@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>더채플대치 발렛 관리</title>
+<style>
+:root {
+--primary-color: #1a365d;
+--secondary-color: #2b6cb0;
+--bg-color: #f7fafc;
+--card-bg: #ffffff;
+--text-color: #2d3748;
+--danger-color: #e53e3e;
+--consult-color: #dd6b20;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+body { background-color: var(--bg-color); color: var(--text-color); padding: 12px; }
+header { text-align: center; margin-bottom: 15px; background: var(--primary-color); color: white; padding: 12px; border-radius: 8px; }
+h1 { font-size: 1.1rem; margin-bottom: 3px; }
+p { font-size: 0.8rem; opacity: 0.9; }
+.card { background: var(--card-bg); border-radius: 8px; padding: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.card h2 { font-size: 1rem; color: var(--primary-color); margin-bottom: 8px; border-bottom: 2px solid var(--bg-color); padding-bottom: 4px; }
+
+.parking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+.parking-box { background: #edf2f7; padding: 8px; border-radius: 6px; text-align: center; font-size: 0.8rem; }
+.parking-box.full { grid-column: span 2; background: #e2e8f0; }
+.count { font-weight: bold; color: var(--primary-color); font-size: 1rem; }
+
+.schedule-box { background: #f1f5f9; padding: 10px; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--secondary-color); }
+.time-title { font-weight: bold; color: var(--primary-color); margin-bottom: 4px; font-size: 0.9rem; }
+.car-info-row { font-size: 0.8rem; margin-bottom: 3px; background: white; padding: 5px; border-radius: 4px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; }
+
+table { width: 100%; font-size: 0.75rem; border-collapse: collapse; margin-top: 4px; }
+th, td { border: 1px solid #e2e8f0; padding: 5px; text-align: left; }
+th { background: #edf2f7; }
+a.tel-link { color: var(--secondary-color); text-decoration: none; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="container" style="max-width: 600px; margin: 0 auto;">
+<header>
+<h1>더채플대치 발렛 파트</h1>
+<p>실시간 자동 업데이트 시스템</p>
+</header>
+
+<!-- 층별 주차 현황 -->
+<div class="card">
+<h2>🅿️ 층별 주차 공간 가이드</h2>
+<div class="parking-grid">
+<div class="parking-box">
+<div>후문 주차장</div>
+<div class="count">9~15대</div>
+<small style="color:var(--consult-color);">상담/시식 전용</small>
+</div>
+<div class="parking-box">
+<div>지하 4층</div>
+<div class="count">혼주 전용</div>
+<small style="color:var(--danger-color);">창고앞 금지</small>
+</div>
+</div>
+<div class="parking-box full">
+<div>지하 5층: 직원·협력업체 / 혼주 공용 (이중주차 가능)</div>
+</div>
+</div>
+
+<!-- 이번 주 예식 일정 및 차량 (구글 시트 연동 영역) -->
+<div class="card">
+<h2>🚗 이번 주 예식 타임별 차량 현황</h2>
+<div id="live-schedule">
+<div class="schedule-box">
+<div class="time-title">⏰ 11:00 예식</div>
+<div class="car-info-row"><span>신랑측: 1234 (제네시스)</span><span>신부측: 5678 (벤츠)</span></div>
+<div class="car-info-row"><span>혼주3: 1111</span><span>혼주4: 2222</span></div>
+<div class="car-info-row" style="border-color:var(--consult-color); background:#fffaf0;">
+<span>📌 [상담/시식] 9999 (그랜저)</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 주요 임원 차량 -->
+<div class="card">
+<h2>👑 주요 임원 차량 (VIP)</h2>
+<table>
+<tr><th>차종</th><th>차량번호</th><th>성함 & 직위</th></tr>
+<tr><td>제네시스 G90</td><td>197하4877</td><td>김수연 대표님span_0span_0span_1span_1</td></tr>
+<tr><td>쏘렌토</td><td>02서2546</td><td>강창열 1그룹장님span_2span_2span_3span_3</td></tr>
+<tr><td>팰리세이드</td><td>126너2085</td><td>김창현 대치 점장님span_4span_4span_5span_5</td></tr>
+<tr><td>제네시스 GV80</td><td>9665</td><td>심상석 2그룹장님span_6span_6span_7span_7</td></tr>
+<tr><td>벤츠 220d</td><td>8881</td><td>서종필 노조임원님span_8span_8span_9span_9</td></tr>
+</table>
+</div>
+
+<!-- 비상연락망 -->
+<div class="card">
+<h2>☎️ 비상연락망</h2>
+<table>
+<tr><th>직위</th><th>이름</th><th>연락처</th></tr>
+<tr><td>이사</td><td>이태희</td><td><a href="tel:010-4229-7800" class="tel-link">010-4229-7800</a>span_10span_10span_11span_11</td></tr>
+<tr><td>부장</td><td>이근산</td><td><a href="tel:010-6404-0230" class="tel-link">010-6404-0230</a>span_12span_12span_13span_13</td></tr>
+<tr><td>팀장</td><td>김문기</td><td><a href="tel:010-9130-3045" class="tel-link">010-9130-3045</a>span_14span_14span_15span_15</td></tr>
+<tr><td>팀원</td><td>임창희 외 9명</td><td><a href="tel:010-3355-4537" class="tel-link">010-3355-4537 (대표)</a>span_16span_16span_17span_17</td></tr>
+</table>
+</div>
+</div>
+
+</body>
+</html>
