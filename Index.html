@@ -1,72 +1,129 @@
-<!-- [실제 웹 브라우저 렌더링 화면 시뮬레이션] -->
-<div style="background-color: #12141c; color: #ffffff; padding: 16px; border-radius: 16px; max-width: 400px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-    
-    <!-- 상단 헤더 -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
-        <span style="font-weight: bold; font-size: 0.95rem; color: #94a3b8;">더채플엣대치 발렛</span>
-        <span style="font-size: 0.8rem; color: #3b82f6; font-weight: bold; background: rgba(59, 130, 246, 0.1); padding: 2px 8px; border-radius: 10px;">🟢 실시간 연동중</span>
-    </div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더채플엣대치 발렛</title>
+    <style>
+        :root {
+            --bg-color: #12141c;
+            --card-bg: #1e222d;
+            --card-hover: #262b3a;
+            --text-main: #ffffff;
+            --text-sub: #94a3b8;
+            --accent-color: #3b82f6;
+            --consult-color: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 12px; padding-bottom: 70px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 4px 8px; }
+        .app-title { font-size: 0.95rem; font-weight: bold; color: var(--text-sub); }
+        .live-time { font-size: 0.8rem; color: var(--accent-color); font-weight: bold; background: rgba(59, 130, 246, 0.1); padding: 2px 8px; border-radius: 10px; }
+        .section-title { font-size: 1rem; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .card-header { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
+        .wedding-count { font-size: 1.8rem; font-weight: bold; margin-bottom: 2px; }
+        .wedding-desc { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .sub-card { background: var(--card-hover); padding: 10px; border-radius: 8px; text-align: center; }
+        .sub-card h3 { font-size: 0.85rem; margin-bottom: 2px; color: var(--text-main); }
+        .sub-card p { font-size: 0.7rem; color: var(--text-sub); }
+        .schedule-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+        .time-badge { display: inline-block; background: var(--accent-color); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 8px; }
+        .car-row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 4px 0; color: #e2e8f0; }
+        .consult-highlight { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: var(--consult-color); padding: 6px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; margin-top: 8px; display: flex; justify-content: space-between; }
+        table { width: 100%; font-size: 0.8rem; border-collapse: collapse; margin-top: 6px; }
+        th, td { padding: 6px 4px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { color: var(--text-sub); font-weight: normal; }
+        a.tel { color: var(--accent-color); text-decoration: none; font-weight: bold; }
+        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #181b24; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 100; }
+        .nav-item { text-align: center; color: var(--text-sub); font-size: 0.7rem; text-decoration: none; }
+        .nav-item.active { color: var(--accent-color); font-weight: bold; }
+    </style>
+</head>
+<body>
 
-    <!-- 오늘 예식 요약 카드 -->
-    <div style="background: #1e222d; border-radius: 12px; padding: 16px; margin-bottom: 14px;">
-        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 4px;">오늘 예식 현황</div>
-        <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 2px;">2건</div>
-        <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px;">11:00 / 12:30 예식 진행 예정</div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-            <div style="background: #262b3a; padding: 10px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 2px;">🅿️ 주차 안내</div>
-                <div style="font-size: 0.7rem; color: #94a3b8;">후문 / 지하 4·5층</div>
+    <header>
+        <span class="app-title">더채플엣대치 발렛</span>
+        <span class="live-time">🟢 실시간 연동중</span>
+    </header>
+
+    <div class="card">
+        <div class="card-header">오늘 예식 현황</div>
+        <div class="wedding-count">2건</div>
+        <div class="wedding-desc">11:00 / 12:30 예식 진행 예정</div>
+        <div class="grid-2">
+            <div class="sub-card">
+                <h3>🅿️ 주차 안내</h3>
+                <p>후문 / 지하 4·5층</p>
             </div>
-            <div style="background: #262b3a; padding: 10px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 0.85rem; font-weight: bold; margin-bottom: 2px;">👑 임원 차량</div>
-                <div style="font-size: 0.7rem; color: #94a3b8;">VIP 리스트 보기</div>
+            <div class="sub-card">
+                <h3>👑 임원 차량</h3>
+                <p>VIP 리스트</p>
             </div>
         </div>
     </div>
 
-    <!-- 타임별 예식 및 상담/시식 차량 카드 -->
-    <div style="background: #1e222d; border-radius: 12px; padding: 16px; margin-bottom: 14px;">
-        <div style="font-size: 1rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-            🚗 타임별 예식 차량 & 상담·시식
-        </div>
-        
-        <!-- 11:00 예식 박스 -->
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-            <span style="background: #3b82f6; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">11:00 예식</span>
-            <div style="font-size: 0.8rem; margin: 8px 0 4px 0; display: flex; justify-content: space-between; color: #e2e8f0;">
-                <span>신랑: 1234 (제네시스)</span><span>신부: 5678 (벤츠)</span>
-            </div>
-            <div style="font-size: 0.8rem; margin-bottom: 6px; color: #e2e8f0;">혼주3: 1111 / 혼주4: 2222</div>
-            
-            <!-- 상담/시식 차량 강조 박스 -->
-            <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #f59e0b; padding: 6px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; display: flex; justify-content: space-between;">
+    <div class="card">
+        <div class="section-title">🚗 타임별 예식 차량 & 상담·시식</div>
+        <div class="schedule-box">
+            <span class="time-badge">11:00 예식</span>
+            <div class="car-row"><span>신랑: 1234 (제네시스)</span><span>신부: 5678 (벤츠)</span></div>
+            <div class="car-row"><span>혼주3: 1111</span><span>혼주4: 2222</span></div>
+            <div class="consult-highlight">
                 <span>📌 [상담/시식 차량]</span>
                 <span>9999 (그랜저) 외 1대</span>
             </div>
         </div>
-    </div>
-
-    <!-- 비상연락망 카드 -->
-    <div style="background: #1e222d; border-radius: 12px; padding: 16px; margin-bottom: 14px;">
-        <div style="font-size: 1rem; font-weight: bold; margin-bottom: 10px;">☎️ 비상연락망</div>
-        <div style="font-size: 0.8rem; display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <span>이사 이태희</span>
-            <span style="color: #3b82f6; font-weight: bold;">010-4229-7800 📞</span>
-        </div>
-        <div style="font-size: 0.8rem; display: flex; justify-content: space-between; padding: 6px 0;">
-            <span>팀장 김문기</span>
-            <span style="color: #3b82f6; font-weight: bold;">010-9130-3045 📞</span>
+        <div class="schedule-box">
+            <span class="time-badge">12:30 예식</span>
+            <div class="car-row"><span>신랑: 3333 (카니발)</span><span>신부: 4444 (BMW)</span></div>
+            <div class="car-row"><span>혼주3: 5555</span><span>혼주4: 6666</span></div>
+            <div class="consult-highlight">
+                <span>📌 [상담/시식 차량]</span>
+                <span>7777 (K8)</span>
+            </div>
         </div>
     </div>
 
-    <!-- 하단 네비게이션바 시뮬레이션 -->
-    <div style="background: #181b24; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; display: flex; justify-content: space-around; padding: 8px 0; text-align: center; font-size: 0.75rem;">
-        <div style="color: #3b82f6; font-weight: bold;">🏠<br>오늘</div>
-        <div style="color: #94a3b8;">📅<br>일정</div>
-        <div style="color: #94a3b8;">🅿️<br>주차</div>
-        <div style="color: #94a3b8;">🚗<br>차량</div>
-        <div style="color: #94a3b8;">☎️<br>연락</div>
+    <div class="card">
+        <div class="section-title">🅿️ 층별 주차 가이드</div>
+        <table>
+            <tr><th>구역</th><th>설명 및 규칙</th></tr>
+            <tr><td><b>후문</b></td><td>9~15대 (상담·시식 전용)</td></tr>
+            <tr><td><b>지하 4층</b></td><td>혼주 전용 (창고 앞 금지)</td></tr>
+            <tr><td><b>지하 5층</b></td><td>직원·혼주 공용 (이중주차)</td></tr>
+        </table>
     </div>
 
-</div>
+    <div class="card">
+        <div class="section-title">👑 주요 임원 차량 (VIP)</div>
+        <table>
+            <tr><th>차종</th><th>번호</th><th>성함 & 직위</th></tr>
+            <tr><td>G90</td><td>197하4877</td><td>김수연 대표님[span_2](start_span)[span_2](end_span)</td></tr>
+            <tr><td>쏘렌토</td><td>02서2546</td><td>강창열 1그룹장[span_3](start_span)[span_3](end_span)</td></tr>
+            <tr><td>팰리세이드</td><td>126너2085</td><td>김창현 점장[span_4](start_span)[span_4](end_span)</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="section-title">☎️ 비상연락망 (터치시 통화)</div>
+        <table>
+            <tr><td>이사 이태희</td><td><a href="tel:010-4229-7800" class="tel">010-4229-7800 📞</a>[span_5](start_span)[span_5](end_span)</td></tr>
+            <tr><td>부장 이근산</td><td><a href="tel:010-6404-0230" class="tel">010-6404-0230 📞</a>[span_6](start_span)[span_6](end_span)</td></tr>
+            <tr><td>팀장 김문기</td><td><a href="tel:010-9130-3045" class="tel">010-9130-3045 📞</a>[span_7](start_span)[span_7](end_span)</td></tr>
+            <tr><td>대표 임창희</td><td><a href="tel:010-3355-4537" class="tel">010-3355-4537 📞</a>[span_8](start_span)[span_8](end_span)</td></tr>
+        </table>
+    </div>
+
+    <nav>
+        <a href="#" class="nav-item active">🏠<br>오늘</a>
+        <a href="#" class="nav-item">📅<br>일정</a>
+        <a href="#" class="nav-item">🅿️<br>주차</a>
+        <a href="#" class="nav-item">🚗<br>차량</a>
+        <a href="#" class="nav-item">☎️<br>연락</a>
+    </nav>
+
+</body>
+</html>
+        
