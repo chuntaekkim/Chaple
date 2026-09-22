@@ -4,194 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더채플엣대치 발렛</title>
-    <!-- 스마트폰 홈 화면 추가 시 표시될 앱 설정 및 아이콘 -->
-    <meta name="theme-color" content="#12141c">
+    <meta name="theme-color" content="#0b0c10">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="더채플발렛">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3202/3202926.png">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3202/3202926.png">
 
     <style>
         :root {
-            --bg-color: #12141c;
-            --card-bg: #1e222d;
-            --card-hover: #262b3a;
+            --bg-color: #0b0c10;
+            --card-bg: #16181d;
+            --card-hover: #1f2229;
             --text-main: #ffffff;
-            --text-sub: #94a3b8;
-            --accent-color: #3b82f6;
-            --consult-color: #f59e0b;
-            --danger-color: #ef4444;
+            --text-sub: #9ca3af;
+            --accent-color: #eab308;
+            --border-color: rgba(255, 255, 255, 0.08);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
         html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-color); color: var(--text-main); padding: 12px; padding-bottom: 80px; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 4px 8px; }
-        .app-title { font-size: 0.95rem; font-weight: bold; color: var(--text-sub); }
-        .live-time { font-size: 0.8rem; color: var(--accent-color); font-weight: bold; background: rgba(59, 130, 246, 0.1); padding: 2px 8px; border-radius: 10px; }
-        .section-title { font-size: 1rem; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .card { background: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .card-header { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 4px; }
-        .wedding-count { font-size: 1.8rem; font-weight: bold; margin-bottom: 2px; }
-        .wedding-desc { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .sub-card { background: var(--card-hover); padding: 10px; border-radius: 8px; text-align: center; }
-        .sub-card h3 { font-size: 0.85rem; margin-bottom: 2px; color: var(--text-main); }
-        .sub-card p { font-size: 0.7rem; color: var(--text-sub); }
-        .schedule-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; margin-bottom: 12px; }
-        .time-badge { display: inline-block; background: var(--accent-color); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; }
-        .car-row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 3px 0; color: #e2e8f0; }
-        .consult-highlight { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); color: var(--consult-color); padding: 8px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: bold; margin-top: 8px; line-height: 1.4; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 14px; padding-bottom: 90px; }
         
-        /* 주차장 레이아웃 도면 스타일 */
-        .parking-map-container { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-        .map-floor { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; }
-        .floor-title { font-size: 0.85rem; font-weight: bold; color: var(--accent-color); margin-bottom: 6px; display: flex; justify-content: space-between; }
-        .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .map-zone { background: #262b3a; border-radius: 6px; padding: 8px; font-size: 0.75rem; text-align: center; border: 1px solid rgba(255,255,255,0.06); }
-        .map-zone.warning { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; }
-        .map-zone.highlight { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); }
+        .top-banner { font-size: 0.75rem; color: #f59e0b; margin-bottom: 8px; font-weight: bold; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding: 2px 4px; }
+        .app-title { font-size: 1.05rem; font-weight: bold; color: var(--text-main); }
+        .date-info { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px; }
 
-        table { width: 100%; font-size: 0.8rem; border-collapse: collapse; margin-top: 6px; }
-        th, td { padding: 6px 4px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        th { color: var(--text-sub); font-weight: normal; }
-        a.tel { color: var(--accent-color); text-decoration: none; font-weight: bold; }
-        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #181b24; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.1); z-index: 100; box-shadow: 0 -2px 6px rgba(0,0,0,0.3); }
-        .nav-item { text-align: center; color: var(--text-sub); font-size: 0.7rem; text-decoration: none; cursor: pointer; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+
+        .card { background: var(--card-bg); border-radius: 14px; padding: 16px; margin-bottom: 14px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .card-header { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 6px; }
+        
+        /* 웨딩 카드 가로 스크롤 레이아웃 (동일 날짜 타임별 우측 추가) */
+        .wedding-timeline-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; margin-top: 10px; }
+        .wedding-slot-card { min-width: 260px; background: var(--card-hover); border-radius: 10px; padding: 14px; border: 1px solid var(--border-color); flex-shrink: 0; }
+        .slot-time { background: var(--accent-color); color: #000; font-weight: bold; font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
+        
+        .couple-row { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 6px; }
+        .side-box { width: 48%; }
+        .side-title { font-size: 0.75rem; color: var(--accent-color); margin-bottom: 2px; }
+        .detail-text { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 4px; }
+        .car-num { color: #60a5fa; font-weight: bold; font-size: 0.8rem; background: rgba(96,165,250,0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px; }
+
+        /* 하단 네비게이션 바 */
+        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #12141a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border-color); z-index: 100; }
+        .nav-item { text-align: center; color: var(--text-sub); font-size: 0.7rem; text-decoration: none; cursor: pointer; background: none; border: none; }
         .nav-item.active { color: var(--accent-color); font-weight: bold; }
+        .nav-item span { display: block; font-size: 1.1rem; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
-    <!-- 1. 오늘 홈 -->
-    <header id="section-home">
-        <span class="app-title">더채플엣대치 발렛 (10/3 개천절)</span>
-        <span class="live-time">🟢 10월 3일 샘플</span>
+    <div class="top-banner">⚠️ 더채플엣대치 발렛 (실시간 연동)</div>
+    <header>
+        <span class="app-title">더채플엣대치 발렛</span>
+        <span id="current-date-text" style="font-size: 0.75rem; color: var(--text-sub);">로딩중...</span>
     </header>
 
-    <div class="card">
-        <div class="card-header">10월 3일(토) 예식 & 상담 현황</div>
-        <div class="wedding-count">예식 3건 / 성수기 상담</div>
-        <div class="wedding-desc">11:00 / 13:00 / 15:00 예식 및 시간당 웨딩 상담 운영</div>
-        <div class="grid-2">
-            <div class="sub-card">
-                <h3>🅿️ 주차 안내</h3>
-                <p>후문 / 지하 4·5층</p>
-            </div>
-            <div class="sub-card">
-                <h3>👑 임원 차량</h3>
-                <p>VIP 리스트</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. 차량 일정 섹션 -->
-    <div class="card" id="section-car">
-        <div class="section-title">🚗 타임별 예식 차량 & 시간당 상담·시식</div>
+    <!-- [1] 웨딩 & 차량 조회 섹션 -->
+    <div id="sec-wedding" class="page-section active">
+        <div class="date-info">구글 스프레드시트 연동 웨딩 스케줄</div>
         
-        <!-- 11:00 예식 -->
-        <div class="schedule-box">
-            <span class="time-badge">11:00 예식 (1부)</span>
-            <div class="car-row"><span>신랑측: 1234 (제네시스)</span><span>신부측: 5678 (벤츠)</span></div>
-            <div class="car-row"><span>혼주1: 1111 (그랜저)</span><span>혼주2: 2222 (K9)</span></div>
-            <div class="car-row"><span>혼주3: 3333 (카니발)</span><span>혼주4: 4444 (쏘렌토)</span></div>
-            
-            <div class="consult-highlight">
-                📌 [상담·시식 10:00~11:00]<br>
-                • 팀 A: 1011 (아반떼) / 팀 B: 1022 (투싼)
-            </div>
-        </div>
-
-        <!-- 13:00 예식 -->
-        <div class="schedule-box">
-            <span class="time-badge">13:00 예식 (2부)</span>
-            <div class="car-row"><span>신랑측: 5555 (BMW)</span><span>신부측: 6666 (아우디)</span></div>
-            <div class="car-row"><span>혼주1: 7777 (K8)</span><span>혼주2: 8888 (GV80)</span></div>
-            <div class="car-row"><span>혼주3: 9999 (그랜저)</span><span>혼주4: 1010 (싼타페)</span></div>
-            
-            <div class="consult-highlight">
-                📌 [상담·시식 12:00~14:00]<br>
-                • 12:00대: 1201 (K5), 1202 (QM6)<br>
-                • 13:00대: 1301 (쏘나타), 1302 (아이오닉)
-            </div>
-        </div>
-
-        <!-- 15:00 예식 -->
-        <div class="schedule-box">
-            <span class="time-badge">15:00 예식 (3부)</span>
-            <div class="car-row"><span>신랑측: 3456 (볼보)</span><span>신부측: 7890 (렉서스)</span></div>
-            <div class="car-row"><span>혼주1: 1357 (G80)</span><span>혼주2: 2468 (모하비)</span></div>
-            
-            <div class="consult-highlight">
-                📌 [상담·시식 15:00~17:00]<br>
-                • 15:00대: 1501 (스타리아), 1502 (팰리세이드)<br>
-                • 16:00대: 1601 (EV6), 1602 (티구안)
+        <div id="wedding-data-area">
+            <div class="card" style="text-align: center; color: var(--text-sub); padding: 30px;">
+                데이터를 불러오는 중입니다...
             </div>
         </div>
     </div>
 
-    <!-- 3. 주차 가이드 섹션 (지하 4층 / 지하 5층 그림 도면 포함) -->
-    <div class="card" id="section-parking">
-        <div class="section-title">🅿️ 층별 주차 가이드 & 배치도</div>
-        <table>
-            <tr><th>구역</th><th>설명 및 규칙</th></tr>
-            <tr><td><b>후문</b></td><td>9~15대 (상담·시식 전용)</td></tr>
-            <tr><td><b>지하 4층</b></td><td>혼주 전용 (창고 앞 금지)</td></tr>
-            <tr><td><b>지하 5층</b></td><td>직원·혼주 공용 (이중주차)</td></tr>
-        </table>
-
-        <!-- 시각적 주차장 도면 카드 -->
-        <div class="parking-map-container">
-            <!-- 지하 4층 도면 -->
-            <div class="map-floor">
-                <div class="floor-title"><span> 지하 4층 (혼주 전용 구역)</span><span>VIP / 혼주 차량</span></div>
-                <div class="map-grid">
-                    <div class="map-zone highlight">🚗 엘리베이터 앞<br><b>신랑·신부 혼주 우선</b></div>
-                    <div class="map-zone warning">⚠️ 냉동고·창고 앞<br><b>[주차 절대 금지구역]</b></div>
-                </div>
-            </div>
-
-            <!-- 지하 5층 도면 -->
-            <div class="map-floor">
-                <div class="floor-title"><span> 지하 5층 (공용 주차 구역)</span><span>직원 및 혼주 공용</span></div>
-                <div class="map-grid">
-                    <div class="map-zone">🅿️ 일반 주차면<br><b>순차적 주차 배치</b></div>
-                    <div class="map-zone highlight">🔄 중앙 통로 구역<br><b>[이중주차 허용 구역]</b></div>
-                </div>
-            </div>
+    <!-- [2] 주차 안내 섹션 -->
+    <div id="sec-parking" class="page-section">
+        <div class="app-title" style="font-size: 1.1rem; margin-bottom: 4px;">주차 안내</div>
+        <div style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 12px;">지하 4층 / 지하 5층 도면</div>
+        
+        <div class="card">
+            <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 6px;">🅿️ 지하 4층 주차 도면</div>
+            <div style="background: var(--card-hover); padding: 20px; border-radius: 8px; text-align: center; color: var(--text-sub);">[지하 4층 도면 이미지 영역]</div>
+        </div>
+        <div class="card">
+            <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 6px;">🅿️ 지하 5층 주차 도면</div>
+            <div style="background: var(--card-hover); padding: 20px; border-radius: 8px; text-align: center; color: var(--text-sub);">[지하 5층 도면 이미지 영역]</div>
         </div>
     </div>
 
-    <!-- 4. 임원 VIP 차량 섹션 -->
-    <div class="card" id="section-vip">
-        <div class="section-title">👑 주요 임원 차량 (VIP)</div>
-        <table>
-            <tr><th>차종</th><th>번호</th><th>성함 & 직위</th></tr>
-            <tr><td>G90</td><td>197하4877</td><td>김수연 대표님[span_0](start_span)[span_0](end_span)</td></tr>
-            <tr><td>쏘렌토</td><td>02서2546</td><td>강창열 1그룹장[span_1](start_span)[span_1](end_span)</td></tr>
-            <tr><td>팰리세이드</td><td>126너2085</td><td>김창현 점장[span_2](start_span)[span_2](end_span)</td></tr>
-        </table>
-    </div>
-
-    <!-- 5. 연락망 섹션 -->
-    <div class="card" id="section-contact">
-        <div class="section-title">☎️ 비상연락망 (터치시 통화)</div>
-        <table>
-            <tr><td>이사 이태희</td><td><a href="tel:010-4229-7800" class="tel">010-4229-7800 📞</a>[span_3](start_span)[span_3](end_span)</td></tr>
-            <tr><td>부장 이근산</td><td><a href="tel:010-6404-0230" class="tel">010-6404-0230 📞</a>[span_4](start_span)[span_4](end_span)</td></tr>
-            <tr><td>팀장 김문기</td><td><a href="tel:010-9130-3045" class="tel">010-9130-3045 📞</a>[span_5](start_span)[span_5](end_span)</td></tr>
-            <tr><td>대표 임창희</td><td><a href="tel:010-3355-4537" class="tel">010-3355-4537 📞</a>[span_6](start_span)[span_6](end_span)</td></tr>
-        </table>
-    </div>
-
-    <!-- 하단 고정 네비게이션 -->
+    <!-- 하단 네비게이션 바 -->
     <nav>
-        <a href="#section-home" class="nav-item active">🏠<br>오늘</a>
-        <a href="#section-car" class="nav-item">🚗<br>차량</a>
-        <a href="#section-parking" class="nav-item">🅿️<br>주차</a>
-        <a href="#section-vip" class="nav-item">👑<br>임원</a>
-        <a href="#section-contact" class="nav-item">☎️<br>연락</a>
+        <button class="nav-item active" onclick="switchTab('wedding', this)"><span>📅</span>웨딩/차량</button>
+        <button class="nav-item" onclick="switchTab('parking', this)"><span>🅿️</span>주차안내</button>
     </nav>
 
+    <script>
+        // ⚠️ 아래 URL을 본인이 배포한 구글 앱스 스크립트 웹 앱 URL로 변경하세요!
+        const SCRIPT_URL ="https://script.google.com/macros/s/AKfycbyjz_CgYPnY36cOB8FnoBklpk77z27GNXrFWcAVPZ0Rz2y39DpS9Qm9LOdtav_ZSnSbBQ/exec";
+
+        async function fetchWeddingData() {
+            if (SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL")) {
+                document.getElementById('wedding-data-area').innerHTML = `
+                    <div class="card" style="text-align: center; color: #ef4444; padding: 20px;">
+                        구글 앱스 스크립트 URL이 설정되지 않았습니다!<br>코드 내의 SCRIPT_URL을 수정해 주세요.
+                    </div>`;
+                return;
+            }
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                renderWeddingSchedule(data);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('wedding-data-area').innerHTML = `
+                    <div class="card" style="text-align: center; color: #ef4444; padding: 20px;">
+                        데이터를 불러오는데 실패했습니다.
+                    </div>`;
+            }
+        }
+
+        function renderWeddingSchedule(rows) {
+            const container = document.getElementById('wedding-data-area');
+            container.innerHTML = '';
+
+            if (!rows || rows.length === 0) {
+                container.innerHTML = `<div class="card">등록된 예식 일정이 없습니다.</div>`;
+                return;
+            }
+
+            // 날짜별로 데이터 그룹화
+            let groupedByDate = {};
+            rows.forEach(row => {
+                let dateKey = row["날짜 (Date)"] || "기타 일정";
+                if (!groupedByDate[dateKey]) groupedByDate[dateKey] = [];
+                groupedByDate[dateKey].push(row);
+            });
+
+            // 날짜 카드 생성
+            for (let date in groupedByDate) {
+                let slots = groupedByDate[date];
+                
+                let cardHTML = `
+                    <div class="card">
+                        <div style="font-size: 0.95rem; font-weight: bold; color: var(--accent-color); margin-bottom: 4px;">📅 ${date} 예식 스케줄</div>
+                        <div style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 8px;">시간별 신랑·신부 및 혼주 차량 정보</div>
+                        <div class="wedding-timeline-container">
+                `;
+
+                slots.forEach(slot => {
+                    let time = slot["예식 시간 (Time)"] || "";
+                    let gName = slot["신랑 이름"] || "";
+                    let bName = slot["신부 이름"] || "";
+                    let gParents = slot["신랑 아버지/어머니"] || "";
+                    let bParents = slot["신부 아버지/어머니"] || "";
+                    let gCount = slot["신랑측 하객수"] || "0";
+                    let bCount = slot["신부측 하객수"] || "0";
+                    let gCar = slot["신랑측 혼주차량"] || "-";
+                    let bCar = slot["신부측 혼주차량"] || "-";
+
+                    cardHTML += `
+                        <div class="wedding-slot-card">
+                            <span class="slot-time">${time}</span>
+                            <div class="couple-row">
+                                <div style="width:48%;">신랑: ${gName}</div>
+                                <div style="width:48%; text-align:right;">신부: ${bName}</div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <div class="side-box">
+                                    <div class="side-title">신랑측 부모</div>
+                                    <div class="detail-text">${gParents}</div>
+                                    <div class="side-title">하객수</div>
+                                    <div class="detail-text">${gCount}명</div>
+                                    <div class="side-title">혼주차량</div>
+                                    <div><span class="car-num">${gCar}</span></div>
+                                </div>
+                                <div class="side-box" style="text-align:right;">
+                                    <div class="side-title">신부측 부모</div>
+                                    <div class="detail-text">${bParents}</div>
+                                    <div class="side-title">하객수</div>
+                                    <div class="detail-text">${bCount}명</div>
+                                    <div class="side-title">혼주차량</div>
+                                    <div><span class="car-num">${bCar}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                cardHTML += `</div></div>`;
+                container.innerHTML += cardHTML;
+            }
+        }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('sec-' + tabId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // 페이지 로딩 시 데이터 가져오기 실행
+        window.onload = function() {
+            const today = new Date();
+            document.getElementById('current-date-text').innerText = `${today.getMonth()+1}.${today.getDate()} 실시간 연동`;
+            fetchWeddingData();
+        };
+    </script>
 </body>
 </html>
