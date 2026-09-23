@@ -68,14 +68,6 @@
                 </div>
             </div>
 
-            <div onclick="switchTab('search')" class="bg-gray-900 hover:bg-gray-850 border border-gray-800 rounded-2xl p-4 shadow cursor-pointer flex justify-between items-center transition">
-                <div>
-                    <div class="text-sm font-bold text-white">차량 조회</div>
-                    <div class="text-xs text-gray-400 mt-0.5">번호 4자리</div>
-                </div>
-                <i class="fa-solid fa-magnifying-glass text-gray-500 text-lg"></i>
-            </div>
-
             <div class="space-y-1 pt-2">
                 <h2 class="text-base font-bold text-white">이번 달</h2>
             </div>
@@ -149,175 +141,168 @@
         <section id="tab-parking" class="tab-content hidden space-y-4">
             <div class="space-y-1">
                 <h2 class="text-xl font-bold text-white">주차 안내</h2>
-                <p class="text-xs text-gray-400">도면은 확대해서 볼 수 있습니다.</p>
+                <p class="text-xs text-gray-400">도면을 터치하여 상세 내용을 확인하세요.</p>
             </div>
 
             <div class="grid grid-cols-3 bg-gray-900 p-1 rounded-xl border border-gray-800 gap-1">
-                <button onclick="setParkingFloor('b4')" id="btn-floor-b4" class="py-2.5 text-xs font-bold rounded-lg bg-amber-400 text-gray-950 transition shadow">지하 4층[span_2](start_span)[span_2](end_span)</button>
-                <button onclick="setParkingFloor('b5')" id="btn-floor-b5" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">지하 5층[span_3](start_span)[span_3](end_span)</button>
-                <button onclick="setParkingFloor('rear')" id="btn-floor-rear" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">후문[span_4](start_span)[span_4](end_span)</button>
+                <button onclick="setParkingFloor('b4')" id="btn-floor-b4" class="py-2.5 text-xs font-bold rounded-lg bg-amber-400 text-gray-950 transition shadow">지하 4층</button>
+                <button onclick="setParkingFloor('b5')" id="btn-floor-b5" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">지하 5층</button>
+                <button onclick="setParkingFloor('rear')" id="btn-floor-rear" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">후문</button>
             </div>
 
             <div id="parking-content-area" class="space-y-3"></div>
         </section>
 
-        <!-- Tab 4: 차량 조회 -->
-        <section id="tab-search" class="tab-content hidden space-y-4">
-            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow space-y-3">
-                <h2 class="text-sm font-semibold text-amber-400">차량 번호 4자리 조회</h2>
-                <input type="text" placeholder="차량 뒷번호 4자리 입력..." class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-sm text-white focus:outline-none">
-            </div>
-        </section>
-
-        <!-- Tab 5: 차량 관리 -->
+        <!-- Tab 4: 차량 관리 -->
         <section id="tab-carlist" class="tab-content hidden space-y-4">
             <div class="space-y-1">
                 <h2 class="text-xl font-bold text-white" id="car-main-title">혼주 차량</h2>
-                <p class="text-xs text-gray-400" id="car-sub-title">예식 시간별로 묶어서 보여줍니다.[span_5](start_span)[span_5](end_span)</p>
+                <p class="text-xs text-gray-400" id="car-sub-title">예식 시간별로 묶어서 보여줍니다.</p>
             </div>
 
             <div class="grid grid-cols-3 bg-gray-900 p-1 rounded-xl border border-gray-800 gap-1">
-                <button onclick="setCarMode('executive')" id="btn-car-exec" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">임원 차량[span_6](start_span)[span_6](end_span)</button>
-                <button onclick="setCarMode('couple')" id="btn-car-couple" class="py-2.5 text-xs font-bold rounded-lg bg-amber-400 text-gray-950 transition shadow">혼주 차량[span_7](start_span)[span_7](end_span)</button>
+                <button onclick="setCarMode('executive')" id="btn-car-exec" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">임원 차량</button>
+                <button onclick="setCarMode('couple')" id="btn-car-couple" class="py-2.5 text-xs font-bold rounded-lg bg-amber-400 text-gray-950 transition shadow">혼주 차량</button>
                 <button onclick="setCarMode('consult')" id="btn-car-consult" class="py-2.5 text-xs font-bold rounded-lg text-gray-400 transition">상담·시식</button>
             </div>
 
             <div id="car-content-area" class="space-y-3"></div>
         </section>
 
-        <!-- Tab 6: 비상 연락망 -->
+        <!-- Tab 5: 비상 연락망 (최신화 반영) -->
         <section id="tab-contacts" class="tab-content hidden space-y-4">
             <div class="space-y-1">
                 <h2 class="text-xl font-bold text-white">비상 연락망</h2>
-                <p class="text-xs text-gray-400">이름을 누르면 바로 전화가 걸립니다.[span_8](start_span)[span_8](end_span)</p>
+                <p class="text-xs text-gray-400">이름을 누르면 바로 전화가 걸립니다.</p>
             </div>
 
             <div class="space-y-3">
                 <!-- 본사 섹션 -->
-                <div class="text-xs font-bold text-amber-400 px-1">본사[span_9](start_span)[span_9](end_span)</div>
+                <div class="text-xs font-bold text-amber-400 px-1">본사</div>
                 <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">이태희[span_10](start_span)[span_10](end_span)</div>
-                            <div class="text-xs text-gray-400">이사[span_11](start_span)[span_11](end_span)</div>
+                            <div class="font-bold text-white text-sm">이태희</div>
+                            <div class="text-xs text-gray-400">이사</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-4229-7800[span_12](start_span)[span_12](end_span)</span>
-                            <a href="tel:010-4229-7800" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화[span_13](start_span)[span_13](end_span)</a>
+                            <span class="text-xs text-gray-200 font-mono">010-4229-7800</span>
+                            <a href="tel:010-4229-7800" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">이큰산[span_14](start_span)[span_14](end_span)</div>
-                            <div class="text-xs text-gray-400">부장[span_15](start_span)[span_15](end_span)</div>
+                            <div class="font-bold text-white text-sm">이큰산</div>
+                            <div class="text-xs text-gray-400">부장</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-6404-0230[span_16](start_span)[span_16](end_span)</span>
-                            <a href="tel:010-6404-0230" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화[span_17](start_span)[span_17](end_span)</a>
+                            <span class="text-xs text-gray-200 font-mono">010-6404-0230</span>
+                            <a href="tel:010-6404-0230" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 대치사업소 섹션 -->
-                <div class="text-xs font-bold text-amber-400 px-1 pt-2">대치사업소[span_18](start_span)[span_18](end_span)</div>
+                <div class="text-xs font-bold text-amber-400 px-1 pt-2">대치사업소</div>
                 <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">김문기[span_19](start_span)[span_19](end_span)</div>
-                            <div class="text-xs text-gray-400">팀장[span_20](start_span)[span_20](end_span)</div>
+                            <div class="font-bold text-white text-sm">김문기</div>
+                            <div class="text-xs text-gray-400">팀장</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-9130-3045[span_21](start_span)[span_21](end_span)</span>
-                            <a href="tel:010-9130-3045" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화[span_22](start_span)[span_22](end_span)</a>
+                            <span class="text-xs text-gray-200 font-mono">010-9130-3045</span>
+                            <a href="tel:010-9130-3045" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
+                        </div>
+                    </div>
+                    <!-- 팀원 (입사순) -->
+                    <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-white text-sm">임창희</div>
+                            <div class="text-xs text-gray-400">팀원 (입사순)</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-gray-200 font-mono">010-3355-4537</span>
+                            <a href="tel:010-3355-4537" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">임창희[span_23](start_span)[span_23](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원 (입사순)[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)</div>
+                            <div class="font-bold text-white text-sm">이종범</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-3355-4537[span_26](start_span)[span_26](end_span)</span>
-                            <a href="tel:010-3355-4537" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화[span_27](start_span)[span_27](end_span)</a>
+                            <span class="text-xs text-gray-200 font-mono">010-3362-6456</span>
+                            <a href="tel:010-3362-6456" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">이종범[span_28](start_span)[span_28](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_29](start_span)[span_29](end_span)</div>
+                            <div class="font-bold text-white text-sm">김태석</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-3362-6456[span_30](start_span)[span_30](end_span)</span>
-                            <a href="tel:010-3362-6456" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화[span_31](start_span)[span_31](end_span)</a>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
-                        <div>
-                            <div class="font-bold text-white text-sm">김태석[span_32](start_span)[span_32](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_33](start_span)[span_33](end_span)</div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-7929-2669[span_34](start_span)[span_34](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-7929-2669</span>
                             <a href="tel:010-7929-2669" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">서원표[span_35](start_span)[span_35](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_36](start_span)[span_36](end_span)</div>
+                            <div class="font-bold text-white text-sm">서원표</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-8618-1108[span_37](start_span)[span_37](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-8618-1108</span>
                             <a href="tel:010-8618-1108" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">이도훈[span_38](start_span)[span_38](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_39](start_span)[span_39](end_span)</div>
+                            <div class="font-bold text-white text-sm">이도훈</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-2031-5446[span_40](start_span)[span_40](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-2031-5446</span>
                             <a href="tel:010-2031-5446" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">동상진[span_41](start_span)[span_41](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_42](start_span)[span_42](end_span)</div>
+                            <div class="font-bold text-white text-sm">동상진</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-3231-3722[span_43](start_span)[span_43](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-3231-3722</span>
                             <a href="tel:010-3231-3722" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">박성준[span_44](start_span)[span_44](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_45](start_span)[span_45](end_span)</div>
+                            <div class="font-bold text-white text-sm">박성준</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-2966-3318[span_46](start_span)[span_46](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-2966-3318</span>
                             <a href="tel:010-2966-3318" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">조영도[span_47](start_span)[span_47](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_48](start_span)[span_48](end_span)</div>
+                            <div class="font-bold text-white text-sm">조영도</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-6844-9401[span_49](start_span)[span_49](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-6844-9401</span>
                             <a href="tel:010-6844-9401" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
                     <div class="bg-gray-800 border border-gray-700 p-3 rounded-xl flex justify-between items-center">
                         <div>
-                            <div class="font-bold text-white text-sm">전다문[span_50](start_span)[span_50](end_span)</div>
-                            <div class="text-xs text-gray-400">팀원[span_51](start_span)[span_51](end_span)</div>
+                            <div class="font-bold text-white text-sm">전다문</div>
+                            <div class="text-xs text-gray-400">팀원</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <span class="text-xs text-gray-200 font-mono">010-3319-9242[span_52](start_span)[span_52](end_span)</span>
+                            <span class="text-xs text-gray-200 font-mono">010-3319-9242</span>
                             <a href="tel:010-3319-9242" class="bg-amber-400 hover:bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1.5 rounded-lg shadow transition">전화</a>
                         </div>
                     </div>
@@ -341,10 +326,6 @@
             <i class="fa-solid fa-square-parking text-sm mb-0.5"></i>
             주차
         </button>
-        <button onclick="switchTab('search')" id="btn-tab-search" class="flex flex-col items-center justify-center text-gray-400 text-[10px] font-medium py-1 focus:outline-none">
-            <i class="fa-solid fa-magnifying-glass text-sm mb-0.5"></i>
-            조회
-        </button>
         <button onclick="switchTab('carlist')" id="btn-tab-carlist" class="flex flex-col items-center justify-center text-gray-400 text-[10px] font-medium py-1 focus:outline-none">
             <i class="fa-solid fa-car text-sm mb-0.5"></i>
             차량
@@ -356,7 +337,7 @@
     </nav>
 
     <script>
-        const tabs = ['home', 'schedule', 'parking', 'search', 'carlist', 'contacts'];
+        const tabs = ['home', 'schedule', 'parking', 'carlist', 'contacts'];
 
         function switchTab(tabName) {
             tabs.forEach(t => {
@@ -532,7 +513,7 @@
             });
         }
 
-        // --- 주차 안내 로직 ---
+        // --- 주차 안내 로직 (최신 도면 이미지 반영) ---
         function setParkingFloor(floor) {
             const b4Btn = document.getElementById('btn-floor-b4');
             const b5Btn = document.getElementById('btn-floor-b5');
@@ -551,17 +532,13 @@
                 area.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                         <div class="bg-red-950/40 border border-red-900/50 p-3 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-red-400">냉동고 및 창고 앞 발렛주차 불가[span_53](start_span)[span_53](end_span)</div>
-                            <div class="text-xs text-gray-300">지정주차구역 외에는 대지 마세요.[span_54](start_span)[span_54](end_span)</div>
-                        </div>
-                        <div class="bg-gray-850 border border-gray-800 p-3 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-amber-400">이중주차 가능[span_55](start_span)[span_55](end_span)</div>
-                            <div class="text-xs text-gray-300">지정구역 안에서만 이중으로 세웁니다.[span_56](start_span)[span_56](end_span)</div>
+                            <div class="text-xs font-bold text-red-400">지하 4층 · 지정주차구역 외 냉동고 및 창고 앞 발렛주차 불가</div>
+                            <div class="text-xs text-gray-300">지정구역 외에는 대지 마세요. 이중주차 가능[span_3](start_span)[span_3](end_span)</div>
                         </div>
                         <div class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-center space-y-2">
-                            <div class="text-xs font-bold text-white">지하 4층 주차 도면[span_57](start_span)[span_57](end_span)</div>
+                            <div class="text-xs font-bold text-white">지하 4층 평면도 도면</div>
                             <div class="overflow-hidden rounded-lg border border-gray-700 bg-gray-900">
-                                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80" alt="지하 4층 도면" class="w-full h-48 object-cover opacity-80 hover:opacity-100 transition">
+                                <img src="30844.png" alt="지하 4층 도면" class="w-full h-auto object-contain">
                             </div>
                         </div>
                     </div>
@@ -571,17 +548,13 @@
                 area.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                         <div class="bg-gray-850 border border-gray-800 p-3 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-amber-400">직원 및 협력업체 주차구역[span_58](start_span)[span_58](end_span)</div>
-                            <div class="text-xs text-gray-300">발렛 차량은 원칙적으로 B4를 먼저 채웁니다.[span_59](start_span)[span_59](end_span)</div>
-                        </div>
-                        <div class="bg-red-950/40 border border-red-900/50 p-3 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-red-400">빈자리 예측 불가[span_60](start_span)[span_60](end_span)</div>
-                            <div class="text-xs text-gray-300">직원·협력업체 차량이 상시 드나들어 여유 면수는 현장에서 직접 확인해야 합니다.[span_61](start_span)[span_61](end_span)</div>
+                            <div class="text-xs font-bold text-amber-400">지하 5층 · 직원 및 협력업체 주차구역</div>
+                            <div class="text-xs text-gray-300">빈자리 외 이중주차 가능[span_4](start_span)[span_4](end_span)</div>
                         </div>
                         <div class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-center space-y-2">
-                            <div class="text-xs font-bold text-white">지하 5층 주차 도면[span_62](start_span)[span_62](end_span)</div>
+                            <div class="text-xs font-bold text-white">지하 5층 평면도 도면</div>
                             <div class="overflow-hidden rounded-lg border border-gray-700 bg-gray-900">
-                                <img src="https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=600&q=80" alt="지하 5층 도면" class="w-full h-48 object-cover opacity-80 hover:opacity-100 transition">
+                                <img src="30845.png" alt="지하 5층 도면" class="w-full h-auto object-contain">
                             </div>
                         </div>
                     </div>
@@ -591,21 +564,17 @@
                 area.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                         <div class="bg-gray-850 border border-gray-800 p-3 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-amber-400">상담·시식 차량 전용[span_63](start_span)[span_63](end_span)</div>
-                            <div class="text-xs text-gray-300">상담 고객과 시식 예약 차량은 이 자리에 주차합니다.[span_64](start_span)[span_64](end_span)</div>
-                        </div>
-                        <div class="bg-gray-850 border border-gray-800 p-3 rounded-xl space-y-1">
-                            <div class="text-xs font-bold text-white">평소 9대 · 최대 15대[span_65](start_span)[span_65](end_span)</div>
-                            <div class="text-xs text-gray-300">이중주차로 최대 15대까지 수용 가능합니다.[span_66](start_span)[span_66](end_span)</div>
+                            <div class="text-xs font-bold text-amber-400">상담·시식 차량 전용 (후문)</div>
+                            <div class="text-xs text-gray-300">상담 고객 및 시식 예약 차량 전용 주차구역입니다.</div>
                         </div>
                         <div class="grid grid-cols-2 gap-2 text-center">
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700">
                                 <div class="text-xl font-extrabold text-white">9</div>
-                                <div class="text-[10px] text-gray-400 mt-1">평소 가능[span_67](start_span)[span_67](end_span)</div>
+                                <div class="text-[10px] text-gray-400 mt-1">평소 가능</div>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700">
                                 <div class="text-xl font-extrabold text-amber-400">15</div>
-                                <div class="text-[10px] text-gray-400 mt-1">최대(이중주차)[span_68](start_span)[span_68](end_span)</div>
+                                <div class="text-[10px] text-gray-400 mt-1">최대 (이중주차)</div>
                             </div>
                         </div>
                     </div>
@@ -613,7 +582,7 @@
             }
         }
 
-        // --- 차량 관리 로직 ---
+        // --- 차량 관리 로직 (최신 임원 차량 반영) ---
         function setCarMode(mode) {
             const execBtn = document.getElementById('btn-car-exec');
             const coupleBtn = document.getElementById('btn-car-couple');
@@ -632,50 +601,50 @@
             if (mode === 'executive') {
                 execBtn.className = activeClass;
                 mainTitle.innerText = "임원 차량";
-                subTitle.innerText = "더채플대치 주요 임원 차량 리스트입니다.[span_69](start_span)[span_69](end_span)";
+                subTitle.innerText = "더채플엣대치 주요 임원 차량 리스트입니다[span_5](start_span)[span_5](end_span).";
                 area.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
-                        <div class="text-xs font-bold text-amber-400 pb-1 border-b border-gray-800">주요 임원 차량 리스트 (업데이트중)[span_70](start_span)[span_70](end_span)</div>
+                        <div class="text-xs font-bold text-amber-400 pb-1 border-b border-gray-800">주요 임원 차량 리스트 (업데이트중)[span_6](start_span)[span_6](end_span)</div>
                         <div class="space-y-2">
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">김수연 대표님[span_71](start_span)[span_71](end_span) <span class="text-amber-400 text-[10px] ml-1">제네시스 G90</span>[span_72](start_span)[span_72](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 197하4877[span_73](start_span)[span_73](end_span)</div>
+                                    <div class="font-bold text-white">김수연 대표님 <span class="text-amber-400 text-[10px] ml-1">제네시스 G90</span>[span_7](start_span)[span_7](end_span)</div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 197하4877[span_8](start_span)[span_8](end_span)</div>
                                 </div>
                                 <span class="bg-amber-400/20 text-amber-400 text-[10px] px-2 py-1 rounded">대표</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">강창열 1그룹장님[span_74](start_span)[span_74](end_span) <span class="text-amber-400 text-[10px] ml-1">쏘렌토</span>[span_75](start_span)[span_75](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 02서2546[span_76](start_span)[span_76](end_span)</div>
+                                    <div class="font-bold text-white">강창열 1그룹장님 <span class="text-amber-400 text-[10px] ml-1">쏘렌토</span>[span_9](start_span)[span_9](end_span)</div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 02서2546[span_10](start_span)[span_10](end_span)</div>
                                 </div>
                                 <span class="bg-blue-400/20 text-blue-400 text-[10px] px-2 py-1 rounded">1그룹</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">김창현 대치 점장님[span_77](start_span)[span_77](end_span) <span class="text-amber-400 text-[10px] ml-1">팰리세이드</span>[span_78](start_span)[span_78](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 126너2085[span_79](start_span)[span_79](end_span)</div>
+                                    <div class="font-bold text-white">김창현 대치 점장님 <span class="text-amber-400 text-[10px] ml-1">팰리세이드</span>[span_11](start_span)[span_11](end_span)</div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 126너2085[span_12](start_span)[span_12](end_span)</div>
                                 </div>
                                 <span class="bg-green-400/20 text-green-400 text-[10px] px-2 py-1 rounded">점장</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">허준석 본부장님[span_80](start_span)[span_80](end_span) <span class="text-amber-400 text-[10px] ml-1">포르쉐/그랜저?</span>[span_81](start_span)[span_81](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 미등록 (?)[span_82](start_span)[span_82](end_span)</div>
+                                    <div class="font-bold text-white">허준석 본부장님 <span class="text-amber-400 text-[10px] ml-1">포르쉐? 그랜저?</span>[span_13](start_span)[span_13](end_span)</div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: ?[span_14](start_span)[span_14](end_span)</div>
                                 </div>
                                 <span class="bg-purple-400/20 text-purple-400 text-[10px] px-2 py-1 rounded">본부장</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">심상석 2그룹장님[span_83](start_span)[span_83](end_span) <span class="text-amber-400 text-[10px] ml-1">제네시스 GV80</span>[span_84](start_span)[span_84](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 9665[span_85](start_span)[span_85](end_span)</div>
+                                    <div class="font-bold text-white">심상석 2그룹장님 <span class="text-amber-400 text-[10px] ml-1">제네시스 GV80</span>[span_15](start_span)[span_15](end_span)</div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 9665[span_16](start_span)[span_16](end_span)</div>
                                 </div>
                                 <span class="bg-blue-400/20 text-blue-400 text-[10px] px-2 py-1 rounded">2그룹</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">서종필 노조임원님[span_86](start_span)[span_86](end_span) <span class="text-amber-400 text-[10px] ml-1">벤츠 220d</span>[span_87](start_span)[span_87](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 8881[span_88](start_span)[span_88](end_span)</div>
+                                    <div class="font-bold text-white">서종필 노조임원님 <span class="text-amber-400 text-[10px] ml-1">벤츠220d</span>[span_17](start_span)[span_17](end_span)</div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 8881[span_18](start_span)[span_18](end_span)</div>
                                 </div>
                                 <span class="bg-red-400/20 text-red-400 text-[10px] px-2 py-1 rounded">노조</span>
                             </div>
@@ -685,50 +654,14 @@
             } else if (mode === 'couple') {
                 coupleBtn.className = activeClass;
                 mainTitle.innerText = "혼주 차량";
-                subTitle.innerText = "예식 시간별로 묶어서 보여줍니다.[span_89](start_span)[span_89](end_span)";
+                subTitle.innerText = "예식 시간별로 묶어서 보여줍니다.";
                 area.innerHTML = `
                     <div class="space-y-3">
-                        <div class="text-xs text-gray-400 font-bold px-1">9월 5일 토요일[span_90](start_span)[span_90](end_span)</div>
-                        
+                        <div class="text-xs text-gray-400 font-bold px-1">9월 5일 토요일</div>
                         <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-2">
                             <div class="bg-gray-800 p-2.5 rounded-xl text-xs font-bold text-amber-400 flex justify-between">
                                 <span>11:00 예식</span>
-                                <span class="text-gray-400 font-normal">혼주 4대 · 번호 미등록[span_91](start_span)[span_91](end_span)</span>
-                            </div>
-                            <div class="space-y-1.5 pt-1">
-                                <div class="bg-gray-850 p-2.5 rounded-lg flex justify-between text-xs items-center">
-                                    <span class="text-white font-medium">혼주 1[span_92](start_span)[span_92](end_span)</span>
-                                    <span class="text-red-400 text-[11px]">번호 등록 대기[span_93](start_span)[span_93](end_span)</span>
-                                </div>
-                                <div class="bg-gray-850 p-2.5 rounded-lg flex justify-between text-xs items-center">
-                                    <span class="text-white font-medium">혼주 2[span_94](start_span)[span_94](end_span)</span>
-                                    <span class="text-red-400 text-[11px]">번호 등록 대기[span_95](start_span)[span_95](end_span)</span>
-                                </div>
-                                <div class="bg-gray-850 p-2.5 rounded-lg flex justify-between text-xs items-center">
-                                    <span class="text-white font-medium">혼주 3[span_96](start_span)[span_96](end_span)</span>
-                                    <span class="text-red-400 text-[11px]">번호 등록 대기[span_97](start_span)[span_97](end_span)</span>
-                                </div>
-                                <div class="bg-gray-850 p-2.5 rounded-lg flex justify-between text-xs items-center">
-                                    <span class="text-white font-medium">혼주 4[span_98](start_span)[span_98](end_span)</span>
-                                    <span class="text-red-400 text-[11px]">번호 등록 대기[span_99](start_span)[span_99](end_span)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-2">
-                            <div class="bg-gray-800 p-2.5 rounded-xl text-xs font-bold text-amber-400 flex justify-between">
-                                <span>13:00 예식</span>
-                                <span class="text-gray-400 font-normal">혼주 4대 · 번호 미등록[span_100](start_span)[span_100](end_span)</span>
-                            </div>
-                            <div class="space-y-1.5 pt-1">
-                                <div class="bg-gray-850 p-2.5 rounded-lg flex justify-between text-xs items-center">
-                                    <span class="text-white font-medium">혼주 1[span_101](start_span)[span_101](end_span)</span>
-                                    <span class="text-red-400 text-[11px]">번호 등록 대기[span_102](start_span)[span_102](end_span)</span>
-                                </div>
-                                <div class="bg-gray-850 p-2.5 rounded-lg flex justify-between text-xs items-center">
-                                    <span class="text-white font-medium">혼주 2[span_103](start_span)[span_103](end_span)</span>
-                                    <span class="text-red-400 text-[11px]">번호 등록 대기[span_104](start_span)[span_104](end_span)</span>
-                                </div>
+                                <span class="text-gray-400 font-normal">혼주 4대 · 번호 미등록</span>
                             </div>
                         </div>
                     </div>
@@ -748,13 +681,6 @@
                                 </div>
                                 <span class="bg-amber-400 text-gray-950 font-bold text-[10px] px-2 py-1 rounded">10:00</span>
                             </div>
-                            <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
-                                <div>
-                                    <div class="font-bold text-white">임하늘 / 조성민 고객님</div>
-                                    <div class="text-gray-400 mt-0.5">후문 주차구역 · 27바 5588</div>
-                                </div>
-                                <span class="bg-amber-400 text-gray-950 font-bold text-[10px] px-2 py-1 rounded">11:00</span>
-                            </div>
                         </div>
                     </div>
                 `;
@@ -766,6 +692,6 @@
         renderDetail(selectedDay);
         setParkingFloor('b4');
         setCarMode('couple');
-    </script>
+     </script>
 </body>
 </html>
