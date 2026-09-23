@@ -34,7 +34,7 @@
         <div>
             <div class="text-xs text-amber-400 font-medium">더채플엣대치 발렛</div>
         </div>
-        <div id="live-time" class="text-xs text-gray-400">9.22 화 01:02</div>
+        <div id="live-time" class="text-xs text-gray-400">9.24 목 12:37</div>
     </header>
 
     <!-- Main Dashboard Content -->
@@ -44,7 +44,7 @@
         <section id="tab-home" class="tab-content space-y-4">
             <div class="space-y-1">
                 <h2 class="text-xl font-bold text-white">오늘</h2>
-                <p class="text-xs text-gray-400">9월 22일 화요일</p>
+                <p class="text-xs text-gray-400">9월 24일 목요일</p>
             </div>
 
             <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5 shadow space-y-2">
@@ -57,8 +57,8 @@
 
             <div class="grid grid-cols-2 gap-3">
                 <div onclick="switchTab('schedule')" class="bg-gray-900 hover:bg-gray-850 border border-gray-800 rounded-2xl p-4 shadow cursor-pointer space-y-3 transition">
-                    <div class="text-xl font-extrabold text-amber-400">10/3</div>
-                    <div class="text-xs text-gray-300 leading-snug">토요일 · 11:00 · 13:00 · 15:00 · 17:00</div>
+                    <div class="text-xl font-extrabold text-amber-400">9/26</div>
+                    <div class="text-xs text-gray-300 leading-snug">토요일 · 13:00 · 15:00</div>
                     <div class="text-right text-xs text-amber-400 font-medium">다음 예식 →</div>
                 </div>
                 <div onclick="switchTab('parking')" class="bg-gray-900 hover:bg-gray-850 border border-gray-800 rounded-2xl p-4 shadow cursor-pointer space-y-3 transition">
@@ -128,7 +128,7 @@
 
             <div id="selected-date-detail" class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                 <div class="text-sm font-semibold text-amber-400 flex justify-between items-center">
-                    <span id="detail-date-title">9월 22일 화요일 일정</span>
+                    <span id="detail-date-title">9월 24일 목요일 일정</span>
                     <span class="text-xs text-gray-400 font-normal">날짜를 터치하여 확인하세요</span>
                 </div>
                 <div id="detail-content-list" class="space-y-2.5">
@@ -169,7 +169,7 @@
             <div id="car-content-area" class="space-y-3"></div>
         </section>
 
-        <!-- Tab 5: 비상 연락망 (최신화 반영) -->
+        <!-- Tab 5: 비상 연락망 -->
         <section id="tab-contacts" class="tab-content hidden space-y-4">
             <div class="space-y-1">
                 <h2 class="text-xl font-bold text-white">비상 연락망</h2>
@@ -354,46 +354,46 @@
             window.scrollTo(0, 0);
         }
 
-        // --- 스케줄 로직 ---
+        // --- 스케줄 로직 (9월, 10월 실제표 반영) ---
         let currentMode = 'wedding';
         let currentYear = 2026;
-        let currentMonth = 8;
-        let selectedDay = 20;
+        let currentMonth = 8; // 0부터 시작하므로 8 = 9월
+        let selectedDay = 24;
 
         const scheduleData = {
             wedding: {
-                "2026-8": {
-                    5: [{time: "11:00", info: "단독홀 · 하객 588명"}, {time: "13:00", info: "단독홀 · 하객 630명"}],
-                    6: [{time: "15:00", info: "단독홀 · 하객 483명"}, {time: "17:00", info: "단독홀 · 하객 441명"}],
-                    12: [{time: "11:00", info: "단독홀 · 하객 500명"}, {time: "13:00", info: "단독홀 · 하객 520명"}, {time: "15:00", info: "단독홀 · 하객 450명"}, {time: "17:00", info: "단독홀 · 하객 410명"}],
-                    19: [{time: "11:00", info: "단독홀 · 하객 588명"}, {time: "13:00", info: "단독홀 · 하객 630명"}, {time: "15:00", info: "단독홀 · 하객 483명"}, {time: "17:00", info: "단독홀 · 하객 441명"}],
-                    20: [{time: "13:00", info: "단독홀 · 하객 420명"}, {time: "15:00", info: "단독홀 · 하객 441명"}]
+                "2026-8": { // 9월
+                    5: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    6: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}],
+                    12: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    13: [{time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}],
+                    19: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    20: [{time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}],
+                    26: [{time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}]
                 },
-                "2026-9": {
-                    3: [{time: "11:00", info: "단독홀 · 하객 588명"}, {time: "13:00", info: "단독홀 · 하객 630명"}, {time: "15:00", info: "단독홀 · 하객 483명"}, {time: "17:00", info: "단독홀 · 하객 441명"}]
+                "2026-9": { // 10월
+                    3: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    4: [{time: "17:00", info: "단독홀 · 웨딩"}],
+                    9: [{time: "13:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    10: [
+                        {time: "11:00", info: "단독홀 · 웨딩"},
+                        {time: "13:00", info: "단독홀 · 웨딩"},
+                        {time: "15:00", info: "단독홀 · 웨딩"},
+                        {time: "17:00", info: "단독홀 · 웨딩"},
+                        {time: "19:00", info: "단독홀 · 웨딩"}
+                    ],
+                    11: [{time: "15:00", info: "단독홀 · 웨딩"}],
+                    17: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    18: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}],
+                    24: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}, {time: "17:00", info: "단독홀 · 웨딩"}],
+                    25: [{time: "11:00", info: "단독홀 · 웨딩"}, {time: "13:00", info: "단독홀 · 웨딩"}, {time: "15:00", info: "단독홀 · 웨딩"}]
                 }
             },
             consult: {
                 "2026-8": {
-                    20: [
-                        {time: "11:00 (1차)", info: "오현주/김상제 (예정: 2027/07/_)"},
-                        {time: "11:00 (1차)", info: "이소정/김민기 (예정: 2027/07/_)"},
-                        {time: "12:00 (1차)", info: "김현희/김충헌 (예정: 2027/08/_)"},
-                        {time: "12:00 (1차)", info: "조아원/김태형 (예정: 2027/04/_)"},
-                        {time: "13:00 (1차)", info: "오현지/김재찬 (예정: 2027/05/23)"},
-                        {time: "13:00 (1차)", info: "민소영/김재영 (예정: 2027/10/23)"},
-                        {time: "13:00 (1차)", info: "박예원/최민범 (예정: 2027/10/_)"},
-                        {time: "14:00 (1차)", info: "박민지/권세움 (예정: 2027/10/03)"},
-                        {time: "15:00 (1차)", info: "박세현/이제선 (예정: 2027/09/_)"},
-                        {time: "15:00 (1차)", info: "나문정/김희태 (예정: 2027/06/26)"},
-                        {time: "15:00 (1차)", info: "장향평/장경배 (예정: 2027/11/_)"},
-                        {time: "16:00 (1차)", info: "강보민/임우섭 (예정: 2027/09/_)"},
-                        {time: "16:00 (1차)", info: "박세미/권오훈 (예정: 2027/10/02)"},
-                        {time: "17:00 (1차)", info: "오예슬/김준호 (예정: 2027/07/03)"},
-                        {time: "17:00 (1차)", info: "최윤정/오호진 (예정: 2027/11/_)"},
-                        {time: "17:00 (1차)", info: "이강희/문설민 (예정: 2027/05/_)"}
-                    ]
-                }
+                    24: [{time: "14:00", info: "상담 방문"}]
+                },
+                "2026-9": {}
             }
         };
 
@@ -413,7 +413,7 @@
                 cBtn.className = "py-2.5 text-xs font-bold rounded-lg bg-gray-800 text-white transition shadow";
                 wBtn.className = "py-2.5 text-xs font-bold rounded-lg text-gray-400 transition";
                 titleEl.innerText = "상담 일정";
-                subTitleEl.innerText = "상담 고객 방문 시간 및 예정 예식일입니다.";
+                subTitleEl.innerText = "상담 고객 방문 시간입니다.";
             }
             renderCalendar();
             renderDetail(selectedDay);
@@ -436,7 +436,7 @@
             } else {
                 ym9.className = "py-3 px-4 rounded-xl text-xs font-bold bg-amber-400 text-gray-950 transition shadow";
                 ym8.className = "py-3 px-4 rounded-xl text-xs font-bold bg-gray-900 border border-gray-800 text-gray-400 transition";
-                totalCount.innerText = "12";
+                totalCount.innerText = "31";
                 totalLabel.innerText = "10월 웨딩 합계";
             }
             renderCalendar();
@@ -513,7 +513,7 @@
             });
         }
 
-        // --- 주차 안내 로직 (최신 도면 이미지 반영) ---
+        // --- 주차 안내 로직 ---
         function setParkingFloor(floor) {
             const b4Btn = document.getElementById('btn-floor-b4');
             const b5Btn = document.getElementById('btn-floor-b5');
@@ -533,7 +533,7 @@
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                         <div class="bg-red-950/40 border border-red-900/50 p-3 rounded-xl space-y-1">
                             <div class="text-xs font-bold text-red-400">지하 4층 · 지정주차구역 외 냉동고 및 창고 앞 발렛주차 불가</div>
-                            <div class="text-xs text-gray-300">지정구역 외에는 대지 마세요. 이중주차 가능[span_3](start_span)[span_3](end_span)</div>
+                            <div class="text-xs text-gray-300">지정구역 외에는 대지 마세요. 이중주차 가능</div>
                         </div>
                         <div class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-center space-y-2">
                             <div class="text-xs font-bold text-white">지하 4층 평면도 도면</div>
@@ -549,7 +549,7 @@
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
                         <div class="bg-gray-850 border border-gray-800 p-3 rounded-xl space-y-1">
                             <div class="text-xs font-bold text-amber-400">지하 5층 · 직원 및 협력업체 주차구역</div>
-                            <div class="text-xs text-gray-300">빈자리 외 이중주차 가능[span_4](start_span)[span_4](end_span)</div>
+                            <div class="text-xs text-gray-300">빈자리 외 이중주차 가능</div>
                         </div>
                         <div class="bg-gray-800 border border-gray-700 rounded-xl p-3 text-center space-y-2">
                             <div class="text-xs font-bold text-white">지하 5층 평면도 도면</div>
@@ -582,7 +582,7 @@
             }
         }
 
-        // --- 차량 관리 로직 (최신 임원 차량 반영) ---
+        // --- 차량 관리 로직 ---
         function setCarMode(mode) {
             const execBtn = document.getElementById('btn-car-exec');
             const coupleBtn = document.getElementById('btn-car-couple');
@@ -601,50 +601,50 @@
             if (mode === 'executive') {
                 execBtn.className = activeClass;
                 mainTitle.innerText = "임원 차량";
-                subTitle.innerText = "더채플엣대치 주요 임원 차량 리스트입니다[span_5](start_span)[span_5](end_span).";
+                subTitle.innerText = "더채플엣대치 주요 임원 차량 리스트입니다.";
                 area.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-3">
-                        <div class="text-xs font-bold text-amber-400 pb-1 border-b border-gray-800">주요 임원 차량 리스트 (업데이트중)[span_6](start_span)[span_6](end_span)</div>
+                        <div class="text-xs font-bold text-amber-400 pb-1 border-b border-gray-800">주요 임원 차량 리스트 (업데이트중)</div>
                         <div class="space-y-2">
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">김수연 대표님 <span class="text-amber-400 text-[10px] ml-1">제네시스 G90</span>[span_7](start_span)[span_7](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 197하4877[span_8](start_span)[span_8](end_span)</div>
+                                    <div class="font-bold text-white">김수연 대표님 <span class="text-amber-400 text-[10px] ml-1">제네시스 G90</span></div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 197하4877</div>
                                 </div>
                                 <span class="bg-amber-400/20 text-amber-400 text-[10px] px-2 py-1 rounded">대표</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">강창열 1그룹장님 <span class="text-amber-400 text-[10px] ml-1">쏘렌토</span>[span_9](start_span)[span_9](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 02서2546[span_10](start_span)[span_10](end_span)</div>
+                                    <div class="font-bold text-white">강창열 1그룹장님 <span class="text-amber-400 text-[10px] ml-1">쏘렌토</span></div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 02서2546</div>
                                 </div>
                                 <span class="bg-blue-400/20 text-blue-400 text-[10px] px-2 py-1 rounded">1그룹</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">김창현 대치 점장님 <span class="text-amber-400 text-[10px] ml-1">팰리세이드</span>[span_11](start_span)[span_11](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 126너2085[span_12](start_span)[span_12](end_span)</div>
+                                    <div class="font-bold text-white">김창현 대치 점장님 <span class="text-amber-400 text-[10px] ml-1">팰리세이드</span></div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 126너2085</div>
                                 </div>
                                 <span class="bg-green-400/20 text-green-400 text-[10px] px-2 py-1 rounded">점장</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">허준석 본부장님 <span class="text-amber-400 text-[10px] ml-1">포르쉐? 그랜저?</span>[span_13](start_span)[span_13](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: ?[span_14](start_span)[span_14](end_span)</div>
+                                    <div class="font-bold text-white">허준석 본부장님 <span class="text-amber-400 text-[10px] ml-1">포르쉐? 그랜저?</span></div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: ?</div>
                                 </div>
                                 <span class="bg-purple-400/20 text-purple-400 text-[10px] px-2 py-1 rounded">본부장</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">심상석 2그룹장님 <span class="text-amber-400 text-[10px] ml-1">제네시스 GV80</span>[span_15](start_span)[span_15](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 9665[span_16](start_span)[span_16](end_span)</div>
+                                    <div class="font-bold text-white">심상석 2그룹장님 <span class="text-amber-400 text-[10px] ml-1">제네시스 GV80</span></div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 9665</div>
                                 </div>
                                 <span class="bg-blue-400/20 text-blue-400 text-[10px] px-2 py-1 rounded">2그룹</span>
                             </div>
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">서종필 노조임원님 <span class="text-amber-400 text-[10px] ml-1">벤츠220d</span>[span_17](start_span)[span_17](end_span)</div>
-                                    <div class="text-gray-400 mt-0.5">차량번호: 8881[span_18](start_span)[span_18](end_span)</div>
+                                    <div class="font-bold text-white">서종필 노조임원님 <span class="text-amber-400 text-[10px] ml-1">벤츠220d</span></div>
+                                    <div class="text-gray-400 mt-0.5">차량번호: 8881</div>
                                 </div>
                                 <span class="bg-red-400/20 text-red-400 text-[10px] px-2 py-1 rounded">노조</span>
                             </div>
@@ -657,11 +657,11 @@
                 subTitle.innerText = "예식 시간별로 묶어서 보여줍니다.";
                 area.innerHTML = `
                     <div class="space-y-3">
-                        <div class="text-xs text-gray-400 font-bold px-1">9월 5일 토요일</div>
+                        <div class="text-xs text-gray-400 font-bold px-1">9월 26일 토요일 예식 차량</div>
                         <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow space-y-2">
                             <div class="bg-gray-800 p-2.5 rounded-xl text-xs font-bold text-amber-400 flex justify-between">
-                                <span>11:00 예식</span>
-                                <span class="text-gray-400 font-normal">혼주 4대 · 번호 미등록</span>
+                                <span>13:00 / 15:00 예식</span>
+                                <span class="text-gray-400 font-normal">혼주 등록 대기 중</span>
                             </div>
                         </div>
                     </div>
@@ -676,10 +676,10 @@
                         <div class="space-y-2">
                             <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center text-xs">
                                 <div>
-                                    <div class="font-bold text-white">윤서연 / 한지호 고객님</div>
-                                    <div class="text-gray-400 mt-0.5">후문 주차구역 · 91마 1024</div>
+                                    <div class="font-bold text-white">상담 고객 차량</div>
+                                    <div class="text-gray-400 mt-0.5">후문 주차구역 이용</div>
                                 </div>
-                                <span class="bg-amber-400 text-gray-950 font-bold text-[10px] px-2 py-1 rounded">10:00</span>
+                                <span class="bg-amber-400 text-gray-950 font-bold text-[10px] px-2 py-1 rounded">후문</span>
                             </div>
                         </div>
                     </div>
@@ -692,6 +692,6 @@
         renderDetail(selectedDay);
         setParkingFloor('b4');
         setCarMode('couple');
-     </script>
+    </script>
 </body>
 </html>
