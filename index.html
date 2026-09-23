@@ -4,208 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더채플엣대치 발렛</title>
-    <meta name="theme-color" content="#0b0c10">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3202/3202926.png">
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3202/3202926.png">
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0b0c10;
-            --card-bg: #16181d;
-            --card-hover: #1f2229;
-            --text-main: #ffffff;
-            --text-sub: #9ca3af;
-            --accent-color: #eab308;
-            --border-color: rgba(255, 255, 255, 0.08);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-color); color: var(--text-main); padding: 14px; padding-bottom: 90px; }
-        
-        .top-banner { font-size: 0.75rem; color: #f59e0b; margin-bottom: 8px; font-weight: bold; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding: 2px 4px; }
-        .app-title { font-size: 1.05rem; font-weight: bold; color: var(--text-main); }
-        .date-info { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px; }
-
-        .page-section { display: none; }
-        .page-section.active { display: block; }
-
-        .card { background: var(--card-bg); border-radius: 14px; padding: 16px; margin-bottom: 14px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .card-header { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 6px; }
-        
-        /* 웨딩 카드 가로 스크롤 레이아웃 (동일 날짜 타임별 우측 추가) */
-        .wedding-timeline-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; margin-top: 10px; }
-        .wedding-slot-card { min-width: 260px; background: var(--card-hover); border-radius: 10px; padding: 14px; border: 1px solid var(--border-color); flex-shrink: 0; }
-        .slot-time { background: var(--accent-color); color: #000; font-weight: bold; font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
-        
-        .couple-row { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; margin-bottom: 6px; }
-        .side-box { width: 48%; }
-        .side-title { font-size: 0.75rem; color: var(--accent-color); margin-bottom: 2px; }
-        .detail-text { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 4px; }
-        .car-num { color: #60a5fa; font-weight: bold; font-size: 0.8rem; background: rgba(96,165,250,0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px; }
-
-        /* 하단 네비게이션 바 */
-        nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #12141a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border-color); z-index: 100; }
-        .nav-item { text-align: center; color: var(--text-sub); font-size: 0.7rem; text-decoration: none; cursor: pointer; background: none; border: none; }
-        .nav-item.active { color: var(--accent-color); font-weight: bold; }
-        .nav-item span { display: block; font-size: 1.1rem; margin-bottom: 2px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-gray-950 text-gray-100 min-h-screen pb-24">
 
-    <div class="top-banner">⚠️ 더채플엣대치 발렛 (실시간 연동)</div>
-    <header>
-        <span class="app-title">더채플엣대치 발렛</span>
-        <span id="current-date-text" style="font-size: 0.75rem; color: var(--text-sub);">로딩중...</span>
+    <!-- Header -->
+    <header class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-md">
+        <div>
+            <div class="text-xs text-amber-400 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-triangle-exclamation"></i> 더채플엣대치 발렛 (현장 실시간)
+            </div>
+            <h1 class="text-lg font-bold text-white">더채플엣대치 발렛</h1>
+        </div>
+        <div id="live-time" class="text-xs text-gray-400 bg-gray-800 px-2.5 py-1 rounded-full">
+            로딩 중...
+        </div>
     </header>
 
-    <!-- [1] 웨딩 & 차량 조회 섹션 -->
-    <div id="sec-wedding" class="page-section active">
-        <div class="date-info">구글 스프레드시트 연동 웨딩 스케줄</div>
+    <!-- Main Content Sections -->
+    <main class="p-4 max-w-xl mx-auto space-y-4">
         
-        <div id="wedding-data-area">
-            <div class="card" style="text-align: center; color: var(--text-sub); padding: 30px;">
-                데이터를 불러오는 중입니다...
+        <!-- Tab 1: 오늘 일정 -->
+        <section id="tab-schedule" class="tab-content space-y-4">
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-semibold text-amber-400 flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-days"></i> 9월 19일 ~ 20일 예식 스케줄
+                    </h2>
+                    <button onclick="loadScheduleData()" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                        <i class="fa-solid fa-rotate"></i> 새로고침
+                    </button>
+                </div>
+                <div id="schedule-container" class="space-y-3">
+                    <div class="text-center py-6 text-gray-400 text-sm">일정 데이터를 불러오는 중입니다...</div>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- [2] 주차 안내 섹션 -->
-    <div id="sec-parking" class="page-section">
-        <div class="app-title" style="font-size: 1.1rem; margin-bottom: 4px;">주차 안내</div>
-        <div style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 12px;">지하 4층 / 지하 5층 도면</div>
-        
-        <div class="card">
-            <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 6px;">🅿️ 지하 4층 주차 도면</div>
-            <div style="background: var(--card-hover); padding: 20px; border-radius: 8px; text-align: center; color: var(--text-sub);">[지하 4층 도면 이미지 영역]</div>
-        </div>
-        <div class="card">
-            <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 6px;">🅿️ 지하 5층 주차 도면</div>
-            <div style="background: var(--card-hover); padding: 20px; border-radius: 8px; text-align: center; color: var(--text-sub);">[지하 5층 도면 이미지 영역]</div>
-        </div>
-    </div>
+        <!-- Tab 2: 주차 차량 -->
+        <section id="tab-parking" class="tab-content hidden space-y-4">
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow space-y-3">
+                <h2 class="text-sm font-semibold text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-square-parking"></i> 주차 안내 및 차량 동선
+                </h2>
+                <div class="bg-gray-800 p-3 rounded-lg text-xs space-y-2 text-gray-300">
+                    <div class="font-bold text-white">🚗 발렛 파킹 이용 안내</div>
+                    <p>• 혼주 차량 및 웨딩카 전용 구역 상시 확보</p>
+                    <p>• 대형버스 주차 구역: 지정 주차장 안내 참조</p>
+                    <p>• 하객 차량 입출차 시 혼잡 구간 수신호 안내 철저</p>
+                </div>
+            </div>
+        </section>
 
-    <!-- 하단 네비게이션 바 -->
-    <nav>
-        <button class="nav-item active" onclick="switchTab('wedding', this)"><span>📅</span>웨딩/차량</button>
-        <button class="nav-item" onclick="switchTab('parking', this)"><span>🅿️</span>주차안내</button>
+        <!-- Tab 3: 연락 버튼 (비상연락망) -->
+        <section id="tab-contacts" class="tab-content hidden space-y-4">
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow">
+                <h2 class="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-phone-volume"></i> 현장 비상연락망 (터치 시 통화 연결)
+                </h2>
+                <div class="space-y-2.5" id="contacts-container">
+                    <a href="tel:010-0000-0000" class="flex items-center justify-between bg-gray-800 hover:bg-gray-750 p-3 rounded-lg border border-gray-700 transition">
+                        <div>
+                            <div class="text-sm font-bold text-white">주차팀장 (현장 총괄)</div>
+                            <div class="text-xs text-gray-400">010-0000-0000</div>
+                        </div>
+                        <span class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
+                            <i class="fa-solid fa-phone"></i> 통화하기
+                        </span>
+                    </a>
+                    <a href="tel:02-000-0000" class="flex items-center justify-between bg-gray-800 hover:bg-gray-750 p-3 rounded-lg border border-gray-700 transition">
+                        <div>
+                            <div class="text-sm font-bold text-white">웨딩홀 예약실 / 프론트</div>
+                            <div class="text-xs text-gray-400">02-000-0000</div>
+                        </div>
+                        <span class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
+                            <i class="fa-solid fa-phone"></i> 통화하기
+                        </span>
+                    </a>
+                    <a href="tel:010-3333-4444" class="flex items-center justify-between bg-gray-800 hover:bg-gray-750 p-3 rounded-lg border border-gray-700 transition">
+                        <div>
+                            <div class="text-sm font-bold text-white">발렛 파킹 반장</div>
+                            <div class="text-xs text-gray-400">010-3333-4444</div>
+                        </div>
+                        <span class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
+                            <i class="fa-solid fa-phone"></i> 통화하기
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Quick Action Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 flex justify-around py-2.5 z-50 shadow-lg">
+        <button onclick="switchTab('schedule')" id="btn-tab-schedule" class="flex flex-col items-center text-amber-400 text-xs font-medium focus:outline-none">
+            <i class="fa-regular fa-calendar-days text-base mb-1"></i>
+            오늘 일정
+        </button>
+        <button onclick="switchTab('parking')" id="btn-tab-parking" class="flex flex-col items-center text-gray-400 text-xs font-medium focus:outline-none">
+            <i class="fa-solid fa-square-parking text-base mb-1"></i>
+            주차 차량
+        </button>
+        <button onclick="switchTab('contacts')" id="btn-tab-contacts" class="flex flex-col items-center text-gray-400 text-xs font-medium focus:outline-none">
+            <i class="fa-solid fa-phone-volume text-base mb-1"></i>
+            연락 버튼
+        </button>
     </nav>
 
     <script>
-        // ⚠️ 아래 URL을 본인이 배포한 구글 앱스 스크립트 웹 앱 URL로 변경하세요!
-        const SCRIPT_URL ="https://script.google.com/macros/s/AKfycbyjz_CgYPnY36cOB8FnoBklpk77z27GNXrFWcAVPZ0Rz2y39DpS9Qm9LOdtav_ZSnSbBQ/exec";
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('btn-tab-schedule').className = "flex flex-col items-center text-gray-400 text-xs font-medium focus:outline-none";
+            document.getElementById('btn-tab-parking').className = "flex flex-col items-center text-gray-400 text-xs font-medium focus:outline-none";
+            document.getElementById('btn-tab-contacts').className = "flex flex-col items-center text-gray-400 text-xs font-medium focus:outline-none";
 
-        async function fetchWeddingData() {
-            if (SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL")) {
-                document.getElementById('wedding-data-area').innerHTML = `
-                    <div class="card" style="text-align: center; color: #ef4444; padding: 20px;">
-                        구글 앱스 스크립트 URL이 설정되지 않았습니다!<br>코드 내의 SCRIPT_URL을 수정해 주세요.
-                    </div>`;
-                return;
-            }
-
-            try {
-                const response = await fetch(SCRIPT_URL);
-                const data = await response.json();
-                renderWeddingSchedule(data);
-            } catch (error) {
-                console.error(error);
-                document.getElementById('wedding-data-area').innerHTML = `
-                    <div class="card" style="text-align: center; color: #ef4444; padding: 20px;">
-                        데이터를 불러오는데 실패했습니다.
-                    </div>`;
+            if(tabName === 'schedule') {
+                document.getElementById('tab-schedule').classList.remove('hidden');
+                document.getElementById('btn-tab-schedule').className = "flex flex-col items-center text-amber-400 text-xs font-medium focus:outline-none";
+            } else if(tabName === 'parking') {
+                document.getElementById('tab-parking').classList.remove('hidden');
+                document.getElementById('btn-tab-parking').className = "flex flex-col items-center text-amber-400 text-xs font-medium focus:outline-none";
+            } else if(tabName === 'contacts') {
+                document.getElementById('tab-contacts').classList.remove('hidden');
+                document.getElementById('btn-tab-contacts').className = "flex flex-col items-center text-amber-400 text-xs font-medium focus:outline-none";
             }
         }
 
-        function renderWeddingSchedule(rows) {
-            const container = document.getElementById('wedding-data-area');
-            container.innerHTML = '';
+        function updateClock() {
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            const date = now.getDate();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('live-time').innerText = `${month}.${date} ${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-            if (!rows || rows.length === 0) {
-                container.innerHTML = `<div class="card">등록된 예식 일정이 없습니다.</div>`;
-                return;
-            }
+        const fallbackData = [
+            {date: "2026-09-19", time: "11:00", groom: "단독홀", bride: "단독홀", parents: "부/모", guests: "588명", guarantee: "280 / 308", bus: "1대 (중구)", weddingCar: "산타페 / 흰색 / 38고 6205", hostCar: "90나 7941"},
+            {date: "2026-09-19", time: "13:00", groom: "단독홀", bride: "단독홀", parents: "부/모", guests: "630명", guarantee: "300 / 330", bus: "1대", weddingCar: "벤츠 / 검정 / 131오 2623", hostCar: "3680 5343, 1778외 2240"},
+            {date: "2026-09-19", time: "15:00", groom: "단독홀", bride: "단독홀", parents: "부/모", guests: "483명", guarantee: "230 / 253", bus: "2대 (여수, 통영)", weddingCar: "BMW 7시리즈 / 181호 2523", hostCar: "김용철 (010-5264-4313)"},
+            {date: "2026-09-19", time: "17:00", groom: "단독홀", bride: "단독홀", parents: "부/모", guests: "441명", guarantee: "210 / 231", bus: "2개", weddingCar: "아우디Q4 / 회색", hostCar: "라 3226, 55묘 9728"},
+            {date: "2026-09-20", time: "13:00", groom: "단독홀", bride: "단독홀", parents: "부/모", guests: "420명", guarantee: "200 / 220", bus: "15인승 1대 (충주)", weddingCar: "벤츠CLE200 / 회색", hostCar: "구 7125, 103서 2547"},
+            {date: "2026-09-20", time: "15:00", groom: "단독홀", bride: "단독홀", parents: "부/모", guests: "441명", guarantee: "210 / 231", bus: "2개", weddingCar: "마이바흐 / 검정", hostCar: "4344, 49거 6000"}
+        ];
 
-            // 날짜별로 데이터 그룹화
-            let groupedByDate = {};
-            rows.forEach(row => {
-                let dateKey = row["날짜 (Date)"] || "기타 일정";
-                if (!groupedByDate[dateKey]) groupedByDate[dateKey] = [];
-                groupedByDate[dateKey].push(row);
-            });
-
-            // 날짜 카드 생성
-            for (let date in groupedByDate) {
-                let slots = groupedByDate[date];
-                
-                let cardHTML = `
-                    <div class="card">
-                        <div style="font-size: 0.95rem; font-weight: bold; color: var(--accent-color); margin-bottom: 4px;">📅 ${date} 예식 스케줄</div>
-                        <div style="font-size: 0.75rem; color: var(--text-sub); margin-bottom: 8px;">시간별 신랑·신부 및 혼주 차량 정보</div>
-                        <div class="wedding-timeline-container">
-                `;
-
-                slots.forEach(slot => {
-                    let time = slot["예식 시간 (Time)"] || "";
-                    let gName = slot["신랑 이름"] || "";
-                    let bName = slot["신부 이름"] || "";
-                    let gParents = slot["신랑 아버지/어머니"] || "";
-                    let bParents = slot["신부 아버지/어머니"] || "";
-                    let gCount = slot["신랑측 하객수"] || "0";
-                    let bCount = slot["신부측 하객수"] || "0";
-                    let gCar = slot["신랑측 혼주차량"] || "-";
-                    let bCar = slot["신부측 혼주차량"] || "-";
-
-                    cardHTML += `
-                        <div class="wedding-slot-card">
-                            <span class="slot-time">${time}</span>
-                            <div class="couple-row">
-                                <div style="width:48%;">신랑: ${gName}</div>
-                                <div style="width:48%; text-align:right;">신부: ${bName}</div>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                                <div class="side-box">
-                                    <div class="side-title">신랑측 부모</div>
-                                    <div class="detail-text">${gParents}</div>
-                                    <div class="side-title">하객수</div>
-                                    <div class="detail-text">${gCount}명</div>
-                                    <div class="side-title">혼주차량</div>
-                                    <div><span class="car-num">${gCar}</span></div>
-                                </div>
-                                <div class="side-box" style="text-align:right;">
-                                    <div class="side-title">신부측 부모</div>
-                                    <div class="detail-text">${bParents}</div>
-                                    <div class="side-title">하객수</div>
-                                    <div class="detail-text">${bCount}명</div>
-                                    <div class="side-title">혼주차량</div>
-                                    <div><span class="car-num">${bCar}</span></div>
-                                </div>
-                            </div>
+        function renderSchedule(dataList) {
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = "";
+            
+            dataList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-gray-800 border border-gray-700 rounded-lg p-3 text-sm space-y-2";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                        <span class="bg-amber-500/20 text-amber-400 font-bold px-2 py-0.5 rounded text-xs">
+                            ${item.date} (${item.time})
+                        </span>
+                        <span class="text-xs text-gray-300 font-semibold">하객 ${item.guests} (지불보증: ${item.guarantee})</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-gray-300 pt-1">
+                        <div><strong class="text-gray-400">혼주(부/모):</strong> ${item.parents}</div>
+                        <div><strong class="text-gray-400">대형버스:</strong> ${item.bus}</div>
+                        <div class="col-span-2"><strong class="text-gray-400">웨딩카:</strong> <span class="text-amber-300">${item.weddingCar}</span></div>
+                        <div class="col-span-2 bg-gray-900/60 p-2 rounded border border-gray-750">
+                            <strong class="text-gray-400">혼주차량:</strong> <span class="text-green-300 font-mono">${item.hostCar}</span>
                         </div>
-                    `;
-                });
-
-                cardHTML += `</div></div>`;
-                container.innerHTML += cardHTML;
-            }
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        function switchTab(tabId, el) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById('sec-' + tabId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
-            window.scrollTo(0, 0);
+        function loadScheduleData() {
+            renderSchedule(fallbackData);
         }
 
-        // 페이지 로딩 시 데이터 가져오기 실행
-        window.onload = function() {
-            const today = new Date();
-            document.getElementById('current-date-text').innerText = `${today.getMonth()+1}.${today.getDate()} 실시간 연동`;
-            fetchWeddingData();
-        };
+        loadScheduleData();
     </script>
 </body>
 </html>
