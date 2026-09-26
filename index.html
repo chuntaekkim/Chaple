@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,7 +14,7 @@
             font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
             background-color: #f4f6f9;
             color: #333;
-            padding: 20px;
+            padding: 20px 20px 80px 20px; /* 하단 네비게이션 가리지 않도록 여백 확보 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,20 +29,22 @@
             margin-bottom: 20px;
         }
         h1 {
-            font-size: 1.5rem;
-            text-align: center;
-            margin-bottom: 20px;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
             color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        /* 월 선택 버튼 영역 (현재달, 다음달 2개 자동 생성) */
+        /* 월 선택 버튼 영역 */
         .month-selector {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .month-btn {
-            padding: 12px 0;
+            padding: 10px 0;
             font-size: 1rem;
             font-weight: bold;
             border: 1px solid #dcdde1;
@@ -53,13 +54,50 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .month-btn:hover {
-            background-color: #dfe4ea;
-        }
         .month-btn.active {
             background-color: #3498db;
             color: white;
             border-color: #2980b9;
+        }
+        /* 캘린더 스타일 */
+        .calendar-view {
+            display: none;
+        }
+        .calendar-view.active {
+            display: block;
+        }
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #e1e4e8;
+            padding: 8px 4px;
+            vertical-align: top;
+            height: 70px;
+        }
+        .calendar-table th {
+            background-color: #f8f9fa;
+            color: #57606f;
+        }
+        .calendar-table td.sun { color: #e74c3c; background-color: #fff5f5; }
+        .calendar-table td.sat { color: #3498db; background-color: #f0f7ff; }
+        .calendar-table td.other-month { color: #bdc3c7; background-color: #fafafa; }
+        .day-num {
+            font-weight: bold;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .wedding-count {
+            background: #2ecc71;
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 4px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 2px;
         }
         /* 이미지 뷰어 영역 */
         .image-container {
@@ -69,7 +107,7 @@
             border: 1px dashed #ced6e0;
             border-radius: 8px;
             padding: 10px;
-            min-height: 250px;
+            min-height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -78,10 +116,6 @@
             max-width: 100%;
             height: auto;
             border-radius: 6px;
-            display: none;
-        }
-        .image-container img.active {
-            display: block;
         }
         .consult-grid {
             display: grid;
@@ -115,36 +149,113 @@
             font-size: 0.9rem;
             padding: 20px;
         }
+        /* 하단 고정 네비게이션 바 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            border-top: 1px solid #dcdde1;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+        .nav-item {
+            text-decoration: none;
+            color: #718093;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            transition: color 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #3498db;
+        }
+        .nav-item span {
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. 이번 주말 웨딩 행사 -->
-    <div class="container">
-        <h1>💍 이번 주말 웨딩 행사</h1>
-        <div class="image-container" style="min-height: 200px;">
-            <img src="wedding_weekend.png" alt="이번 주말 웨딩 행사" style="display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <!-- 1. 오늘 / 주말 웨딩 행사 (ID 부여로 하단 메뉴 연동) -->
+    <div class="container" id="section-today">
+        <h1>💍 오늘 주말 웨딩 행사</h1>
+        <div class="image-container">
+            <img src="wedding_weekend.png" alt="이번 주말 웨딩 행사" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="empty-notice" style="display:none;">등록된 주말 웨딩 행사가 없습니다.</div>
         </div>
     </div>
 
-    <!-- 2. 월별 웨딩 일정표 (현재달 & 다음달 자동 표시) -->
-    <div class="container">
-        <h1 id="wedding-title">📅 월별 웨딩 일정표</h1>
+    <!-- 2. 월별 웨딩 일정표 및 건수 표시 (현재달 & 다음달 캘린더) -->
+    <div class="container" id="section-schedule">
+        <h1>📅 월별 웨딩 일정 및 건수</h1>
         
         <div class="month-selector" id="dynamic-month-buttons">
-            <!-- 자바스크립트가 현재달, 다음달 버튼을 자동으로 만들어줍니다 -->
+            <!-- 자바스크립트로 현재달, 다음달 버튼 생성 -->
         </div>
 
-        <div class="image-container" id="dynamic-image-container">
-            <!-- 자바스크립트가 이미지 태그를 자동으로 넣어줍니다 -->
+        <!-- 9월 캘린더 -->
+        <div id="cal-09" class="calendar-view active">
+            <h3 style="margin-bottom:10px; text-align:center; color:#34495e;">9월 웨딩 건수 현황</h3>
+            <table class="calendar-table">
+                <thead>
+                    <tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="other-month">30</td><td class="other-month">31</td><td>1</td><td>2</td><td>3</td><td>4</td><td class="sat">5<br><span class="wedding-count">12건</span></td></tr>
+                    <tr><td class="sun">6<br><span class="wedding-count">10건</span></td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td class="sat">12<br><span class="wedding-count">14건</span></td></tr>
+                    <tr><td class="sun">13<br><span class="wedding-count">9건</span></td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td class="sat">19<br><span class="wedding-count">15건</span></td></tr>
+                    <tr><td class="sun">20<br><span class="wedding-count">11건</span></td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td class="sat">26<br><span class="wedding-count">13건</span></td></tr>
+                    <tr><td class="sun">27<br><span class="wedding-count">8건</span></td><td>28</td><td>29</td><td>30</td><td class="other-month">1</td><td class="other-month">2</td><td class="other-month">3</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 10월 캘린더 -->
+        <div id="cal-10" class="calendar-view">
+            <h3 style="margin-bottom:10px; text-align:center; color:#34495e;">10월 웨딩 건수 현황</h3>
+            <table class="calendar-table">
+                <thead>
+                    <tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="other-month">27</td><td class="other-month">28</td><td class="other-month">29</td><td class="other-month">30</td><td>1</td><td>2</td><td class="sat">3<br><span class="wedding-count">12건</span></td></tr>
+                    <tr><td class="sun">4<br><span class="wedding-count">10건</span></td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td class="sat">10<br><span class="wedding-count">15건</span></td></tr>
+                    <tr><td class="sun">11<br><span class="wedding-count">9건</span></td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td class="sat">17<br><span class="wedding-count">14건</span></td></tr>
+                    <tr><td class="sun">18<br><span class="wedding-count">11건</span></td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td class="sat">24<br><span class="wedding-count">13건</span></td></tr>
+                    <tr><td class="sun">25<br><span class="wedding-count">8건</span></td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td class="sat">31<br><span class="wedding-count">10건</span></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- 3. 주말 상담 명단 -->
+    <!-- 3. 주차장 현황 (지하 4층, 지하 5층) -->
+    <div class="container" id="section-parking">
+        <h1>🅿️ 주차장 현황 (B4 / B5)</h1>
+        <div class="consult-grid">
+            <div class="consult-card">
+                <h3>지하 4층 주차장</h3>
+                <img src="Chaple_B4.png" alt="지하 4층 주차장" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="empty-notice" style="display:none;">등록된 B4 도면이 없습니다.</div>
+            </div>
+            <div class="consult-card">
+                <h3>지하 5층 주차장</h3>
+                <img src="Chaple_B5.png" alt="지하 5층 주차장" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="empty-notice" style="display:none;">등록된 B5 도면이 없습니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 주말 상담 명단 -->
     <div class="container">
         <h1>📝 주말 상담 명단</h1>
-        
         <div class="consult-grid">
             <div class="consult-card">
                 <h3>토요일 상담</h3>
@@ -159,65 +270,49 @@
         </div>
     </div>
 
-    <!-- 4. 임원차량 및 비상연락망 -->
-    <div class="container">
+    <!-- 5. 차량 및 비상연락망 (ID 부여) -->
+    <div class="container" id="section-contact">
         <h1>🚨 비상연락망 및 임원차량</h1>
-        <div class="image-container" style="min-height: 200px;">
-            <img src="tel_car.png" alt="비상연락망 및 임원차량" style="display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="image-container">
+            <img src="tel_car.png" alt="비상연락망 및 임원차량" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <div class="empty-notice" style="display:none;">등록된 파일이 없습니다.</div>
         </div>
     </div>
 
+    <!-- 하단 고정 네비게이션 바 -->
+    <nav class="bottom-nav">
+        <a href="#section-today" class="nav-item"><span>📌</span>오늘</a>
+        <a href="#section-schedule" class="nav-item"><span>📅</span>일정</a>
+        <a href="#section-parking" class="nav-item"><span>🅿️</span>주차</a>
+        <a href="#section-contact" class="nav-item"><span>🚗</span>차량</a>
+        <a href="#section-contact" class="nav-item"><span>📞</span>연락</a>
+    </nav>
+
     <script>
-        // 현재 날짜를 기준으로 이번 달과 다음 달 계산
+        // 현재 달, 다음 달 자동 계산 및 버튼 생성
         const now = new Date();
-        const currentYear = now.getFullYear();
-        const currentMonthNum = now.getMonth() + 1; // 1 ~ 12
-        
-        // 다음 달 계산 (12월인 경우 다음 해 1월로 넘어가는 로직 포함)
+        const currentMonthNum = now.getMonth() + 1; 
         let nextMonthNum = currentMonthNum + 1;
         if (nextMonthNum > 12) nextMonthNum = 1;
 
-        // 두 자리 문자열로 변환 (예: 9 -> "09", 10 -> "10")
         const curStr = String(currentMonthNum).padStart(2, '0');
         const nextStr = String(nextMonthNum).padStart(2, '0');
 
-        // 버튼과 이미지 영역 동적 생성
         const btnContainer = document.getElementById('dynamic-month-buttons');
-        const imgContainer = document.getElementById('dynamic-image-container');
-
         btnContainer.innerHTML = `
-            <button class="month-btn active" onclick="switchMonth('${curStr}', event)">${currentMonthNum}월</button>
-            <button class="month-btn" onclick="switchMonth('${nextStr}', event)">${nextMonthNum}월</button>
+            <button class="month-btn active" onclick="switchCalendar('${curStr}', event)">${currentMonthNum}월</button>
+            <button class="month-btn" onclick="switchCalendar('${nextStr}', event)">${nextMonthNum}월</button>
         `;
 
-        imgContainer.innerHTML = `
-            <img id="wedding-${curStr}" src="wedding_${curStr}.png" alt="${currentMonthNum}월 웨딩 일정" class="active" onerror="handleImageError(this)">
-            <img id="wedding-${nextStr}" src="wedding_${nextStr}.png" alt="${nextMonthNum}월 웨딩 일정" onerror="handleImageError(this)">
-        `;
-
-        function switchMonth(monthStr, evt) {
+        function switchCalendar(monthStr, evt) {
             const buttons = document.querySelectorAll('.month-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             evt.currentTarget.classList.add('active');
 
-            const images = document.querySelectorAll('.image-container img');
-            images.forEach(img => img.classList.remove('active'));
-
-            const targetImg = document.getElementById('wedding-' + monthStr);
-            if (targetImg) {
-                targetImg.classList.add('active');
-            }
-        }
-
-        function handleImageError(imgElement) {
-            imgElement.style.display = 'none';
-            // 이미지가 없을 경우 안내 문구 추가
-            if (!imgElement.nextElementSibling || !imgElement.nextElementSibling.classList.contains('empty-notice')) {
-                const notice = document.createElement('div');
-                notice.className = 'empty-notice';
-                notice.textContent = '해당 월의 웨딩 일정이 아직 등록되지 않았습니다.';
-                imgElement.parentNode.appendChild(notice);
+            document.querySelectorAll('.calendar-view').forEach(cal => cal.classList.remove('active'));
+            const targetCal = document.getElementById('cal-' + monthStr);
+            if (targetCal) {
+                targetCal.classList.add('active');
             }
         }
     </script>
