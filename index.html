@@ -133,44 +133,46 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+            gap: 6px;
             text-align: center;
-        }
-        .calendar-grid div {
-            padding: 6px 2px;
-            font-size: 0.95rem;
-            border-radius: 10px;
         }
         .calendar-grid .day-header {
             color: #94a3b8;
             font-weight: bold;
-            font-size: 0.9rem;
-            padding-bottom: 8px;
+            font-size: 0.85rem;
+            padding-bottom: 6px;
         }
         .calendar-grid .date-cell {
             background: #242832;
             color: #cbd5e1;
-            height: 64px;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            padding-top: 8px;
             cursor: pointer;
             position: relative;
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: bold;
         }
         .calendar-grid .date-cell.sun { color: #f87171; }
         .calendar-grid .date-cell.sat { color: #60a5fa; }
         .calendar-grid .date-cell.other { color: #475569; background: #161920; }
         .calendar-grid .date-cell.active-date { border: 2px solid #f59e0b; }
+        
         .badge-count {
             background: #f59e0b;
             color: #121417;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-top: 4px;
         }
 
@@ -530,6 +532,7 @@
                 <button class="tab-btn active" id="ctype-guest" onclick="switchCarType('guest')">혼주 차량</button>
             </div>
 
+            <!-- 혼주 차량 뷰 -->
             <div id="car-view-guest">
                 <div style="font-size: 0.9rem; font-weight: bold; color: #cbd5e1; margin-bottom: 10px;">9월 5일 토요일</div>
                 
@@ -548,22 +551,39 @@
                 </div>
             </div>
 
+            <!-- 임원 차량 뷰 -->
             <div id="car-view-exec" style="display:none;">
-                <div class="info-card">
-                    <div class="info-row"><span>대표이사 (카니발)</span><span style="color:#34d399;">지정석 완료</span></div>
-                    <div class="info-row"><span>이사 (제네시스 G80)</span><span style="color:#34d399;">지정석 완료</span></div>
+                <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 5px 0 10px 0;">VIP 지정석 리스트</div>
+
+                <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-weight:bold; font-size:1rem; color:#ffffff;">대표이사</div>
+                        <div style="font-size:0.8rem; color:#94a3b8;">카니발 (지정석 완료)</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <span style="font-size:0.9rem; color:#34d399; font-weight:bold;">등록완료</span>
+                    </div>
+                </div>
+
+                <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이사</div>
+                        <div style="font-size:0.8rem; color:#94a3b8;">제네시스 G80 (지정석 완료)</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <span style="font-size:0.9rem; color:#34d399; font-weight:bold;">등록완료</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. 비상 연락망 화면 (모든 팀원 추가 완료) -->
+    <!-- 5. 비상 연락망 화면 (스크린샷 스타일 완벽 적용) -->
     <div id="sec-contact" class="section-view">
         <div class="container">
             <h1>비상 연락망</h1>
             <div class="desc">이름을 누르면 바로 전화가 걸립니다.</div>
 
-            <!-- 본사 -->
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 15px 0 8px 0;">본사</div>
             
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
@@ -573,7 +593,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:15px;">
                     <span style="font-size:0.9rem; color:#cbd5e1;">010-4229-7800</span>
-                    <a href="tel:010-4229-7800" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                    <a href="tel:010-4229-7800" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
                 </div>
             </div>
 
@@ -584,11 +604,10 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:15px;">
                     <span style="font-size:0.9rem; color:#cbd5e1;">010-6404-0230</span>
-                    <a href="tel:010-6404-0230" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                    <a href="tel:010-6404-0230" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
                 </div>
             </div>
 
-            <!-- 대치사업소 -->
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 20px 0 8px 0;">대치사업소</div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
@@ -598,7 +617,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:15px;">
                     <span style="font-size:0.9rem; color:#cbd5e1;">010-9130-3045</span>
-                    <a href="tel:010-9130-3045" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                    <a href="tel:010-9130-3045" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
                 </div>
             </div>
 
@@ -609,7 +628,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:15px;">
                     <span style="font-size:0.9rem; color:#cbd5e1;">010-3355-4537</span>
-                    <a href="tel:010-3355-4537" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                    <a href="tel:010-3355-4537" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
                 </div>
             </div>
 
@@ -620,7 +639,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:15px;">
                     <span style="font-size:0.9rem; color:#cbd5e1;">010-3362-6456</span>
-                    <a href="tel:010-3362-6456" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                    <a href="tel:010-3362-6456" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
                 </div>
             </div>
         </div>
