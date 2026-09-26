@@ -133,29 +133,32 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
+            gap: 8px;
             text-align: center;
         }
         .calendar-grid div {
-            padding: 10px 2px;
-            font-size: 0.85rem;
-            border-radius: 8px;
+            padding: 6px 2px;
+            font-size: 0.95rem;
+            border-radius: 10px;
         }
         .calendar-grid .day-header {
             color: #94a3b8;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            padding-bottom: 8px;
         }
         .calendar-grid .date-cell {
             background: #242832;
             color: #cbd5e1;
-            height: 48px;
+            height: 64px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             position: relative;
+            font-size: 1rem;
+            font-weight: 500;
         }
         .calendar-grid .date-cell.sun { color: #f87171; }
         .calendar-grid .date-cell.sat { color: #60a5fa; }
@@ -164,11 +167,11 @@
         .badge-count {
             background: #f59e0b;
             color: #121417;
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             font-weight: bold;
-            padding: 1px 5px;
-            border-radius: 4px;
-            margin-top: 2px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-top: 4px;
         }
 
         /* 리스트 스타일 */
@@ -232,37 +235,21 @@
             color: #60a5fa;
         }
 
-        /* 주차장 도면/번호판 스타일 */
-        .parking-slot-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 10px;
+        /* 주차 지도 및 도면 스타일 */
+        .map-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #121417;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
         }
-        .slot-box {
-            background: #161920;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-        }
-        .slot-box.unused {
-            background: #1a1d24;
-            opacity: 0.5;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-        .slot-num {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-bottom: 4px;
-        }
-        .slot-val {
-            font-size: 0.95rem;
-            font-weight: bold;
-            color: #ffffff;
-        }
-        .slot-box.unused .slot-val {
-            color: #f87171;
+        .map-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.85;
         }
 
         /* 하단 네비게이션 바 */
@@ -327,19 +314,19 @@
         <div class="container">
             <h1>🚗 타임별 예식 차량 & 상세 정보</h1>
             
-            <!-- 11:00 예식 -->
             <div class="info-card" style="margin-top: 15px;">
                 <div class="info-header">
                     <span class="time-badge">11:00 예식</span>
-                    <span style="font-size: 0.8rem; color: #94a3b8;">최저보증: 신랑 200명 / 신부 180명</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 신랑 200명 / 신부 180명</span>
                 </div>
                 <div class="info-row"><span>신랑 차량: 1234 (제네시스)</span><span>신부 차량: 5678 (벤츠)</span></div>
-                <div class="info-row"><span>혼주3: 1111</span><span>혼주4: 2222</span></div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량 (신랑측 / 신부측 분리)</div>
+                <div class="info-row"><span>신랑 측 혼주 3, 4</span><span>1111, 2222</span></div>
+                <div class="info-row"><span>신부 측 혼주 3, 4</span><span>3333, 4444</span></div>
                 
                 <div class="detail-badge-row">
                     <span class="mini-tag highlight">웨딩카: 7777 (링컨)</span>
                     <span class="mini-tag highlight">버스대절: 55마 8888</span>
-                    <span class="mini-tag">혼주차량: 3333, 4444</span>
                 </div>
 
                 <div class="consult-box">
@@ -348,19 +335,19 @@
                 </div>
             </div>
 
-            <!-- 12:30 예식 -->
             <div class="info-card">
                 <div class="info-header">
                     <span class="time-badge">12:30 예식</span>
-                    <span style="font-size: 0.8rem; color: #94a3b8;">최저보증: 신랑 250명 / 신부 200명</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 신랑 250명 / 신부 200명</span>
                 </div>
                 <div class="info-row"><span>신랑 차량: 3333 (카니발)</span><span>신부 차량: 4444 (BMW)</span></div>
-                <div class="info-row"><span>혼주3: 5555</span><span>혼주4: 6666</span></div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량 (신랑측 / 신부측 분리)</div>
+                <div class="info-row"><span>신랑 측 혼주 3, 4</span><span>5555, 6666</span></div>
+                <div class="info-row"><span>신부 측 혼주 3, 4</span><span>7777, 8888</span></div>
 
                 <div class="detail-badge-row">
                     <span class="mini-tag highlight">웨딩카: 미등록</span>
                     <span class="mini-tag highlight">버스대절: 없음</span>
-                    <span class="mini-tag">혼주차량: 1212, 3434</span>
                 </div>
 
                 <div class="consult-box">
@@ -374,73 +361,105 @@
     <!-- 2. 일정 화면 -->
     <div id="sec-schedule" class="section-view">
         <div class="container">
-            <h1>운영 스케줄</h1>
-            <div class="desc">날짜를 누르면 웨딩 시간이 나옵니다.</div>
+            <h1 id="sched-title">운영 스케줄</h1>
+            <div class="desc" id="sched-desc">날짜를 누르면 웨딩 시간이 나옵니다.</div>
 
             <div class="tab-group">
-                <button class="tab-btn active" onclick="switchCalTab('wedding', this)">웨딩</button>
-                <button class="tab-btn" onclick="switchCalTab('consult', this)">상담</button>
+                <button class="tab-btn active" id="stype-wedding" onclick="switchScheduleType('wedding')">웨딩</button>
+                <button class="tab-btn" id="stype-consult" onclick="switchScheduleType('consult')">상담</button>
             </div>
 
-            <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
-                <button class="tab-btn active" id="month-btn-9" onclick="setMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
-                <button class="tab-btn" id="month-btn-10" onclick="setMonth(10)" style="background:#242832; color:#94a3b8;">2026년 10월</button>
+            <div id="sched-view-wedding">
+                <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
+                    <button class="tab-btn active" id="month-btn-9" onclick="setMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
+                    <button class="tab-btn" id="month-btn-10" onclick="setMonth(10)" style="background:#242832; color:#94a3b8;">2026년 10월</button>
+                </div>
+
+                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px;"><span id="total-count">18</span> 건 · <span id="month-title">9</span>월 웨딩 합계</div>
+
+                <div id="cal-9" class="calendar-grid">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
+                    <div class="date-cell sat">5<div class="badge-count">4</div></div>
+                    <div class="date-cell sun">6<div class="badge-count">2</div></div>
+                    <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
+                    <div class="date-cell sat">12<div class="badge-count">4</div></div>
+                    <div class="date-cell sun">13<div class="badge-count">2</div></div>
+                    <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
+                    <div class="date-cell sat">19<div class="badge-count">4</div></div>
+                    <div class="date-cell sun">20<div class="badge-count">2</div></div>
+                    <div class="date-cell">21</div><div class="date-cell active-date">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
+                </div>
+
+                <div id="cal-10" class="calendar-grid" style="display:none;">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
+                    <div class="date-cell sat">3<div class="badge-count">5</div></div>
+                    <div class="date-cell sun">4<div class="badge-count">2</div></div>
+                    <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
+                    <div class="date-cell sat">10<div class="badge-count">4</div></div>
+                    <div class="date-cell sun">11<div class="badge-count">2</div></div>
+                    <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
+                    <div class="date-cell sat">17<div class="badge-count">4</div></div>
+                    <div class="date-cell sun">18<div class="badge-count">2</div></div>
+                    <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
+                    <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
+                    <div class="date-cell sat">31<div class="badge-count">3</div></div>
+                </div>
             </div>
 
-            <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px;"><span id="total-count">18</span> 건 · <span id="month-title">9</span>월 웨딩 합계</div>
+            <div id="sched-view-consult" style="display:none;">
+                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #ffffff;">8 팀 · 10월 3일 토요일 · 샘플</div>
+                
+                <div class="info-card">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 4px;">차량 8대 내외</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">상담 1팀당 1대 기준. 샘플 차량번호입니다.</div>
+                </div>
 
-            <div id="cal-9" class="calendar-grid">
-                <div class="day-header" style="color:#f87171;">일</div>
-                <div class="day-header">월</div>
-                <div class="day-header">화</div>
-                <div class="day-header">수</div>
-                <div class="day-header">목</div>
-                <div class="day-header">금</div>
-                <div class="day-header" style="color:#60a5fa;">토</div>
+                <div class="info-card">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 4px;">후문 주차장 이용</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">상담·시식 차량은 후문 주차장(평소 9대 · 최대 15대)에 안내합니다.</div>
+                </div>
 
-                <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
-                <div class="date-cell sat">5<div class="badge-count">4</div></div>
-                <div class="date-cell sun">6<div class="badge-count">2</div></div>
-                <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
-                <div class="date-cell sat">12<div class="badge-count">4</div></div>
-                <div class="date-cell sun">13<div class="badge-count">2</div></div>
-                <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
-                <div class="date-cell sat">19<div class="badge-count">4</div></div>
-                <div class="date-cell sun">20<div class="badge-count">2</div></div>
-                <div class="date-cell">21</div><div class="date-cell active-date">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
-                <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
-            </div>
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="time-badge">10:00</span>
+                        <span style="font-size: 0.8rem; color: #94a3b8;">1팀</span>
+                    </div>
+                    <div class="info-row"><span>윤서연 / 한지호</span><span style="color: #60a5fa;">91마 1024 · 예식 예정 2027/06</span></div>
+                </div>
 
-            <div id="cal-10" class="calendar-grid" style="display:none;">
-                <div class="day-header" style="color:#f87171;">일</div>
-                <div class="day-header">월</div>
-                <div class="day-header">화</div>
-                <div class="day-header">수</div>
-                <div class="day-header">목</div>
-                <div class="day-header">금</div>
-                <div class="day-header" style="color:#60a5fa;">토</div>
-
-                <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
-                <div class="date-cell sat">3<div class="badge-count">5</div></div>
-                <div class="date-cell sun">4<div class="badge-count">2</div></div>
-                <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
-                <div class="date-cell sat">10<div class="badge-count">4</div></div>
-                <div class="date-cell sun">11<div class="badge-count">2</div></div>
-                <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
-                <div class="date-cell sat">17<div class="badge-count">4</div></div>
-                <div class="date-cell sun">18<div class="badge-count">2</div></div>
-                <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
-                <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
-                <div class="date-cell sat">31<div class="badge-count">3</div></div>
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="time-badge">11:00</span>
+                        <span style="font-size: 0.8rem; color: #94a3b8;">1팀</span>
+                    </div>
+                    <div class="info-row"><span>임하늘 / 조성민</span><span style="color: #60a5fa;">27바 5588 · 예식 예정 2027/08</span></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 3. 주차 화면 (지하 4층 / 지하 5층 / 후문 탭 적용) -->
+    <!-- 3. 주차 화면 -->
     <div id="sec-parking" class="section-view">
         <div class="container">
             <h1>주차 안내</h1>
-            <div class="desc">층별 주차 구역 및 차량 번호 현황입니다.</div>
+            <div class="desc">도면은 확대해서 볼 수 있습니다.</div>
             
             <div class="tab-group">
                 <button class="tab-btn active" id="p-tab-4" onclick="switchParkingFloor(4)">지하 4층</button>
@@ -448,52 +467,51 @@
                 <button class="tab-btn" id="p-tab-rear" onclick="switchParkingFloor('rear')">후문</button>
             </div>
 
-            <!-- 지하 4층 구역 -->
             <div id="parking-floor-4">
-                <div class="info-card">
-                    <div class="title" style="font-weight:bold; color:#f59e0b; margin-bottom:5px;">지하 4층 배정 현황</div>
-                    <div class="sub" style="font-size:0.85rem; color:#94a3b8;">예식 차량 및 지정 구역 안내입니다. 미사용 구역은 X 표시됩니다.</div>
+                <div class="info-card" style="border-left: 3px solid #f87171;">
+                    <div style="font-weight: bold; color: #f87171; margin-bottom: 3px;">냉동고 및 창고 앞 발렛주차 불가</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">지정주차구역 외에는 대지 마세요.</div>
                 </div>
-                <div class="parking-slot-grid">
-                    <div class="slot-box"><div class="slot-num">구역 401</div><div class="slot-val">1234</div></div>
-                    <div class="slot-box"><div class="slot-num">구역 402</div><div class="slot-val">5678</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 403</div><div class="slot-val">X (미사용)</div></div>
-                    <div class="slot-box"><div class="slot-num">구역 404</div><div class="slot-val">3333</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 405</div><div class="slot-val">X (미사용)</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 406</div><div class="slot-val">X (미사용)</div></div>
+                <div class="info-card" style="border-left: 3px solid #34d399;">
+                    <div style="font-weight: bold; color: #34d399; margin-bottom: 3px;">이중주차 가능</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">지정구역 안에서만 이중으로 세웁니다.</div>
+                </div>
+                <div class="map-wrapper">
+                    <img src="Chaple_B4.png" alt="지하 4층 주차 도면" onerror="this.style.display='none';">
                 </div>
             </div>
 
-            <!-- 지하 5층 구역 -->
             <div id="parking-floor-5" style="display:none;">
-                <div class="info-card">
-                    <div class="title" style="font-weight:bold; color:#f59e0b; margin-bottom:5px;">지하 5층 배정 현황</div>
-                    <div class="sub" style="font-size:0.85rem; color:#94a3b8;">직원 및 협력업체 전용 구역입니다. 미사용 구역은 X 표시됩니다.</div>
+                <div class="info-card" style="border-left: 3px solid #34d399;">
+                    <div style="font-weight: bold; color: #34d399; margin-bottom: 3px;">직원 및 협력업체 주차구역</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">발렛 차량은 원칙적으로 B4를 먼저 채웁니다.</div>
                 </div>
-                <div class="parking-slot-grid">
-                    <div class="slot-box"><div class="slot-num">구역 501</div><div class="slot-val">9999</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 502</div><div class="slot-val">X (미사용)</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 503</div><div class="slot-val">X (미사용)</div></div>
-                    <div class="slot-box"><div class="slot-num">구역 504</div><div class="slot-val">7777</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 505</div><div class="slot-val">X (미사용)</div></div>
-                    <div class="slot-box unused"><div class="slot-num">구역 506</div><div class="slot-val">X (미사용)</div></div>
+                <div class="info-card" style="border-left: 3px solid #f87171;">
+                    <div style="font-weight: bold; color: #f87171; margin-bottom: 3px;">빈자리 예측 불가</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">직원·협력업체 차량이 수시 드나들어 여유 면수는 현장에서 직접 확인해야 합니다.</div>
+                </div>
+                <div class="map-wrapper">
+                    <img src="Chaple_B5.png" alt="지하 5층 주차 도면" onerror="this.style.display='none';">
                 </div>
             </div>
 
-            <!-- 후문 구역 -->
             <div id="parking-floor-rear" style="display:none;">
                 <div class="info-card">
-                    <div class="title" style="font-weight:bold; color:#f59e0b; margin-bottom:5px;">상담·시식 차량 전용 (후문)</div>
-                    <div class="sub" style="font-size:0.85rem; color:#94a3b8;">상담 고객과 시식 예약 차량 전용 주차 구역입니다.</div>
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">상담·시식 차량 전용</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">상담 고객과 시식 예약 차량은 이 자리에 주차합니다.</div>
+                </div>
+                <div class="info-card">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">평소 9대 · 최대 15대</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">이중주차로 최대 15대까지 수용 가능합니다.</div>
                 </div>
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; text-align: center;">
                     <div class="info-card" style="margin:0;">
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #ffffff;">9자리</div>
-                        <div style="font-size: 0.8rem; color: #94a3b8;">평소 사용</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #ffffff;">9</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">평소 가능</div>
                     </div>
                     <div class="info-card" style="margin:0;">
-                        <div style="font-size: 1.8rem; font-weight: bold; color: #ffffff;">15자리</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #ffffff;">15</div>
                         <div style="font-size: 0.8rem; color: #94a3b8;">최대 (이중주차)</div>
                     </div>
                 </div>
@@ -504,36 +522,50 @@
     <!-- 4. 차량 화면 -->
     <div id="sec-car" class="section-view">
         <div class="container">
-            <h1>혼주 차량</h1>
-            <div class="desc">예식 시간별로 묶어서 보여줍니다.</div>
+            <h1 id="car-title">혼주 차량</h1>
+            <div class="desc" id="car-desc">예식 시간별, 신랑·신부측별로 구분하여 보여줍니다.</div>
 
             <div class="tab-group">
-                <button class="tab-btn">임원 차량</button>
-                <button class="tab-btn active" style="background:#f59e0b; color:#121417;">혼주 차량</button>
+                <button class="tab-btn" id="ctype-exec" onclick="switchCarType('exec')">임원 차량</button>
+                <button class="tab-btn active" id="ctype-guest" onclick="switchCarType('guest')">혼주 차량</button>
             </div>
 
-            <div style="font-size: 0.9rem; font-weight: bold; color: #cbd5e1; margin-bottom: 10px;">9월 5일 토요일</div>
-
-            <div class="info-card">
-                <div class="info-header">
-                    <span class="time-badge" style="background:#242832; color:#cbd5e1; border:1px solid rgba(255,255,255,0.1);">11:00</span>
-                    <span style="font-size: 0.8rem; color: #f87171;">혼주 4대 · 번호 미등록</span>
+            <div id="car-view-guest">
+                <div style="font-size: 0.9rem; font-weight: bold; color: #cbd5e1; margin-bottom: 10px;">9월 5일 토요일</div>
+                
+                <div class="info-card">
+                    <div class="info-header">
+                        <span class="time-badge" style="background:#242832; color:#cbd5e1; border:1px solid rgba(255,255,255,0.1);">11:00 예식</span>
+                        <span style="font-size: 0.8rem; color: #f87171;">혼주 4대</span>
+                    </div>
+                    <div style="font-size:0.85rem; font-weight:bold; color:#60a5fa; margin-bottom:4px;">🤵 신랑 측 혼주 차량</div>
+                    <div class="info-row"><span>혼주 1 (신랑측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row" style="margin-bottom:10px;"><span>혼주 2 (신랑측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    
+                    <div style="font-size:0.85rem; font-weight:bold; color:#f472b6; margin-bottom:4px;">👰 신부 측 혼주 차량</div>
+                    <div class="info-row"><span>혼주 1 (신부측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row"><span>혼주 2 (신부측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
                 </div>
-                <div class="info-row"><span>혼주 1</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                <div class="info-row"><span>혼주 2</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                <div class="info-row"><span>혼주 3</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                <div class="info-row"><span>혼주 4</span><span style="color:#f87171;">번호 등록 대기</span></div>
+            </div>
+
+            <div id="car-view-exec" style="display:none;">
+                <div class="info-card">
+                    <div class="info-row"><span>대표이사 (카니발)</span><span style="color:#34d399;">지정석 완료</span></div>
+                    <div class="info-row"><span>이사 (제네시스 G80)</span><span style="color:#34d399;">지정석 완료</span></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. 비상 연락망 화면 -->
+    <!-- 5. 비상 연락망 화면 (모든 팀원 추가 완료) -->
     <div id="sec-contact" class="section-view">
         <div class="container">
             <h1>비상 연락망</h1>
             <div class="desc">이름을 누르면 바로 전화가 걸립니다.</div>
 
+            <!-- 본사 -->
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 15px 0 8px 0;">본사</div>
+            
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
                     <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이태희</div>
@@ -556,7 +588,9 @@
                 </div>
             </div>
 
+            <!-- 대치사업소 -->
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 20px 0 8px 0;">대치사업소</div>
+
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
                     <div style="font-weight:bold; font-size:1rem; color:#ffffff;">김문기</div>
@@ -565,6 +599,28 @@
                 <div style="display:flex; align-items:center; gap:15px;">
                     <span style="font-size:0.9rem; color:#cbd5e1;">010-9130-3045</span>
                     <a href="tel:010-9130-3045" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">임창희</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3355-4537</span>
+                    <a href="tel:010-3355-4537" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이종범</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3362-6456</span>
+                    <a href="tel:010-3362-6456" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 12px; border-radius:8px;">전화</a>
                 </div>
             </div>
         </div>
@@ -588,6 +644,58 @@
             document.getElementById('nav-' + tabId).classList.add('active');
 
             window.scrollTo(0, 0);
+        }
+
+        function switchScheduleType(type) {
+            if (type === 'wedding') {
+                document.getElementById('sched-view-wedding').style.display = 'block';
+                document.getElementById('sched-view-consult').style.display = 'none';
+                document.getElementById('stype-wedding').classList.add('active');
+                document.getElementById('stype-wedding').style.background = '#f59e0b';
+                document.getElementById('stype-wedding').style.color = '#121417';
+                document.getElementById('stype-consult').classList.remove('active');
+                document.getElementById('stype-consult').style.background = 'transparent';
+                document.getElementById('stype-consult').style.color = '#94a3b8';
+                document.getElementById('sched-title').innerText = '운영 스케줄';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 웨딩 시간이 나옵니다.';
+            } else {
+                document.getElementById('sched-view-wedding').style.display = 'none';
+                document.getElementById('sched-view-consult').style.display = 'block';
+                document.getElementById('stype-consult').classList.add('active');
+                document.getElementById('stype-consult').style.background = '#f59e0b';
+                document.getElementById('stype-consult').style.color = '#121417';
+                document.getElementById('stype-wedding').classList.remove('active');
+                document.getElementById('stype-wedding').style.background = 'transparent';
+                document.getElementById('stype-wedding').style.color = '#94a3b8';
+                document.getElementById('sched-title').innerText = '상담 일정';
+                document.getElementById('sched-desc').innerText = '상담 고객 방문 시간입니다.';
+            }
+        }
+
+        function switchCarType(type) {
+            if (type === 'guest') {
+                document.getElementById('car-view-guest').style.display = 'block';
+                document.getElementById('car-view-exec').style.display = 'none';
+                document.getElementById('ctype-guest').classList.add('active');
+                document.getElementById('ctype-guest').style.background = '#f59e0b';
+                document.getElementById('ctype-guest').style.color = '#121417';
+                document.getElementById('ctype-exec').classList.remove('active');
+                document.getElementById('ctype-exec').style.background = 'transparent';
+                document.getElementById('ctype-exec').style.color = '#94a3b8';
+                document.getElementById('car-title').innerText = '혼주 차량';
+                document.getElementById('car-desc').innerText = '예식 시간별, 신랑·신부측별로 구분하여 보여줍니다.';
+            } else {
+                document.getElementById('car-view-guest').style.display = 'none';
+                document.getElementById('car-view-exec').style.display = 'block';
+                document.getElementById('ctype-exec').classList.add('active');
+                document.getElementById('ctype-exec').style.background = '#f59e0b';
+                document.getElementById('ctype-exec').style.color = '#121417';
+                document.getElementById('ctype-guest').classList.remove('active');
+                document.getElementById('ctype-guest').style.background = 'transparent';
+                document.getElementById('ctype-guest').style.color = '#94a3b8';
+                document.getElementById('car-title').innerText = '임원 차량';
+                document.getElementById('car-desc').innerText = 'VIP 지정석 리스트입니다.';
+            }
         }
 
         function switchParkingFloor(floor) {
@@ -637,18 +745,6 @@
                 document.getElementById('total-count').innerText = '21';
                 document.getElementById('month-title').innerText = '10';
             }
-        }
-
-        function switchCalTab(type, btn) {
-            const group = btn.parentElement;
-            group.querySelectorAll('.tab-btn').forEach(b => {
-                b.style.background = 'transparent';
-                b.style.color = '#94a3b8';
-                b.classList.remove('active');
-            });
-            btn.style.background = '#f59e0b';
-            btn.style.color = '#121417';
-            btn.classList.add('active');
         }
     </script>
 </body>
