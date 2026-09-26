@@ -84,6 +84,19 @@
             border-radius: 8px;
             display: block;
         }
+        .info-section {
+            display: none;
+            padding: 20px;
+        }
+        .info-section.active {
+            display: block;
+        }
+        .sub-tab-content {
+            display: none;
+        }
+        .sub-tab-content.active {
+            display: block;
+        }
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -96,6 +109,7 @@
             align-items: center;
             border-top: 1px solid #282828;
             box-sizing: border-box;
+            z-index: 1000;
         }
         .nav-item {
             text-align: center;
@@ -103,6 +117,9 @@
             font-size: 11px;
             text-decoration: none;
             flex: 1;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
         .nav-item.active {
             color: #ffc107;
@@ -111,96 +128,132 @@
             font-size: 18px;
             margin-bottom: 2px;
         }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
     </style>
 </head>
 <body>
 
-    <div class="header">더채플엣대치 발렛</div>
-    <div class="title-area">
-        <h1>주차 안내</h1>
-    </div>
-    
-    <div class="section-desc">구역별 주차 수칙 및 도면 안내입니다.</div>
-
-    <!-- 탭 메뉴 -->
-    <div class="tab-container">
-        <div class="tab active" onclick="switchTab('b4')">지하 4층</div>
-        <div class="tab" onclick="switchTab('b5')">지하 5층</div>
-        <div class="tab" onclick="switchTab('back')">후문</div>
-    </div>
-
-    <!-- 지하 4층 내용 -->
-    <div id="content-b4" class="tab-content active">
+    <div id="section-today" class="info-section">
+        <div class="header">더채플엣대치 발렛</div>
+        <div class="title-area"><h1>오늘의 주요 행사</h1></div>
         <div class="content-card">
-            <div class="alert-box">
-                <strong>지하 4층 · 지정주차구역 준수</strong>
-                냉장고 및 창고 앞 발렛주차 절대 불가. 지정구역 외 주차 금지 및 이중주차 가능
+            <p style="color: #ccc; margin: 0;">오늘 진행되는 예식 및 주요 행사가 표시됩니다.</p>
+        </div>
+    </div>
+
+    <div id="section-schedule" class="info-section">
+        <div class="header">더채플엣대치 발렛</div>
+        <div class="title-area"><h1>웨딩 일정 캘린더</h1></div>
+        <div class="content-card">
+            <p style="color: #ffc107; font-weight: bold; margin-top: 0;">9월 / 10월 웨딩 건수 현황</p>
+            <p style="color: #ccc; margin-bottom: 0;">현재 달 캘린더 및 일별 웨딩 건수가 표시될 영역입니다.</p>
+        </div>
+    </div>
+
+    <div id="section-parking" class="info-section active">
+        <div class="header">더채플엣대치 발렛</div>
+        <div class="title-area">
+            <h1>주차 안내</h1>
+        </div>
+        <div class="section-desc">구역별 주차 수칙 및 도면 안내입니다.</div>
+
+        <div class="tab-container">
+            <div class="tab active" onclick="switchSubTab('b4')">지하 4층</div>
+            <div class="tab" onclick="switchSubTab('b5')">지하 5층</div>
+            <div class="tab" onclick="switchSubTab('back')">후문(9자리)</div>
+        </div>
+
+        <div id="content-b4" class="sub-tab-content active">
+            <div class="content-card">
+                <div class="alert-box">
+                    <strong>지하 4층 · 지정주차구역 준수</strong>
+                    냉장고 및 창고 앞 발렛주차 절대 불가. 지정구역 외 주차 금지 및 이중주차 가능
+                </div>
+                <div class="image-container">
+                    <img src="Chaple_B4.png" alt="지하 4층 도면">
+                </div>
             </div>
-            <div class="image-container">
-                <img src="Chaple_B4.png" alt="지하 4층 도면">
+        </div>
+
+        <div id="content-b5" class="sub-tab-content">
+            <div class="content-card">
+                <div class="alert-box">
+                    <strong>지하 5층 · 주차 안내</strong>
+                    지하 5층 구역별 주차 수칙을 준수해 주세요.
+                </div>
+                <div class="image-container">
+                    <img src="Chaple_B5.png" alt="지하 5층 도면">
+                </div>
+            </div>
+        </div>
+
+        <div id="content-back" class="sub-tab-content">
+            <div class="content-card">
+                <div class="alert-box">
+                    <strong>후문 · 주차 안내 (9자리)</strong>
+                    후문 구역 9자리 주차 및 입출차 수칙 안내입니다.
+                </div>
+                <div class="image-container" style="color: #888; padding: 40px 0;">
+                    후문 도면 및 9자리 안내 화면입니다.
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 지하 5층 내용 -->
-    <div id="content-b5" class="tab-content">
+    <div id="section-car" class="info-section">
+        <div class="header">더채플엣대치 발렛</div>
+        <div class="title-area"><h1>임원 차량 현황</h1></div>
         <div class="content-card">
-            <div class="alert-box">
-                <strong>지하 5층 · 주차 안내</strong>
-                지하 5층 구역별 주차 수칙을 준수해 주세요.
-            </div>
-            <div class="image-container">
-                <img src="Chaple_B5.png" alt="지하 5층 도면">
-            </div>
+            <p style="color: #ccc; margin: 0;">등록된 임원 차량 정보가 표시됩니다.</p>
         </div>
     </div>
 
-    <!-- 후문 내용 -->
-    <div id="content-back" class="tab-content">
+    <div id="section-contact" class="info-section">
+        <div class="header">더채플엣대치 발렛</div>
+        <div class="title-area"><h1>팀원 비상연락망</h1></div>
         <div class="content-card">
-            <div class="alert-box">
-                <strong>후문 · 안내 사항</strong>
-                후문 구역 입출차 및 주차 수칙 안내입니다.
-            </div>
-            <div class="image-container" style="color: #888; padding: 40px 0;">
-                후문 도면 이미지가 준비중입니다.
-            </div>
+            <p style="color: #ccc; margin: 0;">발렛 팀원들의 비상 연락처가 표시됩니다.</p>
         </div>
     </div>
 
-    <!-- 하단 네비게이션 -->
     <div class="bottom-nav">
-        <a href="#" class="nav-item">
+        <button class="nav-item" onclick="switchMainTab('today')">
             <div>⏰</div>
             <div>오늘</div>
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchMainTab('schedule')">
             <div>📅</div>
             <div>일정</div>
-        </a>
-        <a href="#" class="nav-item active">
+        </button>
+        <button class="nav-item active" id="nav-parking" onclick="switchMainTab('parking')">
             <div>🅿️</div>
             <div>주차</div>
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchMainTab('car')">
             <div>🚗</div>
             <div>차량</div>
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchMainTab('contact')">
             <div>📞</div>
             <div>연락</div>
-        </a>
+        </button>
     </div>
 
     <script>
-        function switchTab(target) {
-            // 탭 버튼 active 전환
+        // 메인 네비게이션 전환 함수 (오늘, 일정, 주차, 차량, 연락)
+        function switchMainTab(sectionId) {
+            document.querySelectorAll('.info-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById('section-' + sectionId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        // 주차 내부 층별 탭 전환 함수 (지하 4층, 지하 5층, 후문)
+        function switchSubTab(target) {
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             
@@ -208,8 +261,7 @@
             if(target === 'b5') tabs[1].classList.add('active');
             if(target === 'back') tabs[2].classList.add('active');
 
-            // 내용 컨텐츠 active 전환
-            document.querySelectorAll('.tab-content').forEach(content => {
+            document.querySelectorAll('.sub-tab-content').forEach(content => {
                 content.classList.remove('active');
             });
             document.getElementById('content-' + target).classList.add('active');
