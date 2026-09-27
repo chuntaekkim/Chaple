@@ -18,7 +18,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            padding-bottom: 80px; /* 하단 네비게이션 공간 확보 */
+            padding-bottom: 80px;
         }
         .container {
             max-width: 1000px;
@@ -31,7 +31,6 @@
             margin-bottom: 20px;
             font-size: 1.5rem;
         }
-        /* 콘텐츠 박스 */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -40,7 +39,6 @@
             overflow-x: auto;
             margin-bottom: 20px;
         }
-        /* 서브 탭 메뉴 (일정 화면 내 월간/주간/상담 전환용) */
         .sub-tab-menu {
             display: flex;
             justify-content: center;
@@ -62,7 +60,29 @@
             background-color: var(--primary-color);
             color: white;
         }
-        /* 테이블 스타일 */
+        /* 날짜 선택 칩 버튼 */
+        .date-filter-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .date-chip {
+            padding: 6px 12px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            color: #334155;
+            font-weight: 600;
+        }
+        .date-chip.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -88,7 +108,24 @@
             color: #64748b;
             font-size: 1rem;
         }
-        /* 하단 네비게이션 바 스타일 */
+        /* 주차 구역 그리드 */
+        .parking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .parking-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .parking-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary-color);
+        }
+        /* 하단 네비게이션 바 */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -116,7 +153,6 @@
             gap: 4px;
             flex: 1;
             padding: 10px 0;
-            transition: color 0.2s;
         }
         .nav-btn.active {
             color: var(--primary-color);
@@ -126,7 +162,6 @@
             height: 22px;
             fill: currentColor;
         }
-        /* 화면 섹션 표시 제어 */
         .screen-section {
             display: none;
         }
@@ -154,18 +189,22 @@
             📅 <strong>오늘 날짜:</strong> <span id="currentDateText"></span>
         </div>
         <div class="card">
-            <h3>오늘 예정된 주요 일정 및 상담</h3>
+            <h3>오늘 예정된 주요 일정</h3>
             <div id="todayContent" class="loading">데이터를 불러오는 중입니다...</div>
         </div>
     </div>
 
-    <!-- 2. [일정] 화면 (월간 웨딩, 주간 웨딩, 상담 주간 통합) -->
+    <!-- 2. [일정] 화면 (웨딩 및 상담 날짜별 필터 기능 포함) -->
     <div id="screen-schedule" class="screen-section">
         <div class="sub-tab-menu">
             <button class="sub-tab-btn active" onclick="switchScheduleTab('monthly', this)">월간 웨딩</button>
             <button class="sub-tab-btn" onclick="switchScheduleTab('weekly', this)">주간 웨딩</button>
-            <button class="sub-tab-btn" onclick="switchScheduleTab('consult', this)">상담 주간</button>
+            <button class="sub-tab-btn" onclick="switchScheduleTab('consult', this)">상담 일정</button>
         </div>
+        
+        <!-- 날짜 클릭 필터 바 (동적 생성) -->
+        <div id="dateFilterBar" class="date-filter-container"></div>
+
         <div class="card">
             <div id="scheduleContent" class="loading">데이터를 불러오는 중입니다...</div>
         </div>
@@ -173,24 +212,70 @@
 
     <!-- 3. [주차] 화면 -->
     <div id="screen-parking" class="screen-section">
+        <div class="parking-grid">
+            <div class="parking-card">
+                <h4>🅿️ 지하 4층</h4>
+                <p>일반 하객 및 방문객 주차 구역</p>
+            </div>
+            <div class="parking-card">
+                <h4>🅿️ 지하 5층</h4>
+                <p>추가 하객 주차 및 대형 차량 구역</p>
+            </div>
+            <div class="parking-card">
+                <h4>🚪 후문 구역</h4>
+                <p>혼주 차량 및 물류 하역 전용</p>
+            </div>
+            <div class="parking-card">
+                <h4>🚗 임원 차량</h4>
+                <p>전용 구획 지정석 및 VIP 구역</p>
+            </div>
+        </div>
         <div class="card">
-            <h3>주차 안내 및 정보</h3>
-            <p style="color: #64748b; line-height: 1.5;">
-                행사 및 상담 방문객을 위한 주차 구역 안내 정보입니다.<br>
-                필요한 주차 관련 메모나 시트 정보를 여기에 연동하여 확인할 수 있습니다.
-            </p>
-            <div id="parkingContent" class="loading">주차 정보를 불러오는 중입니다...</div>
+            <h3>시트 연동 주차 정보</h3>
+            <div id="parkingSheetContent" class="loading">불러오는 중...</div>
         </div>
     </div>
 
-    <!-- 4. [연락] 화면 -->
+    <!-- 4. [연락] 화면 (팀원 비상연락망) -->
     <div id="screen-contact" class="screen-section">
         <div class="card">
-            <h3>주요 연락처 및 담당자</h3>
-            <p style="color: #64748b; line-height: 1.5;">
-                웨딩 및 상담 관련 주요 비상 연락망입니다.
-            </p>
-            <div id="contactContent" class="loading">연락처 정보를 불러오는 중입니다...</div>
+            <h3>📞 팀원 비상연락망</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분 / 직책</th>
+                        <th>이름</th>
+                        <th>연락처</th>
+                        <th>담당 업무</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>총괄 팀장</td>
+                        <td>김철수</td>
+                        <td>010-1234-5678</td>
+                        <td>전체 총괄 및 예식 조율</td>
+                    </tr>
+                    <tr>
+                        <td>웨딩 파트</td>
+                        <td>박영희</td>
+                        <td>010-2345-6789</td>
+                        <td>웨딩 홀 안내 및 예약</td>
+                    </tr>
+                    <tr>
+                        <td>상담 파트</td>
+                        <td>이민수</td>
+                        <td>010-3456-7890</td>
+                        <td>고객 상담 및 스케줄 관리</td>
+                    </tr>
+                    <tr>
+                        <td>주차 관리</td>
+                        <td>정대호</td>
+                        <td>010-4567-8901</td>
+                        <td>주차장 통제 및 안내</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -217,117 +302,139 @@
 </nav>
 
 <script>
-    // 구글 앱스 스크립트 웹 앱 URL 연동 완료
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
 
-    // 캐시 데이터 저장소
     let cacheData = {
         monthly: null,
         weekly: null,
         consult: null
     };
 
-    // 오늘 날짜 표시
+    let currentScheduleType = 'monthly';
+    let selectedDateFilter = '전체';
+
     window.onload = function() {
         const today = new Date();
         const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
         document.getElementById('currentDateText').innerText = formattedDate;
 
-        // 초기 데이터 로드 (오늘 화면용으로 월간/상담 데이터 미리 호출)
         fetchAllData();
     };
 
-    // 화면 전환 함수 ([오늘], [일정], [주차], [연락])
     function switchScreen(screenName, btnElement) {
-        // 상단 타이틀 변경
         const titles = {
             today: '오늘의 일정',
             schedule: '전체 일정 관리',
-            parking: '주차 정보',
-            contact: '연락처 안내'
+            parking: '주차 구역 안내',
+            contact: '팀원 비상연락망'
         };
         document.getElementById('screenTitle').innerText = titles[screenName];
 
-        // 화면 섹션 전환
         document.querySelectorAll('.screen-section').forEach(sec => sec.classList.remove('active'));
         document.getElementById(`screen-${screenName}`).classList.add('active');
 
-        // 하단 버튼 활성화 전환
         document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
     }
 
-    // 일정 화면 안에서 서브 탭 전환 (월간웨딩, 주간웨딩, 상담주간)
     function switchScheduleTab(type, btnElement) {
+        currentScheduleType = type;
+        selectedDateFilter = '전체';
+        
         document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
         btnElement.classList.add('active');
 
         if (cacheData[type]) {
+            buildDateFilterBar(cacheData[type]);
             renderTable('scheduleContent', cacheData[type]);
         } else {
-            fetchSpecificData(type, 'scheduleContent');
+            fetchSpecificData(type);
         }
     }
 
-    // 모든 데이터 한 번에 가져오기 (오늘 화면 및 초기화용)
     async function fetchAllData() {
         try {
-            // 월간 데이터 가져오기
-            const resMonthly = await fetch(`${SCRIPT_URL}?type=monthly`);
-            cacheData.monthly = await resMonthly.json();
+            const [resM, resW, resC] = await Promise.all([
+                fetch(`${SCRIPT_URL}?type=monthly`),
+                fetch(`${SCRIPT_URL}?type=weekly`),
+                fetch(`${SCRIPT_URL}?type=consult`)
+            ]);
 
-            // 상담 데이터 가져오기
-            const resConsult = await fetch(`${SCRIPT_URL}?type=consult`);
-            cacheData.consult = await resConsult.json();
+            cacheData.monthly = await resM.json();
+            cacheData.weekly = await resW.json();
+            cacheData.consult = await resC.json();
 
-            // 주간 데이터 가져오기
-            const resWeekly = await fetch(`${SCRIPT_URL}?type=weekly`);
-            cacheData.weekly = await resWeekly.json();
-
-            // 오늘 화면 렌더링 (월간/상담 데이터 기반 요약 또는 전체 표시)
-            renderTodaySummary();
-            
-            // 기본 일정 화면(월간 웨딩) 렌더링
+            renderTable('todayContent', cacheData.monthly);
+            buildDateFilterBar(cacheData.monthly);
             renderTable('scheduleContent', cacheData.monthly);
-            
-            // 주차 및 연락처 화면에 시트 데이터 연동 (필요시 consult 데이터 활용 등)
-            renderTable('parkingContent', cacheData.consult);
-            renderTable('contactContent', cacheData.weekly);
+            renderTable('parkingSheetContent', cacheData.consult);
 
         } catch (error) {
-            console.error('Data fetch error:', error);
-            document.getElementById('todayContent').innerHTML = '<div class="loading" style="color:red;">데이터를 불러오는 데 실패했습니다.</div>';
+            console.error('Fetch error:', error);
+            document.getElementById('todayContent').innerHTML = '<div class="loading" style="color:red;">데이터 로드 실패</div>';
         }
     }
 
-    // 특정 데이터만 다시 가져오기
-    function fetchSpecificData(type, targetElementId) {
-        const target = document.getElementById(targetElementId);
-        target.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
+    function fetchSpecificData(type) {
+        const target = document.getElementById('scheduleContent');
+        target.innerHTML = '<div class="loading">불러오는 중...</div>';
 
         fetch(`${SCRIPT_URL}?type=${type}`)
             .then(res => res.json())
             .then(data => {
                 cacheData[type] = data;
-                renderTable(targetElementId, data);
+                selectedDateFilter = '전체';
+                buildDateFilterBar(data);
+                renderTable('scheduleContent', data);
             })
-            .catch(err => {
-                target.innerHTML = '<div class="loading" style="color:red;">데이터를 불러오지 못했습니다.</div>';
+            .catch(() => {
+                target.innerHTML = '<div class="loading" style="color:red;">데이터를 가져오지 못했습니다.</div>';
             });
     }
 
-    // 오늘 날짜에 맞는 일정 요약 표시 (예시로 월간 데이터 중 일부 또는 전체 리스트 표시)
-    function renderTodaySummary() {
-        const todayContent = document.getElementById('todayContent');
-        if (!cacheData.monthly || cacheData.monthly.length === 0) {
-            todayContent.innerHTML = '<div class="empty-msg">등록된 일정이 없습니다.</div>';
+    // 날짜별 필터 버튼 동적 생성
+    function buildDateFilterBar(data) {
+        const bar = document.getElementById('dateFilterBar');
+        if (!data || data.length === 0 || data.error) {
+            bar.innerHTML = '';
             return;
         }
-        // 전체 월간 목록을 오늘 화면에도 편리하게 표시
-        renderTable('todayContent', cacheData.monthly);
+
+        const keys = Object.keys(data[0]);
+        const dateKey = keys.find(k => k.includes('일') || k.includes('날짜') || k.includes('일자')) || keys[0];
+
+        const datesSet = new Set();
+        data.forEach(row => {
+            if (row[dateKey]) datesSet.add(row[dateKey]);
+        });
+
+        let html = `<button class="date-chip active" onclick="filterByDate('전체', this)">전체 보기</button>`;
+        datesSet.forEach(d => {
+            html += `<button class="date-chip" onclick="filterByDate('${d}', this)">${d}</button>`;
+        });
+        bar.innerHTML = html;
     }
 
-    // 공통 테이블 렌더링 함수
+    // 특정 날짜 클릭 시 해당 일자의 데이터만 필터링하여 출력
+    function filterByDate(dateVal, btnElement) {
+        selectedDateFilter = dateVal;
+        document.querySelectorAll('.date-chip').forEach(chip => chip.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        const data = cacheData[currentScheduleType];
+        if (!data) return;
+
+        if (dateVal === '전체') {
+            renderTable('scheduleContent', data);
+        } else {
+            const keys = Object.keys(data[0]);
+            const dateKey = keys.find(k => k.includes('일') || k.includes('날짜') || k.includes('일자')) || keys[0];
+            
+            const filtered = data.filter(row => row[dateKey] === dateVal);
+            renderTable('scheduleContent', filtered);
+        }
+    }
+
     function renderTable(elementId, data) {
         const container = document.getElementById(elementId);
         if (!data || data.length === 0 || data.error) {
