@@ -66,6 +66,10 @@
             font-size: 13px;
             color: #8e8e93;
             margin-bottom: 8px;
+            margin-top: 15px;
+        }
+        .section-title:first-child {
+            margin-top: 0;
         }
         .main-card {
             background-color: #1a1d29;
@@ -257,7 +261,7 @@
             cursor: pointer;
             text-decoration: none;
         }
-        .loading, .empty-msg {
+        .empty-msg {
             text-align: center;
             padding: 20px;
             color: #8e8e93;
@@ -403,7 +407,7 @@
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 (Chaple_B4) 배치도</div>
-                <img src="Chaple_B4.jpg" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.jpg+Not+Found'">
+                <img src="Chaple_B4.png" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.png+Not+Found'">
             </div>
         </div>
 
@@ -414,7 +418,7 @@
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 5층 (Chaple_B5) 배치도</div>
-                <img src="Chaple_B5.jpg" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.jpg+Not+Found'">
+                <img src="Chaple_B5.png" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.png+Not+Found'">
             </div>
         </div>
 
@@ -426,13 +430,97 @@
         </div>
     </div>
 
-    <!-- [탭 4] 비상 연락망 화면 -->
+    <!-- [탭 4] 비상 연락망 화면 (HTML에 직접 즉시 렌더링되도록 구현) -->
     <div id="tab-contact" class="content">
-        <div class="section-title">비상 연락망</div>
+        <div class="section-title" style="margin-top:0;">비상 연락망</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">이름을 누르면 바로 전화가 걸립니다.</div>
 
-        <div id="contactListContainer">
-            <!-- 즉시 렌더링됨 -->
+        <div class="section-title">본사</div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">이태희</div>
+                <div style="font-size: 12px; color: #8e8e93;">이사 · 010-4229-7800</div>
+            </div>
+            <a href="tel:010-4229-7800" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">이큰산</div>
+                <div style="font-size: 12px; color: #8e8e93;">부장 · 010-6404-0230</div>
+            </div>
+            <a href="tel:010-6404-0230" class="call-btn">전화</a>
+        </div>
+
+        <div class="section-title">대치사업소</div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">김문기</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀장 · 010-9130-3045</div>
+            </div>
+            <a href="tel:010-9130-3045" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">임창희</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-3355-4537</div>
+            </div>
+            <a href="tel:010-3355-4537" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">이종범</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-3362-6456</div>
+            </div>
+            <a href="tel:010-3362-6456" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">김태석</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-1234-5678</div>
+            </div>
+            <a href="tel:010-1234-5678" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">서원표</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-2345-6789</div>
+            </div>
+            <a href="tel:010-2345-6789" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">이도훈</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-3456-7890</div>
+            </div>
+            <a href="tel:010-3456-7890" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">동상진</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-4567-8901</div>
+            </div>
+            <a href="tel:010-4567-8901" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">박성준</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-5678-9012</div>
+            </div>
+            <a href="tel:010-5678-9012" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">조영도</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-6789-0123</div>
+            </div>
+            <a href="tel:010-6789-0123" class="call-btn">전화</a>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">전다문</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀원 · 010-7890-1234</div>
+            </div>
+            <a href="tel:010-7890-1234" class="call-btn">전화</a>
         </div>
     </div>
 
@@ -460,22 +548,6 @@
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
 
-    // 연락처 데이터 즉시 정의
-    const contactList = [
-        { title: '본사', name: '이태희', role: '이사', phone: '010-4229-7800' },
-        { title: '본사', name: '이큰산', role: '부장', phone: '010-6404-0230' },
-        { title: '대치사업소', name: '김문기', role: '팀장', phone: '010-9130-3045' },
-        { title: '대치사업소', name: '임창희', role: '팀원', phone: '010-3355-4537' },
-        { title: '대치사업소', name: '이종범', role: '팀원', phone: '010-3362-6456' },
-        { title: '대치사업소', name: '김태석', role: '팀원', phone: '010-1234-5678' },
-        { title: '대치사업소', name: '서원표', role: '팀원', phone: '010-2345-6789' },
-        { title: '대치사업소', name: '이도훈', role: '팀원', phone: '010-3456-7890' },
-        { title: '대치사업소', name: '동상진', role: '팀원', phone: '010-4567-8901' },
-        { title: '대치사업소', name: '박성준', role: '팀원', phone: '010-5678-9012' },
-        { title: '대치사업소', name: '조영도', role: '팀원', phone: '010-6789-0123' },
-        { title: '대치사업소', name: '전다문', role: '팀원', phone: '010-7890-1234' }
-    ];
-
     let dbData = {
         monthly: [],
         consult: []
@@ -486,15 +558,11 @@
     let selectedDateStr = null;
 
     window.onload = function() {
-        // 앱 실행 즉시 연락처 렌더링
-        renderContacts();
-        // 스프레드시트 데이터 비동기 로드 시작
         fetchAllData();
     };
 
     async function fetchAllData() {
         try {
-            // PC CORS 에러 대비 및 예외 처리
             const [mRes, cRes] = await Promise.all([
                 fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
                 fetch(`${SCRIPT_URL}?type=consult`, { mode: 'cors' }).then(r => r.json()).catch(() => [])
@@ -648,31 +716,6 @@
             contentHtml += `</div>`;
         });
         container.innerHTML = contentHtml;
-    }
-
-    function renderContacts() {
-        const container = document.getElementById('contactListContainer');
-        if (!container) return;
-        
-        let currentGroup = '';
-        let html = '';
-
-        contactList.forEach(c => {
-            if (c.title !== currentGroup) {
-                currentGroup = c.title;
-                html += `<div class="section-title" style="margin-top: 15px;">${currentGroup}</div>`;
-            }
-            html += `
-                <div class="contact-card">
-                    <div>
-                        <div style="font-weight: 600;">${c.name}</div>
-                        <div style="font-size: 12px; color: #8e8e93;">${c.role} · ${c.phone}</div>
-                    </div>
-                    <a href="tel:${c.phone}" class="call-btn">전화</a>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
     }
 
     function switchParkingTab(floor) {
