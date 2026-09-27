@@ -254,27 +254,61 @@
             color: #ffffff;
         }
 
-        /* 비상 연락망 카드 스타일 */
+        /* 개선된 비상 연락망 스타일 (이름/직급 구분 및 전화기 아이콘 버튼) */
         .contact-card {
             background-color: #1a1d29;
-            border-radius: 10px;
-            padding: 10px 14px;
+            border-radius: 12px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
-        .call-btn {
+        .contact-info-wrap {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .contact-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: #ffffff;
+        }
+        .contact-role {
+            font-size: 12px;
+            font-weight: 600;
+            color: #f0a500;
+            background-color: rgba(240, 165, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .contact-phone {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-top: 3px;
+        }
+        .call-icon-btn {
             background-color: #10b981;
             color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-decoration: none;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            transition: transform 0.1s ease;
         }
+        .call-icon-btn:active {
+            transform: scale(0.92);
+        }
+        .call-icon-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
         .empty-msg {
             text-align: center;
             padding: 20px;
@@ -444,97 +478,157 @@
         </div>
     </div>
 
-    <!-- [탭 4] 비상 연락망 화면 -->
+    <!-- [탭 4] 비상 연락망 화면 (전화기 아이콘 및 컬러 구분 적용) -->
     <div id="tab-contact" class="content">
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
-        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 10px;">이름을 누르면 바로 전화가 걸립니다.</div>
+        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 10px;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
 
         <div class="section-title">본사</div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">이태희</div>
-                <div style="font-size: 11px; color: #8e8e93;">이사 · 010-4229-7800</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">이태희</span>
+                    <span class="contact-role">이사</span>
+                </div>
+                <div class="contact-phone">010-4229-7800</div>
             </div>
-            <a href="tel:010-4229-7800" class="call-btn">전화</a>
+            <a href="tel:010-4229-7800" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">이큰산</div>
-                <div style="font-size: 11px; color: #8e8e93;">부장 · 010-6404-0230</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">이큰산</span>
+                    <span class="contact-role">부장</span>
+                </div>
+                <div class="contact-phone">010-6404-0230</div>
             </div>
-            <a href="tel:010-6404-0230" class="call-btn">전화</a>
+            <a href="tel:010-6404-0230" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
 
         <div class="section-title">대치사업소</div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">김문기</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀장 · 010-9130-3045</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">김문기</span>
+                    <span class="contact-role">팀장</span>
+                </div>
+                <div class="contact-phone">010-9130-3045</div>
             </div>
-            <a href="tel:010-9130-3045" class="call-btn">전화</a>
+            <a href="tel:010-9130-3045" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">임창희</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-3355-4537</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">임창희</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-3355-4537</div>
             </div>
-            <a href="tel:010-3355-4537" class="call-btn">전화</a>
+            <a href="tel:010-3355-4537" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">이종범</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-3362-6456</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">이종범</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-3362-6456</div>
             </div>
-            <a href="tel:010-3362-6456" class="call-btn">전화</a>
+            <a href="tel:010-3362-6456" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">김태석</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-1234-5678</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">김태석</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-1234-5678</div>
             </div>
-            <a href="tel:010-1234-5678" class="call-btn">전화</a>
+            <a href="tel:010-1234-5678" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">서원표</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-2345-6789</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">서원표</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-2345-6789</div>
             </div>
-            <a href="tel:010-2345-6789" class="call-btn">전화</a>
+            <a href="tel:010-2345-6789" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">이도훈</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-3456-7890</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">이도훈</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-3456-7890</div>
             </div>
-            <a href="tel:010-3456-7890" class="call-btn">전화</a>
+            <a href="tel:010-3456-7890" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">동상진</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-4567-8901</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">동상진</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-4567-8901</div>
             </div>
-            <a href="tel:010-4567-8901" class="call-btn">전화</a>
+            <a href="tel:010-4567-8901" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">박성준</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-5678-9012</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">박성준</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-5678-9012</div>
             </div>
-            <a href="tel:010-5678-9012" class="call-btn">전화</a>
+            <a href="tel:010-5678-9012" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">조영도</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-6789-0123</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">조영도</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-6789-0123</div>
             </div>
-            <a href="tel:010-6789-0123" class="call-btn">전화</a>
+            <a href="tel:010-6789-0123" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
         <div class="contact-card">
             <div>
-                <div style="font-weight: 600; font-size: 14px;">전다문</div>
-                <div style="font-size: 11px; color: #8e8e93;">팀원 · 010-7890-1234</div>
+                <div class="contact-info-wrap">
+                    <span class="contact-name">전다문</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                </div>
+                <div class="contact-phone">010-7890-1234</div>
             </div>
-            <a href="tel:010-7890-1234" class="call-btn">전화</a>
+            <a href="tel:010-7890-1234" class="call-icon-btn">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </a>
         </div>
     </div>
 
@@ -637,11 +731,13 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
+    // [강력 개선된 날짜 매칭 함수] 스프레드시트의 날짜 형식을 완벽하게 파악
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let val of Object.values(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
+            // 1. ISO 포맷 또는 YYYY-MM-DD / YYYY.MM.DD / MM/DD 형태 추출
             let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})/);
             if (match) {
                 let m = parseInt(match[2], 10);
@@ -649,17 +745,16 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            if (strVal.includes(`${targetMonth}월`) && (strVal.includes(`${targetDay}일`) || strVal.includes(` ${targetDay} `))) {
+            // 2. "9월 19일" 또는 "9월19일" 형태
+            if (strVal.includes(`${targetMonth}월`) && (strVal.includes(`${targetDay}일`) || strVal.includes(` ${targetDay} `) || strVal.endsWith(`${targetDay}`))) {
                 if (new RegExp(`\\b${targetDay}[일]?\\b`).test(strVal)) return true;
             }
 
+            // 3. 셀 전체에 해당 월과 일이 독립된 숫자로 포함되어 있는지 정밀 검사
             let mReg = new RegExp(`(^|[^0-9])${targetMonth}([^0-9]|$)`);
             let dReg = new RegExp(`(^|[^0-9])${targetDay}([^0-9]|$)`);
-            
-            if (strVal.includes(String(targetMonth)) && strVal.includes(String(targetDay))) {
-                if (mReg.test(strVal) && dReg.test(strVal)) {
-                    return true;
-                }
+            if (mReg.test(strVal) && dReg.test(strVal)) {
+                return true;
             }
         }
         return false;
@@ -679,8 +774,16 @@
         
         const monthFiltered = activeData.filter(row => {
             for (let val of Object.values(row)) {
-                if (val && (String(val).includes(`${currentMonth}월`) || String(val).includes(`-${String(currentMonth).padStart(2, '0')}-`) || String(val).includes(`.${String(currentMonth).padStart(2, '0')}.`) || String(val).includes(`/${String(currentMonth).padStart(2, '0')}/`))) {
-                    return true;
+                if (val !== undefined && val !== null) {
+                    let strVal = String(val);
+                    if (strVal.includes(`${currentMonth}월`) || strVal.includes(`-${String(currentMonth).padStart(2, '0')}-`) || strVal.includes(`.${String(currentMonth).padStart(2, '0')}.`) || strVal.includes(`/${String(currentMonth).padStart(2, '0')}/`)) {
+                        return true;
+                    }
+                    // 연도나 다른 패턴 내에 월이 포함된 경우
+                    let mReg = new RegExp(`(^|[^0-9])${currentMonth}([^0-9]|$)`);
+                    if (mReg.test(strVal) && (strVal.includes('2026') || strVal.includes('2027'))) {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -725,30 +828,23 @@
         grid.innerHTML = html;
     }
 
-    // 날짜/시간 포맷 깔끔하게 정제하는 함수
     function cleanValue(key, val) {
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
 
-        // ISO 날짜 형식(예: 2026-09-19T00:00:00.000Z 또는 1970-01-01T...)인 경우 날짜 또는 시간만 추출
         if (strVal.includes('T')) {
             let parts = strVal.split('T');
-            let datePart = parts[0]; // 2026-09-19
-            let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; // 00:00:00
+            let datePart = parts[0]; 
+            let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
             
-            // 키 이름이나 내용에 따라 적절히 조합
             if (key.includes('시간') || key.includes('시') || timePart !== '00:00:00') {
                 if (timePart && timePart !== '00:00:00') {
-                    // 시:분까지만 자르기 (예: 11:00)
-                    let hm = timePart.substring(0, 5);
-                    return hm;
+                    return timePart.substring(0, 5);
                 }
             }
-            // 날짜만 남기기
             strVal = datePart;
         }
 
-        // 밀리초나 소수점 숫자, 불필요한 Z 제거
         strVal = strVal.replace('.000Z', '').replace('Z', '');
         return strVal;
     }
