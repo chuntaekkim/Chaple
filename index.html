@@ -322,12 +322,11 @@
                     <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 신랑 200명 / 신부 180명</span>
                 </div>
                 <div class="info-row"><span>신랑 차량: 1234 (제네시스)</span><span>신부 차량: 5678 (벤츠)</span></div>
-                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량 (신랑측 / 신부측 분리)</div>
-                <div class="info-row"><span>신랑 측 혼주 3, 4</span><span>1111, 2222</span></div>
-                <div class="info-row"><span>신부 측 혼주 3, 4</span><span>3333, 4444</span></div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 및 웨딩카 통합</div>
+                <div class="info-row"><span>혼주 차량 1, 2, 3, 4</span><span>1111, 2222, 3333, 4444</span></div>
+                <div class="info-row"><span>웨딩카</span><span>7777 (링컨)</span></div>
                 
                 <div class="detail-badge-row">
-                    <span class="mini-tag highlight">웨딩카: 7777 (링컨)</span>
                     <span class="mini-tag highlight">버스대절: 55마 8888</span>
                 </div>
 
@@ -343,12 +342,11 @@
                     <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 신랑 250명 / 신부 200명</span>
                 </div>
                 <div class="info-row"><span>신랑 차량: 3333 (카니발)</span><span>신부 차량: 4444 (BMW)</span></div>
-                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량 (신랑측 / 신부측 분리)</div>
-                <div class="info-row"><span>신랑 측 혼주 3, 4</span><span>5555, 6666</span></div>
-                <div class="info-row"><span>신부 측 혼주 3, 4</span><span>7777, 8888</span></div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 및 웨딩카 통합</div>
+                <div class="info-row"><span>혼주 차량 1, 2, 3, 4</span><span>5555, 6666, 7777, 8888</span></div>
+                <div class="info-row"><span>웨딩카</span><span>미등록</span></div>
 
                 <div class="detail-badge-row">
-                    <span class="mini-tag highlight">웨딩카: 미등록</span>
                     <span class="mini-tag highlight">버스대절: 없음</span>
                 </div>
 
@@ -364,7 +362,7 @@
     <div id="sec-schedule" class="section-view">
         <div class="container">
             <h1 id="sched-title">운영 스케줄</h1>
-            <div class="desc" id="sched-desc">날짜를 누르면 웨딩 시간이 나옵니다.</div>
+            <div class="desc" id="sched-desc">날짜를 누르면 웨딩 시간 및 혼주·웨딩카·버스 정보가 나옵니다.</div>
 
             <div class="tab-group">
                 <button class="tab-btn active" id="stype-wedding" onclick="switchScheduleType('wedding')">웨딩</button>
@@ -389,15 +387,17 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
-                    <div class="date-cell sat">5<div class="badge-count">4</div></div>
-                    <div class="date-cell sun">6<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('9월 5일 예식 일정:\n- 11:00 / 12:30 예식\n- 혼주 차량 각 4대, 웨딩카, 버스대절 포함')">5<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('9월 6일 예식 일정:\n- 11:00 예식\n- 혼주 차량 4대, 웨딩카 포함')">6<div class="badge-count">2</div></div>
                     <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
-                    <div class="date-cell sat">12<div class="badge-count">4</div></div>
-                    <div class="date-cell sun">13<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('9월 12일 예식 일정:\n- 4건 예식 진행\n- 혼주 차량 및 버스대절 등록 완료')">12<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('9월 13일 예식 일정:\n- 2건 예식 진행')">13<div class="badge-count">2</div></div>
                     <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
-                    <div class="date-cell sat">19<div class="badge-count">4</div></div>
-                    <div class="date-cell sun">20<div class="badge-count">2</div></div>
-                    <div class="date-cell">21</div><div class="date-cell active-date">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell sat" onclick="alert('9월 19일 예식 일정:\n- 4건 예식 진행')">19<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('9월 20일 예식 일정:\n- 2건 예식 진행')">20<div class="badge-count">2</div></div>
+                    <div class="date-cell">21</div>
+                    <div class="date-cell active-date" onclick="alert('9월 22일 (오늘)\n- 예식 및 혼주/웨딩카/버스 등록 완료')">22</div>
+                    <div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
                     <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
                 </div>
 
@@ -411,37 +411,32 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
-                    <div class="date-cell sat">3<div class="badge-count">5</div></div>
-                    <div class="date-cell sun">4<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('10월 3일 토요일\n- 예식 5건 진행\n- 상담 일정 및 혼주/웨딩카 등록')">3<div class="badge-count">5</div></div>
+                    <div class="date-cell sun" onclick="alert('10월 4일 일요일\n- 예식 2건 진행')">4<div class="badge-count">2</div></div>
                     <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
-                    <div class="date-cell sat">10<div class="badge-count">4</div></div>
-                    <div class="date-cell sun">11<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('10월 10일 토요일\n- 예식 4건 진행')">10<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('10월 11일 일요일\n- 예식 2건 진행')">11<div class="badge-count">2</div></div>
                     <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
-                    <div class="date-cell sat">17<div class="badge-count">4</div></div>
-                    <div class="date-cell sun">18<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('10월 17일 토요일\n- 예식 4건 진행')">17<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('10월 18일 일요일\n- 예식 2건 진행')">18<div class="badge-count">2</div></div>
                     <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
                     <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
-                    <div class="date-cell sat">31<div class="badge-count">3</div></div>
+                    <div class="date-cell sat" onclick="alert('10월 31일 토요일\n- 예식 3건 진행')">31<div class="badge-count">3</div></div>
                 </div>
             </div>
 
             <div id="sched-view-consult" style="display:none;">
-                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #ffffff;">8 팀 · 10월 3일 토요일 · 샘플</div>
+                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #ffffff;">8 팀 · 10월 3일 토요일 · 상담 및 차량 연동</div>
                 
                 <div class="info-card">
-                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 4px;">차량 8대 내외</div>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">상담 1팀당 1대 기준. 샘플 차량번호입니다.</div>
-                </div>
-
-                <div class="info-card">
-                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 4px;">후문 주차장 이용</div>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">상담·시식 차량은 후문 주차장(평소 9대 · 최대 15대)에 안내합니다.</div>
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 4px;">상담 차량 8대 내외</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">상담 1팀당 1대 기준. 후문 주차장 안내.</div>
                 </div>
 
                 <div class="info-card">
                     <div class="info-header">
                         <span class="time-badge">10:00</span>
-                        <span style="font-size: 0.8rem; color: #94a3b8;">1팀</span>
+                        <span style="font-size: 0.8rem; color: #94a3b8;">상담 1팀</span>
                     </div>
                     <div class="info-row"><span>윤서연 / 한지호</span><span style="color: #60a5fa;">91마 1024 · 예식 예정 2027/06</span></div>
                 </div>
@@ -449,7 +444,7 @@
                 <div class="info-card">
                     <div class="info-header">
                         <span class="time-badge">11:00</span>
-                        <span style="font-size: 0.8rem; color: #94a3b8;">1팀</span>
+                        <span style="font-size: 0.8rem; color: #94a3b8;">상담 2팀</span>
                     </div>
                     <div class="info-row"><span>임하늘 / 조성민</span><span style="color: #60a5fa;">27바 5588 · 예식 예정 2027/08</span></div>
                 </div>
@@ -457,16 +452,17 @@
         </div>
     </div>
 
-    <!-- 3. 주차 화면 -->
+    <!-- 3. 주차 화면 (임원 차량 주차 구역 안내 추가) -->
     <div id="sec-parking" class="section-view">
         <div class="container">
             <h1>주차 안내</h1>
-            <div class="desc">도면은 확대해서 볼 수 있습니다.</div>
+            <div class="desc">도면 및 임원 차량 지정 주차 구역입니다.</div>
             
             <div class="tab-group">
                 <button class="tab-btn active" id="p-tab-4" onclick="switchParkingFloor(4)">지하 4층</button>
                 <button class="tab-btn" id="p-tab-5" onclick="switchParkingFloor(5)">지하 5층</button>
                 <button class="tab-btn" id="p-tab-rear" onclick="switchParkingFloor('rear')">후문</button>
+                <button class="tab-btn" id="p-tab-exec" onclick="switchParkingFloor('exec')">임원 차량</button>
             </div>
 
             <div id="parking-floor-4">
@@ -518,6 +514,18 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 임원 차량 주차 구역 안내 -->
+            <div id="parking-floor-exec" style="display:none;">
+                <div class="info-card" style="border-left: 3px solid #f59e0b;">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">👑 임원 차량 VIP 지정 주차구역</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">대표이사 및 이사 차량 전용 구역으로 상시 비워둡니다.</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-row"><span>대표이사 (카니발)</span><span style="color:#34d399;">VIP 구역 A동</span></div>
+                    <div class="info-row"><span>이사 (제네시스 G80)</span><span style="color:#34d399;">VIP 구역 B동</span></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -525,29 +533,29 @@
     <div id="sec-car" class="section-view">
         <div class="container">
             <h1 id="car-title">혼주 차량</h1>
-            <div class="desc" id="car-desc">예식 시간별, 신랑·신부측별로 구분하여 보여줍니다.</div>
+            <div class="desc" id="car-desc">예식 시간별 혼주 차량 및 웨딩카 리스트입니다.</div>
 
             <div class="tab-group">
                 <button class="tab-btn" id="ctype-exec" onclick="switchCarType('exec')">임원 차량</button>
                 <button class="tab-btn active" id="ctype-guest" onclick="switchCarType('guest')">혼주 차량</button>
             </div>
 
-            <!-- 혼주 차량 뷰 -->
+            <!-- 혼주 차량 뷰 (통합) -->
             <div id="car-view-guest">
                 <div style="font-size: 0.9rem; font-weight: bold; color: #cbd5e1; margin-bottom: 10px;">9월 5일 토요일</div>
                 
                 <div class="info-card">
                     <div class="info-header">
                         <span class="time-badge" style="background:#242832; color:#cbd5e1; border:1px solid rgba(255,255,255,0.1);">11:00 예식</span>
-                        <span style="font-size: 0.8rem; color: #f87171;">혼주 4대</span>
+                        <span style="font-size: 0.8rem; color: #f87171;">혼주 4대 + 웨딩카</span>
                     </div>
-                    <div style="font-size:0.85rem; font-weight:bold; color:#60a5fa; margin-bottom:4px;">🤵 신랑 측 혼주 차량</div>
-                    <div class="info-row"><span>혼주 1 (신랑측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    <div class="info-row" style="margin-bottom:10px;"><span>혼주 2 (신랑측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    
-                    <div style="font-size:0.85rem; font-weight:bold; color:#f472b6; margin-bottom:4px;">👰 신부 측 혼주 차량</div>
-                    <div class="info-row"><span>혼주 1 (신부측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    <div class="info-row"><span>혼주 2 (신부측)</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row"><span>혼주 차량 1</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row"><span>혼주 차량 2</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row"><span>혼주 차량 3</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row"><span>혼주 차량 4</span><span style="color:#f87171;">번호 등록 대기</span></div>
+                    <div class="info-row" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; margin-top: 6px;">
+                        <span style="color:#60a5fa; font-weight:bold;">웨딩카</span><span style="color:#f87171;">번호 등록 대기</span>
+                    </div>
                 </div>
             </div>
 
@@ -578,7 +586,7 @@
         </div>
     </div>
 
-    <!-- 5. 비상 연락망 화면 (스크린샷 스타일 완벽 적용) -->
+    <!-- 5. 비상 연락망 화면 -->
     <div id="sec-contact" class="section-view">
         <div class="container">
             <h1>비상 연락망</h1>
@@ -676,7 +684,7 @@
                 document.getElementById('stype-consult').style.background = 'transparent';
                 document.getElementById('stype-consult').style.color = '#94a3b8';
                 document.getElementById('sched-title').innerText = '운영 스케줄';
-                document.getElementById('sched-desc').innerText = '날짜를 누르면 웨딩 시간이 나옵니다.';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 웨딩 시간 및 혼주·웨딩카·버스 정보가 나옵니다.';
             } else {
                 document.getElementById('sched-view-wedding').style.display = 'none';
                 document.getElementById('sched-view-consult').style.display = 'block';
@@ -702,7 +710,7 @@
                 document.getElementById('ctype-exec').style.background = 'transparent';
                 document.getElementById('ctype-exec').style.color = '#94a3b8';
                 document.getElementById('car-title').innerText = '혼주 차량';
-                document.getElementById('car-desc').innerText = '예식 시간별, 신랑·신부측별로 구분하여 보여줍니다.';
+                document.getElementById('car-desc').innerText = '예식 시간별 혼주 차량 및 웨딩카 리스트입니다.';
             } else {
                 document.getElementById('car-view-guest').style.display = 'none';
                 document.getElementById('car-view-exec').style.display = 'block';
@@ -721,6 +729,7 @@
             document.getElementById('parking-floor-4').style.display = 'none';
             document.getElementById('parking-floor-5').style.display = 'none';
             document.getElementById('parking-floor-rear').style.display = 'none';
+            document.getElementById('parking-floor-exec').style.display = 'none';
 
             document.getElementById('p-tab-4').style.background = 'transparent';
             document.getElementById('p-tab-4').style.color = '#94a3b8';
@@ -728,6 +737,8 @@
             document.getElementById('p-tab-5').style.color = '#94a3b8';
             document.getElementById('p-tab-rear').style.background = 'transparent';
             document.getElementById('p-tab-rear').style.color = '#94a3b8';
+            document.getElementById('p-tab-exec').style.background = 'transparent';
+            document.getElementById('p-tab-exec').style.color = '#94a3b8';
 
             if (floor === 4) {
                 document.getElementById('parking-floor-4').style.display = 'block';
@@ -737,10 +748,14 @@
                 document.getElementById('parking-floor-5').style.display = 'block';
                 document.getElementById('p-tab-5').style.background = '#f59e0b';
                 document.getElementById('p-tab-5').style.color = '#121417';
-            } else {
+            } else if (floor === 'rear') {
                 document.getElementById('parking-floor-rear').style.display = 'block';
                 document.getElementById('p-tab-rear').style.background = '#f59e0b';
                 document.getElementById('p-tab-rear').style.color = '#121417';
+            } else {
+                document.getElementById('parking-floor-exec').style.display = 'block';
+                document.getElementById('p-tab-exec').style.background = '#f59e0b';
+                document.getElementById('p-tab-exec').style.color = '#121417';
             }
         }
 
