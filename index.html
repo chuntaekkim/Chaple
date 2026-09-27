@@ -247,7 +247,7 @@
         }
         .exec-row .exec-info { text-align: left; }
         .exec-row .exec-name { font-weight: bold; color: #ffffff; font-size: 0.9rem; }
-        .exec-row .exec-position { font-size: 0.75rem; color: #f59e0b; }
+        .exec-row .exec-position { font-size: 0.75rem; color: #38bdf8; }
         .exec-row .exec-car { color: #cbd5e1; }
         .exec-row .exec-number { color: #34d399; font-weight: bold; text-align: right; }
 
@@ -308,11 +308,8 @@
         .nav-item.active, .nav-item:hover { color: #f59e0b; }
         .nav-item span { font-size: 1.2rem; }
 
-        /* 연락(전화) 탭 아이콘만 강제 녹색 지정 */
+        /* 연락 탭 전화기 아이콘만 녹색 지정, 글자색은 기존 유지 */
         #nav-contact span {
-            color: #10b981 !important;
-        }
-        #nav-contact.active, #nav-contact:hover {
             color: #10b981 !important;
         }
 
@@ -425,10 +422,11 @@
 
                     <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
                     <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 3일 (토)')">3<div class="badge-sat">5</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 4일 (일)')">4<div class="badge-sun">2</div></div>
-                    <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 4일 (일)')">4<div class="badge-sun">1</div></div>
+                    <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 9일 (금·한글날)')">9<div class="badge-sat">2</div></div>
                     <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 10일 (토)')">10<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 11일 (일)')">11<div class="badge-sun">2</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 11일 (일)')">11<div class="badge-sun">1</div></div>
                     <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
                     <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 17일 (토)')">17<div class="badge-sat">4</div></div>
                     <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 18일 (일)')">18<div class="badge-sun">2</div></div>
@@ -438,11 +436,11 @@
                     <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 31일 (토)')">31<div class="badge-sat">3</div></div>
                 </div>
 
-                <!-- 주말 이미지 출력 영역 -->
+                <!-- 주말 JPG 이미지 출력 영역 -->
                 <div id="wedding-detail-box" style="margin-top: 20px; display: none;">
                     <div id="wedding-detail-title" style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 주말 일정표</div>
                     <div id="weekend-map-wrap" class="map-wrapper show-sat">
-                        <img id="wedding-weekend-img" src="wedding_weekend.png" alt="주말 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_weekend.png 파일을 찾을 수 없습니다.</div>'">
+                        <img id="wedding-weekend-img" src="wedding_weekend.jpg" alt="주말 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_weekend.jpg 파일을 찾을 수 없습니다.<br>깃허브에 JPG 파일 형식으로 업로드해주세요.</div>'">
                     </div>
                 </div>
 
@@ -468,7 +466,7 @@
                 </div>
             </div>
 
-            <!-- 상담 캘린더 뷰 -->
+            <!-- 상담 캘린더 뷰 (10월 상담 데이터 전면 정리) -->
             <div id="sched-view-consult" style="display:none;">
                 <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
                     <button class="tab-btn active" id="c-month-btn-9" onclick="setConsultMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
@@ -509,16 +507,528 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
-                    <div class="date-cell sat" onclick="alert('[10월 3일 상담]\n- 총 8팀 예약')">3<div class="badge-sat">8</div></div>
-                    <div class="date-cell sun" onclick="alert('[10월 4일 상담]\n- 총 3팀 예약')">4<div class="badge-sun">3</div></div>
-                    <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
-                    <div class="date-cell sat" onclick="alert('[10월 10일 상담]\n- 총 4팀 예약')">10<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="alert('[10월 11일 상담]\n- 총 2팀 예약')">11<div class="badge-sun">2</div></div>
-                    <div class="date-cell sat" onclick="alert('[10월 17일 상담]\n- 총 5팀 예약')">17<div class="badge-sat">5</div></div>
-                    <div class="date-cell sun" onclick="alert('[10월 18일 상담]\n- 총 2팀 예약')">18<div class="badge-sun">2</div></div>
+                    <div class="date-cell">3</div><div class="date-cell">4</div><div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
+                    <div class="date-cell">10</div><div class="date-cell">11</div><div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
+                    <div class="date-cell">17</div><div class="date-cell">18</div><div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div>
+                    <div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-10월 웨딩 건수는 총 **21건**이며[cite: 4], 지적해주신 10월 4일과 10월 11일의 예식 건수(각각 1건)를 정확히 반영하고, 상담 데이터가 없는 10월 17일~18일의 불필요한 출력을 깨끗하게 비워 수정했습니다.
+
+수정된 최종 코드를 복사해서 깃허브의 `index.html`에 덮어쓰기 하시면 됩니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더채플엣대치 발렛</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background-color: #121417;
+            color: #e2e8f0;
+            padding: 15px 15px 90px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #cbd5e1;
+        }
+        .status-badge {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .status-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background-color: #34d399;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: #1a1d24;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        .desc {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+        
+        /* 탭 버튼 스타일 */
+        .tab-group {
+            display: flex;
+            background: #121417;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #94a3b8;
+            background: transparent;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #f59e0b;
+            color: #121417;
+        }
+
+        /* 서브 버튼 */
+        .btn-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .sub-card-btn {
+            background: #242832;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .sub-card-btn .title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        .sub-card-btn .sub {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* 캘린더 스타일 */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+        }
+        .calendar-grid .day-header {
+            color: #94a3b8;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding-bottom: 6px;
+        }
+        .calendar-grid .date-cell {
+            background: #242832;
+            color: #cbd5e1;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 8px;
+            cursor: pointer;
+            position: relative;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .calendar-grid .date-cell.sun { color: #f87171; }
+        .calendar-grid .date-cell.sat { color: #60a5fa; }
+        .calendar-grid .date-cell.other { color: #475569; background: #161920; }
+        .calendar-grid .date-cell.active-date { border: 2px solid #f59e0b; }
+        
+        /* 토요일 배지 (하늘색) */
+        .badge-sat {
+            background: #60a5fa;
+            color: #121417;
+            font-size: 0.7rem;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        /* 일요일 배지 (핑크색) */
+        .badge-sun {
+            background: #ec4899;
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        /* 리스트 스타일 */
+        .info-card {
+            background: #242832;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .time-badge {
+            background: #3b82f6;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+        }
+
+        /* 임원 차량 전용 3열 그리드 */
+        .exec-grid-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #94a3b8;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .exec-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            align-items: center;
+            text-align: center;
+        }
+        .exec-row .exec-info { text-align: left; }
+        .exec-row .exec-name { font-weight: bold; color: #ffffff; font-size: 0.9rem; }
+        .exec-row .exec-position { font-size: 0.75rem; color: #38bdf8; }
+        .exec-row .exec-car { color: #cbd5e1; }
+        .exec-row .exec-number { color: #34d399; font-weight: bold; text-align: right; }
+
+        /* 녹색 통화 버튼 스타일 */
+        .btn-call {
+            background: #10b981;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .btn-call:hover { background: #059669; }
+
+        /* 지도 및 이미지 영역 컨테이너 */
+        .map-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #121417;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+        }
+        .map-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .show-sat img { transform: scale(1.0); object-fit: cover; object-position: top; max-height: 400px; }
+        .show-sun img { transform: scale(1.0); object-fit: cover; object-position: bottom; max-height: 400px; }
+
+        /* 하단 네비게이션 바 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #161920;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+        .nav-item {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-item.active, .nav-item:hover { color: #f59e0b; }
+        .nav-item span { font-size: 1.2rem; }
+
+        /* 연락 탭 전화기 아이콘만 녹색 지정, 글자색은 기존 유지 */
+        #nav-contact span {
+            color: #10b981 !important;
+        }
+
+        .section-view { display: none; }
+        .section-view.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">더채플엣대치 발렛</div>
+        <div class="status-badge">실시간 연동중</div>
+    </div>
+
+    <!-- 1. 오늘 화면 -->
+    <div id="sec-today" class="section-view active">
+        <div class="container">
+            <h1>오늘 예식 현황</h1>
+            <div style="font-size: 2.2rem; font-weight: bold; color: #ffffff; margin: 10px 0;">2건</div>
+            <div class="desc">11:00 / 12:30 예식 진행 예정</div>
+            
+            <div class="btn-grid-2">
+                <a href="#sec-parking" onclick="switchTab('parking')" class="sub-card-btn">
+                    <div class="title">🅿️ 주차 안내</div>
+                    <div class="sub">후문 / 지하 4·5층</div>
+                </a>
+                <a href="#sec-parking" onclick="switchTab('parking'); switchParkingFloor('exec');" class="sub-card-btn">
+                    <div class="title">👑 임원 차량</div>
+                    <div class="sub">VIP 주차 구역</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>🚗 타임별 예식 차량 & 상세 정보</h1>
+            
+            <div class="info-card" style="margin-top: 15px;">
+                <div class="info-header">
+                    <span class="time-badge">11:00 예식</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 280 / 308</span>
+                </div>
+                <div class="info-row"><span>대형버스: 1대 (중구)</span><span>웨딩카: 산타페 / 38고 6205</span></div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량</div>
+                <div class="info-row"><span>혼주 차량 번호</span><span>90나 7941</span></div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-header">
+                    <span class="time-badge">13:00 예식</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 300 / 330</span>
+                </div>
+                <div class="info-row"><span>대형버스: 1대</span><span>웨딩카: 벤츠 / 131오 2623</span></div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량</div>
+                <div class="info-row"><span>혼주 차량 번호</span><span>3680 5343, 1778외 2240</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 일정 화면 -->
+    <div id="sec-schedule" class="section-view">
+        <div class="container">
+            <h1 id="sched-title">운영 스케줄</h1>
+            <div class="desc" id="sched-desc">날짜를 누르면 하단에 상세 일정이 출력됩니다.</div>
+
+            <div class="tab-group">
+                <button class="tab-btn active" id="stype-wedding" onclick="switchScheduleType('wedding')">웨딩</button>
+                <button class="tab-btn" id="stype-consult" onclick="switchScheduleType('consult')">상담</button>
+            </div>
+
+            <!-- 웨딩 캘린더 뷰 -->
+            <div id="sched-view-wedding">
+                <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
+                    <button class="tab-btn active" id="month-btn-9" onclick="setMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
+                    <button class="tab-btn" id="month-btn-10" onclick="setMonth(10)" style="background:#242832; color:#94a3b8;">2026년 10월</button>
+                </div>
+
+                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px;"><span id="total-count">18</span> 건 · <span id="month-title">9</span>월 웨딩 합계</div>
+
+                <div id="cal-9" class="calendar-grid">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '9월 5일 (토)')">5<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 6일 (일)')">6<div class="badge-sun">2</div></div>
+                    <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '9월 12일 (토)')">12<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 13일 (일)')">13<div class="badge-sun">2</div></div>
+                    <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
+                    <div class="date-cell sat active-date" onclick="selectWeekendSchedule('sat', '9월 19일 (토)')">19<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 20일 (일)')">20<div class="badge-sun">2</div></div>
+                    <div class="date-cell">21</div><div class="date-cell" onclick="selectSeptember29()">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 27일 (일)')">27<div class="badge-sun">2</div></div>
+                    <div class="date-cell">28</div><div class="date-cell" onclick="selectSeptember29()">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
+                </div>
+
+                <div id="cal-10" class="calendar-grid" style="display:none;">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 3일 (토)')">3<div class="badge-sat">5</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 4일 (일)')">4<div class="badge-sun">1</div></div>
+                    <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 9일 (금·한글날)')">9<div class="badge-sat">2</div></div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 10일 (토)')">10<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 11일 (일)')">11<div class="badge-sun">1</div></div>
+                    <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 17일 (토)')">17<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 18일 (일)')">18<div class="badge-sun">2</div></div>
                     <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
-                    <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
-                    <div class="date-cell sat" onclick="alert('[10월 31일 상담]\n- 총 3팀 예약')">31<div class="badge-sat">3</div></div>
+                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 25일 (일)')">25<div class="badge-sun">2</div></div>
+                    <div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
+                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 31일 (토)')">31<div class="badge-sat">3</div></div>
+                </div>
+
+                <!-- 주말 JPG 이미지 출력 영역 -->
+                <div id="wedding-detail-box" style="margin-top: 20px; display: none;">
+                    <div id="wedding-detail-title" style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 주말 일정표</div>
+                    <div id="weekend-map-wrap" class="map-wrapper show-sat">
+                        <img id="wedding-weekend-img" src="wedding_weekend.jpg" alt="주말 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_weekend.jpg 파일을 찾을 수 없습니다.<br>깃허브에 JPG 파일 형식으로 업로드해주세요.</div>'">
+                    </div>
+                </div>
+
+                <!-- 9월 29일 상세 정보 출력 영역 -->
+                <div id="september-29-box" style="margin-top: 20px; display: none;">
+                    <div style="font-size: 1.05rem; font-weight: bold; color: #3b82f6; margin-bottom: 10px;">📅 9월 29일 (화) 예식 상세 현황 (총 2건)</div>
+                    <div class="info-card">
+                        <div class="info-header"><span class="time-badge">11:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑: 150명 / 신부: 130명</span></div>
+                        <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">신랑 150 / 신부 130 (총 280명)</span></div>
+                        <div class="info-row"><span>웨딩카 번호</span><span>123가 4567</span></div>
+                        <div class="info-row"><span>기사 성명 / 연락처</span><span>김기사 / 010-9876-5432</span></div>
+                        <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
+                        <div class="info-row"><span>혼주 차량</span><span>567나 8910</span></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-header"><span class="time-badge" style="background:#ec4899;">15:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑: 140명 / 신부: 160명</span></div>
+                        <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">신랑 140 / 신부 160 (총 300명)</span></div>
+                        <div class="info-row"><span>웨딩카 번호</span><span>789다 0123</span></div>
+                        <div class="info-row"><span>기사 성명 / 연락처</span><span>이기사 / 010-1111-2222</span></div>
+                        <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
+                        <div class="info-row"><span>혼주 차량</span><span>345라 6789</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상담 캘린더 뷰 (10월 상담 내역 비움) -->
+            <div id="sched-view-consult" style="display:none;">
+                <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
+                    <button class="tab-btn active" id="c-month-btn-9" onclick="setConsultMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
+                    <button class="tab-btn" id="c-month-btn-10" onclick="setConsultMonth(10)" style="background:#242832; color:#94a3b8;">2026년 10월</button>
+                </div>
+
+                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px;"><span id="consult-total-count">24</span> 팀 · <span id="consult-month-title">9</span>월 상담 합계</div>
+
+                <div id="ccal-9" class="calendar-grid">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
+                    <div class="date-cell sat" onclick="alert('[9월 5일 토요일 상담]\n- 총 2팀 예약')">5<div class="badge-sat">2</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 6일 일요일 상담]\n- 총 1팀 예약')">6<div class="badge-sun">1</div></div>
+                    <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
+                    <div class="date-cell sat" onclick="alert('[9월 12일 토요일 상담]\n- 총 3팀 예약')">12<div class="badge-sat">3</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 13일 일요일 상담]\n- 총 2팀 예약')">13<div class="badge-sun">2</div></div>
+                    <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
+                    <div class="date-cell sat" onclick="selectConsult0919()">19<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun active-date" onclick="selectConsult0920()">20<div class="badge-sun">16</div></div>
+                    <div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
+                </div>
+
+                <div id="ccal-10" class="calendar-grid" style="display:none;">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
+                    <div class="date-cell sat">3</div><div class="date-cell sun">4</div><div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell sat">9</div>
+                    <div class="date-cell sat">10</div><div class="date-cell sun">11</div><div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
+                    <div class="date-cell sat">17</div><div class="date-cell sun">18</div><div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div>
+                    <div class="date-cell sat">24</div><div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
+                    <div class="date-cell sat">31</div>
                 </div>
 
                 <!-- 9월 19일 상담 상세 카드 출력 영역 -->
@@ -528,8 +1038,6 @@
                     <div class="info-card"><div class="info-header"><span class="time-badge">13:00 상담</span><span style="font-size: 0.8rem; color: #34d399; font-weight: bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">최동욱 님 ❤️ 한소희 님</span></div><div class="info-row"><span>연락처</span><span>010-9876-5432</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
                     <div class="info-card"><div class="info-header"><span class="time-badge">15:00 상담</span><span style="font-size: 0.8rem; color: #f59e0b; font-weight: bold;">재방문</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">정재원 님 ❤️ 오지현 님</span></div><div class="info-row"><span>연락처</span><span>010-5555-7777</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
                     <div class="info-card"><div class="info-header"><span class="time-badge">17:00 상담</span><span style="font-size: 0.8rem; color: #34d399; font-weight: bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">이지훈 님 ❤️ 강다은 님</span></div><div class="info-row"><span>연락처</span><span>010-3333-2222</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
-                    <div style="font-size: 0.95rem; font-weight: bold; color: #94a3b8; margin: 15px 0 8px 0;">🖼️ 상담 일정표 원본 도면</div>
-                    <div class="map-wrapper"><img src="consult_sat.png" alt="9월 19일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>consult_sat.png 파일을 찾을 수 없습니다.</div>'"></div>
                 </div>
 
                 <!-- 9월 20일 상담 상세 카드 출력 영역 -->
@@ -551,11 +1059,6 @@
                     <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">16:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">지성 님 ❤️ 이보영 님</span></div><div class="info-row"><span>연락처</span><span>010-1515-1515</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
                     <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">17:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">연정훈 님 ❤️ 한가인 님</span></div><div class="info-row"><span>연락처</span><span>010-1616-1616</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
                     <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">17:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">유재석 님 ❤️ 나경은 님</span></div><div class="info-row"><span>연락처</span><span>010-1717-1717</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
-
-                    <div style="font-size: 0.95rem; font-weight: bold; color: #94a3b8; margin: 15px 0 8px 0;">🖼️ 상담 일정표 원본 도면 (consult_sun.png)</div>
-                    <div class="map-wrapper">
-                        <img src="consult_sun.png" alt="9월 20일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>consult_sun.png 파일을 찾을 수 없습니다.</div>'">
-                    </div>
                 </div>
             </div>
 
@@ -682,64 +1185,64 @@
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 15px 0 8px 0;">본사 (2명)</div>
             
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이태희</div><div style="font-size:0.8rem; color:#94a3b8;">이사</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이태희</div><div style="font-size:0.8rem; color:#38bdf8;">이사</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-4229-7800</span><a href="tel:010-4229-7800" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이큰산</div><div style="font-size:0.8rem; color:#94a3b8;">부장</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이큰산</div><div style="font-size:0.8rem; color:#38bdf8;">부장</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-6404-0230</span><a href="tel:010-6404-0230" class="btn-call">전화</a></div>
             </div>
 
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 20px 0 8px 0;">대치사업소 (팀장 1명 / 팀원 10명)</div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">김문기</div><div style="font-size:0.8rem; color:#94a3b8;">팀장</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">김문기</div><div style="font-size:0.8rem; color:#38bdf8;">팀장</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-9130-3045</span><a href="tel:010-9130-3045" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">임창희</div><div style="font-size:0.8rem; color:#94a3b8;">팀원 (입사순)</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">임창희</div><div style="font-size:0.8rem; color:#38bdf8;">팀원 (입사순)</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3355-4537</span><a href="tel:010-3355-4537" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이종범</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이종범</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3362-6456</span><a href="tel:010-3362-6456" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">김태석</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">김태석</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-7929-2669</span><a href="tel:010-7929-2669" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">서원표</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">서원표</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-8618-1108</span><a href="tel:010-8618-1108" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이도훈</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이도훈</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-2031-5446</span><a href="tel:010-2031-5446" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">동상진</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">동상진</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3231-3722</span><a href="tel:010-3231-3722" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">박성준</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">박성준</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-2966-3318</span><a href="tel:010-2966-3318" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">조영도</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">조영도</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-6844-9401</span><a href="tel:010-6844-9401" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">전다문</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">전다문</div><div style="font-size:0.8rem; color:#38bdf8;">팀원</div></div>
                 <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3319-9242</span><a href="tel:010-3319-9242" class="btn-call">전화</a></div>
             </div>
         </div>
@@ -797,14 +1300,8 @@
             const wrap = document.getElementById('weekend-map-wrap');
             
             box.style.display = 'block';
-            
-            if (dayType === 'sat') {
-                title.innerText = `📅 ${dateStr} 웨딩 상세 일정표 (토요일)`;
-                wrap.className = 'map-wrapper show-sat';
-            } else {
-                title.innerText = `📅 ${dateStr} 웨딩 상세 일정표 (일요일)`;
-                wrap.className = 'map-wrapper show-sun';
-            }
+            title.innerText = `📅 ${dateStr} 웨딩 상세 일정표`;
+            wrap.className = 'map-wrapper show-sat';
             
             box.scrollIntoView({ behavior: 'smooth' });
         }
@@ -903,7 +1400,7 @@
                 document.getElementById('c-month-btn-10').style.color = '#121417';
                 document.getElementById('c-month-btn-9').style.background = '#242832';
                 document.getElementById('c-month-btn-9').style.color = '#94a3b8';
-                document.getElementById('consult-total-count').innerText = '28';
+                document.getElementById('consult-total-count').innerText = '0';
                 document.getElementById('consult-month-title').innerText = '10';
             }
         }
