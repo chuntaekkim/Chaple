@@ -1,3 +1,4 @@
+HTML
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -306,9 +307,9 @@
                     <div class="title">🅿️ 주차 안내</div>
                     <div class="sub">후문 / 지하 4·5층</div>
                 </a>
-                <a href="#sec-car" onclick="switchTab('car')" class="sub-card-btn">
+                <a href="#sec-parking" onclick="switchTab('parking'); switchParkingFloor('exec');" class="sub-card-btn">
                     <div class="title">👑 임원 차량</div>
-                    <div class="sub">VIP 리스트</div>
+                    <div class="sub">VIP 주차 구역</div>
                 </a>
             </div>
         </div>
@@ -322,12 +323,12 @@
                     <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 신랑 200명 / 신부 180명</span>
                 </div>
                 <div class="info-row"><span>신랑 차량: 1234 (제네시스)</span><span>신부 차량: 5678 (벤츠)</span></div>
-                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 및 웨딩카 통합</div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 및 웨딩카 등록 목록</div>
                 <div class="info-row"><span>혼주 차량 1, 2, 3, 4</span><span>1111, 2222, 3333, 4444</span></div>
                 <div class="info-row"><span>웨딩카</span><span>7777 (링컨)</span></div>
                 
                 <div class="detail-badge-row">
-                    <span class="mini-tag highlight">버스대절: 55마 8888</span>
+                    <span class="mini-tag highlight">버스대절: 55마 8888 (기사: 010-1234-5678)</span>
                 </div>
 
                 <div class="consult-box">
@@ -342,7 +343,7 @@
                     <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 신랑 250명 / 신부 200명</span>
                 </div>
                 <div class="info-row"><span>신랑 차량: 3333 (카니발)</span><span>신부 차량: 4444 (BMW)</span></div>
-                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 및 웨딩카 통합</div>
+                <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 및 웨딩카 등록 목록</div>
                 <div class="info-row"><span>혼주 차량 1, 2, 3, 4</span><span>5555, 6666, 7777, 8888</span></div>
                 <div class="info-row"><span>웨딩카</span><span>미등록</span></div>
 
@@ -362,13 +363,14 @@
     <div id="sec-schedule" class="section-view">
         <div class="container">
             <h1 id="sched-title">운영 스케줄</h1>
-            <div class="desc" id="sched-desc">날짜를 누르면 웨딩 시간 및 혼주·웨딩카·버스 정보가 나옵니다.</div>
+            <div class="desc" id="sched-desc">날짜를 누르면 웨딩 또는 상담 상세 일정이 표시됩니다.</div>
 
             <div class="tab-group">
                 <button class="tab-btn active" id="stype-wedding" onclick="switchScheduleType('wedding')">웨딩</button>
                 <button class="tab-btn" id="stype-consult" onclick="switchScheduleType('consult')">상담</button>
             </div>
 
+            <!-- 웨딩 캘린더 뷰 -->
             <div id="sched-view-wedding">
                 <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
                     <button class="tab-btn active" id="month-btn-9" onclick="setMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
@@ -387,16 +389,16 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
-                    <div class="date-cell sat" onclick="alert('9월 5일 예식 일정:\n- 11:00 / 12:30 예식\n- 혼주 차량 각 4대, 웨딩카, 버스대절 포함')">5<div class="badge-count">4</div></div>
-                    <div class="date-cell sun" onclick="alert('9월 6일 예식 일정:\n- 11:00 예식\n- 혼주 차량 4대, 웨딩카 포함')">6<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[9월 5일 토요일 웨딩 주요사항]\n\n■ 11:00 예식\n- 지불보증: 신랑 200명 / 신부 180명\n- 혼주 차량: 1111, 2222, 3333, 4444\n- 버스: 55마 8888 (기사: 010-1234-5678)\n\n■ 12:30 예식\n- 지불보증: 신랑 250명 / 신부 200명\n- 혼주 차량: 5555, 6666, 7777, 8888\n- 웨딩카: 7777 (링컨)')">5<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 6일 일요일 웨딩 주요사항]\n\n■ 11:00 예식\n- 지불보증: 신랑 200명 / 신부 180명\n- 혼주 차량: 1212, 3434, 5656, 7878\n- 웨딩카: 9999')">6<div class="badge-count">2</div></div>
                     <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
-                    <div class="date-cell sat" onclick="alert('9월 12일 예식 일정:\n- 4건 예식 진행\n- 혼주 차량 및 버스대절 등록 완료')">12<div class="badge-count">4</div></div>
-                    <div class="date-cell sun" onclick="alert('9월 13일 예식 일정:\n- 2건 예식 진행')">13<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[9월 12일 토요일 웨딩 주요사항]\n- 총 4건 예식 진행\n- 시간별 지불보증, 혼주 차량 및 버스(기사 연락처 포함) 등록 완료')">12<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 13일 일요일 웨딩 주요사항]\n- 총 2건 예식 진행\n- 혼주 차량 및 웨딩카 등록 완료')">13<div class="badge-count">2</div></div>
                     <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
-                    <div class="date-cell sat" onclick="alert('9월 19일 예식 일정:\n- 4건 예식 진행')">19<div class="badge-count">4</div></div>
-                    <div class="date-cell sun" onclick="alert('9월 20일 예식 일정:\n- 2건 예식 진행')">20<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[9월 19일 토요일 웨딩 주요사항]\n- 총 4건 예식 진행')">19<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 20일 일요일 웨딩 주요사항]\n- 총 2건 예식 진행')">20<div class="badge-count">2</div></div>
                     <div class="date-cell">21</div>
-                    <div class="date-cell active-date" onclick="alert('9월 22일 (오늘)\n- 예식 및 혼주/웨딩카/버스 등록 완료')">22</div>
+                    <div class="date-cell active-date" onclick="alert('[9월 22일 화요일 웨딩 주요사항]\n- 예식 및 혼주/웨딩카/버스 등록 완료')">22</div>
                     <div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
                     <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
                 </div>
@@ -411,48 +413,81 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
-                    <div class="date-cell sat" onclick="alert('10월 3일 토요일\n- 예식 5건 진행\n- 상담 일정 및 혼주/웨딩카 등록')">3<div class="badge-count">5</div></div>
-                    <div class="date-cell sun" onclick="alert('10월 4일 일요일\n- 예식 2건 진행')">4<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 3일 토요일 웨딩 주요사항]\n\n■ 11:00 예식\n- 지불보증: 신랑 200명 / 신부 180명\n- 혼주 차량 및 버스 등록 완료\n\n■ 12:30 예식\n- 지불보증: 신랑 250명 / 신부 200명\n\n(총 5건 예식 진행)')">3<div class="badge-count">5</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 4일 일요일 웨딩 주요사항]\n- 총 2건 예식 진행\n- 지불보증 및 혼주 차량 확인 완료')">4<div class="badge-count">2</div></div>
                     <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
-                    <div class="date-cell sat" onclick="alert('10월 10일 토요일\n- 예식 4건 진행')">10<div class="badge-count">4</div></div>
-                    <div class="date-cell sun" onclick="alert('10월 11일 일요일\n- 예식 2건 진행')">11<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 10일 토요일 웨딩 주요사항]\n- 총 4건 예식 진행')">10<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 11일 일요일 웨딩 주요사항]\n- 총 2건 예식 진행')">11<div class="badge-count">2</div></div>
                     <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
-                    <div class="date-cell sat" onclick="alert('10월 17일 토요일\n- 예식 4건 진행')">17<div class="badge-count">4</div></div>
-                    <div class="date-cell sun" onclick="alert('10월 18일 일요일\n- 예식 2건 진행')">18<div class="badge-count">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 17일 토요일 웨딩 주요사항]\n- 총 4건 예식 진행')">17<div class="badge-count">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 18일 일요일 웨딩 주요사항]\n- 총 2건 예식 진행')">18<div class="badge-count">2</div></div>
                     <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
                     <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
-                    <div class="date-cell sat" onclick="alert('10월 31일 토요일\n- 예식 3건 진행')">31<div class="badge-count">3</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 31일 토요일 웨딩 주요사항]\n- 총 3건 예식 진행')">31<div class="badge-count">3</div></div>
                 </div>
             </div>
 
+            <!-- 상담 캘린더 뷰 -->
             <div id="sched-view-consult" style="display:none;">
-                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: #ffffff;">8 팀 · 10월 3일 토요일 · 상담 및 차량 연동</div>
-                
-                <div class="info-card">
-                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 4px;">상담 차량 8대 내외</div>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">상담 1팀당 1대 기준. 후문 주차장 안내.</div>
+                <div class="tab-group" style="background:transparent; border:none; padding:0; margin-bottom:10px;">
+                    <button class="tab-btn active" id="c-month-btn-9" onclick="setConsultMonth(9)" style="background:#f59e0b; color:#121417; margin-right:5px;">2026년 9월</button>
+                    <button class="tab-btn" id="c-month-btn-10" onclick="setConsultMonth(10)" style="background:#242832; color:#94a3b8;">2026년 10월</button>
                 </div>
 
-                <div class="info-card">
-                    <div class="info-header">
-                        <span class="time-badge">10:00</span>
-                        <span style="font-size: 0.8rem; color: #94a3b8;">상담 1팀</span>
-                    </div>
-                    <div class="info-row"><span>윤서연 / 한지호</span><span style="color: #60a5fa;">91마 1024 · 예식 예정 2027/06</span></div>
+                <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px;"><span id="consult-total-count">24</span> 팀 · <span id="consult-month-title">9</span>월 상담 합계</div>
+
+                <div id="ccal-9" class="calendar-grid">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
+                    <div class="date-cell sat" onclick="alert('[9월 5일 토요일 상담 일정]\n\n■ 10:00 - 윤서연 / 한지호\n- 방문 차량: 91마 1024 (예식 예정 2027/06)\n\n■ 11:30 - 임하늘 / 조성민\n- 방문 차량: 27바 5588 (예식 예정 2027/08)\n\n(총 2팀 상담)')">5<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 6일 일요일 상담 일정]\n\n■ 13:00 - 김민지 / 최준호\n- 방문 차량: 45가 7788 (예식 예정 2027/05)')">6<div class="badge-count" style="background:#3b82f6; color:#fff;">1</div></div>
+                    <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
+                    <div class="date-cell sat" onclick="alert('[9월 12일 토요일 상담 일정]\n- 상담 총 3팀 예약 완료 (후문 주차 안내)')">12<div class="badge-count" style="background:#3b82f6; color:#fff;">3</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 13일 일요일 상담 일정]\n- 상담 총 2팀 예약 완료')">13<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
+                    <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
+                    <div class="date-cell sat" onclick="alert('[9월 19일 토요일 상담 일정]\n- 상담 총 4팀 예약 완료')">19<div class="badge-count" style="background:#3b82f6; color:#fff;">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 20일 일요일 상담 일정]\n- 상담 총 2팀 예약 완료')">20<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
+                    <div class="date-cell">21</div>
+                    <div class="date-cell active-date" onclick="alert('[9월 22일 화요일 상담 일정]\n- 평일 상담 1팀 방문 예정')">22</div>
+                    <div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
                 </div>
 
-                <div class="info-card">
-                    <div class="info-header">
-                        <span class="time-badge">11:00</span>
-                        <span style="font-size: 0.8rem; color: #94a3b8;">상담 2팀</span>
-                    </div>
-                    <div class="info-row"><span>임하늘 / 조성민</span><span style="color: #60a5fa;">27바 5588 · 예식 예정 2027/08</span></div>
+                <div id="ccal-10" class="calendar-grid" style="display:none;">
+                    <div class="day-header" style="color:#f87171;">일</div>
+                    <div class="day-header">월</div>
+                    <div class="day-header">화</div>
+                    <div class="day-header">수</div>
+                    <div class="day-header">목</div>
+                    <div class="day-header">금</div>
+                    <div class="day-header" style="color:#60a5fa;">토</div>
+
+                    <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
+                    <div class="date-cell sat" onclick="alert('[10월 3일 토요일 상담 일정]\n\n■ 10:00 - 윤서연 / 한지호\n- 방문 차량: 91마 1024 (예식 예정 2027/06)\n\n■ 11:00 - 임하늘 / 조성민\n- 방문 차량: 27바 5588 (예식 예정 2027/08)\n\n(총 8팀 상담 진행)')">3<div class="badge-count" style="background:#3b82f6; color:#fff;">8</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 4일 일요일 상담 일정]\n- 상담 총 3팀 예약')">4<div class="badge-count" style="background:#3b82f6; color:#fff;">3</div></div>
+                    <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
+                    <div class="date-cell sat" onclick="alert('[10월 10일 토요일 상담 일정]\n- 상담 총 4팀 예약')">10<div class="badge-count" style="background:#3b82f6; color:#fff;">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 11일 일요일 상담 일정]\n- 상담 총 2팀 예약')">11<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
+                    <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
+                    <div class="date-cell sat" onclick="alert('[10월 17일 토요일 상담 일정]\n- 상담 총 5팀 예약')">17<div class="badge-count" style="background:#3b82f6; color:#fff;">5</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 18일 일요일 상담 일정]\n- 상담 총 2팀 예약')">18<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
+                    <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
+                    <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
+                    <div class="date-cell sat" onclick="alert('[10월 31일 토요일 상담 일정]\n- 상담 총 3팀 예약')">31<div class="badge-count" style="background:#3b82f6; color:#fff;">3</div></div>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <!-- 3. 주차 화면 (임원 차량 주차 구역 안내 추가) -->
+    <!-- 3. 주차 화면 -->
     <div id="sec-parking" class="section-view">
         <div class="container">
             <h1>주차 안내</h1>
@@ -515,78 +550,24 @@
                 </div>
             </div>
 
-            <!-- 임원 차량 주차 구역 안내 -->
+            <!-- 임원 차량 주차 구역 전체 안내 -->
             <div id="parking-floor-exec" style="display:none;">
                 <div class="info-card" style="border-left: 3px solid #f59e0b;">
                     <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">👑 임원 차량 VIP 지정 주차구역</div>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">대표이사 및 이사 차량 전용 구역으로 상시 비워둡니다.</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">임원진 전용 지정석으로 항상 확보해 두어야 합니다.</div>
                 </div>
                 <div class="info-card">
-                    <div class="info-row"><span>대표이사 (카니발)</span><span style="color:#34d399;">VIP 구역 A동</span></div>
-                    <div class="info-row"><span>이사 (제네시스 G80)</span><span style="color:#34d399;">VIP 구역 B동</span></div>
+                    <div class="info-row"><span>김수연 대표</span><span style="color:#34d399;">제네시스 G90 (197하4877)</span></div>
+                    <div class="info-row"><span>강창열 1그룹장</span><span style="color:#34d399;">쏘렌토 (02서2546)</span></div>
+                    <div class="info-row"><span>김창현 대치 점장</span><span style="color:#34d399;">팰리세이드 (126너2085)</span></div>
+                    <div class="info-row"><span>허준석 본부장</span><span style="color:#34d399;">GV80 (9665)</span></div>
+                    <div class="info-row"><span>서종필 노조임원</span><span style="color:#34d399;">벤츠 220d (8881)</span></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 4. 차량 화면 -->
-    <div id="sec-car" class="section-view">
-        <div class="container">
-            <h1 id="car-title">혼주 차량</h1>
-            <div class="desc" id="car-desc">예식 시간별 혼주 차량 및 웨딩카 리스트입니다.</div>
-
-            <div class="tab-group">
-                <button class="tab-btn" id="ctype-exec" onclick="switchCarType('exec')">임원 차량</button>
-                <button class="tab-btn active" id="ctype-guest" onclick="switchCarType('guest')">혼주 차량</button>
-            </div>
-
-            <!-- 혼주 차량 뷰 (통합) -->
-            <div id="car-view-guest">
-                <div style="font-size: 0.9rem; font-weight: bold; color: #cbd5e1; margin-bottom: 10px;">9월 5일 토요일</div>
-                
-                <div class="info-card">
-                    <div class="info-header">
-                        <span class="time-badge" style="background:#242832; color:#cbd5e1; border:1px solid rgba(255,255,255,0.1);">11:00 예식</span>
-                        <span style="font-size: 0.8rem; color: #f87171;">혼주 4대 + 웨딩카</span>
-                    </div>
-                    <div class="info-row"><span>혼주 차량 1</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    <div class="info-row"><span>혼주 차량 2</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    <div class="info-row"><span>혼주 차량 3</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    <div class="info-row"><span>혼주 차량 4</span><span style="color:#f87171;">번호 등록 대기</span></div>
-                    <div class="info-row" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6px; margin-top: 6px;">
-                        <span style="color:#60a5fa; font-weight:bold;">웨딩카</span><span style="color:#f87171;">번호 등록 대기</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 임원 차량 뷰 -->
-            <div id="car-view-exec" style="display:none;">
-                <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 5px 0 10px 0;">VIP 지정석 리스트</div>
-
-                <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <div style="font-weight:bold; font-size:1rem; color:#ffffff;">대표이사</div>
-                        <div style="font-size:0.8rem; color:#94a3b8;">카니발 (지정석 완료)</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:15px;">
-                        <span style="font-size:0.9rem; color:#34d399; font-weight:bold;">등록완료</span>
-                    </div>
-                </div>
-
-                <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이사</div>
-                        <div style="font-size:0.8rem; color:#94a3b8;">제네시스 G80 (지정석 완료)</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:15px;">
-                        <span style="font-size:0.9rem; color:#34d399; font-weight:bold;">등록완료</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. 비상 연락망 화면 -->
+    <!-- 4. 비상 연락망 화면 -->
     <div id="sec-contact" class="section-view">
         <div class="container">
             <h1>비상 연락망</h1>
@@ -658,7 +639,6 @@
         <a href="#" onclick="switchTab('today')" class="nav-item active" id="nav-today"><span>⏰</span>오늘</a>
         <a href="#" onclick="switchTab('schedule')" class="nav-item" id="nav-schedule"><span>📅</span>일정</a>
         <a href="#" onclick="switchTab('parking')" class="nav-item" id="nav-parking"><span>🅿️</span>주차</a>
-        <a href="#" onclick="switchTab('car')" class="nav-item" id="nav-car"><span>🚗</span>차량</a>
         <a href="#" onclick="switchTab('contact')" class="nav-item" id="nav-contact"><span>📞</span>연락</a>
     </nav>
 
@@ -684,7 +664,7 @@
                 document.getElementById('stype-consult').style.background = 'transparent';
                 document.getElementById('stype-consult').style.color = '#94a3b8';
                 document.getElementById('sched-title').innerText = '운영 스케줄';
-                document.getElementById('sched-desc').innerText = '날짜를 누르면 웨딩 시간 및 혼주·웨딩카·버스 정보가 나옵니다.';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 웨딩 상세 일정이 표시됩니다.';
             } else {
                 document.getElementById('sched-view-wedding').style.display = 'none';
                 document.getElementById('sched-view-consult').style.display = 'block';
@@ -695,33 +675,7 @@
                 document.getElementById('stype-wedding').style.background = 'transparent';
                 document.getElementById('stype-wedding').style.color = '#94a3b8';
                 document.getElementById('sched-title').innerText = '상담 일정';
-                document.getElementById('sched-desc').innerText = '상담 고객 방문 시간입니다.';
-            }
-        }
-
-        function switchCarType(type) {
-            if (type === 'guest') {
-                document.getElementById('car-view-guest').style.display = 'block';
-                document.getElementById('car-view-exec').style.display = 'none';
-                document.getElementById('ctype-guest').classList.add('active');
-                document.getElementById('ctype-guest').style.background = '#f59e0b';
-                document.getElementById('ctype-guest').style.color = '#121417';
-                document.getElementById('ctype-exec').classList.remove('active');
-                document.getElementById('ctype-exec').style.background = 'transparent';
-                document.getElementById('ctype-exec').style.color = '#94a3b8';
-                document.getElementById('car-title').innerText = '혼주 차량';
-                document.getElementById('car-desc').innerText = '예식 시간별 혼주 차량 및 웨딩카 리스트입니다.';
-            } else {
-                document.getElementById('car-view-guest').style.display = 'none';
-                document.getElementById('car-view-exec').style.display = 'block';
-                document.getElementById('ctype-exec').classList.add('active');
-                document.getElementById('ctype-exec').style.background = '#f59e0b';
-                document.getElementById('ctype-exec').style.color = '#121417';
-                document.getElementById('ctype-guest').classList.remove('active');
-                document.getElementById('ctype-guest').style.background = 'transparent';
-                document.getElementById('ctype-guest').style.color = '#94a3b8';
-                document.getElementById('car-title').innerText = '임원 차량';
-                document.getElementById('car-desc').innerText = 'VIP 지정석 리스트입니다.';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 상담 상세 일정이 표시됩니다.';
             }
         }
 
@@ -778,6 +732,28 @@
                 document.getElementById('month-btn-9').style.color = '#94a3b8';
                 document.getElementById('total-count').innerText = '21';
                 document.getElementById('month-title').innerText = '10';
+            }
+        }
+
+        function setConsultMonth(month) {
+            if (month === 9) {
+                document.getElementById('ccal-9').style.display = 'grid';
+                document.getElementById('ccal-10').style.display = 'none';
+                document.getElementById('c-month-btn-9').style.background = '#f59e0b';
+                document.getElementById('c-month-btn-9').style.color = '#121417';
+                document.getElementById('c-month-btn-10').style.background = '#242832';
+                document.getElementById('c-month-btn-10').style.color = '#94a3b8';
+                document.getElementById('consult-total-count').innerText = '24';
+                document.getElementById('consult-month-title').innerText = '9';
+            } else {
+                document.getElementById('ccal-9').style.display = 'none';
+                document.getElementById('ccal-10').style.display = 'grid';
+                document.getElementById('c-month-btn-10').style.background = '#f59e0b';
+                document.getElementById('c-month-btn-10').style.color = '#121417';
+                document.getElementById('c-month-btn-9').style.background = '#242832';
+                document.getElementById('c-month-btn-9').style.color = '#94a3b8';
+                document.getElementById('consult-total-count').innerText = '28';
+                document.getElementById('consult-month-title').innerText = '10';
             }
         }
     </script>
