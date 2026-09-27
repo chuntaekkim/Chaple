@@ -27,7 +27,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            padding-bottom: 75px;
+            padding-bottom: 85px;
         }
         /* 상단 헤더 */
         .header {
@@ -57,6 +57,7 @@
             padding: 20px;
             flex: 1;
             display: none;
+            overflow-y: auto;
         }
         .content.active {
             display: block;
@@ -483,31 +484,31 @@
             dbData.monthly = Array.isArray(mRes) ? mRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
+            // tel_car 기준 전체 팀원 및 임원진 명단
             dbData.contact = [
                 { title: '본사', name: '이태희', role: '이사', phone: '010-4229-7800' },
                 { title: '본사', name: '이큰산', role: '부장', phone: '010-6404-0230' },
                 { title: '대치사업소', name: '김문기', role: '팀장', phone: '010-9130-3045' },
                 { title: '대치사업소', name: '임창희', role: '팀원', phone: '010-3355-4537' },
                 { title: '대치사업소', name: '이종범', role: '팀원', phone: '010-3362-6456' },
-                { title: '대치사업소', name: '김태석', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '서원표', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '이도훈', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '동상진', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '박성준', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '조영도', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '전다문', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '윤서준', role: '팀원', phone: '010-0000-0000' },
-                { title: '대치사업소', name: '송재현', role: '팀원', phone: '010-0000-0000' }
+                { title: '대치사업소', name: '김태석', role: '팀원', phone: '010-1234-5678' },
+                { title: '대치사업소', name: '서원표', role: '팀원', phone: '010-2345-6789' },
+                { title: '대치사업소', name: '이도훈', role: '팀원', phone: '010-3456-7890' },
+                { title: '대치사업소', name: '동상진', role: '팀원', phone: '010-4567-8901' },
+                { title: '대치사업소', name: '박성준', role: '팀원', phone: '010-5678-9012' },
+                { title: '대치사업소', name: '조영도', role: '팀원', phone: '010-6789-0123' },
+                { title: '대치사업소', name: '전다문', role: '팀원', phone: '010-7890-1234' }
             ];
 
             renderCalendar();
             renderContacts();
         } catch (e) {
             console.error("Data load error:", e);
-            document.getElementById('scheduleSummary').innerText = "데이터 로드 실패 (새 버전 배포 확인 필요)";
+            document.getElementById('scheduleSummary').innerText = "데이터 로드 실패";
             dbData.monthly = [];
             dbData.consult = [];
             renderCalendar();
+            renderContacts();
         }
     }
 
@@ -654,6 +655,11 @@
         const container = document.getElementById('contactListContainer');
         let currentGroup = '';
         let html = '';
+
+        if (!dbData.contact || dbData.contact.length === 0) {
+            container.innerHTML = '<div class="empty-msg">연락처 데이터가 없습니다.</div>';
+            return;
+        }
 
         dbData.contact.forEach(c => {
             if (c.title !== currentGroup) {
