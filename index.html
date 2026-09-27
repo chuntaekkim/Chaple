@@ -134,27 +134,23 @@
 </div>
 
 <script>
-    // ⚠️ 아래에 본인의 구글 앱스 스크립트 웹 앱 URL을 넣어주세요!
+    // 구글 앱스 스크립트 웹 앱 URL 연동 완료
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
 
     let currentTab = 'monthly';
-    let rawMonthlyData = []; // 월간 전체 데이터 보관용
+    let rawMonthlyData = []; 
     let currentFilter = '전체';
 
-    // 페이지 로드 시 기본 월간 데이터 호출
     window.onload = function() {
         fetchData('monthly');
     };
 
-    // 탭 변경 함수
     function switchTab(tabType) {
         currentTab = tabType;
         
-        // 버튼 활성화 디자인 변경
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
 
-        // 월간 탭일 때만 9월/10월 필터 보이기
         const filterEl = document.getElementById('monthlyFilter');
         if (tabType === 'monthly') {
             filterEl.style.display = 'flex';
@@ -165,7 +161,6 @@
         fetchData(tabType);
     }
 
-    // 구글 앱스 스크립트에서 데이터 가져오기
     function fetchData(type) {
         const contentArea = document.getElementById('contentArea');
         contentArea.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
@@ -191,7 +186,6 @@
             });
     }
 
-    // 일반 테이블 렌더링 (Weekly, Consult 용)
     function renderTable(data) {
         const contentArea = document.getElementById('contentArea');
         if (!data || data.length === 0) {
@@ -218,7 +212,6 @@
         contentArea.innerHTML = html;
     }
 
-    // 월간 데이터 렌더링 (필터 적용 포함)
     function renderMonthlyTable(data) {
         let filteredData = data;
         if (currentFilter !== '전체') {
@@ -227,7 +220,6 @@
         renderTable(filteredData);
     }
 
-    // 월간 필터 버튼 클릭 시
     function filterMonthly(month) {
         currentFilter = month;
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
