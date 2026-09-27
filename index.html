@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>웨딩 및 상담 통합 관리 시스템</title>
+    <title>웨딩 및 상담 통합 관리</title>
     <style>
         :root {
             --primary-color: #4f46e5;
@@ -17,78 +17,60 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            padding-bottom: 80px; /* 하단 네비게이션 공간 확보 */
         }
         .container {
             max-width: 1000px;
             margin: 0 auto;
+            padding: 20px;
         }
         h1 {
             text-align: center;
             color: var(--primary-color);
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-        }
-        /* 탭 메뉴 스타일 */
-        .tab-menu {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
             margin-bottom: 20px;
-        }
-        .tab-btn {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: #e2e8f0;
-            color: #64748b;
-            transition: all 0.2s ease;
-        }
-        .tab-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
-        }
-        /* 필터 버튼 스타일 (월간용) */
-        .filter-menu {
-            display: none;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        .filter-btn {
-            padding: 6px 14px;
-            font-size: 0.9rem;
-            border: 1px solid var(--primary-color);
-            border-radius: 6px;
-            cursor: pointer;
-            background-color: white;
-            color: var(--primary-color);
-        }
-        .filter-btn.active {
-            background-color: var(--primary-color);
-            color: white;
+            font-size: 1.5rem;
         }
         /* 콘텐츠 박스 */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            padding: 20px;
+            padding: 15px;
             overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        /* 서브 탭 메뉴 (일정 화면 내 월간/주간/상담 전환용) */
+        .sub-tab-menu {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .sub-tab-btn {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #e2e8f0;
+            color: #64748b;
+        }
+        .sub-tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
         }
         /* 테이블 스타일 */
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         th, td {
-            padding: 12px 15px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-color);
             white-space: nowrap;
         }
@@ -100,96 +82,256 @@
         tr:hover {
             background-color: #f8fafc;
         }
-        .loading {
+        .loading, .empty-msg {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: #64748b;
-            font-size: 1.1rem;
+            font-size: 1rem;
+        }
+        /* 하단 네비게이션 바 스타일 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: white;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.03);
+            z-index: 1000;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #64748b;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+            padding: 10px 0;
+            transition: color 0.2s;
+        }
+        .nav-btn.active {
+            color: var(--primary-color);
+        }
+        .nav-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+        /* 화면 섹션 표시 제어 */
+        .screen-section {
+            display: none;
+        }
+        .screen-section.active {
+            display: block;
+        }
+        .info-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>웨딩 및 상담 통합 관리</h1>
+    <h1 id="screenTitle">오늘의 일정</h1>
 
-    <!-- 메인 탭 메뉴 -->
-    <div class="tab-menu">
-        <button class="tab-btn active" onclick="switchTab('monthly')">월간 웨딩 일정</button>
-        <button class="tab-btn" onclick="switchTab('weekly')">주간 웨딩 일정</button>
-        <button class="tab-btn" onclick="switchTab('consult')">상담 주간 일정</button>
+    <!-- 1. [오늘] 화면 -->
+    <div id="screen-today" class="screen-section active">
+        <div class="info-box">
+            📅 <strong>오늘 날짜:</strong> <span id="currentDateText"></span>
+        </div>
+        <div class="card">
+            <h3>오늘 예정된 주요 일정 및 상담</h3>
+            <div id="todayContent" class="loading">데이터를 불러오는 중입니다...</div>
+        </div>
     </div>
 
-    <!-- 월간 웨딩용 서브 필터 (9월/10월) -->
-    <div id="monthlyFilter" class="filter-menu">
-        <button class="filter-btn active" onclick="filterMonthly('전체')">전체 보기</button>
-        <button class="filter-btn" onclick="filterMonthly('9월')">9월</button>
-        <button class="filter-btn" onclick="filterMonthly('10월')">10월</button>
+    <!-- 2. [일정] 화면 (월간 웨딩, 주간 웨딩, 상담 주간 통합) -->
+    <div id="screen-schedule" class="screen-section">
+        <div class="sub-tab-menu">
+            <button class="sub-tab-btn active" onclick="switchScheduleTab('monthly', this)">월간 웨딩</button>
+            <button class="sub-tab-btn" onclick="switchScheduleTab('weekly', this)">주간 웨딩</button>
+            <button class="sub-tab-btn" onclick="switchScheduleTab('consult', this)">상담 주간</button>
+        </div>
+        <div class="card">
+            <div id="scheduleContent" class="loading">데이터를 불러오는 중입니다...</div>
+        </div>
     </div>
 
-    <!-- 데이터 출력 카드 -->
-    <div class="card">
-        <div id="contentArea" class="loading">데이터를 불러오는 중입니다...</div>
+    <!-- 3. [주차] 화면 -->
+    <div id="screen-parking" class="screen-section">
+        <div class="card">
+            <h3>주차 안내 및 정보</h3>
+            <p style="color: #64748b; line-height: 1.5;">
+                행사 및 상담 방문객을 위한 주차 구역 안내 정보입니다.<br>
+                필요한 주차 관련 메모나 시트 정보를 여기에 연동하여 확인할 수 있습니다.
+            </p>
+            <div id="parkingContent" class="loading">주차 정보를 불러오는 중입니다...</div>
+        </div>
     </div>
+
+    <!-- 4. [연락] 화면 -->
+    <div id="screen-contact" class="screen-section">
+        <div class="card">
+            <h3>주요 연락처 및 담당자</h3>
+            <p style="color: #64748b; line-height: 1.5;">
+                웨딩 및 상담 관련 주요 비상 연락망입니다.
+            </p>
+            <div id="contactContent" class="loading">연락처 정보를 불러오는 중입니다...</div>
+        </div>
+    </div>
+
 </div>
+
+<!-- 하단 고정 네비게이션 바 -->
+<nav class="bottom-nav">
+    <button class="nav-btn active" onclick="switchScreen('today', this)">
+        <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
+        오늘
+    </button>
+    <button class="nav-btn" onclick="switchScreen('schedule', this)">
+        <svg viewBox="0 0 24 24"><path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm14 0v6l5-3z"/></svg>
+        일정
+    </button>
+    <button class="nav-btn" onclick="switchScreen('parking', this)">
+        <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM19 17H5v-4.66l.12-.34h13.77l.11.34V17z"/></svg>
+        주차
+    </button>
+    <button class="nav-btn" onclick="switchScreen('contact', this)">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        연락
+    </button>
+</nav>
 
 <script>
     // 구글 앱스 스크립트 웹 앱 URL 연동 완료
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
 
-    let currentTab = 'monthly';
-    let rawMonthlyData = []; 
-    let currentFilter = '전체';
-
-    window.onload = function() {
-        fetchData('monthly');
+    // 캐시 데이터 저장소
+    let cacheData = {
+        monthly: null,
+        weekly: null,
+        consult: null
     };
 
-    function switchTab(tabType) {
-        currentTab = tabType;
-        
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+    // 오늘 날짜 표시
+    window.onload = function() {
+        const today = new Date();
+        const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+        document.getElementById('currentDateText').innerText = formattedDate;
 
-        const filterEl = document.getElementById('monthlyFilter');
-        if (tabType === 'monthly') {
-            filterEl.style.display = 'flex';
-        } else {
-            filterEl.style.display = 'none';
-        }
+        // 초기 데이터 로드 (오늘 화면용으로 월간/상담 데이터 미리 호출)
+        fetchAllData();
+    };
 
-        fetchData(tabType);
+    // 화면 전환 함수 ([오늘], [일정], [주차], [연락])
+    function switchScreen(screenName, btnElement) {
+        // 상단 타이틀 변경
+        const titles = {
+            today: '오늘의 일정',
+            schedule: '전체 일정 관리',
+            parking: '주차 정보',
+            contact: '연락처 안내'
+        };
+        document.getElementById('screenTitle').innerText = titles[screenName];
+
+        // 화면 섹션 전환
+        document.querySelectorAll('.screen-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(`screen-${screenName}`).classList.add('active');
+
+        // 하단 버튼 활성화 전환
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
     }
 
-    function fetchData(type) {
-        const contentArea = document.getElementById('contentArea');
-        contentArea.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
+    // 일정 화면 안에서 서브 탭 전환 (월간웨딩, 주간웨딩, 상담주간)
+    function switchScheduleTab(type, btnElement) {
+        document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        if (cacheData[type]) {
+            renderTable('scheduleContent', cacheData[type]);
+        } else {
+            fetchSpecificData(type, 'scheduleContent');
+        }
+    }
+
+    // 모든 데이터 한 번에 가져오기 (오늘 화면 및 초기화용)
+    async function fetchAllData() {
+        try {
+            // 월간 데이터 가져오기
+            const resMonthly = await fetch(`${SCRIPT_URL}?type=monthly`);
+            cacheData.monthly = await resMonthly.json();
+
+            // 상담 데이터 가져오기
+            const resConsult = await fetch(`${SCRIPT_URL}?type=consult`);
+            cacheData.consult = await resConsult.json();
+
+            // 주간 데이터 가져오기
+            const resWeekly = await fetch(`${SCRIPT_URL}?type=weekly`);
+            cacheData.weekly = await resWeekly.json();
+
+            // 오늘 화면 렌더링 (월간/상담 데이터 기반 요약 또는 전체 표시)
+            renderTodaySummary();
+            
+            // 기본 일정 화면(월간 웨딩) 렌더링
+            renderTable('scheduleContent', cacheData.monthly);
+            
+            // 주차 및 연락처 화면에 시트 데이터 연동 (필요시 consult 데이터 활용 등)
+            renderTable('parkingContent', cacheData.consult);
+            renderTable('contactContent', cacheData.weekly);
+
+        } catch (error) {
+            console.error('Data fetch error:', error);
+            document.getElementById('todayContent').innerHTML = '<div class="loading" style="color:red;">데이터를 불러오는 데 실패했습니다.</div>';
+        }
+    }
+
+    // 특정 데이터만 다시 가져오기
+    function fetchSpecificData(type, targetElementId) {
+        const target = document.getElementById(targetElementId);
+        target.innerHTML = '<div class="loading">데이터를 불러오는 중입니다...</div>';
 
         fetch(`${SCRIPT_URL}?type=${type}`)
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                if (data.error) {
-                    contentArea.innerHTML = `<div class="loading" style="color:red;">에러: ${data.error}</div>`;
-                    return;
-                }
-                
-                if (type === 'monthly') {
-                    rawMonthlyData = data;
-                    renderMonthlyTable(rawMonthlyData);
-                } else {
-                    renderTable(data);
-                }
+                cacheData[type] = data;
+                renderTable(targetElementId, data);
             })
-            .catch(error => {
-                console.error('Error:', error);
-                contentArea.innerHTML = '<div class="loading" style="color:red;">데이터를 불러오는 데 실패했습니다. URL을 확인해 주세요.</div>';
+            .catch(err => {
+                target.innerHTML = '<div class="loading" style="color:red;">데이터를 불러오지 못했습니다.</div>';
             });
     }
 
-    function renderTable(data) {
-        const contentArea = document.getElementById('contentArea');
-        if (!data || data.length === 0) {
-            contentArea.innerHTML = '<div class="loading">데이터가 없습니다.</div>';
+    // 오늘 날짜에 맞는 일정 요약 표시 (예시로 월간 데이터 중 일부 또는 전체 리스트 표시)
+    function renderTodaySummary() {
+        const todayContent = document.getElementById('todayContent');
+        if (!cacheData.monthly || cacheData.monthly.length === 0) {
+            todayContent.innerHTML = '<div class="empty-msg">등록된 일정이 없습니다.</div>';
+            return;
+        }
+        // 전체 월간 목록을 오늘 화면에도 편리하게 표시
+        renderTable('todayContent', cacheData.monthly);
+    }
+
+    // 공통 테이블 렌더링 함수
+    function renderTable(elementId, data) {
+        const container = document.getElementById(elementId);
+        if (!data || data.length === 0 || data.error) {
+            container.innerHTML = '<div class="empty-msg">데이터가 없습니다.</div>';
             return;
         }
 
@@ -209,22 +351,7 @@
         });
         html += '</tbody></table>';
 
-        contentArea.innerHTML = html;
-    }
-
-    function renderMonthlyTable(data) {
-        let filteredData = data;
-        if (currentFilter !== '전체') {
-            filteredData = data.filter(row => row['월'] === currentFilter);
-        }
-        renderTable(filteredData);
-    }
-
-    function filterMonthly(month) {
-        currentFilter = month;
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-        renderMonthlyTable(rawMonthlyData);
+        container.innerHTML = html;
     }
 </script>
 
