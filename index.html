@@ -425,12 +425,11 @@
                     <div class="date-cell sat" onclick="alert('[10월 31일 토요일 웨딩]\n- 총 3건 예식 진행')">31<div class="badge-count">3</div></div>
                 </div>
 
-                <!-- 웨딩 9/19 상세 출력 영역 (외부 파일 연동 대기중) -->
+                <!-- 웨딩 상세 출력 영역 (wedding_sat.png 연동) -->
                 <div id="wedding-detail-0919" style="margin-top: 20px; display: none;">
-                    <div style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 9월 19일 (토) 웨딩 상세 일정</div>
-                    <!-- 외부 이미지 파일이 갱신되면 자동으로 출력되는 영역입니다 -->
+                    <div style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 9월 19일 (토) 웨딩 상세 일정표</div>
                     <div class="map-wrapper">
-                        <img src="wedding_sat.png" alt="9월 19일 웨딩 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\'>이미지 파일을 불러올 수 없습니다. <br>파일 이름(wedding_sat.png)을 확인해주세요.</div>'">
+                        <img src="wedding_sat.png" alt="9월 19일 웨딩 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_sat.png 파일을 찾을 수 없습니다.<br>깃허브에 해당 이름으로 이미지를 업로드해주세요.</div>'">
                     </div>
                 </div>
             </div>
@@ -483,16 +482,310 @@
                     <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div>
                     <div class="date-cell sat" onclick="alert('[10월 10일 상담]\n- 총 4팀 예약')">10<div class="badge-count" style="background:#3b82f6; color:#fff;">4</div></div>
                     <div class="date-cell sun" onclick="alert('[10월 11일 상담]\n- 총 2팀 예약')">11<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
-                    <div class="date-cell lat" onclick="alert('[10월 17일 상담]\n- 총 5팀 예약')">17<div class="badge-count" style="background:#3b82f6; color:#fff;">5</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 17일 상담]\n- 총 5팀 예약')">17<div class="badge-count" style="background:#3b82f6; color:#fff;">5</div></div>
                     <div class="date-cell sun" onclick="alert('[10월 18일 상담]\n- 총 2팀 예약')">18<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
                     <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
                     <div class="date-cell sun">25</div><div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
                     <div class="date-cell sat" onclick="alert('[10월 31일 상담]\n- 총 3팀 예약')">31<div class="badge-count" style="background:#3b82f6; color:#fff;">3</div></div>
                 </div>
 
-                <!-- 상담 9/19 상세 출력 영역 (외부 파일 연동 대기중) -->
+                <!-- 상담 상세 출력 영역 (consult_sat.png 연동) -->
                 <div id="consult-detail-0919" style="margin-top: 20px; display: none;">
                     <div style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 9월 19일 (토) 상담 일정표</div>
-                     <!-- 외부 이미지 파일이 갱신되면 자동으로 출력되는 영역입니다 -->
                     <div class="map-wrapper">
-                        <img src="consult_sat.png" alt="9월 19일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\'>이미지 파일을 불러올 수 없습니다. <br>파일 이름(consult_sat.png)을
+                        <img src="consult_sat.png" alt="9월 19일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>consult_sat.png 파일을 찾을 수 없습니다.<br>깃허브에 해당 이름으로 이미지를 업로드해주세요.</div>'">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3. 주차 화면 -->
+    <div id="sec-parking" class="section-view">
+        <div class="container">
+            <h1>주차 안내</h1>
+            <div class="desc">도면 및 임원 차량 지정 주차 구역입니다.</div>
+            
+            <div class="tab-group">
+                <button class="tab-btn active" id="p-tab-4" onclick="switchParkingFloor(4)">지하 4층</button>
+                <button class="tab-btn" id="p-tab-5" onclick="switchParkingFloor(5)">지하 5층</button>
+                <button class="tab-btn" id="p-tab-rear" onclick="switchParkingFloor('rear')">후문</button>
+                <button class="tab-btn" id="p-tab-exec" onclick="switchParkingFloor('exec')">임원 차량</button>
+            </div>
+
+            <div id="parking-floor-4">
+                <div class="info-card" style="border-left: 3px solid #f87171;">
+                    <div style="font-weight: bold; color: #f87171; margin-bottom: 3px;">냉동고 및 창고 앞 발렛주차 불가</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">지정주차구역 외에는 대지 마세요.</div>
+                </div>
+                <div class="info-card" style="border-left: 3px solid #34d399;">
+                    <div style="font-weight: bold; color: #34d399; margin-bottom: 3px;">이중주차 가능</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">지정구역 안에서만 이중으로 세웁니다.</div>
+                </div>
+                <div class="map-wrapper">
+                    <img src="Chaple_B4.png" alt="지하 4층 주차 도면" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div id="parking-floor-5" style="display:none;">
+                <div class="info-card" style="border-left: 3px solid #34d399;">
+                    <div style="font-weight: bold; color: #34d399; margin-bottom: 3px;">직원 및 협력업체 주차구역</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">발렛 차량은 원칙적으로 B4를 먼저 채웁니다.</div>
+                </div>
+                <div class="info-card" style="border-left: 3px solid #f87171;">
+                    <div style="font-weight: bold; color: #f87171; margin-bottom: 3px;">빈자리 예측 불가</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">직원·협력업체 차량이 수시 드나들어 여유 면수는 현장에서 직접 확인해야 합니다.</div>
+                </div>
+                <div class="map-wrapper">
+                    <img src="Chaple_B5.png" alt="지하 5층 주차 도면" onerror="this.style.display='none';">
+                </div>
+            </div>
+
+            <div id="parking-floor-rear" style="display:none;">
+                <div class="info-card">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">상담·시식 차량 전용</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">상담 고객과 시식 예약 차량은 이 자리에 주차합니다.</div>
+                </div>
+                <div class="info-card">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">평소 9대 · 최대 15대</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">이중주차로 최대 15대까지 수용 가능합니다.</div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; text-align: center;">
+                    <div class="info-card" style="margin:0;">
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #ffffff;">9</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">평소 가능</div>
+                    </div>
+                    <div class="info-card" style="margin:0;">
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #ffffff;">15</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">최대 (이중주차)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 임원 차량 주차 구역 전체 안내 -->
+            <div id="parking-floor-exec" style="display:none;">
+                <div class="info-card" style="border-left: 3px solid #f59e0b;">
+                    <div style="font-weight: bold; color: #f59e0b; margin-bottom: 3px;">👑 임원 차량 VIP 지정 주차구역</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">임원진 전용 지정석으로 항상 확보해 두어야 합니다.</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-row"><span>김수연 대표</span><span style="color:#34d399;">제네시스 G90 (197하4877)</span></div>
+                    <div class="info-row"><span>강창열 1그룹장</span><span style="color:#34d399;">쏘렌토 (02서2546)</span></div>
+                    <div class="info-row"><span>김창현 대치 점장</span><span style="color:#34d399;">팰리세이드 (126너2085)</span></div>
+                    <div class="info-row"><span>허준석 본부장</span><span style="color:#34d399;">GV80 (9665)</span></div>
+                    <div class="info-row"><span>서종필 노조임원</span><span style="color:#34d399;">벤츠 220d (8881)</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 비상 연락망 화면 -->
+    <div id="sec-contact" class="section-view">
+        <div class="container">
+            <h1>비상 연락망</h1>
+            <div class="desc">이름을 누르면 바로 전화가 걸립니다.</div>
+
+            <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 15px 0 8px 0;">본사</div>
+            
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이태희</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">이사</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-4229-7800</span>
+                    <a href="tel:010-4229-7800" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이큰산</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">부장</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-6404-0230</span>
+                    <a href="tel:010-6404-0230" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+
+            <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 20px 0 8px 0;">대치사업소</div>
+
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">김문기</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">팀장</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-9130-3045</span>
+                    <a href="tel:010-9130-3045" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">임창희</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3355-4537</span>
+                    <a href="tel:010-3355-4537" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+
+            <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이종범</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3362-6456</span>
+                    <a href="tel:010-3362-6456" style="background:#f59e0b; color:#121417; text-decoration:none; font-weight:bold; font-size:0.85rem; padding:6px 14px; border-radius:8px;">전화</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 고정 네비게이션바 -->
+    <nav class="bottom-nav">
+        <a href="#" onclick="switchTab('today')" class="nav-item active" id="nav-today"><span>⏰</span>오늘</a>
+        <a href="#" onclick="switchTab('schedule')" class="nav-item" id="nav-schedule"><span>📅</span>일정</a>
+        <a href="#" onclick="switchTab('parking')" class="nav-item" id="nav-parking"><span>🅿️</span>주차</a>
+        <a href="#" onclick="switchTab('contact')" class="nav-item" id="nav-contact"><span>📞</span>연락</a>
+    </nav>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.section-view').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('sec-' + tabId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.getElementById('nav-' + tabId).classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        function switchScheduleType(type) {
+            if (type === 'wedding') {
+                document.getElementById('sched-view-wedding').style.display = 'block';
+                document.getElementById('sched-view-consult').style.display = 'none';
+                document.getElementById('stype-wedding').classList.add('active');
+                document.getElementById('stype-wedding').style.background = '#f59e0b';
+                document.getElementById('stype-wedding').style.color = '#121417';
+                document.getElementById('stype-consult').classList.remove('active');
+                document.getElementById('stype-consult').style.background = 'transparent';
+                document.getElementById('stype-consult').style.color = '#94a3b8';
+                document.getElementById('sched-title').innerText = '운영 스케줄';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 하단에 상세 일정이 출력됩니다.';
+            } else {
+                document.getElementById('sched-view-wedding').style.display = 'none';
+                document.getElementById('sched-view-consult').style.display = 'block';
+                document.getElementById('stype-consult').classList.add('active');
+                document.getElementById('stype-consult').style.background = '#f59e0b';
+                document.getElementById('stype-consult').style.color = '#121417';
+                document.getElementById('stype-wedding').classList.remove('active');
+                document.getElementById('stype-wedding').style.background = 'transparent';
+                document.getElementById('stype-wedding').style.color = '#94a3b8';
+                document.getElementById('sched-title').innerText = '상담 일정';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 하단에 상담 상세 일정이 출력됩니다.';
+            }
+        }
+
+        function selectWeddingDate(dateCode) {
+            if (dateCode === '0919') {
+                const el = document.getElementById('wedding-detail-0919');
+                el.style.display = el.style.display === 'block' ? 'none' : 'block';
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function selectConsultDate(dateCode) {
+            if (dateCode === '0919') {
+                const el = document.getElementById('consult-detail-0919');
+                el.style.display = el.style.display === 'block' ? 'none' : 'block';
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function switchParkingFloor(floor) {
+            document.getElementById('parking-floor-4').style.display = 'none';
+            document.getElementById('parking-floor-5').style.display = 'none';
+            document.getElementById('parking-floor-rear').style.display = 'none';
+            document.getElementById('parking-floor-exec').style.display = 'none';
+
+            document.getElementById('p-tab-4').style.background = 'transparent';
+            document.getElementById('p-tab-4').style.color = '#94a3b8';
+            document.getElementById('p-tab-5').style.background = 'transparent';
+            document.getElementById('p-tab-5').style.color = '#94a3b8';
+            document.getElementById('p-tab-rear').style.background = 'transparent';
+            document.getElementById('p-tab-rear').style.color = '#94a3b8';
+            document.getElementById('p-tab-exec').style.background = 'transparent';
+            document.getElementById('p-tab-exec').style.color = '#94a3b8';
+
+            if (floor === 4) {
+                document.getElementById('parking-floor-4').style.display = 'block';
+                document.getElementById('p-tab-4').style.background = '#f59e0b';
+                document.getElementById('p-tab-4').style.color = '#121417';
+            } else if (floor === 5) {
+                document.getElementById('parking-floor-5').style.display = 'block';
+                document.getElementById('p-tab-5').style.background = '#f59e0b';
+                document.getElementById('p-tab-5').style.color = '#121417';
+            } else if (floor === 'rear') {
+                document.getElementById('parking-floor-rear').style.display = 'block';
+                document.getElementById('p-tab-rear').style.background = '#f59e0b';
+                document.getElementById('p-tab-rear').style.color = '#121417';
+            } else {
+                document.getElementById('parking-floor-exec').style.display = 'block';
+                document.getElementById('p-tab-exec').style.background = '#f59e0b';
+                document.getElementById('p-tab-exec').style.color = '#121417';
+            }
+        }
+
+        function setMonth(month) {
+            if (month === 9) {
+                document.getElementById('cal-9').style.display = 'grid';
+                document.getElementById('cal-10').style.display = 'none';
+                document.getElementById('month-btn-9').style.background = '#f59e0b';
+                document.getElementById('month-btn-9').style.color = '#121417';
+                document.getElementById('month-btn-10').style.background = '#242832';
+                document.getElementById('month-btn-10').style.color = '#94a3b8';
+                document.getElementById('total-count').innerText = '18';
+                document.getElementById('month-title').innerText = '9';
+            } else {
+                document.getElementById('cal-9').style.display = 'none';
+                document.getElementById('cal-10').style.display = 'grid';
+                document.getElementById('month-btn-10').style.background = '#f59e0b';
+                document.getElementById('month-btn-10').style.color = '#121417';
+                document.getElementById('month-btn-9').style.background = '#242832';
+                document.getElementById('month-btn-9').style.color = '#94a3b8';
+                document.getElementById('total-count').innerText = '21';
+                document.getElementById('month-title').innerText = '10';
+            }
+        }
+
+        function setConsultMonth(month) {
+            if (month === 9) {
+                document.getElementById('ccal-9').style.display = 'grid';
+                document.getElementById('ccal-10').style.display = 'none';
+                document.getElementById('c-month-btn-9').style.background = '#f59e0b';
+                document.getElementById('c-month-btn-9').style.color = '#121417';
+                document.getElementById('c-month-btn-10').style.background = '#242832';
+                document.getElementById('c-month-btn-10').style.color = '#94a3b8';
+                document.getElementById('consult-total-count').innerText = '24';
+                document.getElementById('consult-month-title').innerText = '9';
+            } else {
+                document.getElementById('ccal-9').style.display = 'none';
+                document.getElementById('ccal-10').style.display = 'grid';
+                document.getElementById('c-month-btn-10').style.background = '#f59e0b';
+                document.getElementById('c-month-btn-10').style.color = '#121417';
+                document.getElementById('c-month-btn-9').style.background = '#242832';
+                document.getElementById('c-month-btn-9').style.color = '#94a3b8';
+                document.getElementById('consult-total-count').innerText = '28';
+                document.getElementById('consult-month-title').innerText = '10';
+            }
+        }
+    </script>
+</body>
+</html>
