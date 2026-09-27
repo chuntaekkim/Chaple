@@ -179,6 +179,16 @@
             color: #12141c;
         }
 
+        /* 월 선택 버튼 개별 색상 부여 */
+        #monthBtn9.active {
+            background-color: #f0a500 !important;
+            color: #12141c !important;
+        }
+        #monthBtn10.active {
+            background-color: #3b82f6 !important;
+            color: #ffffff !important;
+        }
+
         /* 주차 서브 섹션 제어 */
         .parking-section {
             display: none;
@@ -239,8 +249,12 @@
             border-radius: 10px;
             font-weight: 700;
         }
+        .calendar-grid.consult-mode .event-count-badge {
+            background-color: #a855f7;
+            color: #ffffff;
+        }
 
-        /* 좁고 슬림해진 비상 연락망 카드 스타일 */
+        /* 비상 연락망 카드 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 10px;
@@ -374,8 +388,8 @@
         </div>
 
         <div class="tab-menu-group" style="background-color: transparent; gap: 10px; padding: 0;">
-            <button id="monthBtn9" class="tab-btn active" style="background-color: #f0a500; color: #12141c;" onclick="switchMonth(9)">2026년 9월</button>
-            <button id="monthBtn10" class="tab-btn" style="background-color: #1a1d29; color: #8e8e93;" onclick="switchMonth(10)">2026년 10월</button>
+            <button id="monthBtn9" class="tab-btn active" onclick="switchMonth(9)">2026년 9월</button>
+            <button id="monthBtn10" class="tab-btn" onclick="switchMonth(10)">2026년 10월</button>
         </div>
 
         <div class="main-card" style="margin-top: 10px;">
@@ -616,40 +630,38 @@
 
     function switchMonth(month) {
         currentMonth = month;
-        document.getElementById('monthBtn9').style.backgroundColor = month === 9 ? '#f0a500' : '#1a1d29';
-        document.getElementById('monthBtn9').style.color = month === 9 ? '#12141c' : '#8e8e93';
-        document.getElementById('monthBtn10').style.backgroundColor = month === 10 ? '#f0a500' : '#1a1d29';
-        document.getElementById('monthBtn10').style.color = month === 10 ? '#12141c' : '#8e8e93';
+        document.getElementById('monthBtn9').classList.toggle('active', month === 9);
+        document.getElementById('monthBtn10').classList.toggle('active', month === 10);
         selectedDateStr = null;
         renderCalendar();
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // 날짜 매칭 함수 (스프레드시트의 다양한 날짜 표현 방식 완벽 대응)
-    function isRowMatchDate(row, month, day) {
-        const text = Object.values(row).join(' ');
-        
-        // 1. "2026-09-19", "2026.09.19", "09/19", "9/19" 형태 검사
-        const mStr = String(month).padStart(2, '0');
-        const dStr = String(day).padStart(2, '0');
-        
-        if (text.includes(`${month}-${mStr}-${dStr}`) || 
-            text.includes(`${month}/${dStr}`) || 
-            text.includes(`${mStr}/${dStr}`) || 
-            text.includes(`${month}.${dStr}`) ||
-            text.includes(`${month}월 ${day}일`) ||
-            text.includes(`${month}월${day}일`)) {
-            return true;
-        }
+    function isRowMatchDate(row, targetMonth, targetDay) {
+        for (let val of Object.values(row)) {
+            if (val === undefined || val === null) continue;
+            let strVal = String(val).trim();
 
-        // 2. 단독 일자(예: "19일" 또는 셀 값이 정확히 숫자 19인 경우) 및 월 조합 검사
-        const hasMonth = text.includes(`${month}월`) || text.includes(`-${mStr}-`) || text.includes(`.${mStr}.`) || text.includes(`/${mStr}/`);
-        const hasDayWord = new RegExp(`\\b${day}[일]?\\b`).test(text);
-        
-        if (hasMonth && hasDayWord) {
-            return true;
-        }
+            let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})/);
+            if (match) {
+                let m = parseInt(match[2], 10);
+                let d = parseInt(match[3], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
 
+            if (strVal.includes(`${targetMonth}월`) && (strVal.includes(`${targetDay}일`) || strVal.includes(` ${targetDay} `))) {
+                if (new RegExp(`\\b${targetDay}[일]?\\b`).test(strVal)) return true;
+            }
+
+            let mReg = new RegExp(`(^|[^0-9])${targetMonth}([^0-9]|$)`);
+            let dReg = new RegExp(`(^|[^0-9])${targetDay}([^0-9]|$)`);
+            
+            if (strVal.includes(String(targetMonth)) && strVal.includes(String(targetDay))) {
+                if (mReg.test(strVal) && dReg.test(strVal)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -657,15 +669,21 @@
         const grid = document.getElementById('calendarGrid');
         const summary = document.getElementById('scheduleSummary');
         
+        if (currentCategory === 'consult') {
+            grid.classList.add('consult-mode');
+        } else {
+            grid.classList.remove('consult-mode');
+        }
+
         const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
         
         const monthFiltered = activeData.filter(row => {
-            const text = Object.values(row).join(' ');
-            return text.includes(`${currentMonth}월`) || 
-                   text.includes(`0${currentMonth}월`) || 
-                   text.includes(`-${String(currentMonth).padStart(2, '0')}-`) || 
-                   text.includes(`/${String(currentMonth).padStart(2, '0')}/`) ||
-                   text.includes(`.${String(currentMonth).padStart(2, '0')}.`);
+            for (let val of Object.values(row)) {
+                if (val && (String(val).includes(`${currentMonth}월`) || String(val).includes(`-${String(currentMonth).padStart(2, '0')}-`) || String(val).includes(`.${String(currentMonth).padStart(2, '0')}.`) || String(val).includes(`/${String(currentMonth).padStart(2, '0')}/`))) {
+                    return true;
+                }
+            }
+            return false;
         });
 
         summary.innerText = `${monthFiltered.length}건 · ${currentMonth}월 ${currentCategory === 'wedding' ? '웨딩' : '상담'} 합계`;
@@ -707,6 +725,34 @@
         grid.innerHTML = html;
     }
 
+    // 날짜/시간 포맷 깔끔하게 정제하는 함수
+    function cleanValue(key, val) {
+        if (val === undefined || val === null) return '';
+        let strVal = String(val).trim();
+
+        // ISO 날짜 형식(예: 2026-09-19T00:00:00.000Z 또는 1970-01-01T...)인 경우 날짜 또는 시간만 추출
+        if (strVal.includes('T')) {
+            let parts = strVal.split('T');
+            let datePart = parts[0]; // 2026-09-19
+            let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; // 00:00:00
+            
+            // 키 이름이나 내용에 따라 적절히 조합
+            if (key.includes('시간') || key.includes('시') || timePart !== '00:00:00') {
+                if (timePart && timePart !== '00:00:00') {
+                    // 시:분까지만 자르기 (예: 11:00)
+                    let hm = timePart.substring(0, 5);
+                    return hm;
+                }
+            }
+            // 날짜만 남기기
+            strVal = datePart;
+        }
+
+        // 밀리초나 소수점 숫자, 불필요한 Z 제거
+        strVal = strVal.replace('.000Z', '').replace('Z', '');
+        return strVal;
+    }
+
     function selectDate(dateStr, dayNum) {
         selectedDateStr = dateStr;
         renderCalendar();
@@ -729,13 +775,9 @@
                     <div style="font-weight:bold; color:#f0a500; margin-bottom:6px;">[${currentCategory === 'wedding' ? '웨딩' : '상담'} ${idx + 1}]</div>
             `;
             for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== '') {
-                    let strVal = String(val);
-                    // 날짜나 시간 뒤에 붙는 불필요한 ISO 타임스탬프 숫자(.000Z 등) 깔끔하게 정제
-                    if (strVal.includes('T') && strVal.includes('Z')) {
-                        strVal = strVal.replace('T', ' ').replace('.000Z', '').replace('Z', '');
-                    }
-                    contentHtml += `<div style="font-size:13px; margin-bottom:4px;"><span style="color:#8e8e93;">${key}:</span> ${strVal}</div>`;
+                let cleaned = cleanValue(key, val);
+                if (cleaned !== '') {
+                    contentHtml += `<div style="font-size:13px; margin-bottom:4px;"><span style="color:#8e8e93;">${key}:</span> ${cleaned}</div>`;
                 }
             }
             contentHtml += `</div>`;
