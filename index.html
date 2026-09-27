@@ -384,7 +384,7 @@
         </div>
     </div>
 
-    <!-- [탭 3] 주차 안내 화면 (지하 4층, 지하 5층 도면 포함) -->
+    <!-- [탭 3] 주차 안내 화면 -->
     <div id="tab-parking" class="content">
         <div class="section-title">주차 안내</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">도면은 확대해서 볼 수 있습니다.</div>
@@ -395,7 +395,6 @@
             <button id="p-btn-rear" class="tab-btn" onclick="switchParkingTab('rear')">후문</button>
         </div>
 
-        <!-- 지하 4층 도면 -->
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #ff3b30;">
                 <div style="font-weight: 600; margin-bottom: 4px;">냉동고 및 창고 앞 발렛주차 불가</div>
@@ -407,7 +406,6 @@
             </div>
         </div>
 
-        <!-- 지하 5층 도면 -->
         <div id="parking-b5" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 600; margin-bottom: 4px;">지하 5층 전용 구역</div>
@@ -419,7 +417,6 @@
             </div>
         </div>
 
-        <!-- 후문 -->
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 600; margin-bottom: 4px;">후문 주차장 이용 안내</div>
@@ -468,8 +465,8 @@
         contact: []
     };
 
-    let currentCategory = 'wedding'; // 'wedding' 또는 'consult'
-    let currentMonth = 9;            // 9월 또는 10월
+    let currentCategory = 'wedding';
+    let currentMonth = 9;
     let selectedDateStr = null;
 
     window.onload = function() {
@@ -478,7 +475,6 @@
 
     async function fetchAllData() {
         try {
-            // Apps Script에서 웨딩(monthly)과 상담(consult) 데이터를 동시에 호출
             const [mRes, cRes] = await Promise.all([
                 fetch(`${SCRIPT_URL}?type=monthly`).then(r => r.json()),
                 fetch(`${SCRIPT_URL}?type=consult`).then(r => r.json())
@@ -487,23 +483,31 @@
             dbData.monthly = Array.isArray(mRes) ? mRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
-            // 비상 연락망 전체 데이터 (tel_car 참조)
             dbData.contact = [
                 { title: '본사', name: '이태희', role: '이사', phone: '010-4229-7800' },
                 { title: '본사', name: '이큰산', role: '부장', phone: '010-6404-0230' },
                 { title: '대치사업소', name: '김문기', role: '팀장', phone: '010-9130-3045' },
                 { title: '대치사업소', name: '임창희', role: '팀원', phone: '010-3355-4537' },
                 { title: '대치사업소', name: '이종범', role: '팀원', phone: '010-3362-6456' },
-                { title: '대치사업소', name: '박영희', role: '팀원', phone: '010-2345-6789' },
-                { title: '대치사업소', name: '정대호', role: '팀원', phone: '010-4567-8901' },
-                { title: '대치사업소', name: '오민수', role: '팀원', phone: '010-5678-1234' },
-                { title: '대치사업소', name: '한지호', role: '팀원', phone: '010-6789-2345' }
+                { title: '대치사업소', name: '김태석', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '서원표', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '이도훈', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '동상진', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '박성준', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '조영도', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '전다문', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '윤서준', role: '팀원', phone: '010-0000-0000' },
+                { title: '대치사업소', name: '송재현', role: '팀원', phone: '010-0000-0000' }
             ];
 
             renderCalendar();
             renderContacts();
         } catch (e) {
             console.error("Data load error:", e);
+            document.getElementById('scheduleSummary').innerText = "데이터 로드 실패 (새 버전 배포 확인 필요)";
+            dbData.monthly = [];
+            dbData.consult = [];
+            renderCalendar();
         }
     }
 
@@ -553,14 +557,12 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // 날짜별 데이터 매칭 및 캘린더 건수 표시
     function renderCalendar() {
         const grid = document.getElementById('calendarGrid');
         const summary = document.getElementById('scheduleSummary');
         
         const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
         
-        // 월별 데이터 필터링 (9월 또는 10월)
         const monthFiltered = activeData.filter(row => {
             const dateVal = Object.values(row).join(' ');
             return dateVal.includes(`${currentMonth}월`) || dateVal.includes(`0${currentMonth}월`) || dateVal.includes(`-${currentMonth}-`) || dateVal.includes(`/${currentMonth}/`);
@@ -579,7 +581,7 @@
         `;
 
         const totalDays = currentMonth === 9 ? 30 : 31;
-        const startDayOffset = currentMonth === 9 ? 2 : 4; // 2026년 9월 1일 화요일(2), 10월 1일 목요일(4)
+        const startDayOffset = currentMonth === 9 ? 2 : 4; 
 
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
@@ -611,7 +613,6 @@
         grid.innerHTML = html;
     }
 
-    // 날짜 클릭 시 해당 일자의 시간대별 상세 정보 출력
     function selectDate(dateStr, dayNum) {
         selectedDateStr = dateStr;
         renderCalendar();
@@ -649,7 +650,6 @@
         container.innerHTML = contentHtml;
     }
 
-    // 비상 연락망 전체 렌더링
     function renderContacts() {
         const container = document.getElementById('contactListContainer');
         let currentGroup = '';
