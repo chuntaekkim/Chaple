@@ -358,7 +358,7 @@
         </div>
     </div>
 
-    <!-- [탭 2] 일정 (운영 스케줄) 화면 -->
+    <!-- [탭 2] 일정 화면 -->
     <div id="tab-schedule" class="content">
         <div class="section-title">운영 스케줄</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;" id="scheduleDesc">날짜를 누르면 웨딩 시간이 나옵니다.</div>
@@ -384,7 +384,7 @@
         </div>
     </div>
 
-    <!-- [탭 3] 주차 안내 화면 -->
+    <!-- [탭 3] 주차 안내 화면 (지하 4층, 지하 5층 도면 포함) -->
     <div id="tab-parking" class="content">
         <div class="section-title">주차 안내</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">도면은 확대해서 볼 수 있습니다.</div>
@@ -395,6 +395,7 @@
             <button id="p-btn-rear" class="tab-btn" onclick="switchParkingTab('rear')">후문</button>
         </div>
 
+        <!-- 지하 4층 도면 -->
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #ff3b30;">
                 <div style="font-weight: 600; margin-bottom: 4px;">냉동고 및 창고 앞 발렛주차 불가</div>
@@ -402,10 +403,11 @@
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 (Chaple_B4) 배치도</div>
-                <img src="Chaple_B4.jpg" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4+Image+Not+Found'">
+                <img src="Chaple_B4.jpg" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.jpg+Not+Found'">
             </div>
         </div>
 
+        <!-- 지하 5층 도면 -->
         <div id="parking-b5" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 600; margin-bottom: 4px;">지하 5층 전용 구역</div>
@@ -413,10 +415,11 @@
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 5층 (Chaple_B5) 배치도</div>
-                <img src="Chaple_B5.jpg" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5+Image+Not+Found'">
+                <img src="Chaple_B5.jpg" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.jpg+Not+Found'">
             </div>
         </div>
 
+        <!-- 후문 -->
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 600; margin-bottom: 4px;">후문 주차장 이용 안내</div>
@@ -460,8 +463,8 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
 
     let dbData = {
-        monthly: [],   // wedding_monthly 데이터
-        consult: [],   // consult_weekly 데이터
+        monthly: [],
+        consult: [],
         contact: []
     };
 
@@ -475,7 +478,7 @@
 
     async function fetchAllData() {
         try {
-            // Apps Script에서 wedding_monthly와 consult_weekly 데이터를 각각 호출
+            // Apps Script에서 웨딩(monthly)과 상담(consult) 데이터를 동시에 호출
             const [mRes, cRes] = await Promise.all([
                 fetch(`${SCRIPT_URL}?type=monthly`).then(r => r.json()),
                 fetch(`${SCRIPT_URL}?type=consult`).then(r => r.json())
@@ -484,6 +487,7 @@
             dbData.monthly = Array.isArray(mRes) ? mRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
+            // 비상 연락망 전체 데이터 (tel_car 참조)
             dbData.contact = [
                 { title: '본사', name: '이태희', role: '이사', phone: '010-4229-7800' },
                 { title: '본사', name: '이큰산', role: '부장', phone: '010-6404-0230' },
@@ -554,10 +558,15 @@
         const grid = document.getElementById('calendarGrid');
         const summary = document.getElementById('scheduleSummary');
         
-        // 웨딩은 wedding_monthly, 상담은 consult_weekly 데이터 사용
         const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
         
-        summary.innerText = `${activeData.length}건 · ${currentMonth}월 ${currentCategory === 'wedding' ? '웨딩' : '상담'} 합계`;
+        // 월별 데이터 필터링 (9월 또는 10월)
+        const monthFiltered = activeData.filter(row => {
+            const dateVal = Object.values(row).join(' ');
+            return dateVal.includes(`${currentMonth}월`) || dateVal.includes(`0${currentMonth}월`) || dateVal.includes(`-${currentMonth}-`) || dateVal.includes(`/${currentMonth}/`);
+        });
+
+        summary.innerText = `${monthFiltered.length}건 · ${currentMonth}월 ${currentCategory === 'wedding' ? '웨딩' : '상담'} 합계`;
 
         let html = `
             <div class="cal-day-header" style="color: #ff3b30;">일</div>
@@ -570,7 +579,7 @@
         `;
 
         const totalDays = currentMonth === 9 ? 30 : 31;
-        const startDayOffset = currentMonth === 9 ? 2 : 4; 
+        const startDayOffset = currentMonth === 9 ? 2 : 4; // 2026년 9월 1일 화요일(2), 10월 1일 목요일(4)
 
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
@@ -579,7 +588,6 @@
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${currentMonth}월 ${day}일`;
             
-            // 시트 데이터에서 해당 일자(예: '9/19', '19일', '9-19' 등)가 포함된 행을 정확히 카운트
             const matchedRows = activeData.filter(row => {
                 const text = Object.values(row).join(' ');
                 return text.includes(`${currentMonth}월 ${day}일`) || 
@@ -603,7 +611,7 @@
         grid.innerHTML = html;
     }
 
-    // 특정 날짜 클릭 시 해당 일자의 데이터 모두 출력
+    // 날짜 클릭 시 해당 일자의 시간대별 상세 정보 출력
     function selectDate(dateStr, dayNum) {
         selectedDateStr = dateStr;
         renderCalendar();
@@ -641,6 +649,7 @@
         container.innerHTML = contentHtml;
     }
 
+    // 비상 연락망 전체 렌더링
     function renderContacts() {
         const container = document.getElementById('contactListContainer');
         let currentGroup = '';
