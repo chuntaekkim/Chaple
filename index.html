@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>웨딩 및 상담 통합 관리</title>
+    <title>더채플 통합 관리 시스템</title>
     <style>
         :root {
-            --primary-color: #4f46e5;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #1e293b;
-            --border-color: #e2e8f0;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent-green: #10b981;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,7 +21,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
         .container {
             max-width: 1000px;
@@ -27,67 +30,71 @@
         }
         h1 {
             text-align: center;
-            color: var(--primary-color);
+            color: #818cf8;
             margin-bottom: 20px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
         .card {
             background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            padding: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            padding: 16px;
             overflow-x: auto;
             margin-bottom: 20px;
         }
         .sub-tab-menu {
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
         .sub-tab-btn {
-            padding: 6px 12px;
+            padding: 7px 14px;
             font-size: 0.85rem;
             font-weight: bold;
-            border: none;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             cursor: pointer;
-            background-color: #e2e8f0;
-            color: #64748b;
+            background-color: #334155;
+            color: var(--text-muted);
+            transition: all 0.2s;
         }
         .sub-tab-btn.active {
             background-color: var(--primary-color);
             color: white;
+            border-color: var(--primary-color);
         }
         /* 날짜 선택 칩 버튼 */
         .date-filter-container {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             margin-bottom: 15px;
         }
         .date-chip {
-            padding: 6px 12px;
-            background: #e2e8f0;
-            border: none;
+            padding: 6px 14px;
+            background: #334155;
+            border: 1px solid var(--border-color);
             border-radius: 20px;
             font-size: 0.85rem;
             cursor: pointer;
             white-space: nowrap;
-            color: #334155;
+            color: var(--text-muted);
             font-weight: 600;
         }
         .date-chip.active {
             background-color: var(--primary-color);
             color: white;
+            border-color: var(--primary-color);
         }
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
         th, td {
             padding: 10px 12px;
@@ -95,20 +102,20 @@
             white-space: nowrap;
         }
         th {
-            background-color: #f1f5f9;
-            color: #334155;
+            background-color: #1e293b;
+            color: #cbd5e1;
             font-weight: 600;
         }
         tr:hover {
-            background-color: #f8fafc;
+            background-color: rgba(255, 255, 255, 0.03);
         }
         .loading, .empty-msg {
             text-align: center;
             padding: 30px;
-            color: #64748b;
-            font-size: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
-        /* 주차 구역 그리드 */
+        /* 주차 구역 (Chaple_B4, Chaple_B5) 스타일 */
         .parking-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -116,14 +123,33 @@
             margin-bottom: 15px;
         }
         .parking-card {
-            background: #f8fafc;
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 15px;
         }
         .parking-card h4 {
             margin: 0 0 8px 0;
-            color: var(--primary-color);
+            color: #818cf8;
+            font-size: 0.95rem;
+        }
+        .parking-card p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        /* 전화기 아이콘 및 연락처 버튼 스타일 (tel_car 연동) */
+        .tel-btn {
+            background-color: var(--accent-green);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         /* 하단 네비게이션 바 */
         .bottom-nav {
@@ -132,20 +158,20 @@
             left: 0;
             width: 100%;
             height: 65px;
-            background-color: white;
+            background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.3);
             z-index: 1000;
         }
         .nav-btn {
             background: none;
             border: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
-            color: #64748b;
+            color: var(--text-muted);
             cursor: pointer;
             display: flex;
             flex-direction: column;
@@ -153,9 +179,10 @@
             gap: 4px;
             flex: 1;
             padding: 10px 0;
+            transition: color 0.2s;
         }
         .nav-btn.active {
-            color: var(--primary-color);
+            color: #818cf8;
         }
         .nav-btn svg {
             width: 22px;
@@ -169,12 +196,13 @@
             display: block;
         }
         .info-box {
-            background: #eef2ff;
+            background: rgba(99, 102, 241, 0.1);
             border-left: 4px solid var(--primary-color);
             padding: 12px 15px;
             border-radius: 6px;
             margin-bottom: 15px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
         }
     </style>
 </head>
@@ -194,7 +222,7 @@
         </div>
     </div>
 
-    <!-- 2. [일정] 화면 (웨딩 및 상담 날짜별 필터 기능 포함) -->
+    <!-- 2. [일정] 화면 (웨딩 및 상담 일정 / 날짜 클릭 필터) -->
     <div id="screen-schedule" class="screen-section">
         <div class="sub-tab-menu">
             <button class="sub-tab-btn active" onclick="switchScheduleTab('monthly', this)">월간 웨딩</button>
@@ -202,7 +230,7 @@
             <button class="sub-tab-btn" onclick="switchScheduleTab('consult', this)">상담 일정</button>
         </div>
         
-        <!-- 날짜 클릭 필터 바 (동적 생성) -->
+        <!-- 날짜 클릭 필터 바 (예: 9/19일 click 시 해당 정보 출력) -->
         <div id="dateFilterBar" class="date-filter-container"></div>
 
         <div class="card">
@@ -210,43 +238,43 @@
         </div>
     </div>
 
-    <!-- 3. [주차] 화면 -->
+    <!-- 3. [주차] 화면 (Chaple_B4, Chaple_B5 및 주차 구역 안내) -->
     <div id="screen-parking" class="screen-section">
         <div class="parking-grid">
             <div class="parking-card">
-                <h4>🅿️ 지하 4층</h4>
-                <p>일반 하객 및 방문객 주차 구역</p>
+                <h4>🅿️ 지하 4층 (Chaple_B4)</h4>
+                <p>일반 하객 및 방문객 주차 구역 (유도원 상주)</p>
             </div>
             <div class="parking-card">
-                <h4>🅿️ 지하 5층</h4>
-                <p>추가 하객 주차 및 대형 차량 구역</p>
+                <h4>🅿️ 지하 5층 (Chaple_B5)</h4>
+                <p>추가 하객 주차 및 대형 차량 대기 구역</p>
             </div>
             <div class="parking-card">
-                <h4>🚪 후문 구역</h4>
-                <p>혼주 차량 및 물류 하역 전용</p>
+                <h4>🚪 후문 주차구역</h4>
+                <p>혼주 차량 및 물류 하역 전용 출입구</p>
             </div>
             <div class="parking-card">
-                <h4>🚗 임원 차량</h4>
-                <p>전용 구획 지정석 및 VIP 구역</p>
+                <h4>🚗 임원 차량 (VIP)</h4>
+                <p>지하 2층 지정 구획 및 임원 전용 주차석</p>
             </div>
         </div>
         <div class="card">
-            <h3>시트 연동 주차 정보</h3>
+            <h3>실시간 주차 및 차량 시트 연동 정보</h3>
             <div id="parkingSheetContent" class="loading">불러오는 중...</div>
         </div>
     </div>
 
-    <!-- 4. [연락] 화면 (팀원 비상연락망) -->
+    <!-- 4. [연락] 화면 (tel_car 참조 비상연락망 및 전화기 아이콘) -->
     <div id="screen-contact" class="screen-section">
         <div class="card">
-            <h3>📞 팀원 비상연락망</h3>
+            <h3>📞 팀원 및 차량 비상연락망 (tel_car)</h3>
             <table>
                 <thead>
                     <tr>
                         <th>구분 / 직책</th>
                         <th>이름</th>
                         <th>연락처</th>
-                        <th>담당 업무</th>
+                        <th>전화걸기</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -254,25 +282,25 @@
                         <td>총괄 팀장</td>
                         <td>김철수</td>
                         <td>010-1234-5678</td>
-                        <td>전체 총괄 및 예식 조율</td>
+                        <td><a href="tel:010-1234-5678" class="tel-btn">📞 전화</a></td>
                     </tr>
                     <tr>
                         <td>웨딩 파트</td>
                         <td>박영희</td>
                         <td>010-2345-6789</td>
-                        <td>웨딩 홀 안내 및 예약</td>
+                        <td><a href="tel:010-2345-6789" class="tel-btn">📞 전화</a></td>
                     </tr>
                     <tr>
                         <td>상담 파트</td>
                         <td>이민수</td>
                         <td>010-3456-7890</td>
-                        <td>고객 상담 및 스케줄 관리</td>
+                        <td><a href="tel:010-3456-7890" class="tel-btn">📞 전화</a></td>
                     </tr>
                     <tr>
                         <td>주차 관리</td>
                         <td>정대호</td>
                         <td>010-4567-8901</td>
-                        <td>주차장 통제 및 안내</td>
+                        <td><a href="tel:010-4567-8901" class="tel-btn">📞 전화</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -325,8 +353,8 @@
         const titles = {
             today: '오늘의 일정',
             schedule: '전체 일정 관리',
-            parking: '주차 구역 안내',
-            contact: '팀원 비상연락망'
+            parking: '주차 안내 (Chaple B4/B5)',
+            contact: '비상연락망 (tel_car)'
         };
         document.getElementById('screenTitle').innerText = titles[screenName];
 
@@ -371,7 +399,7 @@
 
         } catch (error) {
             console.error('Fetch error:', error);
-            document.getElementById('todayContent').innerHTML = '<div class="loading" style="color:red;">데이터 로드 실패</div>';
+            document.getElementById('todayContent').innerHTML = '<div class="loading" style="color:#ef4444;">데이터 로드 실패</div>';
         }
     }
 
@@ -388,11 +416,10 @@
                 renderTable('scheduleContent', data);
             })
             .catch(() => {
-                target.innerHTML = '<div class="loading" style="color:red;">데이터를 가져오지 못했습니다.</div>';
+                target.innerHTML = '<div class="loading" style="color:#ef4444;">데이터를 가져오지 못했습니다.</div>';
             });
     }
 
-    // 날짜별 필터 버튼 동적 생성
     function buildDateFilterBar(data) {
         const bar = document.getElementById('dateFilterBar');
         if (!data || data.length === 0 || data.error) {
@@ -415,7 +442,6 @@
         bar.innerHTML = html;
     }
 
-    // 특정 날짜 클릭 시 해당 일자의 데이터만 필터링하여 출력
     function filterByDate(dateVal, btnElement) {
         selectedDateFilter = dateVal;
         document.querySelectorAll('.date-chip').forEach(chip => chip.classList.remove('active'));
