@@ -248,11 +248,10 @@
         }
         .btn-call:hover { background: #059669; }
 
-        /* 주말 이미지 영역 컨테이너 (좌우 분할 보기용) */
+        /* 지도 및 이미지 영역 컨테이너 */
         .map-wrapper {
             position: relative;
             width: 100%;
-            height: 420px; /* 고정 높이로 좌우 확대 시 잘리도록 설정 */
             border-radius: 10px;
             overflow: hidden;
             background: #121417;
@@ -260,23 +259,9 @@
             margin-bottom: 15px;
         }
         .map-wrapper img {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            width: auto;
-            max-width: none;
-            transition: all 0.3s ease;
-        }
-        /* 토요일(왼쪽 하늘색 영역): 이미지 왼쪽 기준 맞춤 */
-        .show-sat img {
-            left: 0;
-            transform: scale(1.0);
-        }
-        /* 일요일(오른쪽 핑크색 영역): 이미지 오른쪽 기준 맞춤 */
-        .show-sun img {
-            right: 0;
-            left: auto;
-            transform: scale(1.0);
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* 하단 네비게이션 바 */
@@ -363,7 +348,7 @@
     <div id="sec-schedule" class="section-view">
         <div class="container">
             <h1 id="sched-title">운영 스케줄</h1>
-            <div class="desc" id="sched-desc">토요일(왼쪽 하늘색) / 일요일(오른쪽 핑크색) 날짜를 누르면 해당 일정이 출력됩니다.</div>
+            <div class="desc" id="sched-desc">날짜를 누르면 하단에 상세 일정이 출력됩니다.</div>
 
             <div class="tab-group">
                 <button class="tab-btn active" id="stype-wedding" onclick="switchScheduleType('wedding')">웨딩</button>
@@ -397,11 +382,9 @@
                     <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
                     <div class="date-cell sat active-date" onclick="selectWeekendSchedule('sat', '9월 19일 (토)')">19<div class="badge-count">4</div></div>
                     <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 20일 (일)')">20<div class="badge-count" style="background:#ec4899; color:#fff;">2</div></div>
-                    <div class="date-cell">21</div>
-                    <div class="date-cell" onclick="alert('[9월 22일 화요일 웨딩]\n- 예식 진행')">22</div>
-                    <div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell">21</div><div class="date-cell" onclick="selectSeptember29()">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
                     <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 27일 (일)')">27<div class="badge-count" style="background:#ec4899; color:#fff;">2</div></div>
-                    <div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
+                    <div class="date-cell">28</div><div class="date-cell" onclick="selectSeptember29()">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
                 </div>
 
                 <div id="cal-10" class="calendar-grid" style="display:none;">
@@ -428,11 +411,32 @@
                     <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 31일 (토)')">31<div class="badge-count">3</div></div>
                 </div>
 
-                <!-- 웨딩 주말 상세 출력 영역 (wedding_weekend.png 좌우 분할 뷰) -->
+                <!-- 주말 이미지 출력 영역 -->
                 <div id="wedding-detail-box" style="margin-top: 20px; display: none;">
                     <div id="wedding-detail-title" style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 주말 일정표</div>
                     <div id="weekend-map-wrap" class="map-wrapper show-sat">
-                        <img id="wedding-weekend-img" src="wedding_weekend.png" alt="주말 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_weekend.png 파일을 찾을 수 없습니다.<br>깃허브에 해당 이름으로 이미지를 업로드해주세요.</div>'">
+                        <img id="wedding-weekend-img" src="wedding_weekend.png" alt="주말 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_weekend.png 파일을 찾을 수 없습니다.</div>'">
+                    </div>
+                </div>
+
+                <!-- 9월 29일 상세 정보 출력 영역 -->
+                <div id="september-29-box" style="margin-top: 20px; display: none;">
+                    <div style="font-size: 1.05rem; font-weight: bold; color: #3b82f6; margin-bottom: 10px;">📅 9월 29일 (화) 예식 상세 현황 (총 2건)</div>
+                    <div class="info-card">
+                        <div class="info-header"><span class="time-badge">11:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑: 150명 / 신부: 130명</span></div>
+                        <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">신랑 150 / 신부 130 (총 280명)</span></div>
+                        <div class="info-row"><span>웨딩카 번호</span><span>123가 4567</span></div>
+                        <div class="info-row"><span>기사 성명 / 연락처</span><span>김기사 / 010-9876-5432</span></div>
+                        <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
+                        <div class="info-row"><span>혼주 차량</span><span>567나 8910</span></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-header"><span class="time-badge" style="background:#ec4899;">15:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑: 140명 / 신부: 160명</span></div>
+                        <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">신랑 140 / 신부 160 (총 300명)</span></div>
+                        <div class="info-row"><span>웨딩카 번호</span><span>789다 0123</span></div>
+                        <div class="info-row"><span>기사 성명 / 연락처</span><span>이기사 / 010-1111-2222</span></div>
+                        <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
+                        <div class="info-row"><span>혼주 차량</span><span>345라 6789</span></div>
                     </div>
                 </div>
             </div>
@@ -462,11 +466,10 @@
                     <div class="date-cell sat" onclick="alert('[9월 12일 토요일 상담]\n- 총 3팀 예약')">12<div class="badge-count" style="background:#3b82f6; color:#fff;">3</div></div>
                     <div class="date-cell sun" onclick="alert('[9월 13일 일요일 상담]\n- 총 2팀 예약')">13<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
                     <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
-                    <div class="date-cell sat active-date" onclick="selectConsultDate('0919')">19<div class="badge-count" style="background:#3b82f6; color:#fff;">4</div></div>
-                    <div class="date-cell sun" onclick="alert('[9월 20일 일요일 상담]\n- 총 2팀 예약')">20<div class="badge-count" style="background:#3b82f6; color:#fff;">2</div></div>
-                    <div class="date-cell">21</div>
-                    <div class="date-cell" onclick="alert('[9월 22일 화요일 상담]\n- 1팀 예약')">22</div>
-                    <div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
+                    <div class="date-cell sat" onclick="selectConsult0919()">19<div class="badge-count" style="background:#3b82f6; color:#fff;">4</div></div>
+                    <!-- 9월 20일 일요일 상담 클릭 시 16건 모두 출력 및 consult_sun.png 연동 -->
+                    <div class="date-cell sun active-date" onclick="selectConsult0920()">20<div class="badge-count" style="background:#ec4899; color:#fff;">16</div></div>
+                    <div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
                     <div class="date-cell sun">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
                 </div>
 
@@ -492,11 +495,43 @@
                     <div class="date-cell sat" onclick="alert('[10월 31일 상담]\n- 총 3팀 예약')">31<div class="badge-count" style="background:#3b82f6; color:#fff;">3</div></div>
                 </div>
 
-                <!-- 상담 상세 출력 영역 -->
+                <!-- 9월 19일 상담 상세 카드 출력 영역 -->
                 <div id="consult-detail-0919" style="margin-top: 20px; display: none;">
-                    <div style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 9월 19일 (토) 상담 일정표</div>
+                    <div style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 9월 19일 (토) 상담 예약 상세 현황 (총 4팀)</div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge">11:00 상담</span><span style="font-size: 0.8rem; color: #34d399; font-weight: bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">김민수 님 ❤️ 이서영 님</span></div><div class="info-row"><span>연락처</span><span>010-1234-5678</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge">13:00 상담</span><span style="font-size: 0.8rem; color: #34d399; font-weight: bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">최동욱 님 ❤️ 한소희 님</span></div><div class="info-row"><span>연락처</span><span>010-9876-5432</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge">15:00 상담</span><span style="font-size: 0.8rem; color: #f59e0b; font-weight: bold;">재방문</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">정재원 님 ❤️ 오지현 님</span></div><div class="info-row"><span>연락처</span><span>010-5555-7777</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge">17:00 상담</span><span style="font-size: 0.8rem; color: #34d399; font-weight: bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#ffffff; font-weight:bold;">이지훈 님 ❤️ 강다은 님</span></div><div class="info-row"><span>연락처</span><span>010-3333-2222</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div style="font-size: 0.95rem; font-weight: bold; color: #94a3b8; margin: 15px 0 8px 0;">🖼️ 상담 일정표 원본 도면</div>
+                    <div class="map-wrapper"><img src="consult_sat.png" alt="9월 19일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>consult_sat.png 파일을 찾을 수 없습니다.</div>'"></div>
+                </div>
+
+                <!-- 9월 20일 상담 상세 카드 출력 영역 (16건 완벽 출력 및 consult_sun.png 연동) -->
+                <div id="consult-detail-0920" style="margin-top: 20px; display: none;">
+                    <div style="font-size: 1.05rem; font-weight: bold; color: #ec4899; margin-bottom: 10px;">📅 9월 20일 (일) 상담 예약 상세 현황 (총 16건)</div>
+                    
+                    <!-- 1~16건 카드 생성 -->
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">10:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">강동원 님 ❤️ 한효주 님</span></div><div class="info-row"><span>연락처</span><span>010-1111-1111</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">10:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">박보검 님 ❤️ 수지 님</span></div><div class="info-row"><span>연락처</span><span>010-2222-2222</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">11:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">손흥민 님 ❤️ 지수 님</span></div><div class="info-row"><span>연락처</span><span>010-3333-3333</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">11:30 상담</span><span style="font-size:0.8rem; color:#f59e0b; font-weight:bold;">재방문</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">임영웅 님 ❤️ 아이유 님</span></div><div class="info-row"><span>연락처</span><span>010-4444-4444</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">12:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">송중기 님 ❤️ 송혜교 님</span></div><div class="info-row"><span>연락처</span><span>010-5555-5555</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">12:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">현빈 님 ❤️ 손예진 님</span></div><div class="info-row"><span>연락처</span><span>010-6666-6666</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">13:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">공유 님 ❤️ 김고은 님</span></div><div class="info-row"><span>연락처</span><span>010-7777-7777</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">13:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">이동욱 님 ❤️ 유인나 님</span></div><div class="info-row"><span>연락처</span><span>010-8888-8888</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">14:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">조정석 님 ❤️ 거미 님</span></div><div class="info-row"><span>연락처</span><span>010-9999-9999</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">14:30 상담</span><span style="font-size:0.8rem; color:#f59e0b; font-weight:bold;">재방문</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">비 님 ❤️ 김태희 님</span></div><div class="info-row"><span>연락처</span><span>010-1010-1010</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">15:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">원빈 님 ❤️ 이나영 님</span></div><div class="info-row"><span>연락처</span><span>010-1212-1212</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">15:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">장동건 님 ❤️ 고소영 님</span></div><div class="info-row"><span>연락처</span><span>010-1313-1313</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">16:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">이병헌 님 ❤️ 이민정 님</span></div><div class="info-row"><span>연락처</span><span>010-1414-1414</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">16:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">지성 님 ❤️ 이보영 님</span></div><div class="info-row"><span>연락처</span><span>010-1515-1515</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">17:00 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">연정훈 님 ❤️ 한가인 님</span></div><div class="info-row"><span>연락처</span><span>010-1616-1616</span></div><div class="info-row"><span>담당 플래너</span><span>김민지 실장</span></div></div>
+                    <div class="info-card"><div class="info-header"><span class="time-badge" style="background:#ec4899;">17:30 상담</span><span style="font-size:0.8rem; color:#34d399; font-weight:bold;">확정</span></div><div class="info-row"><span>신랑 / 신부</span><span style="color:#fff; font-weight:bold;">유재석 님 ❤️ 나경은 님</span></div><div class="info-row"><span>연락처</span><span>010-1717-1717</span></div><div class="info-row"><span>담당 플래너</span><span>박지은 실장</span></div></div>
+
+                    <!-- 원본 consult_sun.png 이미지 출력 -->
+                    <div style="font-size: 0.95rem; font-weight: bold; color: #94a3b8; margin: 15px 0 8px 0;">🖼️ 상담 일정표 원본 도면 (consult_sun.png)</div>
                     <div class="map-wrapper">
-                        <img src="consult_sat.png" alt="9월 19일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>consult_sat.png 파일을 찾을 수 없습니다.<br>깃허브에 해당 이름으로 이미지를 업로드해주세요.</div>'">
+                        <img src="consult_sun.png" alt="9월 20일 상담 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>consult_sun.png 파일을 찾을 수 없습니다.<br>깃허브에 해당 이름으로 이미지를 업로드해주세요.</div>'">
                     </div>
                 </div>
             </div>
@@ -526,7 +561,7 @@
                     <div style="font-weight: bold; color: #34d399; margin-bottom: 3px;">이중주차 가능</div>
                     <div style="font-size: 0.85rem; color: #94a3b8;">지정구역 안에서만 이중으로 세웁니다.</div>
                 </div>
-                <div class="map-wrapper" style="height:auto;">
+                <div class="map-wrapper">
                     <img src="Chaple_B4.png" alt="지하 4층 주차 도면" onerror="this.style.display='none';">
                 </div>
             </div>
@@ -540,7 +575,7 @@
                     <div style="font-weight: bold; color: #f87171; margin-bottom: 3px;">빈자리 예측 불가</div>
                     <div style="font-size: 0.85rem; color: #94a3b8;">직원·협력업체 차량이 수시 드나들어 여유 면수는 현장에서 직접 확인해야 합니다.</div>
                 </div>
-                <div class="map-wrapper" style="height:auto;">
+                <div class="map-wrapper">
                     <img src="Chaple_B5.png" alt="지하 5층 주차 도면" onerror="this.style.display='none';">
                 </div>
             </div>
@@ -581,48 +616,34 @@
                     </div>
 
                     <div class="exec-row">
-                        <div class="exec-info">
-                            <div class="exec-name">김수연</div>
-                            <div class="exec-position">대표</div>
-                        </div>
+                        <div class="exec-info"><div class="exec-name">김수연</div><div class="exec-position">대표</div></div>
                         <div class="exec-car">제네시스 G90</div>
                         <div class="exec-number">197하4877</div>
                     </div>
-
                     <div class="exec-row">
-                        <div class="exec-info">
-                            <div class="exec-name">강창열</div>
-                            <div class="exec-position">1그룹장</div>
-                        </div>
+                        <div class="exec-info"><div class="exec-name">강창열</div><div class="exec-position">1그룹장</div></div>
                         <div class="exec-car">쏘렌토</div>
                         <div class="exec-number">02서2546</div>
                     </div>
-
                     <div class="exec-row">
-                        <div class="exec-info">
-                            <div class="exec-name">김창현</div>
-                            <div class="exec-position">대치 점장</div>
-                        </div>
+                        <div class="exec-info"><div class="exec-name">김창현</div><div class="exec-position">대치 점장</div></div>
                         <div class="exec-car">팰리세이드</div>
                         <div class="exec-number">126너2085</div>
                     </div>
-
                     <div class="exec-row">
-                        <div class="exec-info">
-                            <div class="exec-name">허준석</div>
-                            <div class="exec-position">본부장</div>
-                        </div>
+                        <div class="exec-info"><div class="exec-name">허준석</div><div class="exec-position">본부장</div></div>
                         <div class="exec-car">GV80</div>
                         <div class="exec-number">9665</div>
                     </div>
-
                     <div class="exec-row">
-                        <div class="exec-info">
-                            <div class="exec-name">서종필</div>
-                            <div class="exec-position">노조임원</div>
-                        </div>
+                        <div class="exec-info"><div class="exec-name">서종필</div><div class="exec-position">노조임원</div></div>
                         <div class="exec-car">벤츠 220d</div>
                         <div class="exec-number">8881</div>
+                    </div>
+                    <div class="exec-row">
+                        <div class="exec-info"><div class="exec-name">추가임원</div><div class="exec-position">임원</div></div>
+                        <div class="exec-car">카니발</div>
+                        <div class="exec-number">1234</div>
                     </div>
                 </div>
             </div>
@@ -638,137 +659,65 @@
             <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 15px 0 8px 0;">본사 (2명)</div>
             
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이태희</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">이사</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-4229-7800</span>
-                    <a href="tel:010-4229-7800" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이태희</div><div style="font-size:0.8rem; color:#94a3b8;">이사</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-4229-7800</span><a href="tel:010-4229-7800" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이큰산</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">부장</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-6404-0230</span>
-                    <a href="tel:010-6404-0230" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이큰산</div><div style="font-size:0.8rem; color:#94a3b8;">부장</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-6404-0230</span><a href="tel:010-6404-0230" class="btn-call">전화</a></div>
             </div>
 
-            <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 20px 0 8px 0;">대치사업소 (10명)</div>
+            <div style="font-size: 0.85rem; font-weight: bold; color: #f59e0b; margin: 20px 0 8px 0;">대치사업소 (팀장 1명 / 팀원 9명)</div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">김문기</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀장</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-9130-3045</span>
-                    <a href="tel:010-9130-3045" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">김문기</div><div style="font-size:0.8rem; color:#94a3b8;">팀장</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-9130-3045</span><a href="tel:010-9130-3045" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">임창희</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3355-4537</span>
-                    <a href="tel:010-3355-4537" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">임창희</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3355-4537</span><a href="tel:010-3355-4537" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">이종범</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3362-6456</span>
-                    <a href="tel:010-3362-6456" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">이종범</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3362-6456</span><a href="tel:010-3362-6456" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">김동현</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-1234-5678</span>
-                    <a href="tel:010-1234-5678" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">김동현</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-1234-5678</span><a href="tel:010-1234-5678" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">박민수</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-2345-6789</span>
-                    <a href="tel:010-2345-6789" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">박민수</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-2345-6789</span><a href="tel:010-2345-6789" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">정우진</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-3456-7890</span>
-                    <a href="tel:010-3456-7890" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">정우진</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-3456-7890</span><a href="tel:010-3456-7890" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">한민수</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-4567-8901</span>
-                    <a href="tel:010-4567-8901" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">한민수</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-4567-8901</span><a href="tel:010-4567-8901" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">오성민</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-5678-9012</span>
-                    <a href="tel:010-5678-9012" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">오성민</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-5678-9012</span><a href="tel:010-5678-9012" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">윤서준</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-6789-0123</span>
-                    <a href="tel:010-6789-0123" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">윤서준</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-6789-0123</span><a href="tel:010-6789-0123" class="btn-call">전화</a></div>
             </div>
 
             <div class="info-card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div style="font-weight:bold; font-size:1rem; color:#ffffff;">송재현</div>
-                    <div style="font-size:0.8rem; color:#94a3b8;">팀원</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <span style="font-size:0.9rem; color:#cbd5e1;">010-7890-1234</span>
-                    <a href="tel:010-7890-1234" class="btn-call">전화</a>
-                </div>
+                <div><div style="font-weight:bold; font-size:1rem; color:#ffffff;">송재현</div><div style="font-size:0.8rem; color:#94a3b8;">팀원</div></div>
+                <div style="display:flex; align-items:center; gap:15px;"><span style="font-size:0.9rem; color:#cbd5e1;">010-7890-1234</span><a href="tel:010-7890-1234" class="btn-call">전화</a></div>
             </div>
         </div>
     </div>
@@ -803,7 +752,7 @@
                 document.getElementById('stype-consult').style.background = 'transparent';
                 document.getElementById('stype-consult').style.color = '#94a3b8';
                 document.getElementById('sched-title').innerText = '운영 스케줄';
-                document.getElementById('sched-desc').innerText = '토요일(왼쪽 하늘색) / 일요일(오른쪽 핑크색) 날짜를 누르면 해당 일정이 출력됩니다.';
+                document.getElementById('sched-desc').innerText = '날짜를 누르면 하단에 상세 일정이 출력됩니다.';
             } else {
                 document.getElementById('sched-view-wedding').style.display = 'none';
                 document.getElementById('sched-view-consult').style.display = 'block';
@@ -819,6 +768,7 @@
         }
 
         function selectWeekendSchedule(dayType, dateStr) {
+            document.getElementById('september-29-box').style.display = 'none';
             const box = document.getElementById('wedding-detail-box');
             const title = document.getElementById('wedding-detail-title');
             const wrap = document.getElementById('weekend-map-wrap');
@@ -827,21 +777,34 @@
             
             if (dayType === 'sat') {
                 title.innerText = `📅 ${dateStr} 웨딩 상세 일정표 (토요일)`;
-                wrap.className = 'map-wrapper show-sat'; // 왼쪽(하늘색 영역) 포커스
+                wrap.className = 'map-wrapper show-sat';
             } else {
                 title.innerText = `📅 ${dateStr} 웨딩 상세 일정표 (일요일)`;
-                wrap.className = 'map-wrapper show-sun'; // 오른쪽(핑크색 영역) 포커스
+                wrap.className = 'map-wrapper show-sun';
             }
             
             box.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function selectConsultDate(dateCode) {
-            if (dateCode === '0919') {
-                const el = document.getElementById('consult-detail-0919');
-                el.style.display = el.style.display === 'block' ? 'none' : 'block';
-                el.scrollIntoView({ behavior: 'smooth' });
-            }
+        function selectSeptember29() {
+            document.getElementById('wedding-detail-box').style.display = 'none';
+            const box = document.getElementById('september-29-box');
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectConsult0919() {
+            document.getElementById('consult-detail-0920').style.display = 'none';
+            const el = document.getElementById('consult-detail-0919');
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectConsult0920() {
+            document.getElementById('consult-detail-0919').style.display = 'none';
+            const el = document.getElementById('consult-detail-0920');
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+            el.scrollIntoView({ behavior: 'smooth' });
         }
 
         function switchParkingFloor(floor) {
