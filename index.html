@@ -56,6 +56,10 @@
         .content {
             padding: 20px;
             flex: 1;
+            display: none;
+        }
+        .content.active {
+            display: block;
         }
         .section-title {
             font-size: 13px;
@@ -87,6 +91,7 @@
             background-color: #242838;
             border-radius: 12px;
             padding: 12px 14px;
+            cursor: pointer;
         }
         .sub-box-title {
             font-size: 13px;
@@ -100,7 +105,7 @@
             font-size: 11px;
             color: #8e8e93;
         }
-        /* 예식 차량 리스트 카드 */
+        /* 공통 카드 스타일 */
         .event-card {
             background-color: #1a1d29;
             border-radius: 16px;
@@ -143,6 +148,84 @@
         .highlight-box span:first-child {
             color: #f0a500;
         }
+
+        /* 탭별 추가 스타일 */
+        .tab-menu-group {
+            display: flex;
+            background-color: #1a1d29;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #8e8e93;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .tab-btn.active {
+            background-color: #f0a500;
+            color: #12141c;
+        }
+        
+        /* 캘린더 그리드 스타일 */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .cal-day-header {
+            font-size: 12px;
+            color: #8e8e93;
+            padding-bottom: 8px;
+        }
+        .cal-cell {
+            background-color: #1a1d29;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-size: 13px;
+            position: relative;
+            cursor: pointer;
+        }
+        .cal-cell.has-event::after {
+            content: '';
+            display: block;
+            width: 5px;
+            height: 5px;
+            background-color: #f0a500;
+            border-radius: 50%;
+            margin: 4px auto 0 auto;
+        }
+
+        /* 비상 연락망 카드 스타일 */
+        .contact-card {
+            background-color: #1a1d29;
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .call-btn {
+            background-color: #f0a500;
+            color: #12141c;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
         /* 하단 네비게이션 바 */
         .nav-bar {
             position: fixed;
@@ -164,6 +247,9 @@
             color: #8e8e93;
             font-size: 11px;
             gap: 4px;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
         .nav-item.active {
             color: #007aff;
@@ -180,27 +266,25 @@
 <div class="app-container">
     <!-- 상단 헤더 -->
     <div class="header">
-        <span>더채플대치 발렛</span>
+        <span id="header-title">더채플대치 발렛</span>
         <div class="status">
             <div class="status-dot"></div>
             실시간 연동중
         </div>
     </div>
 
-    <!-- 메인 콘텐츠 -->
-    <div class="content">
+    <!-- [탭 1] 오늘 화면 -->
+    <div id="tab-today" class="content active">
         <div class="section-title">오늘 예식 현황</div>
-        
         <div class="main-card">
             <div class="stat-number">2건</div>
             <div class="stat-desc">11:00 / 12:30 예식 진행 예정</div>
-            
             <div class="card-row">
-                <div class="sub-box">
+                <div class="sub-box" onclick="switchTab('parking')">
                     <div class="sub-box-title">🅿️ 주차 안내</div>
                     <div class="sub-box-desc">후문 / 지하 4·5층</div>
                 </div>
-                <div class="sub-box">
+                <div class="sub-box" onclick="switchTab('car')">
                     <div class="sub-box-title">👑 임원 차량</div>
                     <div class="sub-box-desc">VIP 리스트</div>
                 </div>
@@ -208,8 +292,6 @@
         </div>
 
         <div class="section-title">🚗 타임별 예식 차량 & 상담·시식</div>
-
-        <!-- 11:00 예식 카드 -->
         <div class="event-card">
             <div class="badge">11:00 예식</div>
             <div class="info-grid">
@@ -224,7 +306,6 @@
             </div>
         </div>
 
-        <!-- 12:30 예식 카드 -->
         <div class="event-card">
             <div class="badge">12:30 예식</div>
             <div class="info-grid">
@@ -240,30 +321,189 @@
         </div>
     </div>
 
-    <!-- 하단 탭 바 -->
+    <!-- [탭 2] 일정 (운영 스케줄) 화면 -->
+    <div id="tab-schedule" class="content">
+        <div class="section-title">운영 스케줄</div>
+        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">날짜를 누르면 웨딩 시간이 나옵니다.</div>
+        
+        <div class="tab-menu-group">
+            <button class="tab-btn active">웨딩</button>
+            <button class="tab-btn">상담</button>
+        </div>
+
+        <div class="tab-menu-group" style="background-color: transparent; gap: 10px; padding: 0;">
+            <button class="tab-btn active" style="background-color: #f0a500; color: #12141c;">2026년 9월</button>
+            <button class="tab-btn" style="background-color: #1a1d29; color: #8e8e93;">2026년 10월</button>
+        </div>
+
+        <div class="main-card" style="margin-top: 10px;">
+            <div style="font-weight: 600; margin-bottom: 10px;">18건 · 월 웨딩 합계</div>
+            <div class="calendar-grid">
+                <div class="cal-day-header" style="color: #ff3b30;">일</div>
+                <div class="cal-day-header">월</div>
+                <div class="cal-day-header">화</div>
+                <div class="cal-day-header">수</div>
+                <div class="cal-day-header">목</div>
+                <div class="cal-day-header">금</div>
+                <div class="cal-day-header">토</div>
+
+                <div class="cal-cell" style="color: #555;"></div>
+                <div class="cal-cell" style="color: #555;"></div>
+                <div class="cal-cell">1</div>
+                <div class="cal-cell">2</div>
+                <div class="cal-cell">3</div>
+                <div class="cal-cell">4</div>
+                <div class="cal-cell has-event" style="color: #f0a500;">5</div>
+
+                <div class="cal-cell has-event" style="color: #ff3b30;">6</div>
+                <div class="cal-cell">7</div>
+                <div class="cal-cell">8</div>
+                <div class="cal-cell">9</div>
+                <div class="cal-cell">10</div>
+                <div class="cal-cell">11</div>
+                <div class="cal-cell has-event" style="color: #f0a500;">12</div>
+
+                <div class="cal-cell has-event" style="color: #ff3b30;">13</div>
+                <div class="cal-cell">14</div>
+                <div class="cal-cell">15</div>
+                <div class="cal-cell">16</div>
+                <div class="cal-cell">17</div>
+                <div class="cal-cell">18</div>
+                <div class="cal-cell has-event" style="color: #f0a500;">19</div>
+
+                <div class="cal-cell has-event" style="color: #ff3b30;">20</div>
+                <div class="cal-cell">21</div>
+                <div class="cal-cell" style="background-color: #242838; border: 1px solid #f0a500;">22</div>
+                <div class="cal-cell">23</div>
+                <div class="cal-cell">24</div>
+                <div class="cal-cell">25</div>
+                <div class="cal-cell">26</div>
+
+                <div class="cal-cell" style="color: #ff3b30;">27</div>
+                <div class="cal-cell">28</div>
+                <div class="cal-cell">29</div>
+                <div class="cal-cell">30</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- [탭 3] 주차 안내 화면 -->
+    <div id="tab-parking" class="content">
+        <div class="section-title">주차 안내</div>
+        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">도면은 확대해서 볼 수 있습니다.</div>
+
+        <div class="tab-menu-group">
+            <button class="tab-btn active">지하 4층</button>
+            <button class="tab-btn">지하 5층</button>
+            <button class="tab-btn">후문</button>
+        </div>
+
+        <div class="event-card" style="border-left: 3px solid #ff3b30;">
+            <div style="font-weight: 600; margin-bottom: 4px;">냉동고 및 창고 앞 발렛주차 불가</div>
+            <div style="font-size: 12px; color: #8e8e93;">지정주차구역 외에는 대지 마세요.</div>
+        </div>
+
+        <div class="event-card" style="border-left: 3px solid #4cd964;">
+            <div style="font-weight: 600; margin-bottom: 4px;">이중주차 가능</div>
+            <div style="font-size: 12px; color: #8e8e93;">지정구역 안에서만 이중으로 세웁니다.</div>
+        </div>
+    </div>
+
+    <!-- [탭 4] 차량 조회 화면 -->
+    <div id="tab-car" class="content">
+        <div class="section-title">차량 조회</div>
+        <div class="main-card">
+            <div style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">🔍 차량 번호로 검색</div>
+            <input type="text" placeholder="차량 번호 4자리를 입력하세요" style="width: 100%; padding: 12px; background-color: #242838; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-size: 14px;">
+        </div>
+    </div>
+
+    <!-- [탭 5] 비상 연락망 화면 -->
+    <div id="tab-contact" class="content">
+        <div class="section-title">비상 연락망</div>
+        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">이름을 누르면 바로 전화가 걸립니다.</div>
+
+        <div class="section-title" style="margin-top: 10px;">본사</div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">이태희</div>
+                <div style="font-size: 12px; color: #8e8e93;">이사 · 010-4229-7800</div>
+            </div>
+            <button class="call-btn">전화</button>
+        </div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">이큰산</div>
+                <div style="font-size: 12px; color: #8e8e93;">부장 · 010-6404-0230</div>
+            </div>
+            <button class="call-btn">전화</button>
+        </div>
+
+        <div class="section-title" style="margin-top: 20px;">대치사업소</div>
+        <div class="contact-card">
+            <div>
+                <div style="font-weight: 600;">김문기</div>
+                <div style="font-size: 12px; color: #8e8e93;">팀장 · 010-9130-3045</div>
+            </div>
+            <button class="call-btn">전화</button>
+        </div>
+    </div>
+
+    <!-- 하단 네비게이션 바 -->
     <div class="nav-bar">
-        <a href="#" class="nav-item active">
+        <button class="nav-item active" onclick="switchTab('today')">
             <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             오늘
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchTab('schedule')">
             <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
             일정
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchTab('parking')">
             <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM19 17H5v-4.66l.12-.34h13.76l.12.34V17z"/></svg>
             주차
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchTab('car')">
             <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>
             차량
-        </a>
-        <a href="#" class="nav-item">
+        </button>
+        <button class="nav-item" onclick="switchTab('contact')">
             <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             연락
-        </a>
+        </button>
     </div>
 </div>
+
+<script>
+    function switchTab(tabId) {
+        // 모든 콘텐츠 숨기기
+        const contents = document.querySelectorAll('.content');
+        contents.forEach(el => el.classList.remove('active'));
+
+        // 선택한 콘텐츠 보이기
+        const target = document.getElementById('tab-' + tabId);
+        if (target) {
+            target.classList.add('active');
+        }
+
+        // 모든 네비게이션 아이콘 활성화 해제
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(el => el.classList.remove('active'));
+
+        // 클릭된 네비게이션 아이콘 활성화
+        event.currentTarget.classList.add('active');
+        
+        // 상단 타이틀 동적 변경 (선택사항)
+        const titles = {
+            'today': '더채플대치 발렛',
+            'schedule': '운영 스케줄',
+            'parking': '주차 안내',
+            'car': '차량 조회',
+            'contact': '비상 연락망'
+        };
+        document.getElementById('header-title').innerText = titles[tabId] || '더채플대치 발렛';
+    }
+</script>
 
 </body>
 </html>
