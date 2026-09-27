@@ -278,10 +278,7 @@
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.3s ease;
         }
-        .show-sat img { transform: scale(1.0); object-fit: cover; object-position: top; max-height: 400px; }
-        .show-sun img { transform: scale(1.0); object-fit: cover; object-position: bottom; max-height: 400px; }
 
         /* 하단 네비게이션 바 */
         .bottom-nav {
@@ -329,7 +326,7 @@
         <div class="container">
             <h1>오늘 예식 현황</h1>
             <div style="font-size: 2.2rem; font-weight: bold; color: #ffffff; margin: 10px 0;">2건</div>
-            <div class="desc">11:00 / 12:30 예식 진행 예정</div>
+            <div class="desc">11:00 / 13:00 예식 진행 예정</div>
             
             <div class="btn-grid-2">
                 <a href="#sec-parking" onclick="switchTab('parking')" class="sub-card-btn">
@@ -344,14 +341,15 @@
         </div>
 
         <div class="container">
-            <h1>🚗 타임별 예식 차량 & 상세 정보</h1>
+            <h1>🚗 타임별 예식 상세 정보</h1>
             
             <div class="info-card" style="margin-top: 15px;">
                 <div class="info-header">
                     <span class="time-badge">11:00 예식</span>
                     <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 280 / 308</span>
                 </div>
-                <div class="info-row"><span>대형버스: 1대 (중구)</span><span>웨딩카: 산타페 / 38고 6205</span></div>
+                <div class="info-row"><span>웨딩카</span><span style="color:#ffffff; font-weight:bold;">산타페 / 38고 6205</span></div>
+                <div class="info-row"><span>대형버스</span><span>1대 (중구)</span></div>
                 <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량</div>
                 <div class="info-row"><span>혼주 차량 번호</span><span>90나 7941</span></div>
             </div>
@@ -361,7 +359,8 @@
                     <span class="time-badge">13:00 예식</span>
                     <span style="font-size: 0.8rem; color: #94a3b8;">지불보증: 300 / 330</span>
                 </div>
-                <div class="info-row"><span>대형버스: 1대</span><span>웨딩카: 벤츠 / 131오 2623</span></div>
+                <div class="info-row"><span>웨딩카</span><span style="color:#ffffff; font-weight:bold;">벤츠 / 131오 2623</span></div>
+                <div class="info-row"><span>대형버스</span><span>1대</span></div>
                 <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:4px;">혼주 차량</div>
                 <div class="info-row"><span>혼주 차량 번호</span><span>3680 5343, 1778외 2240</span></div>
             </div>
@@ -398,16 +397,16 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">30</div><div class="date-cell other">31</div><div class="date-cell">1</div><div class="date-cell">2</div><div class="date-cell">3</div><div class="date-cell">4</div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '9월 5일 (토)')">5<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 6일 (일)')">6<div class="badge-sun">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[9월 5일 토요일 웨딩]\n- 총 4건 (상세 정보 없음)')">5<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 6일 일요일 웨딩]\n- 총 2건 (상세 정보 없음)')">6<div class="badge-sun">2</div></div>
                     <div class="date-cell">7</div><div class="date-cell">8</div><div class="date-cell">9</div><div class="date-cell">10</div><div class="date-cell">11</div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '9월 12일 (토)')">12<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 13일 (일)')">13<div class="badge-sun">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[9월 12일 토요일 웨딩]\n- 총 4건 (상세 정보 없음)')">12<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 13일 일요일 웨딩]\n- 총 2건 (상세 정보 없음)')">13<div class="badge-sun">2</div></div>
                     <div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div><div class="date-cell">17</div><div class="date-cell">18</div>
-                    <div class="date-cell sat active-date" onclick="selectWeekendSchedule('sat', '9월 19일 (토)')">19<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 20일 (일)')">20<div class="badge-sun">2</div></div>
+                    <div class="date-cell sat active-date" onclick="selectWeddingDetail('9월 19일 (토)')">19<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="selectWeddingDetail('9월 20일 (일)')">20<div class="badge-sun">2</div></div>
                     <div class="date-cell">21</div><div class="date-cell" onclick="selectSeptember29()">22</div><div class="date-cell">23</div><div class="date-cell">24</div><div class="date-cell">25</div><div class="date-cell">26</div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '9월 27일 (일)')">27<div class="badge-sun">2</div></div>
+                    <div class="date-cell sun" onclick="alert('[9월 27일 일요일 웨딩]\n- 총 2건 (상세 정보 없음)')">27<div class="badge-sun">2</div></div>
                     <div class="date-cell">28</div><div class="date-cell" onclick="selectSeptember29()">29</div><div class="date-cell">30</div><div class="date-cell other">1</div><div class="date-cell other">2</div><div class="date-cell other">3</div>
                 </div>
 
@@ -421,26 +420,31 @@
                     <div class="day-header" style="color:#60a5fa;">토</div>
 
                     <div class="date-cell other">27</div><div class="date-cell other">28</div><div class="date-cell other">29</div><div class="date-cell other">30</div><div class="date-cell">1</div><div class="date-cell">2</div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 3일 (토)')">3<div class="badge-sat">5</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 4일 (일)')">4<div class="badge-sun">1</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 3일 토요일 웨딩]\n- 총 5건')">3<div class="badge-sat">5</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 4일 일요일 웨딩]\n- 총 1건')">4<div class="badge-sun">1</div></div>
                     <div class="date-cell">5</div><div class="date-cell">6</div><div class="date-cell">7</div><div class="date-cell">8</div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 9일 (금·한글날)')">9<div class="badge-sat">2</div></div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 10일 (토)')">10<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 11일 (일)')">11<div class="badge-sun">1</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 9일 금요일 웨딩]\n- 총 2건')">9<div class="badge-sat">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 10일 토요일 웨딩]\n- 총 4건')">10<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 11일 일요일 웨딩]\n- 총 1건')">11<div class="badge-sun">1</div></div>
                     <div class="date-cell">12</div><div class="date-cell">13</div><div class="date-cell">14</div><div class="date-cell">15</div><div class="date-cell">16</div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 17일 (토)')">17<div class="badge-sat">4</div></div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 18일 (일)')">18<div class="badge-sun">2</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 17일 토요일 웨딩]\n- 총 4건')">17<div class="badge-sat">4</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 18일 일요일 웨딩]\n- 총 2건')">18<div class="badge-sun">2</div></div>
                     <div class="date-cell">19</div><div class="date-cell">20</div><div class="date-cell">21</div><div class="date-cell">22</div><div class="date-cell">23</div><div class="date-cell">24</div>
-                    <div class="date-cell sun" onclick="selectWeekendSchedule('sun', '10월 25일 (일)')">25<div class="badge-sun">2</div></div>
+                    <div class="date-cell sun" onclick="alert('[10월 25일 일요일 웨딩]\n- 총 2건')">25<div class="badge-sun">2</div></div>
                     <div class="date-cell">26</div><div class="date-cell">27</div><div class="date-cell">28</div><div class="date-cell">29</div><div class="date-cell">30</div>
-                    <div class="date-cell sat" onclick="selectWeekendSchedule('sat', '10월 31일 (토)')">31<div class="badge-sat">3</div></div>
+                    <div class="date-cell sat" onclick="alert('[10월 31일 토요일 웨딩]\n- 총 3건')">31<div class="badge-sat">3</div></div>
                 </div>
 
-                <!-- 주말 JPG 이미지 출력 영역 -->
+                <!-- 웨딩 상세 정보 출력 박스 (9월 19일 / 9월 20일 등 공용) -->
                 <div id="wedding-detail-box" style="margin-top: 20px; display: none;">
-                    <div id="wedding-detail-title" style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 주말 일정표</div>
-                    <div id="weekend-map-wrap" class="map-wrapper show-sat">
-                        <img id="wedding-weekend-img" src="wedding_weekend.jpg" alt="주말 일정표" onerror="this.parentElement.innerHTML='<div class=\'info-card\' style=\'text-align:center; color:#94a3b8; padding:20px;\'>wedding_weekend.jpg 파일을 찾을 수 없습니다.<br>깃허브에 JPG 파일 형식으로 업로드해주세요.</div>'">
+                    <div id="wedding-detail-title" style="font-size: 1.05rem; font-weight: bold; color: #f59e0b; margin-bottom: 10px;">📅 상세 예식 현황</div>
+                    <div class="info-card">
+                        <div class="info-header"><span class="time-badge">11:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑 150 / 신부 130</span></div>
+                        <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">총 280명 (보증 308명)</span></div>
+                        <div class="info-row"><span>웨딩카</span><span style="color:#ffffff; font-weight:bold;">제네시스 / 12가 3456</span></div>
+                        <div class="info-row"><span>대형버스</span><span>1대</span></div>
+                        <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
+                        <div class="info-row"><span>혼주 차량</span><span>11가 1234</span></div>
                     </div>
                 </div>
 
@@ -448,18 +452,18 @@
                 <div id="september-29-box" style="margin-top: 20px; display: none;">
                     <div style="font-size: 1.05rem; font-weight: bold; color: #3b82f6; margin-bottom: 10px;">📅 9월 29일 (화) 예식 상세 현황 (총 2건)</div>
                     <div class="info-card">
-                        <div class="info-header"><span class="time-badge">11:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑: 150명 / 신부: 130명</span></div>
+                        <div class="info-header"><span class="time-badge">11:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑 150 / 신부 130</span></div>
                         <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">신랑 150 / 신부 130 (총 280명)</span></div>
-                        <div class="info-row"><span>웨딩카 번호</span><span>123가 4567</span></div>
-                        <div class="info-row"><span>기사 성명 / 연락처</span><span>김기사 / 010-9876-5432</span></div>
+                        <div class="info-row"><span>웨딩카</span><span style="color:#ffffff; font-weight:bold;">123가 4567</span></div>
+                        <div class="info-row"><span>대형버스</span><span>미배차 또는 해당없음</span></div>
                         <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
                         <div class="info-row"><span>혼주 차량</span><span>567나 8910</span></div>
                     </div>
                     <div class="info-card">
-                        <div class="info-header"><span class="time-badge" style="background:#ec4899;">15:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑: 140명 / 신부: 160명</span></div>
+                        <div class="info-header"><span class="time-badge" style="background:#ec4899;">15:00 예식</span><span style="font-size: 0.8rem; color: #94a3b8;">신랑 140 / 신부 160</span></div>
                         <div class="info-row"><span>지불보증</span><span style="color:#ffffff; font-weight:bold;">신랑 140 / 신부 160 (총 300명)</span></div>
-                        <div class="info-row"><span>웨딩카 번호</span><span>789다 0123</span></div>
-                        <div class="info-row"><span>기사 성명 / 연락처</span><span>이기사 / 010-1111-2222</span></div>
+                        <div class="info-row"><span>웨딩카</span><span style="color:#ffffff; font-weight:bold;">789다 0123</span></div>
+                        <div class="info-row"><span>대형버스</span><span>미배차 또는 해당없음</span></div>
                         <div class="info-row" style="color:#f59e0b; font-size:0.85rem; font-weight:bold; margin-top:6px;">혼주 차량 번호</div>
                         <div class="info-row"><span>혼주 차량</span><span>345라 6789</span></div>
                     </div>
@@ -784,16 +788,13 @@
             }
         }
 
-        function selectWeekendSchedule(dayType, dateStr) {
+        function selectWeddingDetail(dateStr) {
             document.getElementById('september-29-box').style.display = 'none';
             const box = document.getElementById('wedding-detail-box');
             const title = document.getElementById('wedding-detail-title');
-            const wrap = document.getElementById('weekend-map-wrap');
             
             box.style.display = 'block';
-            title.innerText = `📅 ${dateStr} 웨딩 상세 일정표`;
-            wrap.className = 'map-wrapper show-sat';
-            
+            title.innerText = `📅 ${dateStr} 웨딩 상세 현황`;
             box.scrollIntoView({ behavior: 'smooth' });
         }
 
