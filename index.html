@@ -254,7 +254,7 @@
             color: #ffffff;
         }
 
-        /* 비상 연락망 스타일 (이름 -> 직책 -> 전화번호 순서, 초록색 전화기 버튼) */
+        /* 비상 연락망 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -263,6 +263,11 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
+        }
+        .contact-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
         .contact-info-wrap {
             display: flex;
@@ -285,7 +290,6 @@
         .contact-phone {
             font-size: 13px;
             color: #8e8e93;
-            margin-top: 4px;
         }
         .call-icon-btn {
             background-color: #10b981;
@@ -478,14 +482,14 @@
         </div>
     </div>
 
-    <!-- [탭 4] 비상 연락망 화면 (이름 -> 직책 -> 전화번호 순서, 녹색 전화기 아이콘) -->
+    <!-- [탭 4] 비상 연락망 화면 -->
     <div id="tab-contact" class="content">
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 10px;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
 
         <div class="section-title">본사</div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">이태희</span>
                     <span class="contact-role">이사</span>
@@ -497,7 +501,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">이큰산</span>
                     <span class="contact-role">부장</span>
@@ -511,7 +515,7 @@
 
         <div class="section-title">대치사업소</div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">김문기</span>
                     <span class="contact-role">팀장</span>
@@ -523,7 +527,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">임창희</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -535,7 +539,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">이종범</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -547,7 +551,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">김태석</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -559,7 +563,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">서원표</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -571,7 +575,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">이도훈</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -583,7 +587,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">동상진</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -595,7 +599,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">박성준</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -607,7 +611,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">조영도</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -619,7 +623,7 @@
             </a>
         </div>
         <div class="contact-card">
-            <div>
+            <div class="contact-left">
                 <div class="contact-info-wrap">
                     <span class="contact-name">전다문</span>
                     <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -658,6 +662,7 @@
 
     let dbData = {
         monthly: [],
+        weekly: [],
         consult: []
     };
 
@@ -671,12 +676,14 @@
 
     async function fetchAllData() {
         try {
-            const [mRes, cRes] = await Promise.all([
+            const [mRes, wRes, cRes] = await Promise.all([
                 fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
+                fetch(`${SCRIPT_URL}?type=weekly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
                 fetch(`${SCRIPT_URL}?type=consult`, { mode: 'cors' }).then(r => r.json()).catch(() => [])
             ]);
 
             dbData.monthly = Array.isArray(mRes) ? mRes : [];
+            dbData.weekly = Array.isArray(wRes) ? wRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
             renderCalendar();
@@ -716,7 +723,7 @@
         currentCategory = category;
         document.getElementById('schedTypeWedding').classList.toggle('active', category === 'wedding');
         document.getElementById('schedTypeConsult').classList.toggle('active', category === 'consult');
-        document.getElementById('scheduleDesc').innerText = category === 'wedding' ? '날짜를 누르면 웨딩 시간이 나옵니다.' : '날짜를 누르면 상담 일정이 나옵니다.';
+        document.getElementById('scheduleDesc').innerText = category === 'wedding' ? '날짜를 누르면 웨딩 상세 내역이 나옵니다.' : '날짜를 누르면 상담 일정이 나옵니다.';
         selectedDateStr = null;
         renderCalendar();
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
@@ -731,13 +738,12 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // 9월 19일, 20일 등 건수가 정확하게 집계되도록 날짜 셀을 정밀 비교하는 핵심 함수
+    // 날짜 매칭 함수 (캘린더 건수 계산용)
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let val of Object.values(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
-            // 1. 날짜형식 (2026-09-19 또는 2026.09.19 또는 09/19 등) 파싱
             let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})/);
             if (match) {
                 let m = parseInt(match[2], 10);
@@ -745,7 +751,6 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 2. "9월 19일" 또는 "9월19" 형태 검사
             let koreanMatch = strVal.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일?/);
             if (koreanMatch) {
                 let m = parseInt(koreanMatch[1], 10);
@@ -753,7 +758,6 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 3. 단독 숫자 조합으로 정확히 포함되어 있는지 검사 (예: 19일, 열 등 간섭 방지)
             let mRegex = new RegExp(`(^|[^0-9])${targetMonth}(월|[^0-9]|$)`);
             let dRegex = new RegExp(`(^|[^0-9])${targetDay}(일|[^0-9]|$)`);
             if (strVal.includes(String(targetMonth)) && strVal.includes(String(targetDay))) {
@@ -802,7 +806,7 @@
         `;
 
         const totalDays = currentMonth === 9 ? 30 : 31;
-        const startDayOffset = currentMonth === 9 ? 2 : 4; // 2026년 9월 1일 화요일(2), 10월 1일 목요일(4)
+        const startDayOffset = currentMonth === 9 ? 2 : 4; 
 
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
@@ -810,7 +814,6 @@
 
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${currentMonth}월 ${day}일`;
-            
             const matchedRows = activeData.filter(row => isRowMatchDate(row, currentMonth, day));
 
             const count = matchedRows.length;
@@ -850,32 +853,68 @@
         selectedDateStr = dateStr;
         renderCalendar();
 
-        const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
-        const matched = activeData.filter(row => isRowMatchDate(row, currentMonth, dayNum));
-
-        document.getElementById('selectedDateTitle').innerText = `${currentMonth}월 ${dayNum}일 상세 내역 (${matched.length}건)`;
-        
         const container = document.getElementById('selectedDateContent');
-        if (matched.length === 0) {
-            container.innerHTML = `<div class="empty-msg">${currentMonth}월 ${dayNum}일에 등록된 ${currentCategory === 'wedding' ? '웨딩' : '상담'} 일정이 없습니다.</div>`;
-            return;
-        }
 
-        let contentHtml = '';
-        matched.forEach((row, idx) => {
-            contentHtml += `
-                <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px;">
-                    <div style="font-weight:bold; color:#f0a500; margin-bottom:6px;">[${currentCategory === 'wedding' ? '웨딩' : '상담'} ${idx + 1}]</div>
-            `;
-            for (let [key, val] of Object.entries(row)) {
-                let cleaned = cleanValue(key, val);
-                if (cleaned !== '') {
-                    contentHtml += `<div style="font-size:13px; margin-bottom:4px;"><span style="color:#8e8e93;">${key}:</span> ${cleaned}</div>`;
-                }
+        if (currentCategory === 'wedding') {
+            // 웨딩 탭일 경우 wedding_weekly 시트 데이터를 우선 조회하여 상세 항목 출력
+            const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, currentMonth, dayNum));
+            
+            document.getElementById('selectedDateTitle').innerText = `${currentMonth}월 ${dayNum}일 웨딩 상세 내역 (${matchedWeekly.length}건)`;
+
+            if (matchedWeekly.length === 0) {
+                container.innerHTML = `<div class="empty-msg">${currentMonth}월 ${dayNum}일에 등록된 웨딩 주간 상세 일정이 없습니다.</div>`;
+                return;
             }
-            contentHtml += `</div>`;
-        });
-        container.innerHTML = contentHtml;
+
+            let contentHtml = '';
+            matchedWeekly.forEach((row, idx) => {
+                // 시트의 컬럼명(예식일, 시간, 지불보증, 웨딩카, 버스대절, 혼주차량 등)에 맞게 매핑
+                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+                let dateDisplay = `${currentMonth}월 ${dayNum}일 ${timeVal ? timeVal : ''}`.trim();
+                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
+                let weddingCar = row['웨딩카'] || '정보 없음';
+                let bus = row['버스대절'] || row['버스'] || '정보 없음';
+                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+
+                contentHtml += `
+                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 4px solid #f0a500;">
+                        <div style="font-weight:bold; color:#f0a500; margin-bottom:8px; font-size:14px;">[웨딩 ${idx + 1}]</div>
+                        <div style="font-size:13px; margin-bottom:5px;"><span style="color:#8e8e93;">일시 :</span> ${dateDisplay}</div>
+                        <div style="font-size:13px; margin-bottom:5px;"><span style="color:#8e8e93;">지불보증 :</span> ${guarantee}</div>
+                        <div style="font-size:13px; margin-bottom:5px;"><span style="color:#8e8e93;">웨딩카 :</span> ${weddingCar}</div>
+                        <div style="font-size:13px; margin-bottom:5px;"><span style="color:#8e8e93;">버스대절 :</span> ${bus}</div>
+                        <div style="font-size:13px;"><span style="color:#8e8e93;">혼주 차량 :</span> ${honjuCar}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = contentHtml;
+
+        } else {
+            // 상담 탭일 경우 기존 consult 데이터 출력
+            const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, currentMonth, dayNum));
+            document.getElementById('selectedDateTitle').innerText = `${currentMonth}월 ${dayNum}일 상담 상세 내역 (${matchedConsult.length}건)`;
+
+            if (matchedConsult.length === 0) {
+                container.innerHTML = `<div class="empty-msg">${currentMonth}월 ${dayNum}일에 등록된 상담 일정이 없습니다.</div>`;
+                return;
+            }
+
+            let contentHtml = '';
+            matchedConsult.forEach((row, idx) => {
+                contentHtml += `
+                    <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px;">
+                        <div style="font-weight:bold; color:#a855f7; margin-bottom:6px;">[상담 ${idx + 1}]</div>
+                `;
+                for (let [key, val] of Object.entries(row)) {
+                    let cleaned = cleanValue(key, val);
+                    if (cleaned !== '') {
+                        contentHtml += `<div style="font-size:13px; margin-bottom:4px;"><span style="color:#8e8e93;">${key}:</span> ${cleaned}</div>`;
+                    }
+                }
+                contentHtml += `</div>`;
+            });
+            container.innerHTML = contentHtml;
+        }
     }
 
     function switchParkingTab(floor) {
