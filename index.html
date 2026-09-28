@@ -254,7 +254,7 @@
             color: #ffffff;
         }
 
-        /* 비상 연락망 스타일 (요청 순서: [이름] [직책] [전화번호] [녹색 전화기 버튼]) */
+        /* 비상 연락망 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -287,7 +287,7 @@
             color: #8e8e93;
         }
         .call-icon-btn {
-            background-color: #10b981; /* 녹색 전화기 버튼 */
+            background-color: #10b981;
             color: white;
             width: 38px;
             height: 38px;
@@ -477,7 +477,7 @@
         </div>
     </div>
 
-    <!-- [탭 4] 비상 연락망 화면 ([이름] [직책] [전화번호] [녹색 전화기] 순서) -->
+    <!-- [탭 4] 비상 연락망 화면 -->
     <div id="tab-contact" class="content">
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 10px;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
@@ -709,68 +709,29 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // [엄격한 날짜 매칭 함수] - 자릿수와 월/일 정확히 비교하여 오인식 방지
+    // [완벽히 수정된 날짜 매칭 함수] - 상담/웨딩 데이터에서 특정 날짜(월, 일)가 명시된 경우에만 정확히 매칭
     function isRowMatchDate(row, targetMonth, targetDay) {
-        for (let [key, val] of Object.entries(row)) {
+        for (let val of Object.values(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
-            // 1. 날짜 형식(YYYY-MM-DD 등)에서 월, 일을 정확히 추출
-            let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})(?!\d)/);
-            if (match) {
-                let m = parseInt(match[2], 10);
-                let d = parseInt(match[3], 10);
+            // 1. "2026-09-19", "2026/09/19", "09-19" 형태 검사
+            let strictMatch = strVal.match(/(\d{4})?[-\./]?\s*0?(\d{1,2})[-\./]0?(\d{1,2})(?!\d)/);
+            if (strictMatch) {
+                let m = parseInt(strictMatch[2], 10);
+                let d = parseInt(strictMatch[3], 10);
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 2. 한글 날짜 형식("9월 19일") 매칭
-            let koreanMatch = strVal.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일?/);
+            // 2. "9월 19일" 또는 "9월19" 형태 검사
+            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
             if (koreanMatch) {
                 let m = parseInt(koreanMatch[1], 10);
                 let d = parseInt(koreanMatch[2], 10);
                 if (m === targetMonth && d === targetDay) return true;
             }
-
-            // 3. 컬럼명이 '월'이거나 데이터가 월 정보일 때 체크
-            if (key.includes('월') && parseInt(strVal, 10) !== targetMonth) {
-                // 해당 행의 월이 타겟 월과 다르면 즉시 제외
-                // 단, 다른 컬럼에 명시적인 날짜가 있다면 위 1, 2번에서 처리됨
-            }
         }
-
-        // 추가 검증: 행 내의 모든 셀 토큰 중 targetMonth와 targetDay가 정확히 공존하는지 확인 (단, 단독 숫자 포함 관계 엄격 검사)
-        let foundMonth = false;
-        let foundDay = false;
-        for (let val of Object.values(row)) {
-            if (val === undefined || val === null) continue;
-            let strVal = String(val).trim();
-            let tokens = strVal.split(/[\s\-\.\/\,:]+/);
-            for (let t of tokens) {
-                let num = parseInt(t, 10);
-                if (num === targetMonth) foundMonth = true;
-                if (num === targetDay) foundDay = true;
-            }
-        }
-
-        // 월과 일이 모두 명확히 발견된 경우에만 인정 (단, 9일과 19일 같은 부분 일치 오류 방지)
-        if (foundMonth && foundDay) {
-            for (let val of Object.values(row)) {
-                let strVal = String(val).trim();
-                let matchFull = strVal.match(new RegExp(`(^|[^0-9])${targetMonth}[-/\\.]${targetDay}([^0-9]|$)`)) ||
-                                strVal.match(new RegExp(`(^|[^0-9])${targetMonth}월\\s*${targetDay}일?([^0-9]|$)`));
-                if (matchFull) return true;
-
-                // 날짜 포맷이 YYYY-MM-DD 형태일 때 정밀 매칭
-                let strictMatch = strVal.match(/(\d{4})[-\./](\d{1,2})[-\./](\d{1,2})/);
-                if (strictMatch) {
-                    let m = parseInt(strictMatch[2], 10);
-                    let d = parseInt(strictMatch[3], 10);
-                    if (m === targetMonth && d === targetDay) return true;
-                }
-            }
-        }
-
-        return false;
+        return false; // 확실하게 날짜 패턴이 일치하지 않으면 무조건 false 반환
     }
 
     function renderCalendar() {
@@ -786,11 +747,10 @@
         const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
         
         const monthFiltered = activeData.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
+            for (let val of Object.values(row)) {
                 if (val !== undefined && val !== null) {
                     let strVal = String(val);
-                    if (key.includes('월') && parseInt(strVal, 10) === currentMonth) return true;
-                    let mMatch = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]/) || strVal.match(/(\d{1,2})\s*월/);
+                    let mMatch = strVal.match(/(\d{4})?[-\./]?\s*0?(\d{1,2})[-\./]/) || strVal.match(/0?(\d{1,2})\s*월/);
                     if (mMatch) {
                         let m = parseInt(mMatch[2] || mMatch[1], 10);
                         if (m === currentMonth) return true;
@@ -875,7 +835,7 @@
             let contentHtml = '';
             matchedWeekly.forEach((row, idx) => {
                 let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let dateDisplay = `${currentMonth}월 ${dayNum}일 ${timeVal ? timeVal : ''}`.trim();
+                let dateDisplay = `${currentMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
                 let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
                 let weddingCar = row['웨딩카'] || '정보 없음';
                 let bus = row['버스대절'] || row['버스'] || '정보 없음';
