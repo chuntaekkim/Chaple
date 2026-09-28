@@ -254,7 +254,7 @@
             color: #ffffff;
         }
 
-        /* 개선된 비상 연락망 스타일 (이름/직급 구분 및 전화기 아이콘 버튼) */
+        /* 비상 연락망 스타일 (이름 -> 직책 -> 전화번호 순서, 초록색 전화기 버튼) */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -267,7 +267,7 @@
         .contact-info-wrap {
             display: flex;
             align-items: baseline;
-            gap: 10px;
+            gap: 8px;
         }
         .contact-name {
             font-weight: 700;
@@ -285,7 +285,7 @@
         .contact-phone {
             font-size: 13px;
             color: #8e8e93;
-            margin-top: 3px;
+            margin-top: 4px;
         }
         .call-icon-btn {
             background-color: #10b981;
@@ -478,7 +478,7 @@
         </div>
     </div>
 
-    <!-- [탭 4] 비상 연락망 화면 (전화기 아이콘 및 컬러 구분 적용) -->
+    <!-- [탭 4] 비상 연락망 화면 (이름 -> 직책 -> 전화번호 순서, 녹색 전화기 아이콘) -->
     <div id="tab-contact" class="content">
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
         <div style="font-size: 13px; color: #8e8e93; margin-bottom: 10px;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
@@ -731,13 +731,13 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // [강력 개선된 날짜 매칭 함수] 스프레드시트의 날짜 형식을 완벽하게 파악
+    // 9월 19일, 20일 등 건수가 정확하게 집계되도록 날짜 셀을 정밀 비교하는 핵심 함수
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let val of Object.values(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
-            // 1. ISO 포맷 또는 YYYY-MM-DD / YYYY.MM.DD / MM/DD 형태 추출
+            // 1. 날짜형식 (2026-09-19 또는 2026.09.19 또는 09/19 등) 파싱
             let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})/);
             if (match) {
                 let m = parseInt(match[2], 10);
@@ -745,16 +745,19 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 2. "9월 19일" 또는 "9월19일" 형태
-            if (strVal.includes(`${targetMonth}월`) && (strVal.includes(`${targetDay}일`) || strVal.includes(` ${targetDay} `) || strVal.endsWith(`${targetDay}`))) {
-                if (new RegExp(`\\b${targetDay}[일]?\\b`).test(strVal)) return true;
+            // 2. "9월 19일" 또는 "9월19" 형태 검사
+            let koreanMatch = strVal.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일?/);
+            if (koreanMatch) {
+                let m = parseInt(koreanMatch[1], 10);
+                let d = parseInt(koreanMatch[2], 10);
+                if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 3. 셀 전체에 해당 월과 일이 독립된 숫자로 포함되어 있는지 정밀 검사
-            let mReg = new RegExp(`(^|[^0-9])${targetMonth}([^0-9]|$)`);
-            let dReg = new RegExp(`(^|[^0-9])${targetDay}([^0-9]|$)`);
-            if (mReg.test(strVal) && dReg.test(strVal)) {
-                return true;
+            // 3. 단독 숫자 조합으로 정확히 포함되어 있는지 검사 (예: 19일, 열 등 간섭 방지)
+            let mRegex = new RegExp(`(^|[^0-9])${targetMonth}(월|[^0-9]|$)`);
+            let dRegex = new RegExp(`(^|[^0-9])${targetDay}(일|[^0-9]|$)`);
+            if (strVal.includes(String(targetMonth)) && strVal.includes(String(targetDay))) {
+                if (mRegex.test(strVal) && dRegex.test(strVal)) return true;
             }
         }
         return false;
@@ -776,13 +779,10 @@
             for (let val of Object.values(row)) {
                 if (val !== undefined && val !== null) {
                     let strVal = String(val);
-                    if (strVal.includes(`${currentMonth}월`) || strVal.includes(`-${String(currentMonth).padStart(2, '0')}-`) || strVal.includes(`.${String(currentMonth).padStart(2, '0')}.`) || strVal.includes(`/${String(currentMonth).padStart(2, '0')}/`)) {
-                        return true;
-                    }
-                    // 연도나 다른 패턴 내에 월이 포함된 경우
-                    let mReg = new RegExp(`(^|[^0-9])${currentMonth}([^0-9]|$)`);
-                    if (mReg.test(strVal) && (strVal.includes('2026') || strVal.includes('2027'))) {
-                        return true;
+                    let mMatch = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]/) || strVal.match(/(\d{1,2})\s*월/);
+                    if (mMatch) {
+                        let m = parseInt(mMatch[2] || mMatch[1], 10);
+                        if (m === currentMonth) return true;
                     }
                 }
             }
@@ -802,7 +802,7 @@
         `;
 
         const totalDays = currentMonth === 9 ? 30 : 31;
-        const startDayOffset = currentMonth === 9 ? 2 : 4; 
+        const startDayOffset = currentMonth === 9 ? 2 : 4; // 2026년 9월 1일 화요일(2), 10월 1일 목요일(4)
 
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
@@ -834,19 +834,16 @@
 
         if (strVal.includes('T')) {
             let parts = strVal.split('T');
-            let datePart = parts[0]; 
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
-            
-            if (key.includes('시간') || key.includes('시') || timePart !== '00:00:00') {
+            if (key.includes('시간') || key.includes('시') || (timePart && timePart !== '00:00:00')) {
                 if (timePart && timePart !== '00:00:00') {
                     return timePart.substring(0, 5);
                 }
             }
-            strVal = datePart;
+            strVal = parts[0];
         }
 
-        strVal = strVal.replace('.000Z', '').replace('Z', '');
-        return strVal;
+        return strVal.replace('.000Z', '').replace('Z', '');
     }
 
     function selectDate(dateStr, dayNum) {
