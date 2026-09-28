@@ -378,10 +378,10 @@
 
     <!-- [탭 1] 오늘 화면 -->
     <div id="tab-today" class="content active">
-        <div class="section-title">오늘 예식 현황</div>
+        <div class="section-title" id="todayTitle">오늘 예식 현황</div>
         <div class="main-card">
-            <div class="stat-number">2건</div>
-            <div class="stat-desc">11:00 / 12:30 예식 진행 예정</div>
+            <div class="stat-number" id="todayStatNum">0건</div>
+            <div class="stat-desc" id="todayStatDesc">오늘 진행되는 예식이 없습니다.</div>
             <div class="card-row">
                 <div class="sub-box" onclick="switchTab('parking')">
                     <div class="sub-box-title">🅿️ 주차 안내</div>
@@ -394,19 +394,9 @@
             </div>
         </div>
 
-        <div class="section-title">🚗 타임별 예식 차량 & 상담·시식</div>
-        <div class="event-card">
-            <div class="badge">11:00 예식</div>
-            <div class="info-grid">
-                <div><span class="info-label">신랑:</span> <span class="info-value">1234 (제네시스)</span></div>
-                <div><span class="info-label">신부:</span> <span class="info-value">5678 (벤츠)</span></div>
-                <div><span class="info-label">혼주3:</span> <span class="info-value">1111</span></div>
-                <div><span class="info-label">혼주4:</span> <span class="info-value">2222</span></div>
-            </div>
-            <div class="highlight-box">
-                <span>📌 [상담/시식 차량]</span>
-                <span>9999 (그랜저) 외 1대</span>
-            </div>
+        <div class="section-title">🚗 타임별 예식 차량 & 상세 내역</div>
+        <div id="todayEventsContainer">
+            <div class="empty-msg">오늘 예정된 예식이 없습니다.</div>
         </div>
     </div>
 
@@ -657,10 +647,11 @@
             dbData.weekly = Array.isArray(wRes) ? wRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
+            renderTodayInfo();
             renderCalendar();
         } catch (e) {
             console.error("Data load error:", e);
-            document.getElementById('scheduleSummary').innerText = "데이터 로드 완료 (오프라인 모드)";
+            renderTodayInfo();
             renderCalendar();
         }
     }
@@ -709,21 +700,35 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // [완벽히 수정된 날짜 매칭 함수] - 상담/웨딩 데이터에서 특정 날짜(월, 일)가 명시된 경우에만 정확히 매칭
+    // [최종 수정된 날짜 매칭 함수]
     function isRowMatchDate(row, targetMonth, targetDay) {
-        for (let val of Object.values(row)) {
+        for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
-            // 1. "2026-09-19", "2026/09/19", "09-19" 형태 검사
-            let strictMatch = strVal.match(/(\d{4})?[-\./]?\s*0?(\d{1,2})[-\./]0?(\d{1,2})(?!\d)/);
+            // 만약 상담(consult) 탭이라면, 오직 '상담일시' 키(컬럼)에 포함된 값만 확인합니다.
+            if (currentCategory === 'consult') {
+                if (!key.includes('상담일시') && !key.includes('상담')) continue;
+            }
+
+            // 2026년도 날짜 검사 (2026-09-19 또는 2026.09.19 등)
+            let match2026 = strVal.match(/2026\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
+            if (match2026) {
+                let m = parseInt(match2026[1], 10);
+                let d = parseInt(match2026[2], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
+
+            // 일반 날짜 형식 검사 (다른 연도인 2025, 2027 등은 철저히 배제)
+            if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
+
+            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
             if (strictMatch) {
                 let m = parseInt(strictMatch[2], 10);
                 let d = parseInt(strictMatch[3], 10);
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 2. "9월 19일" 또는 "9월19" 형태 검사
             let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
             if (koreanMatch) {
                 let m = parseInt(koreanMatch[1], 10);
@@ -731,7 +736,49 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
         }
-        return false; // 확실하게 날짜 패턴이 일치하지 않으면 무조건 false 반환
+        return false;
+    }
+
+    function renderTodayInfo() {
+        const todayMonth = 9;
+        const todayDay = 29;
+
+        const matchedToday = dbData.weekly.filter(row => isRowMatchDate(row, todayMonth, todayDay));
+
+        document.getElementById('todayTitle').innerText = `${todayMonth}월 ${todayDay}일 예식 현황`;
+        document.getElementById('todayStatNum').innerText = `${matchedToday.length}건`;
+
+        const descEl = document.getElementById('todayStatDesc');
+        const container = document.getElementById('todayEventsContainer');
+
+        if (matchedToday.length === 0) {
+            descEl.innerText = "오늘 진행되는 예식이 없습니다.";
+            container.innerHTML = `<div class="empty-msg">오늘(${todayMonth}월 ${todayDay}일) 예정된 예식이 없습니다.</div>`;
+            return;
+        }
+
+        descEl.innerText = `${matchedToday.length}건의 예식 진행 예정`;
+        let contentHtml = '';
+        matchedToday.forEach((row, idx) => {
+            let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+            let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
+            let weddingCar = row['웨딩카'] || '정보 없음';
+            let bus = row['버스대절'] || row['버스'] || '정보 없음';
+            let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+
+            contentHtml += `
+                <div class="event-card">
+                    <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
+                    <div class="info-grid">
+                        <div><span class="info-label">지불보증:</span> <span class="info-value">${guarantee}</span></div>
+                        <div><span class="info-label">웨딩카:</span> <span class="info-value">${weddingCar}</span></div>
+                        <div><span class="info-label">버스대절:</span> <span class="info-value">${bus}</span></div>
+                        <div><span class="info-label">혼주 차량:</span> <span class="info-value">${honjuCar}</span></div>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = contentHtml;
     }
 
     function renderCalendar() {
@@ -747,12 +794,15 @@
         const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
         
         const monthFiltered = activeData.filter(row => {
-            for (let val of Object.values(row)) {
+            for (let [key, val] of Object.entries(row)) {
                 if (val !== undefined && val !== null) {
                     let strVal = String(val);
-                    let mMatch = strVal.match(/(\d{4})?[-\./]?\s*0?(\d{1,2})[-\./]/) || strVal.match(/0?(\d{1,2})\s*월/);
+                    if (currentCategory === 'consult' && !key.includes('상담일시') && !key.includes('상담')) continue;
+                    if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
+
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(/2026\s*[-./]\s*0?(\d{1,2})/);
                     if (mMatch) {
-                        let m = parseInt(mMatch[2] || mMatch[1], 10);
+                        let m = parseInt(mMatch[1], 10);
                         if (m === currentMonth) return true;
                     }
                 }
