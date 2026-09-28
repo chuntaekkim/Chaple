@@ -254,7 +254,7 @@
             color: #ffffff;
         }
 
-        /* 비상 연락망 스타일 */
+        /* 비상 연락망 스타일 (이름 옆에 직책, 전화번호 아래 배치, 녹색 전화기 버튼) */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -292,7 +292,7 @@
             color: #8e8e93;
         }
         .call-icon-btn {
-            background-color: #10b981;
+            background-color: #10b981; /* 녹색 아이콘 배경 */
             color: white;
             width: 38px;
             height: 38px;
@@ -418,7 +418,7 @@
     <!-- [탭 2] 일정 화면 -->
     <div id="tab-schedule" class="content">
         <div class="section-title">운영 스케줄</div>
-        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;" id="scheduleDesc">날짜를 누르면 웨딩 시간이 나옵니다.</div>
+        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;" id="scheduleDesc">날짜를 누르면 웨딩 상세 내역이 나옵니다.</div>
         
         <div class="tab-menu-group">
             <button id="schedTypeWedding" class="tab-btn active" onclick="switchScheduleCategory('wedding')">웨딩</button>
@@ -738,19 +738,21 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // 날짜 매칭 함수 (캘린더 건수 계산용)
+    // [정밀 날짜 매칭 함수] - 9일과 19일 등을 혼동하지 않도록 정확한 날짜 형태 분리 추출
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let val of Object.values(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
-            let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})/);
+            // 1. YYYY-MM-DD 또는 YYYY.MM.DD 또는 MM/DD 형태 추출
+            let match = strVal.match(/(\d{4})?[-\./]?\s*(\d{1,2})[-\./]\s*(\d{1,2})(?!\d)/);
             if (match) {
                 let m = parseInt(match[2], 10);
                 let d = parseInt(match[3], 10);
                 if (m === targetMonth && d === targetDay) return true;
             }
 
+            // 2. "9월 19일" 또는 "9월19" 형태 추출
             let koreanMatch = strVal.match(/(\d{1,2})\s*월\s*(\d{1,2})\s*일?/);
             if (koreanMatch) {
                 let m = parseInt(koreanMatch[1], 10);
@@ -758,10 +760,15 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            let mRegex = new RegExp(`(^|[^0-9])${targetMonth}(월|[^0-9]|$)`);
-            let dRegex = new RegExp(`(^|[^0-9])${targetDay}(일|[^0-9]|$)`);
-            if (strVal.includes(String(targetMonth)) && strVal.includes(String(targetDay))) {
-                if (mRegex.test(strVal) && dRegex.test(strVal)) return true;
+            // 3. 단어/토큰 단위로 정확히 일치하는지 확인 (예: '9'가 '19'에 포함되어 오동작하는 것 방지)
+            let tokens = strVal.split(/[\s\-\.\/\,]+/);
+            for (let t of tokens) {
+                if (parseInt(t, 10) === targetDay) {
+                    // 월도 함께 맞는지 주변 토큰 검사
+                    for (let ot of tokens) {
+                        if (parseInt(ot, 10) === targetMonth) return true;
+                    }
+                }
             }
         }
         return false;
@@ -856,7 +863,6 @@
         const container = document.getElementById('selectedDateContent');
 
         if (currentCategory === 'wedding') {
-            // 웨딩 탭일 경우 wedding_weekly 시트 데이터를 우선 조회하여 상세 항목 출력
             const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, currentMonth, dayNum));
             
             document.getElementById('selectedDateTitle').innerText = `${currentMonth}월 ${dayNum}일 웨딩 상세 내역 (${matchedWeekly.length}건)`;
@@ -868,7 +874,6 @@
 
             let contentHtml = '';
             matchedWeekly.forEach((row, idx) => {
-                // 시트의 컬럼명(예식일, 시간, 지불보증, 웨딩카, 버스대절, 혼주차량 등)에 맞게 매핑
                 let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
                 let dateDisplay = `${currentMonth}월 ${dayNum}일 ${timeVal ? timeVal : ''}`.trim();
                 let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
@@ -890,7 +895,6 @@
             container.innerHTML = contentHtml;
 
         } else {
-            // 상담 탭일 경우 기존 consult 데이터 출력
             const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, currentMonth, dayNum));
             document.getElementById('selectedDateTitle').innerText = `${currentMonth}월 ${dayNum}일 상담 상세 내역 (${matchedConsult.length}건)`;
 
