@@ -45,6 +45,7 @@
             gap: 6px;
             font-size: 13px;
             color: #4cd964;
+            cursor: pointer;
         }
         .header .status-dot {
             width: 8px;
@@ -140,19 +141,6 @@
         .info-value {
             font-weight: 500;
         }
-        .highlight-box {
-            background-color: #2c241b;
-            border: 1px solid #4a3820;
-            border-radius: 8px;
-            padding: 10px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-        }
-        .highlight-box span:first-child {
-            color: #f0a500;
-        }
 
         /* 탭 버튼 그룹 */
         .tab-menu-group {
@@ -173,13 +161,19 @@
             border-radius: 10px;
             cursor: pointer;
             text-align: center;
+            transition: all 0.2s ease;
         }
-        .tab-btn.active {
-            background-color: #f0a500;
-            color: #12141c;
+        
+        /* 웨딩/상담 탭 구분을 위한 스타일 */
+        #schedTypeWedding.active {
+            background-color: #f0a500 !important;
+            color: #12141c !important;
+        }
+        #schedTypeConsult.active {
+            background-color: #a855f7 !important;
+            color: #ffffff !important;
         }
 
-        /* 월 선택 버튼 개별 색상 부여 */
         #monthBtn9.active {
             background-color: #f0a500 !important;
             color: #12141c !important;
@@ -189,7 +183,6 @@
             color: #ffffff !important;
         }
 
-        /* 주차 서브 섹션 제어 */
         .parking-section {
             display: none;
         }
@@ -197,15 +190,61 @@
             display: block;
         }
         
-        /* 도면 이미지 스타일 */
         .parking-map-img {
             width: 100%;
             border-radius: 12px;
             margin-top: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* 후문 모형 위치도 스타일 */
+        .parking-sketch-container {
+            background-color: #12141c;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .sketch-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .sketch-box {
+            width: 45px;
+            height: 35px;
+            background-color: #242838;
+            border: 2px solid #007aff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #60a5fa;
+        }
+        .sketch-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .sketch-entrance {
+            margin-top: 5px;
+            background-color: rgba(0, 122, 255, 0.15);
+            border: 1px dashed #007aff;
+            color: #60a5fa;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
         
-        /* 캘린더 그리드 스타일 */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -233,9 +272,16 @@
         .cal-cell.has-event {
             border: 1px solid rgba(240, 165, 0, 0.4);
         }
+        /* 상담 모드일 때 캘린더 이벤트 배너 색상 테두리 변경 */
+        .calendar-grid.consult-mode .cal-cell.has-event {
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
         .cal-cell.selected {
             background-color: #242838;
             border: 1px solid #f0a500;
+        }
+        .calendar-grid.consult-mode .cal-cell.selected {
+            border: 1px solid #a855f7;
         }
         .cal-date-num {
             font-weight: 600;
@@ -254,7 +300,6 @@
             color: #ffffff;
         }
 
-        /* 비상 연락망 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -315,7 +360,6 @@
             font-size: 0.9rem;
         }
 
-        /* 하단 네비게이션 바 */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -370,9 +414,9 @@
     <!-- 상단 헤더 -->
     <div class="header">
         <span id="header-title">더채플대치 발렛</span>
-        <div class="status">
-            <div class="status-dot"></div>
-            실시간 연동중
+        <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="statusText">캐싱됨 (새로고침)</span>
         </div>
     </div>
 
@@ -439,22 +483,22 @@
 
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #ff3b30;">
-                <div style="font-weight: 600; margin-bottom: 4px;">냉동고 및 창고 앞 발렛주차 불가</div>
+                <div style="font-weight: 600; margin-bottom: 4px;">혼주차량 주차</div>
                 <div style="font-size: 12px; color: #8e8e93;">지정주차구역 외에는 대지 마세요.</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 (Chaple_B4) 배치도</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 배치도</div>
                 <img src="Chaple_B4.png" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.png+Not+Found'">
             </div>
         </div>
 
         <div id="parking-b5" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
-                <div style="font-weight: 600; margin-bottom: 4px;">지하 5층 전용 구역</div>
+                <div style="font-weight: 600; margin-bottom: 4px;">직원 및 혼주 차량 주차</div>
                 <div style="font-size: 12px; color: #8e8e93;">추가 하객 주차 및 대형 차량 대기 구역입니다.</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 5층 (Chaple_B5) 배치도</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 5층 배치도</div>
                 <img src="Chaple_B5.png" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.png+Not+Found'">
             </div>
         </div>
@@ -462,7 +506,28 @@
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 600; margin-bottom: 4px;">후문 주차장 이용 안내</div>
-                <div style="font-size: 12px; color: #8e8e93;">상담·시식 차량은 후문 주차장에 안내합니다.</div>
+                <div style="font-size: 12px; color: #f0a500; font-weight: 700; margin-top: 4px;">🚗 후문은 9대 최대15대 주차가능</div>
+            </div>
+            <div class="main-card">
+                <div style="font-weight: 600; margin-bottom: 12px; color: #f0a500; text-align: center;">후문 주차장 위치 모형도</div>
+                <div class="parking-sketch-container">
+                    <div class="sketch-row">
+                        <div class="sketch-box">ㅁ</div>
+                        <div class="sketch-box">ㅁ</div>
+                        <div class="sketch-box">ㅁ</div>
+                    </div>
+                    <div class="sketch-row">
+                        <div class="sketch-box">ㅁ</div>
+                        <div class="sketch-box">ㅁ</div>
+                        <div class="sketch-box">ㅁ</div>
+                    </div>
+                    <div class="sketch-col">
+                        <div class="sketch-box">ㅁ</div>
+                        <div class="sketch-box">ㅁ</div>
+                        <div class="sketch-box">ㅁ</div>
+                    </div>
+                    <div class="sketch-entrance">후문 주차장 입구</div>
+                </div>
             </div>
         </div>
     </div>
@@ -632,10 +697,34 @@
     let selectedDateStr = null;
 
     window.onload = function() {
-        fetchAllData();
+        loadData(false);
     };
 
-    async function fetchAllData() {
+    async function loadData(forceRefresh = false) {
+        const cachedMonthly = localStorage.getItem('valet_monthly');
+        const cachedWeekly = localStorage.getItem('valet_weekly');
+        const cachedConsult = localStorage.getItem('valet_consult');
+
+        if (!forceRefresh && cachedMonthly && cachedWeekly && cachedConsult) {
+            try {
+                dbData.monthly = JSON.parse(cachedMonthly);
+                dbData.weekly = JSON.parse(cachedWeekly);
+                dbData.consult = JSON.parse(cachedConsult);
+
+                document.getElementById('statusText').innerText = "오프라인 캐시 사용중";
+                document.getElementById('statusDot').style.backgroundColor = "#ff9500";
+
+                renderTodayInfo();
+                renderCalendar();
+                return;
+            } catch (e) {
+                console.error("Cache parse error, fetching fresh data...", e);
+            }
+        }
+
+        document.getElementById('statusText').innerText = "데이터 동기화중...";
+        document.getElementById('statusDot').style.backgroundColor = "#007aff";
+
         try {
             const [mRes, wRes, cRes] = await Promise.all([
                 fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
@@ -647,12 +736,28 @@
             dbData.weekly = Array.isArray(wRes) ? wRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
+            localStorage.setItem('valet_monthly', JSON.stringify(dbData.monthly));
+            localStorage.setItem('valet_weekly', JSON.stringify(dbData.weekly));
+            localStorage.setItem('valet_consult', JSON.stringify(dbData.consult));
+
+            document.getElementById('statusText').innerText = "실시간 연동중";
+            document.getElementById('statusDot').style.backgroundColor = "#4cd964";
+
             renderTodayInfo();
             renderCalendar();
         } catch (e) {
             console.error("Data load error:", e);
+            document.getElementById('statusText').innerText = "동기화 실패 (캐시 확인)";
+            document.getElementById('statusDot').style.backgroundColor = "#ff3b30";
             renderTodayInfo();
             renderCalendar();
+        }
+    }
+
+    function refreshData() {
+        if (confirm("스프레드시트의 최신 데이터를 다시 불러오시겠습니까?")) {
+            localStorage.clear();
+            loadData(true);
         }
     }
 
@@ -700,18 +805,15 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // [최종 수정된 날짜 매칭 함수]
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
             let strVal = String(val).trim();
 
-            // 만약 상담(consult) 탭이라면, 오직 '상담일시' 키(컬럼)에 포함된 값만 확인합니다.
             if (currentCategory === 'consult') {
                 if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
-            // 2026년도 날짜 검사 (2026-09-19 또는 2026.09.19 등)
             let match2026 = strVal.match(/2026\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
             if (match2026) {
                 let m = parseInt(match2026[1], 10);
@@ -719,7 +821,6 @@
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            // 일반 날짜 형식 검사 (다른 연도인 2025, 2027 등은 철저히 배제)
             if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
 
             let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
@@ -819,7 +920,7 @@
             <div class="cal-day-header">수</div>
             <div class="cal-day-header">목</div>
             <div class="cal-day-header">금</div>
-            <div class="cal-day-header">토</div>
+            <div class="cal-day-header" style="color: #3b82f6;">토</div>
         `;
 
         const totalDays = currentMonth === 9 ? 30 : 31;
@@ -837,9 +938,14 @@
             const hasEvent = count > 0;
             const isSelected = selectedDateStr === dateStr;
 
+            let dayOfWeek = (startDayOffset + day - 1) % 7;
+            let colorStyle = '';
+            if (dayOfWeek === 0) colorStyle = 'color: #ff3b30;'; // 일요일
+            else if (dayOfWeek === 6) colorStyle = 'color: #3b82f6;'; // 토요일
+
             html += `
                 <div class="cal-cell ${hasEvent ? 'has-event' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}', ${day})">
-                    <span class="cal-date-num" style="color:${(startDayOffset + day - 1) % 7 === 0 ? '#ff3b30' : 'inherit'}">${day}</span>
+                    <span class="cal-date-num" style="${colorStyle}">${day}</span>
                     ${hasEvent ? `<span class="event-count-badge">${count}건</span>` : ''}
                 </div>
             `;
@@ -855,10 +961,12 @@
         if (strVal.includes('T')) {
             let parts = strVal.split('T');
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
-            if (key.includes('시간') || key.includes('시') || (timePart && timePart !== '00:00:00')) {
-                if (timePart && timePart !== '00:00:00') {
-                    return timePart.substring(0, 5);
-                }
+            if (timePart && timePart !== '00:00:00') {
+                let timePieces = timePart.split(':');
+                let h = parseInt(timePieces[0], 10) + 9;
+                if (h >= 24) h -= 24;
+                let m = timePieces[1] || '00';
+                return `${String(h).padStart(2, '0')}:${m}`;
             }
             strVal = parts[0];
         }
@@ -916,10 +1024,11 @@
             let contentHtml = '';
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
-                    <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px;">
-                        <div style="font-weight:bold; color:#a855f7; margin-bottom:6px;">[상담 ${idx + 1}]</div>
+                    <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #a855f7;">
                 `;
                 for (let [key, val] of Object.entries(row)) {
+                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
+
                     let cleaned = cleanValue(key, val);
                     if (cleaned !== '') {
                         contentHtml += `<div style="font-size:13px; margin-bottom:4px;"><span style="color:#8e8e93;">${key}:</span> ${cleaned}</div>`;
