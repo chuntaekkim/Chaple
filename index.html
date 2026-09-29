@@ -161,10 +161,13 @@
             border-radius: 10px;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
         }
-        
-        /* 웨딩/상담 탭 구분을 위한 스타일 */
+        .tab-btn.active {
+            background-color: #f0a500;
+            color: #12141c;
+        }
+
+        /* 웨딩/상담 카테고리 탭 색상 구분 */
         #schedTypeWedding.active {
             background-color: #f0a500 !important;
             color: #12141c !important;
@@ -174,12 +177,13 @@
             color: #ffffff !important;
         }
 
+        /* 월 선택 버튼 개별 색상 부여 */
         #monthBtn9.active {
-            background-color: #f0a500 !important;
-            color: #12141c !important;
+            background-color: #3b82f6 !important;
+            color: #ffffff !important;
         }
         #monthBtn10.active {
-            background-color: #3b82f6 !important;
+            background-color: #10b981 !important;
             color: #ffffff !important;
         }
 
@@ -197,8 +201,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* 후문 모형 위치도 스타일 */
-        .parking-sketch-container {
+        /* 후문 주차장 모형 스타일 */
+        .parking-layout-box {
             background-color: #12141c;
             border-radius: 12px;
             padding: 20px;
@@ -207,44 +211,55 @@
             align-items: center;
             gap: 15px;
             margin-top: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .sketch-row {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        .sketch-box {
-            width: 45px;
-            height: 35px;
-            background-color: #242838;
-            border: 2px solid #007aff;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-            color: #60a5fa;
-        }
-        .sketch-col {
+        .parking-grid-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            align-items: center;
         }
-        .sketch-entrance {
-            margin-top: 5px;
-            background-color: rgba(0, 122, 255, 0.15);
-            border: 1px dashed #007aff;
-            color: #60a5fa;
-            padding: 6px 16px;
+        .parking-row {
+            display: flex;
+            gap: 10px;
+        }
+        .parking-row.with-side {
+            justify-content: flex-start;
+        }
+        .parking-slot {
+            width: 45px;
+            height: 45px;
+            background-color: #242838;
+            border: 2px solid #3b82f6;
             border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 12px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .parking-slot.empty-space {
+            background-color: transparent;
+            border: none;
+        }
+        .parking-side-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-left: auto; /* 우측에 붙임 */
+        }
+        .parking-entrance {
+            font-size: 13px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            color: #f0a500;
+            background-color: rgba(240, 165, 0, 0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-top: 10px;
+            text-align: center;
         }
         
+        /* 캘린더 그리드 스타일 */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -272,7 +287,6 @@
         .cal-cell.has-event {
             border: 1px solid rgba(240, 165, 0, 0.4);
         }
-        /* 상담 모드일 때 캘린더 이벤트 배너 색상 테두리 변경 */
         .calendar-grid.consult-mode .cal-cell.has-event {
             border: 1px solid rgba(168, 85, 247, 0.4);
         }
@@ -482,9 +496,9 @@
         </div>
 
         <div id="parking-b4" class="parking-section active">
-            <div class="event-card" style="border-left: 3px solid #ff3b30;">
-                <div style="font-weight: 600; margin-bottom: 4px;">혼주차량 주차</div>
-                <div style="font-size: 12px; color: #8e8e93;">지정주차구역 외에는 대지 마세요.</div>
+            <div class="event-card" style="border-left: 3px solid #f0a500;">
+                <div style="font-weight: 600; margin-bottom: 4px;">지하 4층 주차 안내</div>
+                <div style="font-size: 12px; color: #8e8e93;">혼주차량 주차 전용 구역입니다.</div>
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 배치도</div>
@@ -493,12 +507,12 @@
         </div>
 
         <div id="parking-b5" class="parking-section">
-            <div class="event-card" style="border-left: 3px solid #f0a500;">
-                <div style="font-weight: 600; margin-bottom: 4px;">직원 및 혼주 차량 주차</div>
-                <div style="font-size: 12px; color: #8e8e93;">추가 하객 주차 및 대형 차량 대기 구역입니다.</div>
+            <div class="event-card" style="border-left: 3px solid #3b82f6;">
+                <div style="font-weight: 600; margin-bottom: 4px;">지하 5층 주차 안내</div>
+                <div style="font-size: 12px; color: #8e8e93;">직원 및 혼주 차량 주차 구역입니다.</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 5층 배치도</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #3b82f6;">지하 5층 배치도</div>
                 <img src="Chaple_B5.png" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.png+Not+Found'">
             </div>
         </div>
@@ -506,27 +520,31 @@
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 600; margin-bottom: 4px;">후문 주차장 이용 안내</div>
-                <div style="font-size: 12px; color: #f0a500; font-weight: 700; margin-top: 4px;">🚗 후문은 9대 최대15대 주차가능</div>
+                <div style="font-size: 12px; color: #8e8e93;">후문: 9대 최대 15대 주차가능</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 12px; color: #f0a500; text-align: center;">후문 주차장 위치 모형도</div>
-                <div class="parking-sketch-container">
-                    <div class="sketch-row">
-                        <div class="sketch-box">ㅁ</div>
-                        <div class="sketch-box">ㅁ</div>
-                        <div class="sketch-box">ㅁ</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #007aff; text-align: center;">후문 주차장 배치도</div>
+                <div class="parking-layout-box">
+                    <div class="parking-grid-container">
+                        <!-- 첫 번째 가로줄 (3개) -->
+                        <div class="parking-row">
+                            <div class="parking-slot">P</div>
+                            <div class="parking-slot">P</div>
+                            <div class="parking-slot">P</div>
+                        </div>
+                        <!-- 두 번째 가로줄 (3개 + 우측 세로 3개) -->
+                        <div class="parking-row with-side">
+                            <div class="parking-slot">P</div>
+                            <div class="parking-slot">P</div>
+                            <div class="parking-slot">P</div>
+                            <div class="parking-side-group">
+                                <div class="parking-slot">P</div>
+                                <div class="parking-slot">P</div>
+                                <div class="parking-slot">P</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="sketch-row">
-                        <div class="sketch-box">ㅁ</div>
-                        <div class="sketch-box">ㅁ</div>
-                        <div class="sketch-box">ㅁ</div>
-                    </div>
-                    <div class="sketch-col">
-                        <div class="sketch-box">ㅁ</div>
-                        <div class="sketch-box">ㅁ</div>
-                        <div class="sketch-box">ㅁ</div>
-                    </div>
-                    <div class="sketch-entrance">후문 주차장 입구</div>
+                    <div class="parking-entrance">후문 주차장 입구</div>
                 </div>
             </div>
         </div>
@@ -939,13 +957,13 @@
             const isSelected = selectedDateStr === dateStr;
 
             let dayOfWeek = (startDayOffset + day - 1) % 7;
-            let colorStyle = '';
-            if (dayOfWeek === 0) colorStyle = 'color: #ff3b30;'; // 일요일
-            else if (dayOfWeek === 6) colorStyle = 'color: #3b82f6;'; // 토요일
+            let dayColor = 'inherit';
+            if (dayOfWeek === 0) dayColor = '#ff3b30'; // 일요일
+            else if (dayOfWeek === 6) dayColor = '#3b82f6'; // 토요일
 
             html += `
                 <div class="cal-cell ${hasEvent ? 'has-event' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}', ${day})">
-                    <span class="cal-date-num" style="${colorStyle}">${day}</span>
+                    <span class="cal-date-num" style="color:${dayColor}">${day}</span>
                     ${hasEvent ? `<span class="event-count-badge">${count}건</span>` : ''}
                 </div>
             `;
@@ -1024,7 +1042,7 @@
             let contentHtml = '';
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
-                    <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #a855f7;">
+                    <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px;">
                 `;
                 for (let [key, val] of Object.entries(row)) {
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
@@ -1050,3 +1068,4 @@
 
 </body>
 </html>
+
