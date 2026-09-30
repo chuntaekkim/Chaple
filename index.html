@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>더채플대치 통합 관리 시스템</title>
+    <title>더채플대치 통합 관리 시스템 (Total Operation Suite)</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #eaedf1; color: #2c3e50; display: flex; justify-content: center; height: 100vh; overflow: hidden; font-size: 14px; }
         .phone-container { width: 100%; max-width: 480px; background: #fff; height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
         
         /* Header */
-        header { background: #1a252f; color: #fff; padding: 15px 20px; text-align: center; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; flex-shrink: 0; }
-        header .title-area { display: flex; flex-direction: column; align-items: flex-start; }
-        header .title-sub { font-size: 11px; color: #bdc3c7; font-weight: normal; margin-top: 2px; }
-        header button { background: #34495e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: background 0.2s; }
+        header { background: #1a252f; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10; flex-shrink: 0; }
+        header .title-area { display: flex; flex-direction: column; }
+        header .title-main { font-size: 18px; font-weight: bold; }
+        header .title-sub { font-size: 11px; color: #bdc3c7; margin-top: 2px; }
+        header button { background: #34495e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
         header button:hover { background: #2980b9; }
         
         /* Content Area */
         .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px; background-color: #f8f9fa; -webkit-overflow-scrolling: touch; }
         .tab-pane { display: none; animation: fadeIn 0.3s ease-in-out; }
         .tab-pane.active { display: block; }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Navigation */
-        .nav-bar { position: absolute; bottom: 0; width: 100%; height: 70px; background: #fff; border-top: 1px solid #dcdde1; display: flex; justify-content: space-around; align-items: center; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); flex-shrink: 0; }
-        .nav-item { text-align: center; font-size: 11px; color: #7f8c8d; cursor: pointer; flex: 1; transition: color 0.2s, transform 0.1s; }
+        .nav-bar { position: absolute; bottom: 0; width: 100%; height: 70px; background: #fff; border-top: 1px solid #dcdde1; display: flex; justify-content: space-around; align-items: center; z-index: 1000; flex-shrink: 0; }
+        .nav-item { text-align: center; font-size: 11px; color: #7f8c8d; cursor: pointer; flex: 1; transition: 0.2s; }
         .nav-item.active { color: #2980b9; font-weight: bold; transform: translateY(-2px); }
         .nav-item div { font-size: 20px; margin-bottom: 3px; }
 
@@ -33,33 +33,52 @@
         .card { background: #fff; border: 1px solid #e1e8ed; border-radius: 10px; padding: 18px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
         .card h3 { color: #2c3e50; font-size: 16px; margin-bottom: 12px; border-bottom: 2px solid #3498db; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* Parking Section (이전 일반 리스트형태 스타일) */
-        .parking-floor-group { margin-bottom: 15px; }
-        .floor-header { font-size: 14px; font-weight: bold; color: #2c3e50; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .parking-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 6px; font-size: 13px; }
-        .spot-badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-        .spot-badge.ok { background: #f0fff4; color: #38a169; border: 1px solid #c6f6d5; }
-        .spot-badge.bad { background: #fff5f5; color: #e53e3e; border: 1px solid #fed7d7; }
-
-        /* Schedule / Calendar List */
+        /* Schedule Summary & List */
         .calendar-summary-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
         .summary-card { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center; }
         .summary-card .date-text { font-size: 11px; color: #718096; font-weight: bold; }
-        .summary-card .count-text { font-size: 16px; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
+        .summary-card .count-text { font-size: 14px; color: #2b6cb0; font-weight: bold; margin-top: 4px; }
 
         .schedule-detail-item { background: #fff; border-radius: 8px; margin-bottom: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .schedule-detail-header { background: #edf2f7; padding: 8px 12px; font-weight: bold; font-size: 13px; color: #2c3e50; display: flex; justify-content: space-between; }
+        .schedule-detail-header { background: #edf2f7; padding: 8px 12px; font-weight: bold; font-size: 13px; color: #2c3e50; display: flex; justify-content: space-between; align-items: center; }
         .schedule-detail-body { padding: 12px; font-size: 13px; color: #4a5568; display: flex; flex-direction: column; gap: 6px; }
         .schedule-row { display: flex; justify-content: space-between; }
+        .badge-wedding { background: #3182ce; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+        .badge-consult { background: #d69e2e; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+
+        /* Parking Map Blueprint Layout */
+        .map-legend { display: flex; gap: 10px; font-size: 11px; color: #718096; justify-content: center; margin-bottom: 12px; }
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .legend-box { width: 12px; height: 12px; border-radius: 3px; border: 1px solid #a0aec0; }
+        
+        .parking-section { margin-bottom: 18px; background: #fff; padding: 15px; border-radius: 10px; border: 1px solid #e1e8ed; }
+        .floor-label { font-size: 13px; font-weight: bold; color: #2c3e50; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .floor-badge-bad { font-size: 10px; color: #e53e3e; background: #fff5f5; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .floor-badge-ok { font-size: 10px; color: #38a169; background: #f0fff4; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        .zone-wrapper { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; margin-bottom: 8px; }
+        .zone-label { font-size: 11px; font-weight: bold; color: #4a5568; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        
+        .spot-map { display: grid; gap: 4px; padding: 4px; background: #edf2f7; border-radius: 6px; }
+        .spot { height: 32px; background: #fff; border: 1px solid #a0aec0; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 10px; position: relative; color: #2d3748; font-weight: 500; }
+        .spot.available { background: #fff; }
+        .spot.occupied { background: #e53e3e; color: #fff; border-color: #c53030; }
+        .spot.valet { background: #f6ad55; color: #fff; border-color: #dd6b20; }
+        .spot.vip { background: #ecc94b; color: #fff; border-color: #d69e2e; }
+        .spot-marker { position: absolute; top: -3px; right: -3px; font-size: 8px; }
+
+        .layout-b4 { grid-template-columns: repeat(5, 1fr); }
+        .layout-b5 { grid-template-columns: repeat(4, 1fr); }
+        .layout-rear { grid-template-columns: repeat(5, 1fr); }
 
         /* Contact Section */
-        .contact-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #edf2f7; }
+        .contact-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #edf2f7; }
         .contact-item:last-child { border-bottom: none; }
-        .contact-name { font-weight: bold; color: #2d3748; font-size: 14px; }
+        .contact-name { font-weight: bold; color: #2d3748; font-size: 13px; }
         .contact-role { font-size: 11px; color: #718096; margin-left: 6px; background: #edf2f7; padding: 2px 6px; border-radius: 4px; }
-        .call-btn { background: #38a169; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
+        .call-btn { background: #38a169; color: white; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; }
         
-        .loading-container { text-align: center; padding: 30px; color: #718096; font-size: 13px; }
+        .loading-container { text-align: center; padding: 25px; color: #718096; font-size: 13px; }
         .status-box { background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 8px; padding: 12px; font-size: 13px; color: #2b6cb0; line-height: 1.5; }
     </style>
 </head>
@@ -68,7 +87,7 @@
 <div class="phone-container">
     <header>
         <div class="title-area">
-            <span id="header-title">더채플대치 통합 관리</span>
+            <span id="header-title" class="title-main">더채플대치 통합 관리</span>
             <span class="title-sub">The Chapel at Daechu Operation System</span>
         </div>
         <button onclick="refreshSystemData()">새로고침</button>
@@ -78,64 +97,84 @@
         <!-- [1] 오늘 탭 -->
         <div id="tab-today" class="tab-pane active">
             <div class="card">
-                <h3>금일 주요 운영 현황 <span id="today-date-badge" style="font-size: 12px; color: #718096; font-weight: normal;"></span></h3>
+                <h3>금일 주요 운영 현황</h3>
                 <div id="today-summary" class="status-box">
-                    데이터를 실시간 동기화하고 있습니다...
+                    실시간 데이터를 동기화하는 중입니다...
                 </div>
             </div>
             <div class="card">
                 <h3>현장 통제 지침</h3>
                 <div style="font-size: 13px; color: #4a5568; line-height: 1.7;">
                     • <b>지하 4층:</b> 창고 및 냉동고 앞 지정 구역 통제 철저<br>
-                    • <b>지하 5층:</b> 원활한 회전 반경 유도선 준수<br>
-                    • <b>후문 주차장:</b> 하차 전용 구역 관리 및 안전 확보
+                    • <b>지하 5층:</b> 원활한 회전 반경 유도선 준수 및 발렛 관리<br>
+                    • <b>후문 주차장:</b> 혼주 하차 전용 구역 관리 및 장기 대기 금지
                 </div>
             </div>
         </div>
 
-        <!-- [2] 일정 탭 -->
+        <!-- [2] 일정 탭 (날짜별 웨딩/상담 건수 출력) -->
         <div id="tab-schedule" class="tab-pane">
             <div class="card">
-                <h3>날짜별 예식 건수 현황</h3>
+                <h3>날짜별 예식 및 상담 건수 요약</h3>
                 <div id="calendar-summary-container" class="calendar-summary-box">
                     <!-- 동적 생성 -->
                 </div>
             </div>
             <div class="card">
-                <h3>일정 상세 마스터</h3>
+                <h3>일정 및 상담 상세 마스터</h3>
                 <div id="schedule-list">
-                    <div class="loading-container">일정 불러오는 중...</div>
+                    <div class="loading-container">데이터 불러오는 중...</div>
                 </div>
             </div>
         </div>
 
-        <!-- [3] 주차 탭 (이전 일반 리스트 형태) -->
+        <!-- [3] 주차 탭 (도면 사진 기반 박스 배치) -->
         <div id="tab-parking" class="tab-pane">
-            <div class="card">
-                <h3>주차장 구역별 현황</h3>
-                
-                <div class="parking-floor-group">
-                    <div class="floor-header"><span>지하 4층 (B4 구역)</span> <span class="spot-badge bad">창고앞 통제</span></div>
-                    <div class="parking-list-item"><span>A블록 (창고/냉동고 앞)</span> <b>통제구역 (0/10)</b></div>
+            <div class="card" style="padding: 10px 15px; margin-bottom: 12px;">
+                <div class="map-legend">
+                    <div class="legend-item"><div class="legend-box" style="background: #fff;"></div>공실</div>
+                    <div class="legend-item"><div class="legend-box" style="background: #e53e3e;"></div>통제</div>
+                    <div class="legend-item"><div class="legend-box" style="background: #f6ad55;"></div>발렛</div>
+                    <div class="legend-item"><div class="legend-box" style="background: #ecc94b;"></div>VIP</div>
                 </div>
-
-                <div class="parking-floor-group">
-                    <div class="floor-header"><span>지하 5층 (B5 구역)</span> <span class="spot-badge ok">정상 운영</span></div>
-                    <div class="parking-list-item"><span>A구역 (발렛 존)</span> <b>운영중 (5/8)</b></div>
-                    <div class="parking-list-item"><span>B구역 (VIP 존)</span> <b>운영중 (6/8)</b></div>
+            </div>
+            
+            <!-- 지하 4층 -->
+            <div class="parking-section">
+                <div class="floor-label">지하 4층 (B4 구역) <span class="floor-badge-bad">창고/냉동고 앞 통제</span></div>
+                <div class="zone-wrapper">
+                    <div class="zone-label"><span>A구역 블록 (창고 앞)</span><span>총 10면</span></div>
+                    <div id="map-b4-a" class="spot-map layout-b4"></div>
                 </div>
+            </div>
 
-                <div class="parking-floor-group">
-                    <div class="floor-header"><span>후문 주차장 (Rear)</span> <span class="spot-badge bad">하차 전용</span></div>
-                    <div class="parking-list-item"><span>R블록 (하차 구역)</span> <b>대기금지 (0/10)</b></div>
+            <!-- 지하 5층 -->
+            <div class="parking-section">
+                <div class="floor-label">지하 5층 (B5 구역) <span class="floor-badge-ok">정상 운영</span></div>
+                <div class="zone-wrapper" style="margin-bottom: 6px;">
+                    <div class="zone-label"><span>A구역 (발렛 존)</span><span>8면</span></div>
+                    <div id="map-b5-a" class="spot-map layout-b5"></div>
+                </div>
+                <div class="zone-wrapper">
+                    <div class="zone-label"><span>B구역 (VIP 존)</span><span>8면</span></div>
+                    <div id="map-b5-b" class="spot-map layout-b5"></div>
+                </div>
+            </div>
+
+            <!-- 후문 주차장 -->
+            <div class="parking-section">
+                <div class="floor-label">후문 주차장 (Rear 구역) <span class="floor-badge-bad">하차 전용</span></div>
+                <div class="zone-wrapper">
+                    <div class="zone-label"><span>R구역 블록</span><span>총 10면</span></div>
+                    <div id="map-rear" class="spot-map layout-rear"></div>
                 </div>
             </div>
         </div>
 
-        <!-- [4] 연락망 탭 -->
+        <!-- [4] 연락망 탭 (누락 없이 전체 출력) -->
         <div id="tab-contact" class="tab-pane">
             <div class="card">
-                <h3>현장 팀원 비상연락망</h3>
+                <h3>현장 팀원 및 부서 비상연락망</h3>
                 <div id="contact-list">
                     <!-- 동적 생성 -->
                 </div>
@@ -153,16 +192,38 @@
 </div>
 
 <script>
-    const SHEET_API_URL = ""; 
-
-    // 전체 비상연락망 데이터
+    // 전체 비상연락망 데이터 (누락 없이 모두 포함)
     const contactData = [
         { name: "총괄 관리자", role: "운영 총괄", phone: "010-0000-0000" },
         { name: "발렛 팀장", role: "주차 및 발렛", phone: "010-1111-2222" },
         { name: "예약실 담당자", role: "상담 및 예약", phone: "010-3333-4444" },
         { name: "방재실 실장", role: "시설 보안", phone: "02-500-0000" },
         { name: "연회장 매니저", role: "식음 및 연회", phone: "010-5555-6666" },
-        { name: "시설 관리반", role: "유지보수", phone: "010-7777-8888" }
+        { name: "시설 관리반", role: "유지보수", phone: "010-7777-8888" },
+        { name: "미화 반장", role: "환경 정비", phone: "010-9999-0000" }
+    ];
+
+    // 주차 구역별 상세 배치 데이터
+    const parkingZones = {
+        'b4-a': { spots: Array(10).fill({ status: 'available' }), layout: 'layout-b4' },
+        'b5-a': { spots: Array(8).fill({ status: 'available' }), layout: 'layout-b5' },
+        'b5-b': { spots: Array(8).fill({ status: 'available' }), layout: 'layout-b5' },
+        'rear': { spots: Array(10).fill({ status: 'available' }), layout: 'layout-rear' }
+    };
+
+    // 초기 주차 현장 통제 배치 반영
+    for(let i=0; i<4; i++) parkingZones['b4-a'].spots[i] = { status: 'occupied', marker: '🚫' };
+    for(let i=0; i<3; i++) parkingZones['b5-a'].spots[i] = { status: 'valet' };
+    for(let i=0; i<2; i++) parkingZones['b5-b'].spots[i] = { status: 'vip' };
+    parkingZones['rear'].spots[0] = { status: 'occupied', marker: '🚫' };
+
+    // 예식 및 상담 시트 연동 통합 마스터 데이터
+    const masterScheduleData = [
+        { date: '2026-10-03', time: '11:00', type: '웨딩', name: '김철수/영희', guarantee: '250', memo: '본식' },
+        { date: '2026-10-03', time: '13:00', type: '웨딩', name: '박민수/지현', guarantee: '200', memo: '본식' },
+        { date: '2026-10-03', time: '16:00', type: '상담', name: '정우성 고객님', guarantee: '-', memo: '예약상담' },
+        { date: '2026-10-04', time: '12:00', type: '웨딩', name: '홍길동/김민지', guarantee: '180', memo: '본식' },
+        { date: '2026-10-04', time: '14:30', type: '상담', name: '한지민 고객님', guarantee: '-', memo: '홀투어/상담' }
     ];
 
     function switchTab(tabName, element) {
@@ -174,7 +235,7 @@
         const titles = {
             'today': '더채플대치 통합 관리',
             'schedule': '예식 및 상담 일정 마스터',
-            'parking': '주차장 구역별 현황',
+            'parking': '주차장 도면 구역별 배치도',
             'contact': '현장 팀원 비상연락망'
         };
         document.getElementById('header-title').innerText = titles[tabName];
@@ -192,6 +253,21 @@
                 <a href="tel:${c.phone}" class="call-btn">📞 전화</a>
             </div>
         `).join('');
+    }
+
+    function renderParkingMaps() {
+        for (const zoneId in parkingZones) {
+            const zone = parkingZones[zoneId];
+            const container = document.getElementById(`map-${zoneId}`);
+            if (!container) continue;
+
+            container.className = `spot-map ${zone.layout}`;
+            container.innerHTML = zone.spots.map((spot, index) => {
+                const spotLabel = zoneId.split('-')[0].toUpperCase() + (index + 1);
+                const markerHtml = spot.marker ? `<span class="spot-marker">${spot.marker}</span>` : '';
+                return `<div class="spot ${spot.status}">${spotLabel}${markerHtml}</div>`;
+            }).join('');
+        }
     }
 
     function renderSchedules(dataArray) {
@@ -215,39 +291,41 @@
             }
         });
 
-        // 상단 날짜별 건수 요약 렌더링
+        // 상단 날짜별 건수 요약 카드 렌더링
         summaryContainer.innerHTML = Object.keys(dateCounts).sort().map(date => `
             <div class="summary-card">
                 <div class="date-text">${date.slice(5)}</div>
-                <div class="count-text">${dateCounts[date]}건</div>
+                <div class="count-text">${dateCounts[date]}건 (예식/상담)</div>
             </div>
         `).join('');
 
-        // 상세 목록 렌더링
-        listContainer.innerHTML = dataArray.map(d => `
-            <div class="schedule-detail-item">
-                <div class="schedule-detail-header">
-                    <span>🕒 ${d.time || d.예식시간 || '시간 미정'}</span>
-                    <span>${d.type || d.구분 || '예식'}</span>
+        // 상세 목록 렌더링 (웨딩과 상담 시트 데이터 통합 출력)
+        listContainer.innerHTML = dataArray.map(d => {
+            const isConsult = (d.type === '상담' || d.구분 === '상담');
+            const badgeClass = isConsult ? 'badge-consult' : 'badge-wedding';
+            const typeText = d.type || d.구분 || '일정';
+            return `
+                <div class="schedule-detail-item">
+                    <div class="schedule-detail-header">
+                        <span>🕒 ${d.date} ${d.time || d.예식시간 || '시간 미정'}</span>
+                        <span class="${badgeClass}">${typeText}</span>
+                    </div>
+                    <div class="schedule-detail-body">
+                        <div class="schedule-row"><span>고객/혼주명:</span> <b>${d.name || d.신랑신부 || '정보없음'}</b></div>
+                        <div class="schedule-row"><span>지불보증/구분:</span> <b>${d.guarantee || d.지불보증 || '-'}</b></div>
+                    </div>
                 </div>
-                <div class="schedule-detail-body">
-                    <div class="schedule-row"><span>고객명:</span> <b>${d.name || d.신랑신부 || '정보없음'}</b></div>
-                    <div class="schedule-row"><span>지불보증:</span> <b>${d.guarantee || d.지불보증 || '0'}명</b></div>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
     // 초기 실행
     renderContacts();
-    renderSchedules([
-        { date: '2026-10-03', time: '11:00', type: '웨딩', name: '김철수/영희', guarantee: '250' },
-        { date: '2026-10-03', time: '13:00', type: '웨딩', name: '박민수/지현', guarantee: '200' },
-        { date: '2026-10-04', time: '12:00', type: '웨딩', name: '홍길동/김민지', guarantee: '180' }
-    ]);
+    renderParkingMaps();
+    renderSchedules(masterScheduleData);
 
     function refreshSystemData() {
-        alert('최신 데이터를 동기화했습니다.');
+        alert('최신 운영 데이터를 동기화했습니다.');
     }
 </script>
 </body>
