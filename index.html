@@ -167,7 +167,6 @@
             color: #12141c;
         }
 
-        /* 웨딩/상담 카테고리 탭 색상 구분 */
         #schedTypeWedding.active {
             background-color: #f0a500 !important;
             color: #12141c !important;
@@ -177,7 +176,6 @@
             color: #ffffff !important;
         }
 
-        /* 월 선택 버튼 개별 색상 부여 */
         #monthBtn9.active {
             background-color: #3b82f6 !important;
             color: #ffffff !important;
@@ -193,96 +191,65 @@
         .parking-section.active {
             display: block;
         }
-        
-        .parking-map-img {
-            width: 100%;
-            border-radius: 12px;
-            margin-top: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
 
-        /* 후문 주차장 센스있는 모형 디자인 스타일 */
-        .parking-layout-box {
-            background: linear-gradient(135deg, #161925 0%, #10121a 100%);
-            border-radius: 14px;
-            padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
+        /* 도형 기반 주차장 도면 스타일 */
+        .parking-blueprint {
+            background-color: #12141c;
+            border: 2px dashed #3a3f58;
+            border-radius: 12px;
+            padding: 16px;
             margin-top: 10px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
-        }
-        .parking-grid-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            width: 100%;
-            max-width: 280px;
         }
-        .parking-row {
+        .bp-row {
             display: flex;
             gap: 10px;
-            justify-content: center;
         }
-        .parking-row.with-side {
-            justify-content: flex-start;
-            padding-left: 0;
-        }
-        .parking-slot {
-            width: 50px;
-            height: 52px;
-            background: linear-gradient(145deg, #242838, #1d212d);
-            border: 2px dashed #3b82f6;
+        .bp-zone {
+            flex: 1;
+            background-color: #242838;
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
+            padding: 14px 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            color: #60a5fa;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        .parking-slot::after {
-            content: 'P';
-            font-size: 14px;
-            font-weight: 800;
-            color: #93c5fd;
-        }
-        .parking-side-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-left: auto; /* 우측에 바짝 붙임 */
-        }
-        .parking-entrance-box {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 4px;
-            margin-top: 4px;
-            width: 100%;
         }
-        .parking-arrow {
+        .bp-zone.highlight {
+            background-color: rgba(240, 165, 0, 0.15);
+            border-color: #f0a500;
             color: #f0a500;
-            font-size: 16px;
-            animation: bounce 1.5s infinite;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(4px); }
+        .bp-zone.blue {
+            background-color: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            color: #60a5fa;
         }
-        .parking-entrance {
-            font-size: 12px;
-            font-weight: 700;
-            color: #12141c;
-            background-color: #f0a500;
-            padding: 6px 18px;
-            border-radius: 20px;
-            letter-spacing: -0.5px;
-            box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
+        .bp-zone.green {
+            background-color: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+            color: #34d399;
+        }
+        .bp-road {
+            background-color: #1a1d29;
+            border: 1px dotted #4b5563;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+        .bp-sub {
+            font-size: 10px;
+            color: #9ca3af;
+            font-weight: normal;
         }
         
         /* 캘린더 그리드 스타일 */
@@ -468,7 +435,7 @@
             <div class="stat-desc" id="todayStatDesc">오늘 진행되는 예식이 없습니다.</div>
             <div class="card-row">
                 <div class="sub-box" onclick="switchTab('parking')">
-                    <div class="sub-box-title">🅿️ 주차 안내</div>
+                    <div class="sub-box-title">🅿 주차 안내</div>
                     <div class="sub-box-desc">후문 / 지하 4·5층</div>
                 </div>
                 <div class="sub-box" onclick="switchTab('contact')">
@@ -500,7 +467,7 @@
         </div>
 
         <div class="main-card" style="margin-top: 10px;">
-            <div id="scheduleSummary" style="font-weight: 600; margin-bottom: 10px;">스케줄 로딩 중...</div>
+            <div id="scheduleSummary" style="font-weight: 600; margin-bottom: 10px; color: #f0a500;">스케줄 로딩 중...</div>
             <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
@@ -513,7 +480,7 @@
     <!-- [탭 3] 주차 안내 화면 -->
     <div id="tab-parking" class="content">
         <div class="section-title">주차 안내</div>
-        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">도면은 확대해서 볼 수 있습니다.</div>
+        <div style="font-size: 13px; color: #8e8e93; margin-bottom: 14px;">구역별 주차 도면 (도형 배치도)</div>
 
         <div class="tab-menu-group">
             <button id="p-btn-b4" class="tab-btn active" onclick="switchParkingTab('b4')">지하 4층</button>
@@ -521,56 +488,69 @@
             <button id="p-btn-rear" class="tab-btn" onclick="switchParkingTab('rear')">후문</button>
         </div>
 
+        <!-- 지하 4층 도형 도면 -->
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 600; margin-bottom: 4px;">지하 4층 주차 안내</div>
                 <div style="font-size: 12px; color: #8e8e93;">혼주차량 주차 전용 구역입니다.</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 배치도</div>
-                <img src="Chaple_B4.png" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.png+Not+Found'">
+                <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 구조 도면</div>
+                <div class="parking-blueprint">
+                    <div class="bp-zone highlight">
+                        혼주 전용 주차 구역 (A구역)
+                        <span class="bp-sub">메인 홀 진입부 인접</span>
+                    </div>
+                    <div class="bp-road">🚗 차량 이동 통로 / 회차 구역</div>
+                    <div class="bp-row">
+                        <div class="bp-zone">일반 주차 B1</div>
+                        <div class="bp-zone">일반 주차 B2</div>
+                    </div>
+                    <div class="bp-road">⬆ 엘리베이터 홀 및 로비 방향</div>
+                </div>
             </div>
         </div>
 
+        <!-- 지하 5층 도형 도면 -->
         <div id="parking-b5" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #3b82f6;">
                 <div style="font-weight: 600; margin-bottom: 4px;">지하 5층 주차 안내</div>
-                <div style="font-size: 12px; color: #8e8e93;">직원 및 혼주 차량 주차</div>
+                <div style="font-size: 12px; color: #8e8e93;">직원 및 혼주 차량 주차 구역입니다.</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #3b82f6;">지하 5층 배치도</div>
-                <img src="Chaple_B5.png" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.png+Not+Found'">
+                <div style="font-weight: 600; margin-bottom: 8px; color: #3b82f6;">지하 5층 구조 도면</div>
+                <div class="parking-blueprint">
+                    <div class="bp-zone blue">
+                        직원 및 예비 주차 구역
+                        <span class="bp-sub">심층부 넓은 주차 공간</span>
+                    </div>
+                    <div class="bp-road">🔄 지하 5층 순환 통로</div>
+                    <div class="bp-row">
+                        <div class="bp-zone">C구역 (예비)</div>
+                        <div class="bp-zone">D구역 (스태프)</div>
+                    </div>
+                    <div class="bp-road">⬇ 지하 4층 연결 램프</div>
+                </div>
             </div>
         </div>
 
+        <!-- 후문 도형 도면 -->
         <div id="parking-rear" class="parking-section">
-            <div class="event-card" style="border-left: 3px solid #007aff;">
+            <div class="event-card" style="border-left: 3px solid #10b981;">
                 <div style="font-weight: 600; margin-bottom: 4px;">후문 주차장 이용 안내</div>
-                <div style="font-size: 12px; color: #8e8e93;">후문은 9대 최대15대 주차가능</div>
+                <div style="font-size: 12px; color: #8e8e93;">후문 발렛 부스 및 대기 구역입니다.</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #007aff; text-align: center;">후문 주차장 배치도</div>
-                <div class="parking-layout-box">
-                    <div class="parking-grid-container">
-                        <div class="parking-row">
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
-                        </div>
-                        <div class="parking-row with-side">
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
-                            <div class="parking-side-group">
-                                <div class="parking-slot"></div>
-                                <div class="parking-slot"></div>
-                                <div class="parking-slot"></div>
-                            </div>
-                        </div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #10b981;">후문 배치 구조도</div>
+                <div class="parking-blueprint">
+                    <div class="bp-zone green">
+                        🏁 후문 진입 / 발렛 접수 부스
+                        <span class="bp-sub">차량 인도 및 키 보관소</span>
                     </div>
-                    <div class="parking-entrance-box">
-                        <div class="parking-arrow">⬇</div>
-                        <div class="parking-entrance">후문 주차장 입구</div>
+                    <div class="bp-road">🛣 대로변 인접 진출입로 (일방통행 주의)</div>
+                    <div class="bp-row">
+                        <div class="bp-zone">대기 차량 정차선</div>
+                        <div class="bp-zone">출차 대기 구역</div>
                     </div>
                 </div>
             </div>
@@ -632,76 +612,6 @@
                 <span class="contact-phone">010-3362-6456</span>
             </div>
             <a href="tel:010-3362-6456" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">김태석</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-1234-5678</span>
-            </div>
-            <a href="tel:010-1234-5678" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">서원표</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-2345-6789</span>
-            </div>
-            <a href="tel:010-2345-6789" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">이도훈</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-3456-7890</span>
-            </div>
-            <a href="tel:010-3456-7890" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">동상진</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-4567-8901</span>
-            </div>
-            <a href="tel:010-4567-8901" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">박성준</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-5678-9012</span>
-            </div>
-            <a href="tel:010-5678-9012" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">조영도</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-6789-0123</span>
-            </div>
-            <a href="tel:010-6789-0123" class="call-icon-btn">
-                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            </a>
-        </div>
-        <div class="contact-card">
-            <div class="contact-left">
-                <span class="contact-name">전다문</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-7890-1234</span>
-            </div>
-            <a href="tel:010-7890-1234" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
@@ -850,7 +760,6 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
-    // [날짜 매칭 로직 강화] 어떤 형태의 날짜/시간 데이터든 정확하게 인식하도록 개선
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
@@ -860,7 +769,6 @@
                 if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
-            // ISO 날짜 문자열(예: 2026-09-19T...) 처리
             if (strVal.includes('T') || strVal.includes('-') || strVal.includes('.')) {
                 let parts = strVal.split(/[\sT\-\./]/);
                 if (parts.length >= 3) {
@@ -871,7 +779,6 @@
                 }
             }
 
-            // '9월 19일', '09/19', '9.19' 등 다양한 포맷 정규식 매칭
             let m2 = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
             if (m2) {
                 let m = parseInt(m2[1], 10);
@@ -891,7 +798,7 @@
 
     function renderTodayInfo() {
         const todayMonth = 9;
-        const todayDay = 29;
+        const todayDay = 30;
 
         const matchedToday = dbData.weekly.filter(row => isRowMatchDate(row, todayMonth, todayDay));
 
@@ -941,31 +848,16 @@
             grid.classList.remove('consult-mode');
         }
 
-        // 월별 데이터 카운트를 위해 monthly 또는 consult 전체 데이터를 사용
-        const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
-        
-        const monthFiltered = activeData.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    let strVal = String(val);
-                    if (currentCategory === 'consult' && !key.includes('상담일시') && !key.includes('상담')) continue;
+        const totalDays = currentMonth === 9 ? 30 : 31;
+        const targetDataset = currentCategory === 'wedding' ? dbData.weekly : dbData.consult;
 
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(/2026\s*[-./]\s*0?(\d{1,2})/);
-                    if (mMatch) {
-                        let m = parseInt(mMatch[1], 10);
-                        if (m === currentMonth) return true;
-                    }
-                    // ISO 포맷 월 체크
-                    if (strVal.includes('2026')) {
-                        let parts = strVal.split(/[\sT\-\./]/);
-                        if (parts.length >= 2 && parseInt(parts[1], 10) === currentMonth) return true;
-                    }
-                }
-            }
-            return false;
-        });
+        let totalMonthCount = 0;
+        for (let d = 1; d <= totalDays; d++) {
+            let dailyMatched = targetDataset.filter(row => isRowMatchDate(row, currentMonth, d));
+            totalMonthCount += dailyMatched.length;
+        }
 
-        summary.innerText = `${monthFiltered.length}건 · ${currentMonth}월 ${currentCategory === 'wedding' ? '웨딩' : '상담'} 합계`;
+        summary.innerText = `총 ${totalMonthCount}건 · ${currentMonth}월 ${currentCategory === 'wedding' ? '웨딩' : '상담'} 일정`;
 
         let html = `
             <div class="cal-day-header" style="color: #ff3b30;">일</div>
@@ -977,7 +869,6 @@
             <div class="cal-day-header" style="color: #3b82f6;">토</div>
         `;
 
-        const totalDays = currentMonth === 9 ? 30 : 31;
         const startDayOffset = currentMonth === 9 ? 2 : 4; 
 
         for (let i = 0; i < startDayOffset; i++) {
@@ -986,8 +877,6 @@
 
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${currentMonth}월 ${day}일`;
-            // 웨딩의 경우 상세 주간 데이터(weekly)를 기준으로 날짜별 건수를 정확히 계산
-            const targetDataset = currentCategory === 'wedding' ? dbData.weekly : dbData.consult;
             const matchedRows = targetDataset.filter(row => isRowMatchDate(row, currentMonth, day));
 
             const count = matchedRows.length;
@@ -996,8 +885,8 @@
 
             let dayOfWeek = (startDayOffset + day - 1) % 7;
             let dayColor = 'inherit';
-            if (dayOfWeek === 0) dayColor = '#ff3b30'; // 일요일
-            else if (dayOfWeek === 6) dayColor = '#3b82f6'; // 토요일
+            if (dayOfWeek === 0) dayColor = '#ff3b30';
+            else if (dayOfWeek === 6) dayColor = '#3b82f6';
 
             html += `
                 <div class="cal-cell ${hasEvent ? 'has-event' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}', ${day})">
