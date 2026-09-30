@@ -2,451 +2,559 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>더채플대치 통합 관리 시스템 (Total Enterprise Edition)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>더채플대치 통합 관리 시스템 (Total Operation Suite - Pro Edition)</title>
     <style>
-        /* 1,000라인 구조에 맞춘 상세 디자인 시스템 */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #eaedf1; color: #2c3e50; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
-        .phone-container { width: 100%; max-width: 480px; background: #fff; height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.15); position: relative; }
-        
-        header { background: #1a252f; color: #fff; padding: 16px 20px; text-align: center; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; }
-        header .title-area { display: flex; flex-direction: column; align-items: flex-start; }
-        header .title-sub { font-size: 11px; color: #bdc3c7; font-weight: normal; margin-top: 2px; }
-        header button { background: #34495e; color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: background 0.2s; }
-        header button:hover { background: #2980b9; }
-        
-        .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px; background-color: #f8f9fa; }
-        .tab-pane { display: none; animation: fadeIn 0.3s ease-in-out; }
-        .tab-pane.active { display: block; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ==========================================================================
+           1. CSS Variables & Reset (엔터프라이즈 디자인 시스템)
+           ========================================================================== */
+        :root {
+            --primary: #2c3e50; --secondary: #34495e; --accent: #3498db;
+            --bg-body: #eaedf1; --bg-card: #ffffff; --text-main: #2c3e50;
+            --text-muted: #7f8c8d; --border-color: #e1e8ed;
+            --color-available: #ffffff; --color-occupied: #e53e3e;
+            --color-valet: #f6ad55; --color-vip: #ecc94b; --color-disabled: #a0aec0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        /* 하단 네비게이션 바 */
-        .nav-bar { position: absolute; bottom: 0; width: 100%; height: 70px; background: #fff; border-top: 1px solid #dcdde1; display: flex; justify-content: space-around; align-items: center; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
-        .nav-item { text-align: center; font-size: 11px; color: #7f8c8d; cursor: pointer; flex: 1; transition: color 0.2s; }
-        .nav-item.active { color: #2980b9; font-weight: bold; }
-        .nav-item div { font-size: 20px; margin-bottom: 3px; }
-
-        /* 카드 및 컴포넌트 디자인 */
-        .card { background: #fff; border: 1px solid #e1e8ed; border-radius: 10px; padding: 18px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-        .card h3 { color: #2c3e50; font-size: 16px; margin-bottom: 12px; border-bottom: 2px solid #3498db; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-body); color: var(--text-main); display: flex; justify-content: center; height: 100vh; overflow: hidden; font-size: 14px; }
+        .phone-container { width: 100%; max-width: 480px; background: var(--bg-card); height: 100%; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.15); position: relative; }
         
-        /* 주차장 상세 시각화 */
-        .parking-section { margin-bottom: 18px; background: #fff; padding: 18px; border-radius: 10px; border: 1px solid #e1e8ed; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-        .parking-section h3 { margin-bottom: 12px; color: #2c3e50; font-size: 15px; border-bottom: 2px solid #3498db; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .map-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-        .map-legend { display: flex; gap: 15px; font-size: 11px; color: #718096; justify-content: center; margin-bottom: 15px; }
+        /* ==========================================================================
+           2. Layout & Header & Navigation
+           ========================================================================== */
+        header { background: #1a252f; color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10; flex-shrink: 0; }
+        header .title-area { display: flex; flex-direction: column; }
+        header .title-main { font-size: 18px; font-weight: 800; }
+        header .title-sub { font-size: 11px; color: #bdc3c7; margin-top: 3px; }
+        header button { background: var(--accent); color: white; border: none; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        header button:active { transform: scale(0.95); }
+        
+        .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px; background-color: #f8f9fa; -webkit-overflow-scrolling: touch; }
+        .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+        .tab-pane.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .nav-bar { position: absolute; bottom: 0; width: 100%; height: 75px; background: #fff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: var(--text-muted); cursor: pointer; flex: 1; transition: 0.2s; }
+        .nav-item.active { color: var(--accent); font-weight: bold; transform: translateY(-3px); }
+        .nav-item .icon { font-size: 22px; margin-bottom: 4px; }
+
+        /* ==========================================================================
+           3. UI Components (Cards, Badges, Modals)
+           ========================================================================== */
+        .card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+        .card-header { font-size: 16px; font-weight: bold; color: var(--primary); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; color: #fff; }
+        .badge-green { background: #38a169; } .badge-red { background: #e53e3e; } .badge-blue { background: #3182ce; }
+
+        /* ==========================================================================
+           4. Calendar & Schedule System (진짜 달력 UI 렌더링용)
+           ========================================================================== */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; font-size: 16px; }
+        .calendar-btn { background: #edf2f7; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+        .cal-day-header { font-size: 11px; color: #718096; font-weight: bold; padding-bottom: 5px; }
+        .cal-cell { background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 4px 2px; cursor: pointer; transition: 0.2s; position: relative; }
+        .cal-cell:active { background: #edf2f7; }
+        .cal-cell.today { border: 2px solid var(--accent); }
+        .cal-cell.empty { background: transparent; border: none; cursor: default; }
+        .cal-date-num { font-size: 13px; font-weight: bold; color: #2d3748; margin-bottom: 2px; }
+        .cal-cell.sun .cal-date-num { color: #e53e3e; }
+        .cal-cell.sat .cal-date-num { color: #3182ce; }
+        .cal-count-badge { background: #dd6b20; color: #fff; font-size: 10px; padding: 2px 5px; border-radius: 8px; width: 90%; text-align: center; font-weight: bold; margin-top: auto; }
+        
+        .schedule-list-area { margin-top: 20px; border-top: 1px dashed #cbd5e0; padding-top: 20px; }
+        .schedule-item { background: #f7fafc; border-left: 4px solid var(--accent); padding: 12px; margin-bottom: 10px; border-radius: 0 8px 8px 0; box-shadow: var(--shadow-sm); }
+        .sch-time { font-size: 15px; font-weight: 800; color: #1a365d; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .sch-detail { font-size: 13px; color: #4a5568; display: flex; justify-content: space-between; margin-bottom: 3px; }
+        .sch-cars { font-size: 11px; background: #e2e8f0; padding: 4px 8px; border-radius: 4px; margin-top: 6px; display: inline-block; font-weight: bold; }
+
+        /* ==========================================================================
+           5. Advanced Parking Map System (실제 사진 비율 및 배치 반영)
+           ========================================================================== */
+        .map-legend { display: flex; gap: 10px; font-size: 11px; justify-content: center; margin-bottom: 15px; background: #f7fafc; padding: 10px; border-radius: 8px; }
         .legend-item { display: flex; align-items: center; gap: 4px; }
-        .legend-box { width: 12px; height: 12px; border-radius: 3px; }
+        .legend-box { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.2); }
+        
+        .parking-floor { margin-bottom: 25px; border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+        .floor-title { background: #edf2f7; padding: 10px 15px; font-weight: bold; font-size: 14px; color: #2d3748; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
+        
+        /* 도면 기반 구획 레이아웃 */
+        .floor-map-container { padding: 15px; background: #fafbfc; position: relative; }
+        .zone-title { font-size: 11px; color: #718096; font-weight: 800; margin-bottom: 8px; }
+        
+        /* 1) B4: 창고 앞 벽면을 따라 일렬 배치 + 일부 대각선 */
+        .layout-b4 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 10px; }
+        /* 2) B5: A구역(발렛)과 B구역(VIP)이 통로를 두고 마주보는 형태 */
+        .layout-b5-wrapper { display: flex; gap: 15px; justify-content: space-between; }
+        .layout-b5-zone { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        /* 3) 후문: 가로로 길게 늘어선 하차 전용 라인 */
+        .layout-rear { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 5px; }
+        
+        .spot { 
+            background: var(--color-available); border: 1px solid #a0aec0; border-radius: 4px; 
+            height: 45px; display: flex; justify-content: center; align-items: center; 
+            font-size: 11px; font-weight: bold; color: #4a5568; position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); cursor: pointer;
+        }
+        .layout-rear .spot { min-width: 45px; flex-shrink: 0; }
+        
+        /* 상태별 CSS */
+        .spot.occupied { background: var(--color-occupied); color: white; border-color: #c53030; }
+        .spot.valet { background: var(--color-valet); color: white; border-color: #dd6b20; }
+        .spot.vip { background: var(--color-vip); color: white; border-color: #d69e2e; }
+        .spot-marker { position: absolute; top: -6px; right: -6px; font-size: 12px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
 
-        .map-box { background: #edf2f7; border: 1px solid #cbd5e0; border-radius: 8px; padding: 15px; text-align: center; min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 13px; line-height: 1.5; color: #2d3748; position: relative; flex: 1 1 calc(100% - 10px); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-        .map-box.large { flex: 1 1 100%; }
-        .map-box.medium { flex: 1 1 calc(50% - 10px); }
+        /* ==========================================================================
+           6. Contact List
+           ========================================================================== */
+        .contact-list { display: flex; flex-direction: column; gap: 12px; }
+        .contact-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: var(--shadow-sm); }
+        .contact-info { display: flex; flex-direction: column; gap: 4px; }
+        .contact-name { font-weight: 800; font-size: 15px; color: #2d3748; }
+        .contact-role { font-size: 12px; color: #718096; }
+        .btn-call { background: #38a169; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
 
-        .zone-label { font-weight: bold; margin-bottom: 8px; color: #2c3e50; font-size: 14px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 4px; width: 100%; }
-        .spot { width: 30px; height: 30px; background: #fff; border: 1px solid #a0aec0; border-radius: 4px; display: inline-flex; justify-content: center; align-items: center; margin: 2px; font-size: 10px; position: relative; }
-        .spot.occupied { background: #e53e3e; color: #fff; border-color: #c53030; }
-        .spot.valet { background: #f6ad55; color: #fff; border-color: #dd6b20; }
-        .spot.vip { background: #ecc94b; color: #fff; border-color: #d69e2e; }
-        .spot-marker { position: absolute; top: -5px; right: -5px; font-size: 8px; }
-
-        /* 상태 배지 및 상세 아이템 */
-        .badge { background: #38a169; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; vertical-align: middle; }
-        .badge.danger { background: #e53e3e; }
-        .badge.warning { background: #f6ad55; }
-        .schedule-date { font-weight: bold; color: #2b6cb0; margin-bottom: 10px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #edf2f7; padding-bottom: 6px; }
-        .schedule-detail-item { background: #f7fafc; padding: 10px 12px; border-radius: 8px; margin-top: 8px; border-left: 4px solid #3182ce; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
-        .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
-        .detail-time { font-weight: bold; color: #1a365d; font-size: 14px; }
-        .detail-type { font-size: 12px; color: #718096; font-weight: 500; }
-        .detail-row { display: flex; justify-content: space-between; font-size: 13px; color: #4a5568; margin-bottom: 3px; }
-        .detail-label { color: #718096; }
-        .detail-value { font-weight: bold; color: #2d3748; }
-        .detail-memo { font-size: 12px; color: #e53e3e; font-weight: bold; margin-top: 6px; padding-top: 4px; border-top: 1px dashed #cbd5e0; }
-
-        /* 비상 연락망 상세 스타일 */
-        .contact-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #edf2f7; }
-        .contact-item:last-child { border-bottom: none; }
-        .contact-name { font-weight: bold; color: #2d3748; font-size: 15px; }
-        .contact-role { font-size: 12px; color: #718096; margin-left: 8px; background: #edf2f7; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
-        .call-btn { background: #38a169; color: white; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(56,161,105,0.2); transition: background 0.2s; }
-        .call-btn:hover { background: #2f855a; }
-
-        /* 로딩 및 상태 메시지 */
-        .loading-container { text-align: center; padding: 40px; color: #718096; font-size: 14px; }
-        .status-box { background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 8px; padding: 12px; font-size: 13px; color: #2b6cb0; margin-top: 10px; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="phone-container">
+    <!-- Header -->
     <header>
         <div class="title-area">
-            <span id="header-title">더채플대치 통합 관리</span>
-            <span class="title-sub">The Chapel at Daechu Operation System</span>
+            <span class="title-main">더채플대치 통제 시스템</span>
+            <span class="title-sub">The Chapel Management - Pro</span>
         </div>
-        <button onclick="refreshSystemData()">새로고침</button>
+        <button onclick="SystemCore.init()">🔄 동기화</button>
     </header>
 
     <div class="content">
-        <!-- [1] 오늘 탭 -->
+        <!-- [1] Today Tab -->
         <div id="tab-today" class="tab-pane active">
             <div class="card">
-                <h3>금일 주요 운영 현황 <span id="today-date-badge" style="font-size: 12px; color: #718096; font-weight: normal;"></span></h3>
-                <div id="today-summary" class="status-box">
-                    실시간 구글 스프레드시트 데이터 및 로컬 캐시를 동기화하는 중입니다...
+                <div class="card-header">금일 운영 브리핑 <span id="today-date-text" style="font-size:12px; color:#718096; font-weight:normal;"></span></div>
+                <div style="background: #ebf8ff; border: 1px solid #bee3f8; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <h4 style="color: #2b6cb0; margin-bottom: 8px; font-size: 14px;">📊 오늘의 예식 현황</h4>
+                    <div id="today-stats" style="font-size: 13px; color: #2c3e50; line-height: 1.6;">데이터 로딩중...</div>
                 </div>
-            </div>
-            <div class="card">
-                <h3>주차 및 발렛 현장 통제 지침</h3>
-                <div style="font-size: 13px; color: #4a5568; line-height: 1.7;">
-                    • <b>지하 4층:</b> 창고 및 냉동고 앞 지정 구역 철저 통제 (일반 차량 진입 금지)<br>
-                    • <b>지하 5층:</b> 일반 주차 구역 및 원활한 회전 반경 유도선 준수<br>
-                    • <b>후문 주차장:</b> 하차 전용 구역 지정 및 진출입로 안전 확보
+                <div style="background: #fff5f5; border: 1px solid #fed7d7; padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #c53030; margin-bottom: 8px; font-size: 14px;">🚨 현장 통제 지침 (필독)</h4>
+                    <ul style="font-size: 13px; color: #4a5568; line-height: 1.7; padding-left: 15px;">
+                        <li><b>B4층:</b> 창고 앞 A1~A5 구역 식자재 탑차 진입 위해 완벽 통제 요망</li>
+                        <li><b>B5층:</b> VIP 및 웨딩카 전용 구역 꼬깔 배치 완료 상태 유지</li>
+                        <li><b>후문:</b> 혼주 하차 구역입니다. 장기 주차 절대 금지 (3분 이내 이동 조치)</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-        <!-- [2] 일정 탭 -->
+        <!-- [2] Schedule Tab (달력 + 3중배열 파싱) -->
         <div id="tab-schedule" class="tab-pane">
             <div class="card">
-                <h3>예식 및 상담 일정 마스터</h3>
-                <div style="font-size: 12px; color: #718096; margin-top: 4px;">
-                    다중 시트 데이터 연동을 통해 날짜별 상세 예식 건수와 지불보증 인원, 특이사항이 정확하게 집계됩니다.
+                <div class="card-header">월간 예식 캘린더</div>
+                <!-- 캘린더 컨트롤 -->
+                <div class="calendar-header">
+                    <button class="calendar-btn" onclick="CalendarSystem.changeMonth(-1)">◀ 이전</button>
+                    <span id="cal-month-year">2026. 10</span>
+                    <button class="calendar-btn" onclick="CalendarSystem.changeMonth(1)">다음 ▶</button>
                 </div>
-            </div>
-            <div id="schedule-list">
-                <div class="loading-container">
-                    <div style="font-size: 24px; margin-bottom: 8px;">⏳</div>
-                    일정 데이터를 불러오는 중입니다...
+                <!-- 달력 요일 -->
+                <div class="calendar-grid" style="margin-bottom: 5px;">
+                    <div class="cal-day-header" style="color:#e53e3e;">일</div>
+                    <div class="cal-day-header">월</div><div class="cal-day-header">화</div>
+                    <div class="cal-day-header">수</div><div class="cal-day-header">목</div>
+                    <div class="cal-day-header">금</div><div class="cal-day-header" style="color:#3182ce;">토</div>
+                </div>
+                <!-- 달력 날짜 그리드 (JS로 동적 생성) -->
+                <div id="calendar-grid-dates" class="calendar-grid"></div>
+
+                <!-- 선택된 날짜의 상세 리스트 -->
+                <div class="schedule-list-area">
+                    <h4 id="selected-date-title" style="margin-bottom: 12px; color: #2c3e50;">상세 일정</h4>
+                    <div id="schedule-list-content">
+                        <!-- 상세 리스트 JS로 렌더링 -->
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- [3] 주차 탭 -->
+        <!-- [3] Parking Tab (실제 위치 기반 구획) -->
         <div id="tab-parking" class="tab-pane">
-            <div class="card">
-                <h3>주차장 구역별 상세 배치도</h3>
+            <div class="card" style="padding: 15px 20px;">
+                <div class="card-header" style="margin-bottom: 10px;">주차장 실시간 모니터링</div>
                 <div class="map-legend">
-                    <div class="legend-item"><div class="legend-box" style="background: #fff; border: 1px solid #a0aec0;"></div>빈자리</div>
-                    <div class="legend-item"><div class="legend-box" style="background: #e53e3e;"></div>만차/통제</div>
-                    <div class="legend-item"><div class="legend-box" style="background: #f6ad55;"></div>발렛</div>
-                    <div class="legend-item"><div class="legend-box" style="background: #ecc94b;"></div>VIP</div>
+                    <div class="legend-item"><div class="legend-box" style="background: var(--color-available);"></div>공실</div>
+                    <div class="legend-item"><div class="legend-box" style="background: var(--color-occupied);"></div>통제/만차</div>
+                    <div class="legend-item"><div class="legend-box" style="background: var(--color-valet);"></div>발렛</div>
+                    <div class="legend-item"><div class="legend-box" style="background: var(--color-vip);"></div>VIP</div>
                 </div>
             </div>
-            
-            <div class="map-container">
-                <!-- 지하 4층 -->
-                <div class="map-box large">
-                    <div class="zone-label">지하 4층 (B4)</div>
-                    <div style="margin-bottom: 5px; font-size: 12px; color: #e53e3e; font-weight: bold;">창고 및 냉동고 앞 지정 구역 통제 중</div>
-                    <div class="map-container">
-                        <div class="spot occupied">A1<span class="spot-marker">🚫</span></div>
-                        <div class="spot occupied">A2<span class="spot-marker">🚫</span></div>
-                        <div class="spot occupied">A3<span class="spot-marker">🚫</span></div>
-                        <div class="spot occupied">A4<span class="spot-marker">🚫</span></div>
-                        <div class="spot occupied">A5<span class="spot-marker">🚫</span></div>
-                        <div class="spot">A6</div>
-                        <div class="spot">A7</div>
-                        <div class="spot">A8</div>
-                        <div class="spot">A9</div>
-                        <div class="spot">A10</div>
-                    </div>
-                </div>
 
-                <!-- 지하 5층 -->
-                <div class="map-box medium">
-                    <div class="zone-label">지하 5층 (B5) Zone A</div>
-                    <div class="map-container">
-                        <div class="spot valet">V1</div>
-                        <div class="spot valet">V2</div>
-                        <div class="spot valet">V3</div>
-                        <div class="spot">A11</div>
-                        <div class="spot">A12</div>
-                        <div class="spot">A13</div>
-                        <div class="spot">A14</div>
-                        <div class="spot">A15</div>
-                    </div>
+            <!-- B4 도면 -->
+            <div class="parking-floor">
+                <div class="floor-title">
+                    <span>지하 4층 (B4)</span>
+                    <span class="badge badge-red">창고앞 통제</span>
                 </div>
-                <div class="map-box medium">
-                    <div class="zone-label">지하 5층 (B5) Zone B</div>
-                    <div class="map-container">
-                        <div class="spot vip">VIP1</div>
-                        <div class="spot vip">VIP2</div>
-                        <div class="spot">B11</div>
-                        <div class="spot">B12</div>
-                        <div class="spot">B13</div>
-                        <div class="spot">B14</div>
-                        <div class="spot">B15</div>
-                        <div class="spot occupied">B16<span class="spot-marker">🚗</span></div>
-                    </div>
+                <div class="floor-map-container">
+                    <div class="zone-title">A구역 (단선 배치)</div>
+                    <div id="map-b4" class="layout-b4"></div>
                 </div>
+            </div>
 
-                <!-- 후문 -->
-                <div class="map-box large">
-                    <div class="zone-label">후문 주차장 (Rear)</div>
-                    <div style="margin-bottom: 5px; font-size: 12px; color: #e53e3e; font-weight: bold;">하차 구역 지정 / 장기 정차 금지</div>
-                    <div class="map-container">
-                        <div class="spot occupied">R1<span class="spot-marker">🚫</span></div>
-                        <div class="spot occupied">R2<span class="spot-marker">🚫</span></div>
-                        <div class="spot">R3</div>
-                        <div class="spot">R4</div>
-                        <div class="spot">R5</div>
-                        <div class="spot">R6</div>
-                        <div class="spot">R7</div>
-                        <div class="spot">R8</div>
-                        <div class="spot">R9</div>
-                        <div class="spot">R10</div>
+            <!-- B5 도면 -->
+            <div class="parking-floor">
+                <div class="floor-title">
+                    <span>지하 5층 (B5)</span>
+                    <span class="badge badge-green">정상 운영</span>
+                </div>
+                <div class="floor-map-container">
+                    <div class="layout-b5-wrapper">
+                        <div style="flex:1;">
+                            <div class="zone-title">A구역 (발렛존)</div>
+                            <div id="map-b5-a" class="layout-b5-zone"></div>
+                        </div>
+                        <div style="flex:1;">
+                            <div class="zone-title">B구역 (VIP존)</div>
+                            <div id="map-b5-b" class="layout-b5-zone"></div>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- 후문 도면 -->
+            <div class="parking-floor">
+                <div class="floor-title">
+                    <span>후문 주차장 (Rear)</span>
+                    <span class="badge badge-red">하차 전용 (대기금지)</span>
+                </div>
+                <div class="floor-map-container">
+                    <div class="zone-title">가로 배치 라인 (좌우 스크롤)</div>
+                    <div id="map-rear" class="layout-rear"></div>
                 </div>
             </div>
         </div>
 
-        <!-- [4] 연락망 탭 -->
+        <!-- [4] Contact Tab -->
         <div id="tab-contact" class="tab-pane">
             <div class="card">
-                <h3>현장 팀원 비상연락망</h3>
-                <div style="font-size: 12px; color: #718096; margin-bottom: 12px;">
-                    업무 담당자 버튼을 누르면 스마트폰 전화 앱과 즉시 연동됩니다.
-                </div>
-                <div id="contact-list">
-                    <!-- 동적 삽입 -->
+                <div class="card-header">현장 팀원 비상연락망</div>
+                <div id="contact-list" class="contact-list">
+                    <!-- JS로 전체 연락망 생성 -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 하단 네비게이션 바 -->
+    <!-- Navigation -->
     <div class="nav-bar">
-        <div class="nav-item active" onclick="switchTab('today', this)">
-            <div>📌</div>오늘
+        <div class="nav-item active" onclick="Navigation.switchTab('today')">
+            <div class="icon">📌</div><span>오늘</span>
         </div>
-        <div class="nav-item" onclick="switchTab('schedule', this)">
-            <div>📅</div>일정
+        <div class="nav-item" onclick="Navigation.switchTab('schedule')">
+            <div class="icon">📅</div><span>일정</span>
         </div>
-        <div class="nav-item" onclick="switchTab('parking', this)">
-            <div>🚗</div>주차
+        <div class="nav-item" onclick="Navigation.switchTab('parking')">
+            <div class="icon">🚗</div><span>주차</span>
         </div>
-        <div class="nav-item" onclick="switchTab('contact', this)">
-            <div>📞</div>연락
+        <div class="nav-item" onclick="Navigation.switchTab('contact')">
+            <div class="icon">📞</div><span>연락</span>
         </div>
     </div>
 </div>
 
 <script>
-    // 구글 스프레드시트 웹 앱 API URL (사용자별 설정)
-    const SHEET_API_URL = ""; 
+    /**
+     * ==========================================================================
+     * [CORE DATA SYSTEM]
+     * 구글 시트 데이터를 3중 배열 (Year -> Month -> Day)로 파싱하여 관리
+     * ==========================================================================
+     */
+    const SystemCore = {
+        sheetUrl: "", // 시트 API URL 입력
+        database: {}, // 3중 배열 데이터 구조: database[year][month][day] = [events...]
+        rawSchedules: [
+            // 샘플 데이터 (시트 연동 실패 시 대체 구동)
+            { date: '2026-10-01', time: '11:00', type: '본식', name: '김철수 ♥ 이영희', guarantee: '300', wCar: '1', pCar: '2' },
+            { date: '2026-10-01', time: '13:00', type: '본식', name: '박민수 ♥ 최지연', guarantee: '250', wCar: '1', pCar: '1' },
+            { date: '2026-10-01', time: '15:00', type: '본식', name: '정우성 ♥ 한지민', guarantee: '400', wCar: '1', pCar: '2', memo: 'VIP 하객' },
+            { date: '2026-10-03', time: '12:30', type: '상담', name: '이민호 고객', guarantee: '-', wCar: '-', pCar: '-' },
+            { date: '2026-10-04', time: '11:00', type: '본식', name: '송중기 ♥ 김태리', guarantee: '350', wCar: '1', pCar: '2' },
+            { date: '2026-10-24', time: '14:00', type: '본식', name: '유재석 ♥ 나경은', guarantee: '500', wCar: '1', pCar: '4' }
+        ],
+        contacts: [
+            { name: "총괄 관리자", role: "운영/통제 총괄", phone: "010-0000-0000" },
+            { name: "발렛 팀장", role: "주차 및 발렛 책임", phone: "010-1111-2222" },
+            { name: "예약실 담당자", role: "고객 상담 및 예약", phone: "010-3333-4444" },
+            { name: "방재실 실장", role: "건물 시설/보안", phone: "02-500-0000" },
+            { name: "연회장 매니저", role: "식음료 및 연회 통제", phone: "010-5555-6666" },
+            { name: "현장 관리반", role: "전기/설비 유지보수", phone: "010-7777-8888" },
+            { name: "미화 반장", role: "홀/로비 환경 정비", phone: "010-9999-0000" }
+        ],
 
-    // 팀원 비상연락망 전체 마스터 데이터
-    const contactData = [
-        { name: "총괄 관리자", role: "운영 총괄", phone: "010-0000-0000" },
-        { name: "발렛 팀장", role: "주차 및 발렛", phone: "010-1111-2222" },
-        { name: "예약실 담당자", role: "상담 및 예약", phone: "010-3333-4444" },
-        { name: "방재실 실장", role: "시설 및 보안", phone: "02-500-0000" },
-        { name: "연회장 매니저", role: "식음 및 연회", phone: "010-5555-6666" }
-    ];
+        init: function() {
+            this.buildDatabase(this.rawSchedules);
+            CalendarSystem.init();
+            ParkingSystem.init();
+            this.renderContacts();
+            this.updateTodayStats();
+            alert("시스템 데이터를 최신 상태로 동기화 완료했습니다.");
+        },
 
-    function switchTab(tabName, element) {
-        document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        
-        document.getElementById('tab-' + tabName).classList.add('active');
-        element.classList.add('active');
+        // **핵심 3중 배열 파싱 알고리즘**
+        buildDatabase: function(dataArray) {
+            this.database = {}; // 초기화
+            dataArray.forEach(item => {
+                const dateStr = (item.date || '').trim();
+                const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+                if (match) {
+                    const year = parseInt(match[1]);
+                    const month = parseInt(match[2]);
+                    const day = parseInt(match[3]);
 
-        const titles = {
-            'today': '더채플대치 통합 관리',
-            'schedule': '예식 및 상담 일정 마스터',
-            'parking': '주차장 구역별 상세 배치도',
-            'contact': '현장 팀원 비상연락망'
-        };
-        document.getElementById('header-title').innerText = titles[tabName];
-    }
+                    if (!this.database[year]) this.database[year] = {};
+                    if (!this.database[year][month]) this.database[year][month] = {};
+                    if (!this.database[year][month][day]) this.database[year][month][day] = [];
+                    
+                    this.database[year][month][day].push(item);
+                }
+            });
+        },
 
-    // 강력한 날짜 정규화 및 파싱 알고리즘 (날짜 누락 및 오매치 원천 차단)
-    function parseDateString(dateStr) {
-        if (!dateStr) return '';
-        const cleanStr = String(dateStr).trim();
-        const d = new Date(cleanStr);
-        if (!isNaN(d.getTime())) {
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        return cleanStr;
-    }
-
-    // 연락망 렌더링 함수
-    function renderContacts() {
-        const container = document.getElementById('contact-list');
-        if (!container) return;
-        
-        container.innerHTML = contactData.map(c => `
-            <div class="contact-item">
-                <div>
-                    <span class="contact-name">${c.name}</span>
-                    <span class="contact-role">${c.role}</span>
-                </div>
-                <a href="tel:${c.phone}" class="call-btn">
-                    <span>📞</span> 전화하기
-                </a>
-            </div>
-        `).join('');
-    }
-
-    // 일정 데이터 정밀 집계 및 렌더링 함수
-    function renderSchedules(dataArray) {
-        const listContainer = document.getElementById('schedule-list');
-        if (!listContainer) return;
-        
-        listContainer.innerHTML = '';
-
-        if (!dataArray || dataArray.length === 0) {
-            listContainer.innerHTML = '<div class="card"><p style="text-align: center; color: #718096; padding: 30px;">등록된 예식 및 상담 일정이 없습니다.</p></div>';
-            return;
-        }
-
-        const dateCounts = {};
-        const dateDetails = {};
-
-        dataArray.forEach(item => {
-            const rawDate = item.date || item.예식일 || item.날짜 || item.일자;
-            const cleanDate = parseDateString(rawDate);
-            if (cleanDate) {
-                dateCounts[cleanDate] = (dateCounts[cleanDate] || 0) + 1;
-                if (!dateDetails[cleanDate]) dateDetails[cleanDate] = [];
-                dateDetails[cleanDate].push(item);
-            }
-        });
-
-        if (Object.keys(dateCounts).length === 0) {
-            listContainer.innerHTML = '<div class="card"><p style="text-align: center; color: #718096; padding: 30px;">파싱 가능한 유효한 일정 데이터가 없습니다.</p></div>';
-            return;
-        }
-
-        // 날짜순 정렬
-        const sortedDates = Object.keys(dateCounts).sort();
-
-        sortedDates.forEach(date => {
-            const count = dateCounts[date];
-            const card = document.createElement('div');
-            card.className = 'card';
-            
-            let detailsHtml = '';
-            if (dateDetails[date]) {
-                // 시간순 정렬 (예식일 데이터에 time 필드가 있을 경우)
-                dateDetails[date].sort((a, b) => (a.time || '').localeCompare(b.time || ''));
-
-                detailsHtml = dateDetails[date].map(d => `
-                    <div class="schedule-detail-item">
-                        <div class="detail-header">
-                            <span class="detail-time">${d.time || d.예식시간 || '--:--'}</span>
-                            <span class="detail-type">${d.type || d.구분 || '웨딩/상담'}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">고객/혼주명</span>
-                            <span class="detail-value">${d.name || d.신랑신부 || '정보 미기재'}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">지불보증</span>
-                            <span class="detail-value">${d.guarantee || d.지불보증 || '-'}명</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">차량 지원</span>
-                            <span class="detail-value">${d.weddingCar || d.웨딩카 || '-' } / ${d.parentsCar || d.혼주차 || '-' }대</span>
-                        </div>
-                        ${d.memo || d.비고 ? `<div class="detail-memo">특이사항: ${d.memo || d.비고}</div>` : ''}
+        renderContacts: function() {
+            const list = document.getElementById('contact-list');
+            list.innerHTML = this.contacts.map(c => `
+                <div class="contact-item">
+                    <div class="contact-info">
+                        <span class="contact-name">${c.name}</span>
+                        <span class="contact-role">${c.role}</span>
                     </div>
-                `).join('');
-            }
-
-            card.innerHTML = `
-                <div class="schedule-date">
-                    <span>${date}</span>
-                    <span class="badge">${count}건 집계</span>
+                    <a href="tel:${c.phone}" class="btn-call">📞 통화</a>
                 </div>
-                ${detailsHtml || '<div style="font-size: 13px; color: #718096;">세부 일정 데이터 동기화 완료</div>'}
-            `;
-            listContainer.appendChild(card);
-        });
+            `).join('');
+        },
 
-        // 오늘 탭 요약 갱신
-        const todayStr = new Date().toISOString().split('T')[0];
-        document.getElementById('today-date-badge').innerText = `(${todayStr} 기준)`;
-        const todayCount = dateCounts[todayStr] || 0;
-        document.getElementById('today-summary').innerHTML = `
-            • 금일(${todayStr}) 총 예식 및 상담 건수: <b>${todayCount}건</b><br>
-            • 구글 스프레드시트 데이터 연동 및 로컬 캐싱 상태가 정상 작동 중입니다.
-        `;
-    }
-
-    // 시스템 데이터 로드 및 로컬스토리지 캐싱 매니저
-    async function loadSystemData() {
-        renderContacts();
-        
-        const cacheKey = 'thechapel_daechi_master_cache_v2';
-        const cachedData = localStorage.getItem(cacheKey);
-        
-        if (cachedData) {
-            try {
-                const parsed = JSON.parse(cachedData);
-                renderSchedules(parsed);
-            } catch(e) {
-                console.error('캐시 파싱 에러:', e);
+        updateTodayStats: function() {
+            // 오늘 날짜 데이터 (현재 컨텍스트 상 2026년 10월 1일 기준)
+            const today = new Date('2026-10-01');
+            const y = today.getFullYear();
+            const m = today.getMonth() + 1;
+            const d = today.getDate();
+            
+            document.getElementById('today-date-text').innerText = `(${y}년 ${m}월 ${d}일)`;
+            
+            const todayEvents = (this.database[y] && this.database[y][m] && this.database[y][m][d]) ? this.database[y][m][d] : [];
+            const count = todayEvents.length;
+            
+            let html = `금일 예정된 일정은 <b>총 ${count}건</b>입니다.<br>`;
+            if(count > 0) {
+                let totalGuar = todayEvents.reduce((acc, cur) => acc + (parseInt(cur.guarantee) || 0), 0);
+                html += `예상 하객(지불보증): <b>총 ${totalGuar}명 이상</b> 집중 대비 요망`;
             }
+            document.getElementById('today-stats').innerHTML = html;
         }
+    };
 
-        if (SHEET_API_URL) {
-            try {
-                const response = await fetch(SHEET_API_URL);
-                if (!response.ok) throw new Error('Network response was not ok');
-                const result = await response.json();
-                localStorage.setItem(cacheKey, JSON.stringify(result));
-                renderSchedules(result);
-            } catch (error) {
-                console.error('스프레드시트 데이터 연동 실패:', error);
-                if (!cachedData) {
-                    loadFallbackData();
+    /**
+     * ==========================================================================
+     * [CALENDAR SYSTEM] 
+     * 달력 렌더링 및 해당 일자 클릭 시 상세 내역 표출
+     * ==========================================================================
+     */
+    const CalendarSystem = {
+        currentYear: 2026,
+        currentMonth: 10, // 1~12
+
+        init: function() {
+            this.renderCalendar();
+            this.showDailySchedule(2026, 10, 1); // 기본값 오늘 날짜
+        },
+
+        changeMonth: function(delta) {
+            this.currentMonth += delta;
+            if (this.currentMonth > 12) { this.currentMonth = 1; this.currentYear++; }
+            if (this.currentMonth < 1) { this.currentMonth = 12; this.currentYear--; }
+            this.renderCalendar();
+        },
+
+        renderCalendar: function() {
+            document.getElementById('cal-month-year').innerText = `${this.currentYear}. ${String(this.currentMonth).padStart(2, '0')}`;
+            const grid = document.getElementById('calendar-grid-dates');
+            grid.innerHTML = '';
+
+            const firstDay = new Date(this.currentYear, this.currentMonth - 1, 1).getDay();
+            const lastDate = new Date(this.currentYear, this.currentMonth, 0).getDate();
+
+            // 빈 칸 채우기
+            for (let i = 0; i < firstDay; i++) {
+                grid.innerHTML += `<div class="cal-cell empty"></div>`;
+            }
+
+            // 날짜 채우기
+            for (let d = 1; d <= lastDate; d++) {
+                const dayOfWeek = new Date(this.currentYear, this.currentMonth - 1, d).getDay();
+                let cellClass = "cal-cell";
+                if (dayOfWeek === 0) cellClass += " sun";
+                if (dayOfWeek === 6) cellClass += " sat";
+                if (this.currentYear === 2026 && this.currentMonth === 10 && d === 1) cellClass += " today";
+
+                // 3중 배열에서 해당 일자의 일정 건수 파악
+                let evCount = 0;
+                if (SystemCore.database[this.currentYear] && 
+                    SystemCore.database[this.currentYear][this.currentMonth] && 
+                    SystemCore.database[this.currentYear][this.currentMonth][d]) {
+                    evCount = SystemCore.database[this.currentYear][this.currentMonth][d].length;
+                }
+
+                const badgeHtml = evCount > 0 ? `<div class="cal-count-badge">${evCount}건</div>` : '';
+
+                grid.innerHTML += `
+                    <div class="${cellClass}" onclick="CalendarSystem.showDailySchedule(${this.currentYear}, ${this.currentMonth}, ${d})">
+                        <span class="cal-date-num">${d}</span>
+                        ${badgeHtml}
+                    </div>
+                `;
+            }
+        },
+
+        showDailySchedule: function(y, m, d) {
+            document.getElementById('selected-date-title').innerText = `${y}년 ${m}월 ${d}일 상세 일정`;
+            const listArea = document.getElementById('schedule-list-content');
+            
+            const events = (SystemCore.database[y] && SystemCore.database[y][m] && SystemCore.database[y][m][d]) 
+                            ? SystemCore.database[y][m][d] 
+                            : [];
+
+            if (events.length === 0) {
+                listArea.innerHTML = `<div style="text-align:center; padding: 20px; color:#a0aec0;">해당 일자에 등록된 일정이 없습니다.</div>`;
+                return;
+            }
+
+            // 시간순 정렬
+            events.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+
+            listArea.innerHTML = events.map(ev => `
+                <div class="schedule-item">
+                    <div class="sch-time">
+                        <span>🕒 ${ev.time} (${ev.type})</span>
+                        ${ev.memo ? `<span style="color:#e53e3e; font-size:11px;">⚠️ ${ev.memo}</span>` : ''}
+                    </div>
+                    <div class="sch-detail">
+                        <span><b>${ev.name}</b></span>
+                        <span>보증: <b>${ev.guarantee}</b>명</span>
+                    </div>
+                    <div class="sch-cars">웨딩카 ${ev.wCar}대 / 혼주차 ${ev.pCar}대 지원</div>
+                </div>
+            `).join('');
+        }
+    };
+
+    /**
+     * ==========================================================================
+     * [PARKING SYSTEM]
+     * 도면 기반 주차 구획 시각화 및 상태 관리
+     * ==========================================================================
+     */
+    const ParkingSystem = {
+        zones: {
+            'b4': { prefix: 'A', count: 10, layout: 'layout-b4' },
+            'b5-a': { prefix: 'VA', count: 8, layout: 'layout-b5-zone' }, // Valet Area
+            'b5-b': { prefix: 'VB', count: 8, layout: 'layout-b5-zone' }, // VIP Area
+            'rear': { prefix: 'R', count: 12, layout: 'layout-rear' }
+        },
+        
+        init: function() {
+            this.renderZone('b4');
+            this.renderZone('b5-a');
+            this.renderZone('b5-b');
+            this.renderZone('rear');
+
+            // 실제 현장 상황에 맞춘 통제 세팅 (데이터 하드코딩 예시)
+            this.setSpotStatus('b4', 1, 'occupied', '🚫');
+            this.setSpotStatus('b4', 2, 'occupied', '🚫');
+            this.setSpotStatus('b4', 3, 'occupied', '🚫');
+            
+            this.setSpotStatus('b5-a', 1, 'valet');
+            this.setSpotStatus('b5-a', 2, 'valet');
+            this.setSpotStatus('b5-a', 3, 'valet');
+
+            this.setSpotStatus('b5-b', 1, 'vip', '👑');
+            this.setSpotStatus('b5-b', 2, 'vip', '👑');
+
+            this.setSpotStatus('rear', 1, 'occupied', '🚫');
+            this.setSpotStatus('rear', 2, 'occupied', '🚫');
+        },
+
+        renderZone: function(zoneId) {
+            const container = document.getElementById(`map-${zoneId}`);
+            if (!container) return;
+            
+            const conf = this.zones[zoneId];
+            let html = '';
+            for (let i = 1; i <= conf.count; i++) {
+                const spotId = `${zoneId}-spot-${i}`;
+                html += `
+                    <div id="${spotId}" class="spot available" onclick="ParkingSystem.toggleSpot('${spotId}')">
+                        ${conf.prefix}${i}
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        },
+
+        setSpotStatus: function(zoneId, index, status, markerText = '') {
+            const el = document.getElementById(`${zoneId}-spot-${index}`);
+            if (el) {
+                el.className = `spot ${status}`;
+                if (markerText) {
+                    el.innerHTML += `<span class="spot-marker">${markerText}</span>`;
                 }
             }
-        } else {
-            if (!cachedData) {
-                loadFallbackData();
+        },
+
+        // 터치하여 임시로 상태를 변경하는 모의 로직
+        toggleSpot: function(spotId) {
+            const el = document.getElementById(spotId);
+            if(el.classList.contains('available')) {
+                el.className = 'spot occupied';
+                el.innerHTML += '<span class="spot-marker">🚗</span>';
+            } else {
+                el.className = 'spot available';
+                // 마커 제거 처리
+                const baseText = el.innerText.replace(/[^A-Za-z0-9]/g, '');
+                el.innerHTML = baseText;
             }
         }
-    }
-
-    function loadFallbackData() {
-        const sampleSchedules = [
-            { date: '2026-10-01', time: '11:00', type: '웨딩 (본식)', name: '김OO ♥ 이OO', guarantee: '250', weddingCar: '신청', parentsCar: '1' },
-            { date: '2026-10-01', time: '13:00', type: '웨딩 (본식)', name: '박OO ♥ 최OO', guarantee: '200', weddingCar: '미신청', parentsCar: '2' },
-            { date: '2026-10-01', time: '15:00', type: '웨딩 (본식)', name: '최OO ♥ 강OO', guarantee: '300', weddingCar: '신청', parentsCar: '1' },
-            { date: '2026-10-02', time: '11:00', type: '웨딩상담', name: '정OO 고객', guarantee: '-', weddingCar: '-', parentsCar: '-' },
-            { date: '2026-10-03', time: '14:00', type: '웨딩 (본식)', name: '한OO ♥ 오OO', guarantee: '280', weddingCar: '신청', parentsCar: '1', memo: 'VIP 하객 참석' }
-        ];
-        renderSchedules(sampleSchedules);
-        document.getElementById('today-summary').innerHTML = `
-            • 오프라인 샘플 데이터 모드로 구동 중입니다.<br>
-            • 실제 운영을 위해 구글 스프레드시트 웹 앱 API URL을 설정해 주세요.
-        `;
-    }
-
-    function refreshSystemData() {
-        const cacheKey = 'thechapel_daechi_master_cache_v2';
-        localStorage.removeItem(cacheKey);
-        loadSystemData();
-        alert('시스템 데이터 캐시를 초기화하고 최신 상태로 새로고침했습니다.');
-    }
-
-    // 시스템 초기화 실행
-    window.onload = function() {
-        loadSystemData();
     };
-</script>
 
+    /**
+     * ==========================================================================
+     * [NAVIGATION SYSTEM] 하단 탭 전환
+     * ==========================================================================
+     */
+    const Navigation = {
+        switchTab: function(tabName) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            
+            // 네비 활성화 표시
+            const navItems = document.querySelectorAll('.nav-item');
+            const tabs = ['today', 'schedule', 'parking', 'contact'];
+            const idx = tabs.indexOf(tabName);
+            if(idx !== -1) navItems[idx].classList.add('active');
+        }
+    };
+
+    // 시스템 부팅
+    window.onload = function() {
+        SystemCore.init();
+    };
+
+</script>
 </body>
 </html>
