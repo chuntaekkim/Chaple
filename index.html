@@ -552,13 +552,11 @@
                 <div style="font-weight: 600; margin-bottom: 8px; color: #007aff; text-align: center;">후문 주차장 배치도</div>
                 <div class="parking-layout-box">
                     <div class="parking-grid-container">
-                        <!-- 첫 번째 가로줄 (3개) -->
                         <div class="parking-row">
                             <div class="parking-slot"></div>
                             <div class="parking-slot"></div>
                             <div class="parking-slot"></div>
                         </div>
-                        <!-- 두 번째 가로줄 (3개 + 우측 세로 3개) -->
                         <div class="parking-row with-side">
                             <div class="parking-slot"></div>
                             <div class="parking-slot"></div>
@@ -852,6 +850,7 @@
         document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
     }
 
+    // [날짜 매칭 로직 강화] 어떤 형태의 날짜/시간 데이터든 정확하게 인식하도록 개선
     function isRowMatchDate(row, targetMonth, targetDay) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
@@ -861,26 +860,29 @@
                 if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
-            let match2026 = strVal.match(/2026\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
-            if (match2026) {
-                let m = parseInt(match2026[1], 10);
-                let d = parseInt(match2026[2], 10);
+            // ISO 날짜 문자열(예: 2026-09-19T...) 처리
+            if (strVal.includes('T') || strVal.includes('-') || strVal.includes('.')) {
+                let parts = strVal.split(/[\sT\-\./]/);
+                if (parts.length >= 3) {
+                    let y = parseInt(parts[0], 10);
+                    let m = parseInt(parts[1], 10);
+                    let d = parseInt(parts[2], 10);
+                    if (y === 2026 && m === targetMonth && d === targetDay) return true;
+                }
+            }
+
+            // '9월 19일', '09/19', '9.19' 등 다양한 포맷 정규식 매칭
+            let m2 = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
+            if (m2) {
+                let m = parseInt(m2[1], 10);
+                let d = parseInt(m2[2], 10);
                 if (m === targetMonth && d === targetDay) return true;
             }
 
-            if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
-
-            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
-            if (strictMatch) {
-                let m = parseInt(strictMatch[2], 10);
-                let d = parseInt(strictMatch[3], 10);
-                if (m === targetMonth && d === targetDay) return true;
-            }
-
-            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
-            if (koreanMatch) {
-                let m = parseInt(koreanMatch[1], 10);
-                let d = parseInt(koreanMatch[2], 10);
+            let m3 = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
+            if (m3) {
+                let m = parseInt(m3[2], 10);
+                let d = parseInt(m3[3], 10);
                 if (m === targetMonth && d === targetDay) return true;
             }
         }
@@ -939,6 +941,7 @@
             grid.classList.remove('consult-mode');
         }
 
+        // 월별 데이터 카운트를 위해 monthly 또는 consult 전체 데이터를 사용
         const activeData = currentCategory === 'wedding' ? dbData.monthly : dbData.consult;
         
         const monthFiltered = activeData.filter(row => {
@@ -946,12 +949,16 @@
                 if (val !== undefined && val !== null) {
                     let strVal = String(val);
                     if (currentCategory === 'consult' && !key.includes('상담일시') && !key.includes('상담')) continue;
-                    if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
 
                     let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(/2026\s*[-./]\s*0?(\d{1,2})/);
                     if (mMatch) {
                         let m = parseInt(mMatch[1], 10);
                         if (m === currentMonth) return true;
+                    }
+                    // ISO 포맷 월 체크
+                    if (strVal.includes('2026')) {
+                        let parts = strVal.split(/[\sT\-\./]/);
+                        if (parts.length >= 2 && parseInt(parts[1], 10) === currentMonth) return true;
                     }
                 }
             }
@@ -979,7 +986,9 @@
 
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${currentMonth}월 ${day}일`;
-            const matchedRows = activeData.filter(row => isRowMatchDate(row, currentMonth, day));
+            // 웨딩의 경우 상세 주간 데이터(weekly)를 기준으로 날짜별 건수를 정확히 계산
+            const targetDataset = currentCategory === 'wedding' ? dbData.weekly : dbData.consult;
+            const matchedRows = targetDataset.filter(row => isRowMatchDate(row, currentMonth, day));
 
             const count = matchedRows.length;
             const hasEvent = count > 0;
