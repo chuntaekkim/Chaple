@@ -143,7 +143,7 @@
             text-align: left;
             flex-shrink: 0;
         }
-        /* 상담 일정용 라벨 정렬 스타일 (스크린샷 형태 반영) */
+        /* 상담 일정용 라벨 정렬 스타일 */
         .consult-row {
             display: flex;
             align-items: flex-start;
@@ -154,6 +154,12 @@
             width: 120px;
             font-weight: 600;
             color: #38bdf8;
+            flex-shrink: 0;
+        }
+        .consult-row .info-colon {
+            color: #38bdf8;
+            font-weight: 600;
+            margin-right: 4px;
             flex-shrink: 0;
         }
         .consult-row .info-value {
@@ -644,7 +650,7 @@
         <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">임창희</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">클에가 / 팀원</span>
+                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
                 <span class="contact-phone">010-3355-4537</span>
             </div>
             <a href="tel:010-3355-4537" class="call-icon-btn">
@@ -1086,8 +1092,8 @@
                     <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #c084fc;">
                         <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:13px;">[상담 ${idx + 1}]</div>
                         <div class="consult-row">
-                            <span class="info-label">번호</span>
-                            <span class="info-value">: ${idx + 1}</span>
+                            <span class="info-label">번호</span><span class="info-colon">:</span>
+                            <span class="info-value">${idx + 1}</span>
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
@@ -1102,8 +1108,8 @@
                     if (cleaned !== '') {
                         contentHtml += `
                             <div class="consult-row">
-                                <span class="info-label">${labelText}</span>
-                                <span class="info-value">: ${cleaned}</span>
+                                <span class="info-label">${labelText}</span><span class="info-colon">:</span>
+                                <span class="info-value">${cleaned}</span>
                             </div>
                         `;
                     }
