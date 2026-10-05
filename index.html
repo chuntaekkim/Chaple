@@ -130,7 +130,7 @@
             margin-bottom: 12px;
         }
 
-        /* 완벽하게 너비가 일치하는 고정형 정렬 레이아웃 */
+        /* 고정형 정렬 레이아웃 */
         .info-row {
             font-size: 13px;
             margin-bottom: 6px;
@@ -142,7 +142,7 @@
             display: inline-block;
             text-align: left;
             flex-shrink: 0;
-            width: 78px; /* 일시, 지불 보증, 웨딩카, 버스대절, 혼주 차량 글자 수 맞춤 */
+            width: 78px; /* 웨딩용 라벨 너비 */
         }
         .info-colon {
             margin-right: 8px;
@@ -156,9 +156,9 @@
             flex: 1;
         }
 
-        /* 상담 일정용 고정 너비 레이아웃 */
+        /* 상담 일정용 고정 너비 레이아웃 (요청하신 넓이에 정확히 맞춤) */
         .consult-row .info-label {
-            width: 115px; /* 상담일시(회차) 등 긴 라벨 기준 */
+            width: 140px; 
         }
 
         /* 탭 버튼 그룹 */
@@ -259,13 +259,12 @@
             background: linear-gradient(145deg, #1e3a8a, #1d212d);
         }
         .disabled-badge {
-            font-size: 9px;
+            font-size: 12px;
             color: #93c5fd;
             background-color: rgba(59, 130, 246, 0.3);
-            padding: 1px 3px;
-            border-radius: 3px;
+            padding: 1px 4px;
+            border-radius: 4px;
             margin-top: 2px;
-            font-weight: 600;
         }
 
         .parking-side-group {
@@ -292,11 +291,11 @@
             box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
         
-        /* 캘린더 그리드 스타일 */
+        /* 캘린더 그리드 스타일 (가로 한 줄 출력 개선) */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
+            gap: 5px;
             text-align: center;
             margin-top: 10px;
         }
@@ -308,8 +307,8 @@
         .cal-cell {
             background-color: #1a1d29;
             border-radius: 8px;
-            padding: 6px 2px;
-            font-size: 12px;
+            padding: 6px 1px;
+            font-size: 11px;
             cursor: pointer;
             min-height: 60px;
             display: flex;
@@ -317,6 +316,7 @@
             align-items: center;
             justify-content: flex-start;
             gap: 3px;
+            overflow: hidden;
         }
         .cal-cell.has-event {
             border: 1px solid rgba(240, 165, 0, 0.4);
@@ -327,7 +327,8 @@
         }
         .cal-date-num {
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
+            font-size: 12px;
         }
         .badge-group {
             display: flex;
@@ -337,24 +338,26 @@
             align-items: center;
         }
         .event-count-badge {
-            font-size: 10px;
+            font-size: 9px;
             background-color: #f0a500;
             color: #12141c;
-            padding: 1px 4px;
-            border-radius: 8px;
+            padding: 1px 2px;
+            border-radius: 6px;
             font-weight: 700;
-            width: 90%;
+            width: 95%;
             text-align: center;
+            white-space: nowrap;
         }
         .consult-count-badge {
-            font-size: 10px;
+            font-size: 9px;
             background-color: #c084fc;
             color: #12141c;
-            padding: 1px 4px;
-            border-radius: 8px;
+            padding: 1px 2px;
+            border-radius: 6px;
             font-weight: 700;
-            width: 90%;
+            width: 95%;
             text-align: center;
+            white-space: nowrap;
         }
 
         .contact-card {
@@ -561,7 +564,7 @@
                 <div style="font-size: 12px; color: #d1d5db;">상담 차량 및 시식 차량 주차</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도 (장애인 구역 반영)</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도</div>
                 <div class="parking-layout-box">
                     <div class="parking-grid-container">
                         <div class="parking-row">
@@ -576,11 +579,11 @@
                             <div class="parking-side-group">
                                 <div class="parking-slot disabled-slot">
                                     <span>P7</span>
-                                    <span class="disabled-badge">♿ 장애인</span>
+                                    <span class="disabled-badge">♿</span>
                                 </div>
                                 <div class="parking-slot disabled-slot">
                                     <span>P8</span>
-                                    <span class="disabled-badge">♿ 장애인</span>
+                                    <span class="disabled-badge">♿</span>
                                 </div>
                                 <div class="parking-slot">P9</div>
                             </div>
@@ -1081,8 +1084,8 @@
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
                     let cleaned = cleanValue(key, val);
                     if (cleaned !== '') {
-                        // 키 문자열에 포함된 모든 콜론과 번호 접미사(예: :1, :2)를 깔끔하게 제거
-                        let pureKey = key.split(':')[0].trim();
+                        // 키 문자열에 포함된 번호(:1, :2 등)와 불필요한 접미사를 완벽하게 정제
+                        let pureKey = key.replace(/[:\d\s]+$/, '').trim();
                         contentHtml += `
                             <div class="info-row consult-row">
                                 <span class="info-label" style="color:#38bdf8;">${pureKey}</span>
