@@ -130,7 +130,7 @@
             margin-bottom: 12px;
         }
 
-        /* 고정형 레이아웃 (키와 콜론, 밸류 일체화) */
+        /* 고정형 레이아웃 */
         .info-row {
             font-size: 13px;
             margin-bottom: 6px;
@@ -146,16 +146,10 @@
         .wedding-row .info-label {
             width: 78px;
         }
-        /* 상담 일정용 통일된 라벨 너비 부여 및 콜론 바로 붙이기 */
+        /* 상담 일정용 통일된 라벨 너비 부여 및 : 다음에 바로 글자 출력 */
         .consult-row .info-label {
             width: 140px;
             text-align: left;
-        }
-        .info-colon {
-            margin-right: 8px;
-            font-weight: 600;
-            flex-shrink: 0;
-            display: none;
         }
         .info-value {
             color: #ffffff;
@@ -606,7 +600,7 @@
         <div class="contact-card">
             <div class="contact-left">
                 <span class="contact-name">이태희</span>
-                <span class="contact-role">대표</span>
+                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.1);">대표</span>
                 <span class="contact-phone">010-4229-7800</span>
             </div>
             <a href="tel:010-4229-7800" class="call-icon-btn">
@@ -616,7 +610,7 @@
         <div class="contact-card">
             <div class="contact-left">
                 <span class="contact-name">이큰산</span>
-                <span class="contact-role">부장</span>
+                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.1);">부장</span>
                 <span class="contact-phone">010-6404-0230</span>
             </div>
             <a href="tel:010-6404-0230" class="call-icon-btn">
@@ -1086,10 +1080,14 @@
                 for (let [key, val] of Object.entries(row)) {
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
                     let cleaned = cleanValue(key, val);
-                    if (cleaned !== '') {
-                        let pureKey = key.split(':')[0].trim();
-                        let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
+                    
+                    // 빈 키값 및 이미 수동으로 출력한 번호 필드 걸러내기
+                    let pureKey = key.split(':')[0].trim();
+                    if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
+                    let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
+
+                    if (cleaned !== '') {
                         contentHtml += `
                             <div class="info-row consult-row">
                                 <span class="info-label" style="color:#38bdf8;">${labelText}</span>
