@@ -129,34 +129,32 @@
             border-radius: 6px;
             margin-bottom: 12px;
         }
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 16px;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-        .info-label {
-            color: #38bdf8;
-            font-weight: 600;
-        }
-        .info-value {
-            font-weight: 500;
-            color: #ffffff;
-        }
 
-        /* 상세 카드 내부 항목 스타일 (가독성 개선) */
-        .detail-row {
+        /* 공통 정렬된 행 스타일 */
+        .info-row {
             font-size: 13px;
             margin-bottom: 6px;
             display: flex;
-            gap: 8px;
+            align-items: center;
         }
-        .detail-label {
+        .info-label {
             font-weight: 600;
-            min-width: 75px;
+            display: inline-block;
+            text-align-last: justify;
+            text-align: justify;
+            flex-shrink: 0;
         }
-        .detail-value {
+        .wedding-row .info-label {
+            width: 75px;
+        }
+        .consult-row .info-label {
+            width: 105px;
+        }
+        .info-colon {
+            margin-right: 8px;
+            font-weight: 600;
+        }
+        .info-value {
             color: #ffffff;
             font-weight: 500;
             word-break: break-all;
@@ -187,7 +185,6 @@
             color: #12141c;
         }
 
-        /* 월 선택 버튼 개별 색상 부여 */
         #monthBtn9.active {
             background-color: #3b82f6 !important;
             color: #ffffff !important;
@@ -221,7 +218,7 @@
             align-items: center;
             gap: 16px;
             margin-top: 10px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.4);
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
         }
         .parking-grid-container {
@@ -241,26 +238,36 @@
             padding-left: 0;
         }
         .parking-slot {
-            width: 50px;
+            width: 52px;
             height: 52px;
             background: linear-gradient(145deg, #242838, #1d212d);
-            border: 2px dashed #3b82f6;
+            border: 2px solid #3b82f6;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 700;
-            color: #60a5fa;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        .parking-slot::after {
-            content: 'P';
-            font-size: 14px;
-            font-weight: 800;
             color: #93c5fd;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            position: relative;
         }
+        /* 장애인 주차구역 스타일 */
+        .parking-slot.disabled-slot {
+            border-color: #60a5fa;
+            background: linear-gradient(145deg, #1e3a8a, #1d212d);
+        }
+        .disabled-badge {
+            font-size: 9px;
+            color: #93c5fd;
+            background-color: rgba(59, 130, 246, 0.3);
+            padding: 1px 3px;
+            border-radius: 3px;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
         .parking-side-group {
             display: flex;
             flex-direction: column;
@@ -529,7 +536,7 @@
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 600; margin-bottom: 4px; color: #facc15;">지하 4층 주차 안내</div>
-                <div style="font-size: 12px; color: #d1d5db;">혼주차량 및 임원 주차</div>
+                <div style="font-size: 12px; color: #d1d5db;">혼주 차량 및 임원 차량 주차</div>
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #facc15;">지하 4층 배치도</div>
@@ -540,7 +547,7 @@
         <div id="parking-b5" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #3b82f6;">
                 <div style="font-weight: 600; margin-bottom: 4px; color: #60a5fa;">지하 5층 주차 안내</div>
-                <div style="font-size: 12px; color: #d1d5db;">직원 및 혼주 차량 주차</div>
+                <div style="font-size: 12px; color: #d1d5db;">혼주 차량 및 직원 차량 주차</div>
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #60a5fa;">지하 5층 배치도</div>
@@ -551,25 +558,31 @@
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 600; margin-bottom: 4px; color: #38bdf8;">후문 주차장 이용 안내</div>
-                <div style="font-size: 12px; color: #d1d5db;">상담 및 시식 주차</div>
+                <div style="font-size: 12px; color: #d1d5db;">상담 차량 및 시식 차량 주차</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도 (장애인 구역 반영)</div>
                 <div class="parking-layout-box">
                     <div class="parking-grid-container">
                         <div class="parking-row">
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
+                            <div class="parking-slot">P1</div>
+                            <div class="parking-slot">P2</div>
+                            <div class="parking-slot">P3</div>
                         </div>
                         <div class="parking-row with-side">
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
-                            <div class="parking-slot"></div>
+                            <div class="parking-slot">P4</div>
+                            <div class="parking-slot">P5</div>
+                            <div class="parking-slot">P6</div>
                             <div class="parking-side-group">
-                                <div class="parking-slot"></div>
-                                <div class="parking-slot"></div>
-                                <div class="parking-slot"></div>
+                                <div class="parking-slot disabled-slot">
+                                    <span>P7</span>
+                                    <span class="disabled-badge">♿ 장애인</span>
+                                </div>
+                                <div class="parking-slot disabled-slot">
+                                    <span>P8</span>
+                                    <span class="disabled-badge">♿ 장애인</span>
+                                </div>
+                                <div class="parking-slot">P9</div>
                             </div>
                         </div>
                     </div>
@@ -908,12 +921,10 @@
             contentHtml += `
                 <div class="event-card">
                     <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                    <div class="info-grid">
-                        <div><span class="info-label">지불보증:</span> <span class="info-value">${guarantee}</span></div>
-                        <div><span class="info-label">웨딩카:</span> <span class="info-value">${weddingCar}</span></div>
-                        <div><span class="info-label">버스대절:</span> <span class="info-value">${bus}</span></div>
-                        <div><span class="info-label">혼주 차량:</span> <span class="info-value">${honjuCar}</span></div>
-                    </div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불보증</span><span class="info-colon">:</span><span class="info-value">${guarantee}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon">:</span><span class="info-value">${weddingCar}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon">:</span><span class="info-value">${bus}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon">:</span><span class="info-value">${honjuCar}</span></div>
                 </div>
             `;
         });
@@ -1005,18 +1016,12 @@
             let parts = strVal.split('T');
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
             if (timePart && timePart !== '00:00:00') {
-                let timePieces = timePart.split(':');
-                let h = parseInt(timePieces[0], 10);
-                
-                // UTC 시간을 로컬 시간(KST, +9시간)으로 변환할 때 24시간 넘어가면 처리 및 시차 보정
-                // 구글 시트 ISO 문자열이 이미 Z(UTC) 기준인 경우 올바른 KST 시간을 위해 +9 적용
-                // 단, 이미 로컬로 변환된 경우 중복 적용 방지
+                let h = parseInt(timePart.split(':')[0], 10);
+                let m = timePart.split(':')[1] || '00';
                 let dObj = new Date(strVal);
                 if (!isNaN(dObj.getTime())) {
-                    h = dObj.getHours(); // 브라우저 로컬 시간대로 추출
+                    h = dObj.getHours();
                 }
-                
-                let m = timePieces[1] || '00';
                 return `${String(h).padStart(2, '0')}:${m}`;
             }
             strVal = parts[0];
@@ -1055,11 +1060,11 @@
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 4px solid #f0a500;">
                         <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:14px;">[웨딩 ${idx + 1}]</div>
-                        <div class="detail-row"><span class="detail-label" style="color:#38bdf8;">일시        :</span> <span class="detail-value">${dateDisplay}</span></div>
-                        <div class="detail-row"><span class="detail-label" style="color:#34d399;">지불 보증 :</span> <span class="detail-value">${guarantee}</span></div>
-                        <div class="detail-row"><span class="detail-label" style="color:#f472b6;">웨딩카    :</span> <span class="detail-value">${weddingCar}</span></div>
-                        <div class="detail-row"><span class="detail-label" style="color:#fbbf24;">버스대절 :</span> <span class="detail-value">${bus}</span></div>
-                        <div class="detail-row"><span class="detail-label" style="color:#a78bfa;">혼주 차량 :</span> <span class="detail-value">${honjuCar}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-colon">:</span><span class="info-value">${dateDisplay}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon">:</span><span class="info-value">${guarantee}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon">:</span><span class="info-value">${weddingCar}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon">:</span><span class="info-value">${bus}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon">:</span><span class="info-value">${honjuCar}</span></div>
                     </div>
                 `;
             });
@@ -1076,9 +1081,14 @@
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
                     let cleaned = cleanValue(key, val);
                     if (cleaned !== '') {
-                        // 키 값에 들어있는 콜론(:1 등) 강제 제거 가공
-                        let pureKey = key.split(':')[0].trim();
-                        contentHtml += `<div class="detail-row"><span class="detail-label" style="color:#38bdf8;">${pureKey} :</span> <span class="detail-value">${cleaned}</span></div>`;
+                        let pureKey = key.split(':')[0].replace(/:\d+$/, '').trim();
+                        contentHtml += `
+                            <div class="info-row consult-row">
+                                <span class="info-label" style="color:#38bdf8;">${pureKey}</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value">${cleaned}</span>
+                            </div>
+                        `;
                     }
                 }
                 contentHtml += `</div>`;
