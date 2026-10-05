@@ -130,7 +130,7 @@
             margin-bottom: 12px;
         }
 
-        /* 완벽하게 너비가 일치하는 고정형 정렬 레이아웃 */
+        /* 고정형 레이아웃 (키와 콜론, 밸류 일체화) */
         .info-row {
             font-size: 13px;
             margin-bottom: 6px;
@@ -142,23 +142,26 @@
             display: inline-block;
             text-align: left;
             flex-shrink: 0;
+        }
+        .wedding-row .info-label {
             width: 78px;
+        }
+        /* 상담 일정용 통일된 라벨 너비 부여 및 콜론 바로 붙이기 */
+        .consult-row .info-label {
+            width: 140px;
+            text-align: left;
         }
         .info-colon {
             margin-right: 8px;
             font-weight: 600;
             flex-shrink: 0;
+            display: none; /* 별도 콜론 태그 사용 안 함 (라벨에 직접 콜론 포함) */
         }
         .info-value {
             color: #ffffff;
             font-weight: 500;
             word-break: break-all;
             flex: 1;
-        }
-
-        /* 상담 일정용 고정 너비 레이아웃 */
-        .consult-row .info-label {
-            width: 135px; 
         }
 
         /* 탭 버튼 그룹 */
@@ -613,7 +616,7 @@
         <div class="contact-card">
             <div class="contact-left">
                 <span class="contact-name">이큰산</span>
-                <span class="contact-role">대표</span>
+                <span class="contact-role" style="color: #60a5fa; background-color: rgba(96, 165, 250, 0.1);">부장</span>
                 <span class="contact-phone">010-6404-0230</span>
             </div>
             <a href="tel:010-6404-0230" class="call-icon-btn">
@@ -921,10 +924,10 @@
             contentHtml += `
                 <div class="event-card">
                     <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon">:</span><span class="info-value">${guarantee}</span></div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon">:</span><span class="info-value">${weddingCar}</span></div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon">:</span><span class="info-value">${bus}</span></div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon">:</span><span class="info-value">${honjuCar}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-value">: ${bus}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-value">: ${honjuCar}</span></div>
                 </div>
             `;
         });
@@ -1060,11 +1063,11 @@
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 4px solid #f0a500;">
                         <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:14px;">[웨딩 ${idx + 1}]</div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-colon">:</span><span class="info-value">${dateDisplay}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon">:</span><span class="info-value">${guarantee}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon">:</span><span class="info-value">${weddingCar}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon">:</span><span class="info-value">${bus}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon">:</span><span class="info-value">${honjuCar}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-value">: ${dateDisplay}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-value">: ${bus}</span></div>
+                        <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-value">: ${honjuCar}</span></div>
                     </div>
                 `;
             });
@@ -1081,14 +1084,12 @@
                     let cleaned = cleanValue(key, val);
                     if (cleaned !== '') {
                         let pureKey = key.split(':')[0].trim();
-                        let labelText = pureKey.includes('상담일시') ? '상담일시(회차) :' : pureKey;
-                        let colonSpan = pureKey.includes('상담일시') ? '' : '<span class="info-colon">:</span>';
+                        let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
 
                         contentHtml += `
                             <div class="info-row consult-row">
                                 <span class="info-label" style="color:#38bdf8;">${labelText}</span>
-                                ${colonSpan}
-                                <span class="info-value">${cleaned}</span>
+                                <span class="info-value">: ${cleaned}</span>
                             </div>
                         `;
                     }
