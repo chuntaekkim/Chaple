@@ -458,7 +458,7 @@
             <div class="stat-desc" id="todayStatDesc">오늘 진행되는 예식이 없습니다.</div>
             <div class="card-row">
                 <div class="sub-box" onclick="switchTab('parking')">
-                    <div class="sub-box-title">🅿️️ 주차 안내</div>
+                    <div class="sub-box-title">🅿️ 주차 안내</div>
                     <div class="sub-box-desc">후문 / 지하 4·5층</div>
                 </div>
                 <div class="sub-box" onclick="switchTab('contact')">
@@ -509,7 +509,7 @@
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 600; margin-bottom: 4px;">지하 4층 주차 안내</div>
-                <div style="font-size: 12px; color: #8e8e93;">혼주차량 주차 전용 구역입니다.</div>
+                <div style="font-size: 12px; color: #8e8e93;">혼주차량 및 임원 주차</div>
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #f0a500;">지하 4층 배치도</div>
@@ -531,7 +531,7 @@
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 600; margin-bottom: 4px;">후문 주차장 이용 안내</div>
-                <div style="font-size: 12px; color: #8e8e93;">후문은 9대 최대15대 주차가능</div>
+                <div style="font-size: 12px; color: #8e8e93;">상담 및 시식 주차</div>
             </div>
             <div class="main-card">
                 <div style="font-weight: 600; margin-bottom: 8px; color: #007aff; text-align: center;">후문 주차장 배치도</div>
@@ -986,7 +986,7 @@
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
             if (timePart && timePart !== '00:00:00') {
                 let timePieces = timePart.split(':');
-                let h = parseInt(timePieces[0], 10); // UTC 오프셋 중복 방지 (원래 시간 유지)
+                let h = parseInt(timePieces[0], 10);
                 let m = timePieces[1] || '00';
                 return `${String(h).padStart(2, '0')}:${m}`;
             }
@@ -1013,7 +1013,6 @@
 
         let contentHtml = '';
 
-        // 1. 웨딩 상세 내역 먼저 시간대별 출력
         if (matchedWeekly.length > 0) {
             contentHtml += `<div style="font-size:13px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
@@ -1037,7 +1036,6 @@
             });
         }
 
-        // 2. 상담 상세 내역 이어서 시간대별 출력 ([상담 1] 형태로 콜론 제거)
         if (matchedConsult.length > 0) {
             contentHtml += `<div style="font-size:13px; font-weight:bold; color:#a855f7; margin-top:16px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
             matchedConsult.forEach((row, idx) => {
