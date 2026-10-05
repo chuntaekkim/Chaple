@@ -137,19 +137,29 @@
             display: flex;
             align-items: flex-start;
         }
-        .info-label {
+        .wedding-row .info-label {
+            width: 78px;
             font-weight: 600;
-            display: inline-block;
             text-align: left;
             flex-shrink: 0;
         }
-        .wedding-row .info-label {
-            width: 78px;
+        /* 상담 일정용 라벨 정렬 스타일 수정 (오른쪽 정렬 및 콜론 배치) */
+        .consult-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 6px;
         }
-        /* 상담 일정용 통일된 라벨 너비 부여 및 : 다음에 바로 글자 출력 */
         .consult-row .info-label {
-            width: 140px;
+            width: 105px;
+            font-weight: 600;
             text-align: left;
+            flex-shrink: 0;
+        }
+        .consult-row .info-colon {
+            width: 15px;
+            text-align: center;
+            flex-shrink: 0;
+            font-weight: 600;
         }
         .info-value {
             color: #ffffff;
@@ -1072,16 +1082,16 @@
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
                     <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #c084fc;">
-                        <div class="info-row consult-row">
+                        <div class="consult-row">
                             <span class="info-label" style="color:#38bdf8;">번호</span>
-                            <span class="info-value">: ${idx + 1}</span>
+                            <span class="info-colon">:</span>
+                            <span class="info-value">${idx + 1}</span>
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
                     let cleaned = cleanValue(key, val);
                     
-                    // 빈 키값 및 이미 수동으로 출력한 번호 필드 걸러내기
                     let pureKey = key.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
@@ -1089,9 +1099,10 @@
 
                     if (cleaned !== '') {
                         contentHtml += `
-                            <div class="info-row consult-row">
+                            <div class="consult-row">
                                 <span class="info-label" style="color:#38bdf8;">${labelText}</span>
-                                <span class="info-value">: ${cleaned}</span>
+                                <span class="info-colon">:</span>
+                                <span class="info-value">${cleaned}</span>
                             </div>
                         `;
                     }
