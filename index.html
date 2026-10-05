@@ -201,7 +201,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* 후문 주차장 센스있는 모형 디자인 스타일 */
+        /* 후문 주차장 모형 디자인 스타일 (수정 반영) */
         .parking-layout-box {
             background: linear-gradient(135deg, #161925 0%, #10121a 100%);
             border-radius: 14px;
@@ -224,7 +224,7 @@
         .parking-row {
             display: flex;
             gap: 10px;
-            justify-content: center;
+            justify-content: flex-start; /* 첫줄 P P P 왼쪽 정렬 반영 */
         }
         .parking-row.with-side {
             justify-content: flex-start;
@@ -255,24 +255,14 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-left: auto; /* 우측에 바짝 붙임 */
+            margin-left: auto; 
+            margin-top: 64px; /* 우측 세로줄 P P P 한 칸 아래로 내림 반영 (칸 높이 + 간격 고려) */
         }
         .parking-entrance-box {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            margin-top: 4px;
+            justify-content: flex-end; /* 후문 주차장 입구 오른쪽 끝 이동 반영 */
             width: 100%;
-        }
-        .parking-arrow {
-            color: #f0a500;
-            font-size: 16px;
-            animation: bounce 1.5s infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(4px); }
+            margin-top: 4px;
         }
         .parking-entrance {
             font-size: 12px;
@@ -552,13 +542,13 @@
                 <div style="font-weight: 600; margin-bottom: 8px; color: #007aff; text-align: center;">후문 주차장 배치도</div>
                 <div class="parking-layout-box">
                     <div class="parking-grid-container">
-                        <!-- 첫 번째 가로줄 (3개) -->
+                        <!-- 첫 번째 가로줄 (3개) - 왼쪽 정렬 반영 -->
                         <div class="parking-row">
                             <div class="parking-slot"></div>
                             <div class="parking-slot"></div>
                             <div class="parking-slot"></div>
                         </div>
-                        <!-- 두 번째 가로줄 (3개 + 우측 세로 3개) -->
+                        <!-- 두 번째 가로줄 (3개 + 우측 세로 3개 - 한 칸 아래로 내림 반영) -->
                         <div class="parking-row with-side">
                             <div class="parking-slot"></div>
                             <div class="parking-slot"></div>
@@ -570,8 +560,8 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 화살표 삭제 및 우측 끝 이동 반영 -->
                     <div class="parking-entrance-box">
-                        <div class="parking-arrow">⬇</div>
                         <div class="parking-entrance">후문 주차장 입구</div>
                     </div>
                 </div>
