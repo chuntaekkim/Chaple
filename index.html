@@ -104,7 +104,7 @@
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 4px;
-            display: flex;
+            display:/ flex;
             align-items: center;
             gap: 4px;
         }
@@ -143,23 +143,18 @@
             text-align: left;
             flex-shrink: 0;
         }
-        /* 상담 일정용 라벨 정렬 스타일 수정 */
+        /* 상담 일정용 라벨 정렬 스타일 */
         .consult-row {
             display: flex;
             align-items: flex-start;
             margin-bottom: 6px;
+            font-size: 13px;
         }
         .consult-row .info-label {
-            width: 105px;
+            width: 115px;
             font-weight: 600;
             text-align: left;
             flex-shrink: 0;
-        }
-        .consult-row .info-colon {
-            width: 15px;
-            text-align: center;
-            flex-shrink: 0;
-            font-weight: 600;
         }
         .info-value {
             color: #ffffff;
@@ -374,12 +369,10 @@
             align-items: center;
             margin-bottom: 6px;
         }
-        /* 본사 카드 구별 스타일 (골드/앰버 계열 포인트) */
         .contact-card.hq-card {
             border-left: 3px solid #f59e0b;
             background-color: #1c1f2e;
         }
-        /* 대치사업소 카드 구별 스타일 (블루 계열 포인트) */
         .contact-card.branch-card {
             border-left: 3px solid #3b82f6;
         }
@@ -651,7 +644,7 @@
         <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">임창희</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">&#53364;&#50640;&#44032; / 팀원</span>
+                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">클에가 / 팀원</span>
                 <span class="contact-phone">010-3355-4537</span>
             </div>
             <a href="tel:010-3355-4537" class="call-icon-btn">
@@ -1075,7 +1068,7 @@
 
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 4px solid #f0a500;">
-                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:14px;">[웨딩 ${idx + 1}]</div>
+                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:13px;">[웨딩 ${idx + 1}]</div>
                         <div class="info-row wedding-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-value">: ${dateDisplay}</span></div>
                         <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
                         <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
@@ -1091,10 +1084,10 @@
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
                     <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #c084fc;">
+                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:13px;">[상담 ${idx + 1}]</div>
                         <div class="consult-row">
                             <span class="info-label" style="color:#38bdf8;">번호</span>
-                            <span class="info-colon">:</span>
-                            <span class="info-value">${idx + 1}</span>
+                            <span class="info-value">:${idx + 1}</span>
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
@@ -1110,8 +1103,7 @@
                         contentHtml += `
                             <div class="consult-row">
                                 <span class="info-label" style="color:#38bdf8;">${labelText}</span>
-                                <span class="info-colon">:</span>
-                                <span class="info-value">${cleaned}</span>
+                                <span class="info-value">:${cleaned}</span>
                             </div>
                         `;
                     }
