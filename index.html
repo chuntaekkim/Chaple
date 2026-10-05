@@ -130,34 +130,35 @@
             margin-bottom: 12px;
         }
 
-        /* 공통 정렬된 행 스타일 */
+        /* 완벽하게 너비가 일치하는 고정형 정렬 레이아웃 */
         .info-row {
             font-size: 13px;
             margin-bottom: 6px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
         .info-label {
             font-weight: 600;
             display: inline-block;
-            text-align-last: justify;
-            text-align: justify;
+            text-align: left;
             flex-shrink: 0;
-        }
-        .wedding-row .info-label {
-            width: 75px;
-        }
-        .consult-row .info-label {
-            width: 105px;
+            width: 78px; /* 일시, 지불 보증, 웨딩카, 버스대절, 혼주 차량 글자 수 맞춤 */
         }
         .info-colon {
             margin-right: 8px;
             font-weight: 600;
+            flex-shrink: 0;
         }
         .info-value {
             color: #ffffff;
             font-weight: 500;
             word-break: break-all;
+            flex: 1;
+        }
+
+        /* 상담 일정용 고정 너비 레이아웃 */
+        .consult-row .info-label {
+            width: 115px; /* 상담일시(회차) 등 긴 라벨 기준 */
         }
 
         /* 탭 버튼 그룹 */
@@ -253,7 +254,6 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
             position: relative;
         }
-        /* 장애인 주차구역 스타일 */
         .parking-slot.disabled-slot {
             border-color: #60a5fa;
             background: linear-gradient(145deg, #1e3a8a, #1d212d);
@@ -921,7 +921,7 @@
             contentHtml += `
                 <div class="event-card">
                     <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불보증</span><span class="info-colon">:</span><span class="info-value">${guarantee}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon">:</span><span class="info-value">${guarantee}</span></div>
                     <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon">:</span><span class="info-value">${weddingCar}</span></div>
                     <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon">:</span><span class="info-value">${bus}</span></div>
                     <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon">:</span><span class="info-value">${honjuCar}</span></div>
@@ -1081,7 +1081,8 @@
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
                     let cleaned = cleanValue(key, val);
                     if (cleaned !== '') {
-                        let pureKey = key.split(':')[0].replace(/:\d+$/, '').trim();
+                        // 키 문자열에 포함된 모든 콜론과 번호 접미사(예: :1, :2)를 깔끔하게 제거
+                        let pureKey = key.split(':')[0].trim();
                         contentHtml += `
                             <div class="info-row consult-row">
                                 <span class="info-label" style="color:#38bdf8;">${pureKey}</span>
