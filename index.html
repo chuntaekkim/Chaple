@@ -155,7 +155,7 @@
             margin-right: 8px;
             font-weight: 600;
             flex-shrink: 0;
-            display: none; /* 별도 콜론 태그 사용 안 함 (라벨에 직접 콜론 포함) */
+            display: none;
         }
         .info-value {
             color: #ffffff;
@@ -616,7 +616,7 @@
         <div class="contact-card">
             <div class="contact-left">
                 <span class="contact-name">이큰산</span>
-                <span class="contact-role" style="color: #60a5fa; background-color: rgba(96, 165, 250, 0.1);">부장</span>
+                <span class="contact-role">부장</span>
                 <span class="contact-phone">010-6404-0230</span>
             </div>
             <a href="tel:010-6404-0230" class="call-icon-btn">
@@ -1078,6 +1078,10 @@
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
                     <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #c084fc;">
+                        <div class="info-row consult-row">
+                            <span class="info-label" style="color:#38bdf8;">번호</span>
+                            <span class="info-value">: ${idx + 1}</span>
+                        </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
