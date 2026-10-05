@@ -142,7 +142,7 @@
             display: inline-block;
             text-align: left;
             flex-shrink: 0;
-            width: 78px; /* 일시, 지불 보증, 웨딩카, 버스대절, 혼주 차량 글자 수 맞춤 */
+            width: 78px;
         }
         .info-colon {
             margin-right: 8px;
@@ -156,9 +156,9 @@
             flex: 1;
         }
 
-        /* 상담 일정용 고정 너비 레이아웃 (요청하신 폭 적용) */
+        /* 상담 일정용 고정 너비 레이아웃 */
         .consult-row .info-label {
-            width: 125px; 
+            width: 135px; 
         }
 
         /* 탭 버튼 그룹 */
@@ -603,7 +603,7 @@
         <div class="contact-card">
             <div class="contact-left">
                 <span class="contact-name">이태희</span>
-                <span class="contact-role">이사</span>
+                <span class="contact-role">대표</span>
                 <span class="contact-phone">010-4229-7800</span>
             </div>
             <a href="tel:010-4229-7800" class="call-icon-btn">
@@ -613,7 +613,7 @@
         <div class="contact-card">
             <div class="contact-left">
                 <span class="contact-name">이큰산</span>
-                <span class="contact-role">부장</span>
+                <span class="contact-role">대표</span>
                 <span class="contact-phone">010-6404-0230</span>
             </div>
             <a href="tel:010-6404-0230" class="call-icon-btn">
@@ -1075,18 +1075,19 @@
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
                     <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #c084fc;">
-                        <div style="font-weight:bold; color:#e9d5ff; margin-bottom:6px; font-size:13px;">[상담 ${idx + 1}]</div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
                     if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
                     let cleaned = cleanValue(key, val);
                     if (cleaned !== '') {
-                        // 키 문자열에 포함된 콜론 및 :1, :2 등 번호 인덱스 잔여 표시 제거
                         let pureKey = key.split(':')[0].trim();
+                        let labelText = pureKey.includes('상담일시') ? '상담일시(회차) :' : pureKey;
+                        let colonSpan = pureKey.includes('상담일시') ? '' : '<span class="info-colon">:</span>';
+
                         contentHtml += `
                             <div class="info-row consult-row">
-                                <span class="info-label" style="color:#38bdf8;">${pureKey}</span>
-                                <span class="info-colon">:</span>
+                                <span class="info-label" style="color:#38bdf8;">${labelText}</span>
+                                ${colonSpan}
                                 <span class="info-value">${cleaned}</span>
                             </div>
                         `;
