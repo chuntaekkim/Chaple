@@ -143,7 +143,7 @@
             text-align: left;
             flex-shrink: 0;
         }
-        /* 상담 일정용 라벨 정렬 스타일 수정 (오른쪽 정렬 및 콜론 배치) */
+        /* 상담 일정용 라벨 정렬 스타일 수정 */
         .consult-row {
             display: flex;
             align-items: flex-start;
@@ -364,15 +364,26 @@
             text-align: center;
         }
 
+        /* 연락처 카드 간격 좁히기 및 구별 스타일 */
         .contact-card {
             background-color: #1a1d29;
-            border-radius: 12px;
-            padding: 14px 16px;
+            border-radius: 10px;
+            padding: 10px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
+        /* 본사 카드 구별 스타일 (골드/앰버 계열 포인트) */
+        .contact-card.hq-card {
+            border-left: 3px solid #f59e0b;
+            background-color: #1c1f2e;
+        }
+        /* 대치사업소 카드 구별 스타일 (블루 계열 포인트) */
+        .contact-card.branch-card {
+            border-left: 3px solid #3b82f6;
+        }
+
         .contact-left {
             display: flex;
             align-items: center;
@@ -380,14 +391,12 @@
         }
         .contact-name {
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             color: #ffffff;
         }
         .contact-role {
             font-size: 12px;
             font-weight: 600;
-            color: #f0a500;
-            background-color: rgba(240, 165, 0, 0.1);
             padding: 2px 6px;
             border-radius: 4px;
         }
@@ -398,22 +407,22 @@
         .call-icon-btn {
             background-color: #10b981;
             color: white;
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
             transition: transform 0.1s ease;
         }
         .call-icon-btn:active {
             transform: scale(0.92);
         }
         .call-icon-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             fill: currentColor;
         }
 
@@ -606,21 +615,21 @@
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
         <div style="font-size: 13px; color: #d1d5db; margin-bottom: 10px;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
 
-        <div class="section-title">본사</div>
-        <div class="contact-card">
+        <div class="section-title" style="color: #f59e0b;">■ 본사</div>
+        <div class="contact-card hq-card">
             <div class="contact-left">
                 <span class="contact-name">이태희</span>
-                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.1);">대표</span>
+                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.15);">대표</span>
                 <span class="contact-phone">010-4229-7800</span>
             </div>
             <a href="tel:010-4229-7800" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card hq-card">
             <div class="contact-left">
                 <span class="contact-name">이큰산</span>
-                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.1);">부장</span>
+                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.15);">부장</span>
                 <span class="contact-phone">010-6404-0230</span>
             </div>
             <a href="tel:010-6404-0230" class="call-icon-btn">
@@ -628,28 +637,28 @@
             </a>
         </div>
 
-        <div class="section-title">대치사업소</div>
-        <div class="contact-card">
+        <div class="section-title" style="color: #3b82f6; margin-top: 16px;">■ 대치사업소</div>
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">김문기</span>
-                <span class="contact-role">팀장</span>
+                <span class="contact-role" style="color:#3b82f6; background-color:rgba(59,130,246,0.15);">팀장</span>
                 <span class="contact-phone">010-9130-3045</span>
             </div>
             <a href="tel:010-9130-3045" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">임창희</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">&#53364;&#50640;&#44032; / 팀원</span>
                 <span class="contact-phone">010-3355-4537</span>
             </div>
             <a href="tel:010-3355-4537" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">이종범</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -659,7 +668,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">김태석</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -669,7 +678,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">서원표</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -679,7 +688,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">이도훈</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -689,7 +698,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">동상진</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -699,7 +708,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">박성준</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -709,7 +718,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">조영도</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
@@ -719,7 +728,7 @@
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
-        <div class="contact-card">
+        <div class="contact-card branch-card">
             <div class="contact-left">
                 <span class="contact-name">전다문</span>
                 <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
