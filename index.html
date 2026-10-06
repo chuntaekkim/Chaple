@@ -169,36 +169,51 @@
             flex: 1;
         }
 
-        /* 탭 버튼 그룹 */
+        /* 3개 월 탭 버튼 그룹 (지난달, 이번달, 다음달) */
         .tab-menu-group {
             display: flex;
             background-color: #1a1d29;
             border-radius: 12px;
             padding: 4px;
             margin-bottom: 16px;
+            align-items: center;
+            gap: 4px;
         }
         .tab-btn {
             flex: 1;
             background: none;
             border: none;
             color: #d1d5db;
-            padding: 10px;
-            font-size: 14px;
+            padding: 10px 6px;
+            font-size: 13px;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
             text-align: center;
+            transition: all 0.2s ease;
+        }
+        /* 이번달 버튼은 조금 더 크고 두껍게 강조 */
+        .tab-btn.main-current-month {
+            flex: 1.25;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 12px 8px;
         }
         .tab-btn.active {
             background-color: #f0a500;
             color: #12141c;
         }
 
-        #monthBtn1.active {
+        #monthBtnCurrent.active {
             background-color: #3b82f6 !important;
             color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
-        #monthBtn2.active {
+        #monthBtnPrev.active {
+            background-color: #64748b !important;
+            color: #ffffff !important;
+        }
+        #monthBtnNext.active {
             background-color: #10b981 !important;
             color: #ffffff !important;
         }
@@ -521,9 +536,11 @@
         <div class="section-title">운영 스케줄 통합 조회</div>
         <div style="font-size: 13px; color: #d1d5db; margin-bottom: 14px;">날짜를 누르면 웨딩 및 상담 상세 내역이 시간대별로 출력됩니다.</div>
         
-        <div class="tab-menu-group" style="background-color: transparent; gap: 10px; padding: 0;">
-            <button id="monthBtn1" class="tab-btn active" onclick="selectMonthTab(0)">이번 달</button>
-            <button id="monthBtn2" class="tab-btn" onclick="selectMonthTab(1)">다음 달</button>
+        <!-- 지난달, 이번달(강조), 다음달 3개 버튼 그룹 -->
+        <div class="tab-menu-group" style="background-color: transparent; gap: 8px; padding: 0;">
+            <button id="monthBtnPrev" class="tab-btn" onclick="selectMonthTab('prev')">지난달</button>
+            <button id="monthBtnCurrent" class="tab-btn main-current-month active" onclick="selectMonthTab('current')">이번달</button>
+            <button id="monthBtnNext" class="tab-btn" onclick="selectMonthTab('next')">다음달</button>
         </div>
 
         <div class="main-card" style="margin-top: 10px;">
@@ -769,23 +786,33 @@
         consult: []
     };
 
-    // 현재 기기 날짜 기준으로 이번 달과 다음 달 설정 (안전한 파싱)
+    // 현재 기기 날짜 기준으로 지난달, 이번달, 다음달 자동 계산
     const nowDate = new Date();
-    let thisYear = nowDate.getFullYear();
-    let thisMonth = nowDate.getMonth() + 1;
+    let currentYear = nowDate.getFullYear();
+    let currentMonth = nowDate.getMonth() + 1;
     
-    if (isNaN(thisYear) || thisYear < 2024) thisYear = 2026;
-    if (isNaN(thisMonth) || thisMonth < 1 || thisMonth > 12) thisMonth = 10;
+    if (isNaN(currentYear) || currentYear < 2024) currentYear = 2026;
+    if (isNaN(currentMonth) || currentMonth < 1 || currentMonth > 12) currentMonth = 10;
 
-    let nextYear = thisYear;
-    let nextMonth = thisMonth + 1;
+    // 지난달 계산
+    let prevYear = currentYear;
+    let prevMonth = currentMonth - 1;
+    if (prevMonth < 1) {
+        prevMonth = 12;
+        prevYear--;
+    }
+
+    // 다음달 계산
+    let nextYear = currentYear;
+    let nextMonth = currentMonth + 1;
     if (nextMonth > 12) {
         nextMonth = 1;
         nextYear++;
     }
 
-    let currentSelectedYear = thisYear;
-    let currentSelectedMonth = thisMonth;
+    // 기본 선택은 '이번달'로 설정
+    let selectedYear = currentYear;
+    let selectedMonth = currentMonth;
     let selectedDateStr = null;
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -799,30 +826,40 @@
     };
 
     function initMonthButtons() {
-        const btn1 = document.getElementById('monthBtn1');
-        const btn2 = document.getElementById('monthBtn2');
-        if (btn1 && btn2) {
-            btn1.innerText = `${thisYear}년 ${thisMonth}월`;
-            btn2.innerText = `${nextYear}년 ${nextMonth}월`;
+        const btnPrev = document.getElementById('monthBtnPrev');
+        const btnCurrent = document.getElementById('monthBtnCurrent');
+        const btnNext = document.getElementById('monthBtnNext');
+        
+        if (btnPrev && btnCurrent && btnNext) {
+            btnPrev.innerText = `${prevMonth}월`;
+            btnCurrent.innerText = `${currentMonth}월 (이번달)`;
+            btnNext.innerText = `${nextMonth}월`;
         }
     }
 
-    function selectMonthTab(index) {
-        if (index === 0) {
-            currentSelectedYear = thisYear;
-            currentSelectedMonth = thisMonth;
-            const b1 = document.getElementById('monthBtn1');
-            const b2 = document.getElementById('monthBtn2');
-            if(b1) b1.classList.add('active');
-            if(b2) b2.classList.remove('active');
-        } else {
-            currentSelectedYear = nextYear;
-            currentSelectedMonth = nextMonth;
-            const b1 = document.getElementById('monthBtn1');
-            const b2 = document.getElementById('monthBtn2');
-            if(b1) b1.classList.remove('active');
-            if(b2) b2.classList.add('active');
+    function selectMonthTab(type) {
+        const btnPrev = document.getElementById('monthBtnPrev');
+        const btnCurrent = document.getElementById('monthBtnCurrent');
+        const btnNext = document.getElementById('monthBtnNext');
+
+        if (btnPrev) btnPrev.classList.remove('active');
+        if (btnCurrent) btnCurrent.classList.remove('active');
+        if (btnNext) btnNext.classList.remove('active');
+
+        if (type === 'prev') {
+            selectedYear = prevYear;
+            selectedMonth = prevMonth;
+            if (btnPrev) btnPrev.classList.add('active');
+        } else if (type === 'current') {
+            selectedYear = currentYear;
+            selectedMonth = currentMonth;
+            if (btnCurrent) btnCurrent.classList.add('active');
+        } else if (type === 'next') {
+            selectedYear = nextYear;
+            selectedMonth = nextMonth;
+            if (btnNext) btnNext.classList.add('active');
         }
+
         selectedDateStr = null;
         renderCalendar();
         const sc = document.getElementById('selectedDateContent');
@@ -1004,8 +1041,8 @@
             for (let [key, val] of Object.entries(row)) {
                 if (val !== undefined && val !== null) {
                     let strVal = String(val);
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${currentSelectedYear}\\s*[-./]\\s*0?(${currentSelectedMonth})`));
-                    if (mMatch && parseInt(mMatch[1], 10) === currentSelectedMonth) return true;
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
+                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
                 }
             }
             return false;
@@ -1016,14 +1053,14 @@
                 if (val !== undefined && val !== null) {
                     if (!key.includes('상담일시') && !key.includes('상담')) continue;
                     let strVal = String(val);
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${currentSelectedYear}\\s*[-./]\\s*0?(${currentSelectedMonth})`));
-                    if (mMatch && parseInt(mMatch[1], 10) === currentSelectedMonth) return true;
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
+                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
                 }
             }
             return false;
         });
 
-        summary.innerText = `${currentSelectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
+        summary.innerText = `${selectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
 
         let html = `
             <div class="cal-day-header" style="color: #ff3b30;">일</div>
@@ -1035,8 +1072,8 @@
             <div class="cal-day-header" style="color: #3b82f6;">토</div>
         `;
 
-        const firstDayObj = new Date(currentSelectedYear, currentSelectedMonth - 1, 1);
-        const lastDayObj = new Date(currentSelectedYear, currentSelectedMonth, 0);
+        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
+        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
         const totalDays = lastDayObj.getDate();
         const startDayOffset = firstDayObj.getDay();
 
@@ -1045,9 +1082,9 @@
         }
 
         for (let day = 1; day <= totalDays; day++) {
-            const dateStr = `${currentSelectedMonth}월 ${day}일`;
-            const matchedWeddings = dbData.monthly.filter(row => isRowMatchDate(row, currentSelectedYear, currentSelectedMonth, day, false));
-            const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, currentSelectedYear, currentSelectedMonth, day, true));
+            const dateStr = `${selectedMonth}월 ${day}일`;
+            const matchedWeddings = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
+            const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true));
 
             const wCount = matchedWeddings.length;
             const cCount = matchedConsults.length;
@@ -1103,15 +1140,15 @@
         const titleEl = document.getElementById('selectedDateTitle');
         if (!container) return;
 
-        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, currentSelectedYear, currentSelectedMonth, dayNum, false));
-        const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, currentSelectedYear, currentSelectedMonth, dayNum, true));
+        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
+        const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
 
         if (titleEl) {
-            titleEl.innerText = `${currentSelectedMonth}월 ${dayNum}일 상세 내역 (웨딩 ${matchedWeekly.length}건 / 상담 ${matchedConsult.length}건)`;
+            titleEl.innerText = `${selectedMonth}월 ${dayNum}일 상세 내역 (웨딩 ${matchedWeekly.length}건 / 상담 ${matchedConsult.length}건)`;
         }
 
         if (matchedWeekly.length === 0 && matchedConsult.length === 0) {
-            container.innerHTML = `<div class="empty-msg">${currentSelectedMonth}월 ${dayNum}일에 등록된 웨딩 및 상담 일정이 없습니다.</div>`;
+            container.innerHTML = `<div class="empty-msg">${selectedMonth}월 ${dayNum}일에 등록된 웨딩 및 상담 일정이 없습니다.</div>`;
             return;
         }
 
@@ -1121,7 +1158,7 @@
             contentHtml += `<div style="font-size:13px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
                 let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let dateDisplay = `${currentSelectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
+                let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
                 let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
                 let weddingCar = row['웨딩카'] || '정보 없음';
                 let bus = row['버스대절'] || row['버스'] || '정보 없음';
