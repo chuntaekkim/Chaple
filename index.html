@@ -746,4 +746,334 @@
             오늘
         </button>
         <button class="nav-item nav-schedule" onclick="switchTab('schedule', this)">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
+            일정
+        </button>
+        <button class="nav-item nav-parking" onclick="switchTab('parking', this)">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3z"/></svg>
+            주차
+        </button>
+        <button class="nav-item nav-contact" onclick="switchTab('contact', this)">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            연락
+        </button>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
+
+    let dbData = {
+        monthly: [],
+        weekly: [],
+        consult: []
+    };
+
+    // 현재 날짜(10월)를 기준 기본 월로 설정 (10월, 11월 조회 가능)
+    let currentMonth = 10;
+    let selectedDateStr = null;
+
+    window.onload = function() {
+        loadData(false);
+    };
+
+    async function loadData(forceRefresh = false) {
+        const cachedMonthly = localStorage.getItem('valet_monthly');
+        const cachedWeekly = localStorage.getItem('valet_weekly');
+        const cachedConsult = localStorage.getItem('valet_consult');
+
+        if (!forceRefresh && cachedMonthly && cachedWeekly && cachedConsult) {
+            try {
+                dbData.monthly = JSON.parse(cachedMonthly);
+                dbData.weekly = JSON.parse(cachedWeekly);
+                dbData.consult = JSON.parse(cachedConsult);
+
+                document.getElementById('statusText').innerText = "오프라인 캐시 사용중";
+                document.getElementById('statusDot').style.backgroundColor = "#ff9500";
+
+                renderTodayInfo();
+                renderCalendar();
+                return;
+            } catch (e) {
+                console.error("Cache parse error, fetching fresh data...", e);
+            }
+        }
+
+        document.getElementById('statusText').innerText = "데이터 동기화중...";
+        document.getElementById('statusDot').style.backgroundColor = "#007aff";
+
+        try {
+            const [mRes, wRes, cRes] = await Promise.all([
+                fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
+                fetch(`${SCRIPT_URL}?type=weekly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
+                fetch(`${SCRIPT_URL}?type=consult`, { mode: 'cors' }).then(r => r.json()).catch(() => [])
+            ]);
+
+            dbData.monthly = Array.isArray(mRes) ? mRes : [];
+            dbData.weekly = Array.isArray(wRes) ? wRes : [];
+            dbData.consult = Array.isArray(cRes) ? cRes : [];
+
+            localStorage.setItem('valet_monthly', JSON.stringify(dbData.monthly));
+            localStorage.setItem('valet_weekly', JSON.stringify(dbData.weekly));
+            localStorage.setItem('valet_consult', JSON.stringify(dbData.consult));
+
+            document.getElementById('statusText').innerText = "실시간 연동중";
+            document.getElementById('statusDot').style.backgroundColor = "#4cd964";
+
+            renderTodayInfo();
+            renderCalendar();
+        } catch (e) {
+            console.error("Data load error:", e);
+            document.getElementById('statusText').innerText = "동기화 실패 (캐시 확인)";
+            document.getElementById('statusDot').style.backgroundColor = "#ff3b30";
+            renderTodayInfo();
+            renderCalendar();
+        }
+    }
+
+    function refreshData() {
+        if (confirm("스프레드시트의 최신 데이터를 다시 불러오시겠습니까?")) {
+            localStorage.clear();
+            loadData(true);
+        }
+    }
+
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+        const target = document.getElementById('tab-' + tabId);
+        if (target) target.classList.add('active');
+
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        if (element) {
+            element.classList.add('active');
+        } else {
+            const navButtons = document.querySelectorAll('.nav-item');
+            if (tabId === 'today') navButtons[0].classList.add('active');
+            if (tabId === 'schedule') navButtons[1].classList.add('active');
+            if (tabId === 'parking') navButtons[2].classList.add('active');
+            if (tabId === 'contact') navButtons[3].classList.add('active');
+        }
+        
+        const titles = {
+            'today': '더채플대치 발렛',
+            'schedule': '운영 스케줄 통합 조회',
+            'parking': '주차 안내',
+            'contact': '비상 연락망'
+        };
+        document.getElementById('header-title').innerText = titles[tabId] || '더채플대치 발렛';
+    }
+
+    function switchMonth(month) {
+        currentMonth = month;
+        document.getElementById('monthBtn10').classList.toggle('active', month === 10);
+        document.getElementById('monthBtn11').classList.toggle('active', month === 11);
+        selectedDateStr = null;
+        renderCalendar();
+        document.getElementById('selectedDateContent').innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
+    }
+
+    function isRowMatchDate(row, targetMonth, targetDay, isConsult = false) {
+        for (let [key, val] of Object.entries(row)) {
+            if (val === undefined || val === null) continue;
+            let strVal = String(val).trim();
+
+            if (isConsult) {
+                if (!key.includes('상담일시') && !key.includes('상담')) continue;
+            }
+
+            let match2026 = strVal.match(/2026\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
+            if (match2026) {
+                let m = parseInt(match2026[1], 10);
+                let d = parseInt(match2026[2], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
+
+            if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
+
+            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
+            if (strictMatch) {
+                let m = parseInt(strictMatch[2], 10);
+                let d = parseInt(strictMatch[3], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
+
+            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
+            if (koreanMatch) {
+                let m = parseInt(koreanMatch[1], 10);
+                let d = parseInt(koreanMatch[2], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
+        }
+        return false;
+    }
+
+    function renderTodayInfo() {
+        const todayMonth = 10;
+        const todayDay = 1;
+
+        const matchedToday = dbData.weekly.filter(row => isRowMatchDate(row, todayMonth, todayDay, false));
+
+        document.getElementById('todayTitle').innerText = `${todayMonth}월 ${todayDay}일 예식 현황`;
+        document.getElementById('todayStatNum').innerText = `${matchedToday.length}건`;
+
+        const descEl = document.getElementById('todayStatDesc');
+        const container = document.getElementById('todayEventsContainer');
+
+        if (matchedToday.length === 0) {
+            descEl.innerText = "오늘 진행되는 예식이 없습니다.";
+            container.innerHTML = `<div class="empty-msg">오늘(${todayMonth}월 ${todayDay}일) 예정된 예식이 없습니다.</div>`;
+            return;
+        }
+
+        descEl.innerText = `${matchedToday.length}건의 예식 진행 예정`;
+        let contentHtml = '';
+        matchedToday.forEach((row, idx) => {
+            let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+            let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
+            let weddingCar = row['웨딩카'] || '정보 없음';
+            let bus = row['버스대절'] || row['버스'] || '정보 없음';
+            let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+
+            contentHtml += `
+                <div class="event-card">
+                    <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-value">: ${bus}</span></div>
+                    <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-value">: ${honjuCar}</span></div>
+                </div>
+            `;
+        });
+        container.innerHTML = contentHtml;
+    }
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        const summary = document.getElementById('scheduleSummary');
+        
+        const monthWedding = dbData.monthly.filter(row => {
+            for (let [key, val] of Object.entries(row)) {
+                if (val !== undefined && val !== null) {
+                    let strVal = String(val);
+                    if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(/2026\s*[-./]\s*0?(\d{1,2})/);
+                    if (mMatch && parseInt(mMatch[1], 10) === currentMonth) return true;
+                }
+            }
+            return false;
+        });
+
+        const monthConsult = dbData.consult.filter(row => {
+            for (let [key, val] of Object.entries(row)) {
+                if (val !== undefined && val !== null) {
+                    if (!key.includes('상담일시') && !key.includes('상담')) continue;
+                    let strVal = String(val);
+                    if (strVal.includes('2027') || strVal.includes('2025') || strVal.includes('2024')) continue;
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(/2026\s*[-./]\s*0?(\d{1,2})/);
+                    if (mMatch && parseInt(mMatch[1], 10) === currentMonth) return true;
+                }
+            }
+            return false;
+        });
+
+        summary.innerText = `${currentMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
+
+        let html = `
+            <div class="cal-day-header" style="color: #ff3b30;">일</div>
+            <div class="cal-day-header">월</div>
+            <div class="cal-day-header">화</div>
+            <div class="cal-day-header">수</div>
+            <div class="cal-day-header">목</div>
+            <div class="cal-day-header">금</div>
+            <div class="cal-day-header" style="color: #3b82f6;">토</div>
+        `;
+
+        const totalDays = (currentMonth === 10) ? 31 : 30; // 10월 31일, 11월 30일
+        // 2026년 10월 1일은 목요일(offset: 4), 11월 1일은 일요일(offset: 0)
+        const startDayOffset = (currentMonth === 10) ? 4 : 0; 
+
+        for (let i = 0; i < startDayOffset; i++) {
+            html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
+        }
+
+        for (let day = 1; day <= totalDays; day++) {
+            const dateStr = `${currentMonth}월 ${day}일`;
+            const matchedWeddings = dbData.monthly.filter(row => isRowMatchDate(row, currentMonth, day, false));
+            const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, currentMonth, day, true));
+
+            const wCount = matchedWeddings.length;
+            const cCount = matchedConsults.length;
+            const hasEvent = (wCount > 0 || cCount > 0);
+            const isSelected = selectedDateStr === dateStr;
+
+            let dayOfWeek = (startDayOffset + day - 1) % 7;
+            let dayColor = 'inherit';
+            if (dayOfWeek === 0) dayColor = '#ff3b30';
+            else if (dayOfWeek === 6) dayColor = '#3b82f6';
+
+            html += `
+                <div class="cal-cell ${hasEvent ? 'has-event' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}',${day})">
+                    <span class="cal-date-num" style="color:${dayColor}">${day}</span>
+                    <div class="badge-group">
+                        ${wCount > 0 ? `<span class="event-count-badge">웨딩 ${wCount}</span>` : ''}
+                        ${cCount > 0 ? `<span class="consult-count-badge">상담 ${cCount}</span>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        grid.innerHTML = html;
+    }
+
+    function cleanValue(key, val) {
+        if (val === undefined || val === null) return '';
+        let strVal = String(val).trim();
+
+        if (strVal.includes('T')) {
+            let parts = strVal.split('T');
+            let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
+            if (timePart && timePart !== '00:00:00') {
+                let h = parseInt(timePart.split(':')[0], 10);
+                let m = timePart.split(':')[1] || '00';
+                let dObj = new Date(strVal);
+                if (!isNaN(dObj.getTime())) {
+                    h = dObj.getHours();
+                }
+                return `${String(h).padStart(2, '0')}:${m}`;
+            }
+            strVal = parts[0];
+        }
+
+        return strVal.replace('.000Z', '').replace('Z', '');
+    }
+
+    function selectDate(dateStr, dayNum) {
+        selectedDateStr = dateStr;
+        renderCalendar();
+
+        const container = document.getElementById('selectedDateContent');
+        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, currentMonth, dayNum, false));
+        const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, currentMonth, dayNum, true));
+
+        document.getElementById('selectedDateTitle').innerText = `${currentMonth}월 ${dayNum}일 상세 내역 (웨딩 ${matchedWeekly.length}건 / 상담 ${matchedConsult.length}건)`;
+
+        if (matchedWeekly.length === 0 && matchedConsult.length === 0) {
+            container.innerHTML = `<div class="empty-msg">${currentMonth}월 ${dayNum}일에 등록된 웨딩 및 상담 일정이 없습니다.</div>`;
+            return;
+        }
+
+        let contentHtml = '';
+
+        if (matchedWeekly.length > 0) {
+            contentHtml += `<div style="font-size:13px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
+            matchedWeekly.forEach((row, idx) => {
+                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+                let dateDisplay = `${currentMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
+                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
+                let weddingCar = row['웨딩카'] || '정보 없음';
+                let bus = row['버스대절'] || row['버스'] || '정보 없음';
+                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+
+                contentHtml += `
+                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 4px solid #f0a500;">
+                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font
