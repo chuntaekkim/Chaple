@@ -130,7 +130,7 @@
             margin-bottom: 8px;
         }
 
-        /* 统一 정렬된 정보 행 스타일 (라벨 너비 고정으로 콜론(:) 위치 완벽 일치) */
+        /* 통일 정렬된 정보 행 스타일 */
         .uniform-row {
             display: flex;
             align-items: flex-start;
@@ -184,7 +184,6 @@
             opacity: 0.7;
         }
         
-        /* 이번달 박스는 더 크고 눈에 띄게 강조 */
         .month-card-btn.main-current-month {
             flex: 1.35;
             padding: 16px 8px;
@@ -199,7 +198,6 @@
             font-weight: 700;
         }
 
-        /* 월 선택 활성화 상태 색상 */
         #monthBtnPrev.active {
             background-color: #475569 !important;
             border-color: #64748b !important;
@@ -217,7 +215,7 @@
             color: #ffffff !important;
         }
 
-        /* 주차 안내 전용 탭 메뉴 그룹 (완벽한 균등 분할) */
+        /* 주차 안내 전용 탭 메뉴 그룹 */
         .parking-tab-group {
             display: flex;
             background-color: #1a1d29;
@@ -331,21 +329,23 @@
             width: 100%;
             margin-top: 4px;
         }
+        /* 후문주차장 입구 버튼 (두 줄 구조 및 폭 확장) */
         .parking-entrance {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: #12141c;
             background-color: #f0a500;
-            padding: 6px 18px;
-            border-radius: 20px;
-            letter-spacing: -0.5px;
+            padding: 6px 14px;
+            border-radius: 12px;
+            text-align: center;
+            line-height: 1.3;
             box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
         
-        /* 캘린더 그리드 스타일 (평일 축소 / 주말 확충) */
+        /* 캘린더 그리드 스타일 (일요일과 토요일 너비 균등 배분을 위해 1fr씩 설정) */
         .calendar-grid {
             display: grid;
-            grid-template-columns: 0.8fr 1fr 1fr 1fr 1fr 1fr 1.3fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
             gap: 4px;
             text-align: center;
             margin-top: 10px;
@@ -658,7 +658,7 @@
                         </div>
                     </div>
                     <div class="parking-entrance-box">
-                        <div class="parking-entrance">후문 주차장 입구</div>
+                        <div class="parking-entrance">후문주차장<br>입구</div>
                     </div>
                 </div>
             </div>
