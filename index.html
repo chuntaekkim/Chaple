@@ -1192,6 +1192,7 @@
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
 
+        // 엑셀 날짜-시간 포맷인 경우 (T 포함), 서버 타임존으로 왜곡되지 않도록 원본 시각 추출 및 02:00~04:00대 변형 방지 보정
         if (strVal.includes('T')) {
             let parts = strVal.split('T');
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
@@ -1199,14 +1200,10 @@
                 let h = parseInt(timePart.split(':')[0], 10);
                 let m = timePart.split(':')[1] || '00';
                 
-                // UTC 시간을 한국 시간(KST, +9시간)으로 보정하거나, 시트 원본 시간이 왜곡된 경우를 바로잡음
-                let dObj = new Date(strVal);
-                if (!isNaN(dObj.getTime())) {
-                    // UTC 기준으로 파싱된 경우 한국 시간대로 보정 (+9시간)
-                    let utcHours = dObj.getUTCHours();
-                    let utcMinutes = dObj.getUTCMinutes();
-                    let kstHours = (utcHours + 9) % 24;
-                    return `${String(kstHours).padStart(2, '0')}:${String(utcMinutes).padStart(2, '0')}`;
+                // 오전 2시~4시로 잘못 튀는 경우(UTC 변환 오류) 원래 입력된 시간대(오전 11시 등)로 복원
+                if (h === 2 || h === 3 || h === 4) {
+                    h += 9;
+                    if (h >= 24) h -= 24;
                 }
                 return `${String(h).padStart(2, '0')}:${m}`;
             }
