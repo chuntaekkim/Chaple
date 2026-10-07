@@ -112,7 +112,7 @@
             font-size: 11px;
             color: #d1d5db;
         }
-        /* 공통 카드 스타일 (상세 간격 좁힘) */
+        /* 공통 카드 스타일 */
         .event-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -130,40 +130,24 @@
             margin-bottom: 8px;
         }
 
-        /* 고정형 레이아웃 (간격 압축) */
-        .info-row {
-            font-size: 12px;
-            margin-bottom: 4px;
+        /* 统一 정렬된 정보 행 스타일 (라벨 너비 고정으로 콜론(:) 위치 완벽 일치) */
+        .uniform-row {
             display: flex;
             align-items: flex-start;
-        }
-        .wedding-row .info-label {
-            width: 72px;
-            font-weight: 600;
-            text-align: left;
-            flex-shrink: 0;
-        }
-        /* 상담 일정용 라벨 정렬 스타일 (간격 압축) */
-        .consult-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             font-size: 12px;
         }
-        .consult-row .info-label {
-            width: 110px;
+        .uniform-row .info-label {
+            width: 85px;
             font-weight: 600;
-            color: #38bdf8;
             flex-shrink: 0;
         }
-        .consult-row .info-colon {
-            color: #38bdf8;
+        .uniform-row .info-colon {
             font-weight: 600;
-            margin-right: 4px;
+            margin-right: 6px;
             flex-shrink: 0;
         }
-        .consult-row .info-value {
-            color: #ffffff;
+        .uniform-row .info-value {
             font-weight: 500;
             word-break: break-all;
             flex: 1;
@@ -1073,10 +1057,10 @@
             contentHtml += `
                 <div class="event-card">
                     <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-value">: ${bus}</span></div>
-                    <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-value">: ${honjuCar}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
                 </div>
             `;
         });
@@ -1216,13 +1200,15 @@
                 let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
                 contentHtml += `
-                    <div style="background:#242838; padding:10px; border-radius:8px; margin-bottom:6px; border-left: 3px solid #f0a500;">
-                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:6px; font-size:12px;">[웨딩 ${idx + 1}]</div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-value">: ${dateDisplay}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-value">: ${bus}</span></div>
-                        <div class="info-row wedding-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-value">: ${honjuCar}</span></div>
+                    <div style="background:#242838; padding:10px; border-radius:10px; margin-bottom:8px; border-left: 3px solid #f0a500;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="background-color: #f0a500; color: #12141c; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">[웨딩 ${idx + 1}]</span>
+                        </div>
+                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff;">${dateDisplay}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
                     </div>
                 `;
             });
@@ -1232,9 +1218,9 @@
             contentHtml += `<div style="font-size:12px; font-weight:bold; color:#c084fc; margin-top:12px; margin-bottom:6px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
-                    <div style="background:#242838; padding:10px; border-radius:8px; margin-bottom:6px; border-left: 3px solid #c084fc;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                            <span style="background-color: #f59e0b; color: #12141c; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px;">번호 ${idx + 1}</span>
+                    <div style="background:#242838; padding:10px; border-radius:10px; margin-bottom:8px; border-left: 3px solid #c084fc;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="background-color: #f59e0b; color: #12141c; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">[번호 ${idx + 1}]</span>
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
@@ -1259,8 +1245,9 @@
                         }
 
                         contentHtml += `
-                            <div class="consult-row" style="align-items: center; margin-bottom: 5px;">
-                                <span class="info-label" style="color: ${labelColor};">${labelText}</span><span class="info-colon" style="color: ${labelColor};">:</span>
+                            <div class="uniform-row">
+                                <span class="info-label" style="color: ${labelColor};">${labelText}</span>
+                                <span class="info-colon" style="color: ${labelColor};">:</span>
                                 <span class="info-value" style="${valueStyle}">${cleaned}</span>
                             </div>
                         `;
