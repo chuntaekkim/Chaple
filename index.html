@@ -464,7 +464,7 @@
             color: #f3f4f6;
             font-weight: 600;
         }
-        /* 전화기 아이콘 버튼 (더 밝고 선명한 밝은 녹색 스타일 적용) */
+        /* 전화기 아이콘 버튼 */
         .call-icon-btn {
             background-color: #10b981;
             color: white;
@@ -533,7 +533,6 @@
         .nav-item.nav-today { color: #ff7675; }
         .nav-item.nav-schedule { color: #a29bfe; }
         .nav-item.nav-parking { color: #55efc4; }
-        /* 하단 연락 탭을 눈에 띄는 밝은 초록색 계열로 변경 */
         .nav-item.nav-contact { color: #34d399; }
 
         .nav-item:not(.active) { opacity: 0.6; }
@@ -1199,9 +1198,15 @@
             if (timePart && timePart !== '00:00:00') {
                 let h = parseInt(timePart.split(':')[0], 10);
                 let m = timePart.split(':')[1] || '00';
+                
+                // UTC 시간을 한국 시간(KST, +9시간)으로 보정하거나, 시트 원본 시간이 왜곡된 경우를 바로잡음
                 let dObj = new Date(strVal);
                 if (!isNaN(dObj.getTime())) {
-                    h = dObj.getHours();
+                    // UTC 기준으로 파싱된 경우 한국 시간대로 보정 (+9시간)
+                    let utcHours = dObj.getUTCHours();
+                    let utcMinutes = dObj.getUTCMinutes();
+                    let kstHours = (utcHours + 9) % 24;
+                    return `${String(kstHours).padStart(2, '0')}:${String(utcMinutes).padStart(2, '0')}`;
                 }
                 return `${String(h).padStart(2, '0')}:${m}`;
             }
