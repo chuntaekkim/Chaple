@@ -35,8 +35,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 16px;
+            font-weight: 600;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .header .status {
@@ -64,11 +64,11 @@
             display: block;
         }
         .section-title {
-            font-size: 13px;
-            color: #a1a1aa;
-            margin-bottom: 6px;
-            margin-top: 12px;
-            font-weight: 600;
+            font-size: 15px;
+            color: #b5b5be;
+            margin-bottom: 8px;
+            margin-top: 14px;
+            font-weight: 700;
         }
         .section-title:first-child {
             margin-top: 0;
@@ -76,18 +76,19 @@
         .main-card {
             background-color: #1a1d29;
             border-radius: 16px;
-            padding: 16px;
+            padding: 18px;
             margin-bottom: 16px;
         }
         .stat-number {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .stat-desc {
-            font-size: 13px;
-            color: #d1d5db;
+            font-size: 14px;
+            color: #e5e7eb;
             margin-bottom: 16px;
+            font-weight: 500;
         }
         .card-row {
             display: flex;
@@ -97,58 +98,58 @@
             flex: 1;
             background-color: #242838;
             border-radius: 12px;
-            padding: 12px 14px;
+            padding: 14px 14px;
             cursor: pointer;
         }
         .sub-box-title {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             margin-bottom: 4px;
             display: flex;
             align-items: center;
             gap: 4px;
         }
         .sub-box-desc {
-            font-size: 11px;
+            font-size: 12px;
             color: #d1d5db;
         }
         /* 공통 카드 스타일 */
         .event-card {
             background-color: #1a1d29;
             border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 8px;
+            padding: 14px;
+            margin-bottom: 10px;
         }
         .badge {
             display: inline-block;
             background-color: #007aff;
             color: #ffffff;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 3px 8px;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
             border-radius: 6px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        /* 통일 정렬된 정보 행 스타일 */
+        /* 통일 정렬된 정보 행 스타일 (폰트 소폭 확대) */
         .uniform-row {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 5px;
-            font-size: 12px;
+            margin-bottom: 7px;
+            font-size: 14px;
         }
         .uniform-row .info-label {
-            width: 85px;
-            font-weight: 600;
+            width: 95px;
+            font-weight: 700;
             flex-shrink: 0;
         }
         .uniform-row .info-colon {
-            font-weight: 600;
-            margin-right: 6px;
+            font-weight: 700;
+            margin-right: 8px;
             flex-shrink: 0;
         }
         .uniform-row .info-value {
-            font-weight: 500;
+            font-weight: 600;
             word-break: break-all;
             flex: 1;
         }
@@ -167,7 +168,7 @@
             border-radius: 12px;
             padding: 12px 6px;
             color: #9ca3af;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
@@ -180,7 +181,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .month-card-btn .m-sub {
-            font-size: 10px;
+            font-size: 11px;
             opacity: 0.7;
         }
         
@@ -189,10 +190,10 @@
             padding: 16px 8px;
             background-color: #1e2433;
             border: 2px solid rgba(59, 130, 246, 0.4);
-            font-size: 15px;
+            font-size: 16px;
         }
         .month-card-btn.main-current-month .m-sub {
-            font-size: 11px;
+            font-size: 12px;
             color: #93c5fd;
             opacity: 1;
             font-weight: 700;
@@ -231,7 +232,7 @@
             border: none;
             color: #d1d5db;
             padding: 10px 6px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
@@ -329,7 +330,6 @@
             width: 100%;
             margin-top: 4px;
         }
-        /* 후문주차장 입구 버튼 (두 줄 구조 및 폭 확장) */
         .parking-entrance {
             font-size: 11px;
             font-weight: 700;
@@ -342,7 +342,7 @@
             box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
         
-        /* 캘린더 그리드 스타일 (일요일과 토요일 너비 균등 배분을 위해 1fr씩 설정) */
+        /* 캘린더 그리드 스타일 */
         .calendar-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -351,22 +351,23 @@
             margin-top: 10px;
         }
         .cal-day-header {
-            font-size: 11px;
-            color: #a1a1aa;
+            font-size: 13px;
+            color: #b5b5be;
             padding-bottom: 6px;
+            font-weight: 700;
         }
         .cal-cell {
             background-color: #1a1d29;
             border-radius: 6px;
-            padding: 5px 1px;
-            font-size: 11px;
+            padding: 6px 2px;
+            font-size: 13px;
             cursor: pointer;
-            min-height: 56px;
+            min-height: 64px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            gap: 2px;
+            gap: 3px;
         }
         .cal-cell.has-event {
             border: 1px solid rgba(240, 165, 0, 0.4);
@@ -376,9 +377,9 @@
             border: 1px solid #f0a500;
         }
         .cal-date-num {
-            font-weight: 600;
-            margin-bottom: 1px;
-            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            font-size: 14px;
         }
         .badge-group {
             display: flex;
@@ -388,10 +389,10 @@
             align-items: center;
         }
         .event-count-badge {
-            font-size: 9px;
+            font-size: 11px;
             background-color: #f0a500;
             color: #12141c;
-            padding: 1px 2px;
+            padding: 2px 4px;
             border-radius: 6px;
             font-weight: 700;
             width: 95%;
@@ -399,10 +400,10 @@
             white-space: nowrap;
         }
         .consult-count-badge {
-            font-size: 9px;
+            font-size: 11px;
             background-color: #c084fc;
             color: #12141c;
-            padding: 1px 2px;
+            padding: 2px 4px;
             border-radius: 6px;
             font-weight: 700;
             width: 95%;
@@ -410,15 +411,15 @@
             white-space: nowrap;
         }
 
-        /* 연락처 카드 간격 및 구별 스타일 */
+        /* 연락처 카드 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .contact-card.hq-card {
             border-left: 3px solid #f59e0b;
@@ -431,50 +432,65 @@
         .contact-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
+            flex: 1;
+        }
+        .contact-info-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
         }
         .contact-name {
             font-weight: 700;
-            font-size: 15px;
+            font-size: 17px;
             color: #ffffff;
+            width: 60px;
+            flex-shrink: 0;
         }
         .contact-role {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 2px 6px;
-            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            width: 52px;
+            text-align: center;
+            flex-shrink: 0;
         }
         .contact-phone {
-            font-size: 13px;
-            color: #d1d5db;
+            font-size: 15px;
+            color: #f3f4f6;
+            font-weight: 600;
         }
         .call-icon-btn {
             background-color: #10b981;
             color: white;
-            width: 34px;
-            height: 34px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+            flex-shrink: 0;
             transition: transform 0.1s ease;
         }
         .call-icon-btn:active {
             transform: scale(0.92);
         }
         .call-icon-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             fill: currentColor;
         }
 
         .empty-msg {
             text-align: center;
-            padding: 20px;
-            color: #a1a1aa;
-            font-size: 0.9rem;
+            padding: 22px;
+            color: #b5b5be;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         .nav-bar {
@@ -496,8 +512,8 @@
             align-items: center;
             text-decoration: none;
             color: #a1a1aa;
-            font-size: 11px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
             gap: 5px;
             cursor: pointer;
             background: none;
@@ -564,7 +580,7 @@
     <!-- [탭 2] 일정 화면 (웨딩/상담 통합) -->
     <div id="tab-schedule" class="content">
         <div class="section-title">운영 스케줄 통합 조회</div>
-        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 12px;">날짜를 누르면 웨딩 및 상담 상세 내역이 출력됩니다.</div>
+        <div style="font-size: 14px; color: #e5e7eb; margin-bottom: 12px; font-weight: 500;">날짜를 누르면 웨딩 및 상담 상세 내역이 출력됩니다.</div>
         
         <!-- 독립 박스 카드 형태의 월 선택 그룹 (이번달 강조) -->
         <div class="month-box-group">
@@ -583,7 +599,7 @@
         </div>
 
         <div class="main-card" style="margin-top: 10px;">
-            <div id="scheduleSummary" style="font-weight: 600; margin-bottom: 10px; color: #f3f4f6;">스케줄 로딩 중...</div>
+            <div id="scheduleSummary" style="font-weight: 700; margin-bottom: 10px; color: #f3f4f6; font-size: 15px;">스케줄 로딩 중...</div>
             <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
@@ -596,7 +612,7 @@
     <!-- [탭 3] 주차 안내 화면 -->
     <div id="tab-parking" class="content">
         <div class="section-title">주차 안내</div>
-        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 14px;">도면은 확대해서 볼 수 있습니다.</div>
+        <div style="font-size: 14px; color: #e5e7eb; margin-bottom: 14px; font-weight: 500;">도면은 확대해서 볼 수 있습니다.</div>
 
         <div class="parking-tab-group">
             <button id="p-btn-b4" class="parking-tab-btn active" onclick="switchParkingTab('b4')">지하 4층</button>
@@ -606,33 +622,33 @@
 
         <div id="parking-b4" class="parking-section active">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
-                <div style="font-weight: 600; margin-bottom: 4px; color: #facc15;">지하 4층 주차 안내</div>
-                <div style="font-size: 12px; color: #d1d5db;">혼주 차량 및 임원 차량 주차</div>
+                <div style="font-weight: 700; margin-bottom: 6px; color: #facc15; font-size: 15px;">지하 4층 주차 안내</div>
+                <div style="font-size: 14px; color: #e5e7eb;">혼주 차량 및 임원 차량 주차</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #facc15;">지하 4층 배치도</div>
+                <div style="font-weight: 700; margin-bottom: 8px; color: #facc15; font-size: 15px;">지하 4층 배치도</div>
                 <img src="Chaple_B4.png" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.png+Not+Found'">
             </div>
         </div>
 
         <div id="parking-b5" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #3b82f6;">
-                <div style="font-weight: 600; margin-bottom: 4px; color: #60a5fa;">지하 5층 주차 안내</div>
-                <div style="font-size: 12px; color: #d1d5db;">혼주 차량 및 직원 차량 주차</div>
+                <div style="font-weight: 700; margin-bottom: 6px; color: #60a5fa; font-size: 15px;">지하 5층 주차 안내</div>
+                <div style="font-size: 14px; color: #e5e7eb;">혼주 차량 및 직원 차량 주차</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #60a5fa;">지하 5층 배치도</div>
+                <div style="font-weight: 700; margin-bottom: 8px; color: #60a5fa; font-size: 15px;">지하 5층 배치도</div>
                 <img src="Chaple_B5.png" alt="지하 5층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B5.png+Not+Found'">
             </div>
         </div>
 
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
-                <div style="font-weight: 600; margin-bottom: 4px; color: #38bdf8;">후문 주차장 이용 안내</div>
-                <div style="font-size: 12px; color: #d1d5db;">상담 차량 및 시식 차량 주차</div>
+                <div style="font-weight: 700; margin-bottom: 6px; color: #38bdf8; font-size: 15px;">후문 주차장 이용 안내</div>
+                <div style="font-size: 14px; color: #e5e7eb;">상담 차량 및 시식 차량 주차</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도</div>
+                <div style="font-weight: 700; margin-bottom: 8px; color: #38bdf8; text-align: center; font-size: 15px;">후문 주차장 배치도</div>
                 <div class="parking-layout-box">
                     <div class="parking-grid-container">
                         <div class="parking-row">
@@ -668,14 +684,16 @@
     <!-- [탭 4] 비상 연락망 화면 -->
     <div id="tab-contact" class="content">
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
-        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 10px;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
+        <div style="font-size: 14px; color: #e5e7eb; margin-bottom: 12px; font-weight: 500;">전화기 아이콘을 누르면 바로 통화가 연결됩니다.</div>
 
         <div class="section-title" style="color: #f59e0b;">■ 본사</div>
         <div class="contact-card hq-card">
             <div class="contact-left">
-                <span class="contact-name">이태희</span>
-                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.15);">대표</span>
-                <span class="contact-phone">010-4229-7800</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">이태희</span>
+                    <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.15);">대표</span>
+                    <span class="contact-phone">010-4229-7800</span>
+                </div>
             </div>
             <a href="tel:010-4229-7800" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -683,21 +701,25 @@
         </div>
         <div class="contact-card hq-card">
             <div class="contact-left">
-                <span class="contact-name">이큰산</span>
-                <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.15);">부장</span>
-                <span class="contact-phone">010-6404-0230</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">이큰산</span>
+                    <span class="contact-role" style="color:#f59e0b; background-color:rgba(245,158,11,0.15);">부장</span>
+                    <span class="contact-phone">010-6404-0230</span>
+                </div>
             </div>
             <a href="tel:010-6404-0230" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </a>
         </div>
 
-        <div class="section-title" style="color: #3b82f6; margin-top: 16px;">■ 대치사업소</div>
+        <div class="section-title" style="color: #3b82f6; margin-top: 18px;">■ 대치사업소</div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">김문기</span>
-                <span class="contact-role" style="color:#3b82f6; background-color:rgba(59,130,246,0.15);">팀장</span>
-                <span class="contact-phone">010-9130-3045</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">김문기</span>
+                    <span class="contact-role" style="color:#3b82f6; background-color:rgba(59,130,246,0.15);">팀장</span>
+                    <span class="contact-phone">010-9130-3045</span>
+                </div>
             </div>
             <a href="tel:010-9130-3045" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -705,9 +727,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">임창희</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-3355-4537</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">임창희</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-3355-4537</span>
+                </div>
             </div>
             <a href="tel:010-3355-4537" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -715,9 +739,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">이종범</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-3362-6456</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">이종범</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-3362-6456</span>
+                </div>
             </div>
             <a href="tel:010-3362-6456" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -725,9 +751,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">김태석</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-1234-5678</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">김태석</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-1234-5678</span>
+                </div>
             </div>
             <a href="tel:010-1234-5678" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -735,9 +763,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">서원표</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-2345-6789</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">서원표</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-2345-6789</span>
+                </div>
             </div>
             <a href="tel:010-2345-6789" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -745,9 +775,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">이도훈</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-3456-7890</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">이도훈</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-3456-7890</span>
+                </div>
             </div>
             <a href="tel:010-3456-7890" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -755,9 +787,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">동상진</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-4567-8901</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">동상진</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-4567-8901</span>
+                </div>
             </div>
             <a href="tel:010-4567-8901" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -765,9 +799,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">박성준</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-5678-9012</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">박성준</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-5678-9012</span>
+                </div>
             </div>
             <a href="tel:010-5678-9012" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -775,9 +811,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">조영도</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-6789-0123</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">조영도</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-6789-0123</span>
+                </div>
             </div>
             <a href="tel:010-6789-0123" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -785,9 +823,11 @@
         </div>
         <div class="contact-card branch-card">
             <div class="contact-left">
-                <span class="contact-name">전다문</span>
-                <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                <span class="contact-phone">010-7890-1234</span>
+                <div class="contact-info-group">
+                    <span class="contact-name">전다문</span>
+                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
+                    <span class="contact-phone">010-7890-1234</span>
+                </div>
             </div>
             <a href="tel:010-7890-1234" class="call-icon-btn">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -1057,10 +1097,10 @@
             contentHtml += `
                 <div class="event-card">
                     <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                    <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
-                    <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
-                    <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
-                    <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
                 </div>
             `;
         });
@@ -1190,7 +1230,7 @@
         let contentHtml = '';
 
         if (matchedWeekly.length > 0) {
-            contentHtml += `<div style="font-size:12px; font-weight:bold; color:#f0a500; margin-bottom:6px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
+            contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
                 let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
@@ -1200,27 +1240,27 @@
                 let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
                 contentHtml += `
-                    <div style="background:#242838; padding:10px; border-radius:10px; margin-bottom:8px; border-left: 3px solid #f0a500;">
+                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #f0a500;">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #f0a500; color: #12141c; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">[웨딩 ${idx + 1}]</span>
+                            <span style="background-color: #f0a500; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[웨딩 ${idx + 1}]</span>
                         </div>
-                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff;">${dateDisplay}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8; font-size:14px;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${dateDisplay}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
                     </div>
                 `;
             });
         }
 
         if (matchedConsult.length > 0) {
-            contentHtml += `<div style="font-size:12px; font-weight:bold; color:#c084fc; margin-top:12px; margin-bottom:6px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
+            contentHtml += `<div style="font-size:14px; font-weight:bold; color:#c084fc; margin-top:14px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
-                    <div style="background:#242838; padding:10px; border-radius:10px; margin-bottom:8px; border-left: 3px solid #c084fc;">
+                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #c084fc;">
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #f59e0b; color: #12141c; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">[번호 ${idx + 1}]</span>
+                            <span style="background-color: #f59e0b; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[번호 ${idx + 1}]</span>
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
@@ -1237,16 +1277,16 @@
                         let labelColor = '#38bdf8';
                         
                         if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 13px;';
+                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 15px;';
                             labelColor = '#f472b6';
                         } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600;';
+                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 14px;';
                             labelColor = '#38bdf8';
                         }
 
                         contentHtml += `
                             <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor};">${labelText}</span>
+                                <span class="info-label" style="color: ${labelColor}; font-size:14px;">${labelText}</span>
                                 <span class="info-colon" style="color: ${labelColor};">:</span>
                                 <span class="info-value" style="${valueStyle}">${cleaned}</span>
                             </div>
