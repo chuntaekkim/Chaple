@@ -76,7 +76,7 @@
         .main-card {
             background-color: #1a1d29;
             border-radius: 16px;
-            padding: 20px;
+            padding: 16px;
             margin-bottom: 16px;
         }
         .stat-number {
@@ -112,46 +112,46 @@
             font-size: 11px;
             color: #d1d5db;
         }
-        /* 공통 카드 스타일 */
+        /* 공통 카드 스타일 (상세 간격 좁힘) */
         .event-card {
             background-color: #1a1d29;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
         }
         .badge {
             display: inline-block;
             background-color: #007aff;
             color: #ffffff;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        /* 고정형 레이아웃 */
+        /* 고정형 레이아웃 (간격 압축) */
         .info-row {
-            font-size: 13px;
-            margin-bottom: 6px;
+            font-size: 12px;
+            margin-bottom: 4px;
             display: flex;
             align-items: flex-start;
         }
         .wedding-row .info-label {
-            width: 78px;
+            width: 72px;
             font-weight: 600;
             text-align: left;
             flex-shrink: 0;
         }
-        /* 상담 일정용 라벨 정렬 스타일 */
+        /* 상담 일정용 라벨 정렬 스타일 (간격 압축) */
         .consult-row {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 6px;
-            font-size: 13px;
+            margin-bottom: 3px;
+            font-size: 12px;
         }
         .consult-row .info-label {
-            width: 120px;
+            width: 110px;
             font-weight: 600;
             color: #38bdf8;
             flex-shrink: 0;
@@ -169,7 +169,7 @@
             flex: 1;
         }
 
-        /* 3개 월 탭 버튼 그룹 (지난달, 이번달, 다음달) */
+        /* 3개 월 탭 버튼 그룹 */
         .tab-menu-group {
             display: flex;
             background-color: #1a1d29;
@@ -192,7 +192,6 @@
             text-align: center;
             transition: all 0.2s ease;
         }
-        /* 이번달 버튼은 조금 더 크고 두껍게 강조 */
         .tab-btn.main-current-month {
             flex: 1.25;
             font-size: 15px;
@@ -315,31 +314,31 @@
             box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
         
-        /* 캘린더 그리드 스타일 */
+        /* 캘린더 그리드 스타일 (평일 축소 / 주말 확충으로 뱃지 글자 잘림 방지) */
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
+            grid-template-columns: 0.8fr 1fr 1fr 1fr 1fr 1fr 1.3fr;
+            gap: 4px;
             text-align: center;
             margin-top: 10px;
         }
         .cal-day-header {
-            font-size: 12px;
+            font-size: 11px;
             color: #a1a1aa;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
         .cal-cell {
             background-color: #1a1d29;
-            border-radius: 8px;
-            padding: 6px 2px;
-            font-size: 12px;
+            border-radius: 6px;
+            padding: 5px 1px;
+            font-size: 11px;
             cursor: pointer;
-            min-height: 60px;
+            min-height: 56px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            gap: 3px;
+            gap: 2px;
         }
         .cal-cell.has-event {
             border: 1px solid rgba(240, 165, 0, 0.4);
@@ -350,7 +349,8 @@
         }
         .cal-date-num {
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
+            font-size: 11px;
         }
         .badge-group {
             display: flex;
@@ -360,27 +360,29 @@
             align-items: center;
         }
         .event-count-badge {
-            font-size: 10px;
+            font-size: 9px;
             background-color: #f0a500;
             color: #12141c;
-            padding: 1px 4px;
-            border-radius: 8px;
+            padding: 1px 2px;
+            border-radius: 6px;
             font-weight: 700;
-            width: 90%;
+            width: 95%;
             text-align: center;
+            white-space: nowrap;
         }
         .consult-count-badge {
-            font-size: 10px;
+            font-size: 9px;
             background-color: #c084fc;
             color: #12141c;
-            padding: 1px 4px;
-            border-radius: 8px;
+            padding: 1px 2px;
+            border-radius: 6px;
             font-weight: 700;
-            width: 90%;
+            width: 95%;
             text-align: center;
+            white-space: nowrap;
         }
 
-        /* 연락처 카드 간격 좁히기 및 구별 스타일 */
+        /* 연락처 카드 간격 및 구별 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 10px;
@@ -786,7 +788,6 @@
         consult: []
     };
 
-    // 현재 기기 날짜 기준으로 지난달, 이번달, 다음달 자동 계산
     const nowDate = new Date();
     let currentYear = nowDate.getFullYear();
     let currentMonth = nowDate.getMonth() + 1;
@@ -794,7 +795,6 @@
     if (isNaN(currentYear) || currentYear < 2024) currentYear = 2026;
     if (isNaN(currentMonth) || currentMonth < 1 || currentMonth > 12) currentMonth = 10;
 
-    // 지난달 계산
     let prevYear = currentYear;
     let prevMonth = currentMonth - 1;
     if (prevMonth < 1) {
@@ -802,7 +802,6 @@
         prevYear--;
     }
 
-    // 다음달 계산
     let nextYear = currentYear;
     let nextMonth = currentMonth + 1;
     if (nextMonth > 12) {
@@ -810,7 +809,6 @@
         nextYear++;
     }
 
-    // 기본 선택은 '이번달'로 설정
     let selectedYear = currentYear;
     let selectedMonth = currentMonth;
     let selectedDateStr = null;
@@ -1155,7 +1153,7 @@
         let contentHtml = '';
 
         if (matchedWeekly.length > 0) {
-            contentHtml += `<div style="font-size:13px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
+            contentHtml += `<div style="font-size:12px; font-weight:bold; color:#f0a500; margin-bottom:6px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
                 let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
@@ -1165,8 +1163,8 @@
                 let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
                 contentHtml += `
-                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 4px solid #f0a500;">
-                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:13px;">[웨딩 ${idx + 1}]</div>
+                    <div style="background:#242838; padding:10px; border-radius:8px; margin-bottom:6px; border-left: 3px solid #f0a500;">
+                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:6px; font-size:12px;">[웨딩 ${idx + 1}]</div>
                         <div class="info-row wedding-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-value">: ${dateDisplay}</span></div>
                         <div class="info-row wedding-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-value">: ${guarantee}</span></div>
                         <div class="info-row wedding-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-value">: ${weddingCar}</span></div>
@@ -1178,11 +1176,11 @@
         }
 
         if (matchedConsult.length > 0) {
-            contentHtml += `<div style="font-size:13px; font-weight:bold; color:#c084fc; margin-top:16px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
+            contentHtml += `<div style="font-size:12px; font-weight:bold; color:#c084fc; margin-top:12px; margin-bottom:6px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
-                    <div style="background:#242838; padding:12px; border-radius:8px; margin-bottom:10px; border-left: 4px solid #c084fc;">
-                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:8px; font-size:13px;">[상담 ${idx + 1}]</div>
+                    <div style="background:#242838; padding:10px; border-radius:8px; margin-bottom:6px; border-left: 3px solid #c084fc;">
+                        <div style="font-weight:bold; color:#fbcfe8; margin-bottom:6px; font-size:12px;">[상담 ${idx + 1}]</div>
                         <div class="consult-row">
                             <span class="info-label">번호</span><span class="info-colon">:</span>
                             <span class="info-value">${idx + 1}</span>
