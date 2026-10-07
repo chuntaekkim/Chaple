@@ -169,7 +169,7 @@
             flex: 1;
         }
 
-        /* 3개 월 탭 버튼 그룹 (독립된 박스 카드 형태로 개선) */
+        /* 3개 월 탭 버튼 그룹 (박스 카드 형태) */
         .month-box-group {
             display: flex;
             gap: 8px;
@@ -215,7 +215,7 @@
             font-weight: 700;
         }
 
-        /* 활성화(선택) 상태 색상 */
+        /* 월 선택 활성화 상태 색상 */
         #monthBtnPrev.active {
             background-color: #475569 !important;
             border-color: #64748b !important;
@@ -231,6 +231,34 @@
             background-color: #059669 !important;
             border-color: #10b981 !important;
             color: #ffffff !important;
+        }
+
+        /* 주차 안내 전용 탭 메뉴 그룹 (완벽한 균등 분할) */
+        .parking-tab-group {
+            display: flex;
+            background-color: #1a1d29;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 16px;
+            align-items: center;
+            gap: 4px;
+        }
+        .parking-tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: #d1d5db;
+            padding: 10px 6px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .parking-tab-btn.active {
+            background-color: #f0a500;
+            color: #12141c;
         }
 
         .parking-section {
@@ -586,10 +614,10 @@
         <div class="section-title">주차 안내</div>
         <div style="font-size: 13px; color: #d1d5db; margin-bottom: 14px;">도면은 확대해서 볼 수 있습니다.</div>
 
-        <div class="tab-menu-group">
-            <button id="p-btn-b4" class="tab-btn active" onclick="switchParkingTab('b4')">지하 4층</button>
-            <button id="p-btn-b5" class="tab-btn" onclick="switchParkingTab('b5')">지하 5층</button>
-            <button id="p-btn-rear" class="tab-btn" onclick="switchParkingTab('rear')">후문</button>
+        <div class="parking-tab-group">
+            <button id="p-btn-b4" class="parking-tab-btn active" onclick="switchParkingTab('b4')">지하 4층</button>
+            <button id="p-btn-b5" class="parking-tab-btn" onclick="switchParkingTab('b5')">지하 5층</button>
+            <button id="p-btn-rear" class="parking-tab-btn" onclick="switchParkingTab('rear')">후문</button>
         </div>
 
         <div id="parking-b4" class="parking-section active">
@@ -620,7 +648,7 @@
                 <div style="font-size: 12px; color: #d1d5db;">상담 차량 및 시식 차량 주차</div>
             </div>
             <div class="main-card">
-                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도 (장애인 구역 반영)</div>
+                <div style="font-weight: 600; margin-bottom: 8px; color: #38bdf8; text-align: center;">후문 주차장 배치도</div>
                 <div class="parking-layout-box">
                     <div class="parking-grid-container">
                         <div class="parking-row">
@@ -1219,7 +1247,6 @@
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
 
                     if (cleaned !== '') {
-                        // 신부/신랑명과 상담일시(회차)에 가독성 좋은 색상 및 스타일 적용
                         let valueStyle = '';
                         let labelColor = '#38bdf8';
                         
@@ -1248,7 +1275,7 @@
 
     function switchParkingTab(floor) {
         document.querySelectorAll('.parking-section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('#tab-parking .tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('#tab-parking .parking-tab-btn').forEach(btn => btn.classList.remove('active'));
         const targetSec = document.getElementById('parking-' + floor);
         const targetBtn = document.getElementById('p-btn-' + floor);
         if (targetSec) targetSec.classList.add('active');
