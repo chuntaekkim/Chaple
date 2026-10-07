@@ -464,9 +464,9 @@
             color: #f3f4f6;
             font-weight: 600;
         }
-        /* 전화기 아이콘 버튼 (선명한 녹색 스타일 적용) */
+        /* 전화기 아이콘 버튼 (더 밝고 선명한 밝은 녹색 스타일 적용) */
         .call-icon-btn {
-            background-color: #059669;
+            background-color: #10b981;
             color: white;
             width: 42px;
             height: 42px;
@@ -475,7 +475,7 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.4);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
             flex-shrink: 0;
             transition: transform 0.1s ease;
         }
@@ -533,7 +533,8 @@
         .nav-item.nav-today { color: #ff7675; }
         .nav-item.nav-schedule { color: #a29bfe; }
         .nav-item.nav-parking { color: #55efc4; }
-        .nav-item.nav-contact { color: #74b9ff; }
+        /* 하단 연락 탭을 눈에 띄는 밝은 초록색 계열로 변경 */
+        .nav-item.nav-contact { color: #34d399; }
 
         .nav-item:not(.active) { opacity: 0.6; }
         .nav-item.active {
@@ -568,7 +569,7 @@
                     <div class="sub-box-desc">후문 / 지하 4·5층</div>
                 </div>
                 <div class="sub-box" onclick="switchTab('contact', document.querySelectorAll('.nav-item')[3])">
-                    <div class="sub-box-title" style="color: #38bdf8;">📞 비상 연락망</div>
+                    <div class="sub-box-title" style="color: #34d399;">📞 비상 연락망</div>
                     <div class="sub-box-desc">본사 및 대치사업소</div>
                 </div>
             </div>
