@@ -169,51 +169,67 @@
             flex: 1;
         }
 
-        /* 3개 월 탭 버튼 그룹 */
-        .tab-menu-group {
+        /* 3개 월 탭 버튼 그룹 (독립된 박스 카드 형태로 개선) */
+        .month-box-group {
             display: flex;
-            background-color: #1a1d29;
-            border-radius: 12px;
-            padding: 4px;
+            gap: 8px;
             margin-bottom: 16px;
             align-items: center;
-            gap: 4px;
         }
-        .tab-btn {
+        .month-card-btn {
             flex: 1;
-            background: none;
-            border: none;
-            color: #d1d5db;
-            padding: 10px 6px;
+            background-color: #1a1d29;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px 6px;
+            color: #9ca3af;
             font-size: 13px;
             font-weight: 600;
-            border-radius: 10px;
             cursor: pointer;
             text-align: center;
             transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .tab-btn.main-current-month {
-            flex: 1.25;
+        .month-card-btn .m-sub {
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        
+        /* 이번달 박스는 더 크고 눈에 띄게 강조 */
+        .month-card-btn.main-current-month {
+            flex: 1.35;
+            padding: 16px 8px;
+            background-color: #1e2433;
+            border: 2px solid rgba(59, 130, 246, 0.4);
             font-size: 15px;
-            font-weight: 700;
-            padding: 12px 8px;
         }
-        .tab-btn.active {
-            background-color: #f0a500;
-            color: #12141c;
+        .month-card-btn.main-current-month .m-sub {
+            font-size: 11px;
+            color: #93c5fd;
+            opacity: 1;
+            font-weight: 700;
         }
 
-        #monthBtnCurrent.active {
-            background-color: #3b82f6 !important;
-            color: #ffffff !important;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
+        /* 활성화(선택) 상태 색상 */
         #monthBtnPrev.active {
-            background-color: #64748b !important;
+            background-color: #475569 !important;
+            border-color: #64748b !important;
             color: #ffffff !important;
+        }
+        #monthBtnCurrent.active {
+            background-color: #2563eb !important;
+            border-color: #3b82f6 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
         }
         #monthBtnNext.active {
-            background-color: #10b981 !important;
+            background-color: #059669 !important;
+            border-color: #10b981 !important;
             color: #ffffff !important;
         }
 
@@ -314,7 +330,7 @@
             box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
         
-        /* 캘린더 그리드 스타일 (평일 축소 / 주말 확충으로 뱃지 글자 잘림 방지) */
+        /* 캘린더 그리드 스타일 (평일 축소 / 주말 확충) */
         .calendar-grid {
             display: grid;
             grid-template-columns: 0.8fr 1fr 1fr 1fr 1fr 1fr 1.3fr;
@@ -536,13 +552,22 @@
     <!-- [탭 2] 일정 화면 (웨딩/상담 통합) -->
     <div id="tab-schedule" class="content">
         <div class="section-title">운영 스케줄 통합 조회</div>
-        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 14px;">날짜를 누르면 웨딩 및 상담 상세 내역이 시간대별로 출력됩니다.</div>
+        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 12px;">날짜를 누르면 웨딩 및 상담 상세 내역이 출력됩니다.</div>
         
-        <!-- 지난달, 이번달(강조), 다음달 3개 버튼 그룹 -->
-        <div class="tab-menu-group" style="background-color: transparent; gap: 8px; padding: 0;">
-            <button id="monthBtnPrev" class="tab-btn" onclick="selectMonthTab('prev')">지난달</button>
-            <button id="monthBtnCurrent" class="tab-btn main-current-month active" onclick="selectMonthTab('current')">이번달</button>
-            <button id="monthBtnNext" class="tab-btn" onclick="selectMonthTab('next')">다음달</button>
+        <!-- 독립 박스 카드 형태의 월 선택 그룹 (이번달 강조) -->
+        <div class="month-box-group">
+            <button id="monthBtnPrev" class="month-card-btn" onclick="selectMonthTab('prev')">
+                <span id="labelPrev">지난달</span>
+                <span class="m-sub">이전</span>
+            </button>
+            <button id="monthBtnCurrent" class="month-card-btn main-current-month active" onclick="selectMonthTab('current')">
+                <span id="labelCurrent">이번달</span>
+                <span class="m-sub">현재 진행</span>
+            </button>
+            <button id="monthBtnNext" class="month-card-btn" onclick="selectMonthTab('next')">
+                <span id="labelNext">다음달</span>
+                <span class="m-sub">예정</span>
+            </button>
         </div>
 
         <div class="main-card" style="margin-top: 10px;">
@@ -824,14 +849,14 @@
     };
 
     function initMonthButtons() {
-        const btnPrev = document.getElementById('monthBtnPrev');
-        const btnCurrent = document.getElementById('monthBtnCurrent');
-        const btnNext = document.getElementById('monthBtnNext');
+        const lblPrev = document.getElementById('labelPrev');
+        const lblCurrent = document.getElementById('labelCurrent');
+        const lblNext = document.getElementById('labelNext');
         
-        if (btnPrev && btnCurrent && btnNext) {
-            btnPrev.innerText = `${prevMonth}월`;
-            btnCurrent.innerText = `${currentMonth}월 (이번달)`;
-            btnNext.innerText = `${nextMonth}월`;
+        if (lblPrev && lblCurrent && lblNext) {
+            lblPrev.innerText = `${prevMonth}월`;
+            lblCurrent.innerText = `${currentMonth}월`;
+            lblNext.innerText = `${nextMonth}월`;
         }
     }
 
