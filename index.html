@@ -1192,7 +1192,7 @@
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
 
-        // 엑셀 날짜-시간 포맷인 경우 (T 포함), 서버 타임존으로 왜곡되지 않도록 원본 시각 추출 및 02:00~04:00대 변형 방지 보정
+        // 스프레드시트 타임스탬프 왜곡 방지 및 정확한 시각 추출 (로컬 시간 기준 그대로 표시)
         if (strVal.includes('T')) {
             let parts = strVal.split('T');
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
@@ -1200,12 +1200,13 @@
                 let h = parseInt(timePart.split(':')[0], 10);
                 let m = timePart.split(':')[1] || '00';
                 
-                // 오전 2시~4시로 잘못 튀는 경우(UTC 변환 오류) 원래 입력된 시간대(오전 11시 등)로 복원
-                if (h === 2 || h === 3 || h === 4) {
-                    h += 9;
-                    if (h >= 24) h -= 24;
+                // UTC 변환으로 시간이 꼬이는 현상을 방지하기 위해 로컬 시간을 직접 파싱
+                let dObj = new Date(strVal);
+                if (!isNaN(dObj.getTime())) {
+                    h = dObj.getHours();
+                    m = dObj.getMinutes();
                 }
-                return `${String(h).padStart(2, '0')}:${m}`;
+                return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
             }
             strVal = parts[0];
         }
