@@ -1094,7 +1094,7 @@
             let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
             let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
             let weddingCar = row['웨딩카'] || '정보 없음';
-            let bus = row['버스대절'] || row['버스'] || '정보 없음';
+            let bus = row['대형버스'] || row['버스'] || '정보 없음';
             let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
             contentHtml += `
@@ -1102,7 +1102,7 @@
                     <div class="badge">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
                     <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
                     <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
-                    <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
+                    <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
                     <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
                 </div>
             `;
@@ -1237,7 +1237,7 @@
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
                 let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
                 let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['버스대절'] || row['버스'] || '정보 없음';
+                let bus = row['대형버스'] || row['버스'] || '정보 없음';
                 let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
                 contentHtml += `
@@ -1248,7 +1248,7 @@
                         <div class="uniform-row"><span class="info-label" style="color:#38bdf8; font-size:14px;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${dateDisplay}</span></div>
                         <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
                         <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">버스대절</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
                         <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
                     </div>
                 `;
