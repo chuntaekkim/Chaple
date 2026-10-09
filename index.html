@@ -324,7 +324,7 @@
             flex-direction: column;
             gap: 12px;
             margin-left: auto; 
-            margin-top: 64px; 
+            margin-top: 8px; /* 여백을 줄여서 박스가 잘리지 않고 위로 정렬되도록 수정 */
         }
         .parking-entrance-box {
             display: flex;
@@ -688,7 +688,7 @@
         <div id="parking-rear" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #007aff;">
                 <div style="font-weight: 700; margin-bottom: 6px; color: #38bdf8; font-size: 15px;">후문 주차장 이용 안내</div>
-                <div style="font-size: 14px; color: #e5e7eb;">상담 차량 및 시식 차량 주차</div>
+                <div style="font-size: 14px; color: #e5e7eb;">상담 차량 및 시식 차량 주차 (평소 9대 주차)</div>
             </div>
             <div class="main-card">
                 <div style="font-weight: 700; margin-bottom: 8px; color: #38bdf8; text-align: center; font-size: 15px;">후문 주차장 배치도</div>
@@ -713,6 +713,7 @@
                                     <span class="disabled-badge">♿ 장애인</span>
                                 </div>
                                 <div class="parking-slot">P9</div>
+                                <div class="parking-slot"></div>
                             </div>
                         </div>
                     </div>
