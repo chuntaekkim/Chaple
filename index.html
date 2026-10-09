@@ -1192,21 +1192,15 @@
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
 
-        // 스프레드시트 타임스탬프 왜곡 방지 및 정확한 시각 추출 (로컬 시간 기준 그대로 표시)
+        // 스프레드시트 타임스탬프 왜곡을 완벽 방지: 'T'가 포함된 경우 UTC 변환 오차 없이 원본 시각 문자열만 추출
         if (strVal.includes('T')) {
             let parts = strVal.split('T');
             let timePart = parts[1] ? parts[1].replace('Z', '').split('.')[0] : ''; 
             if (timePart && timePart !== '00:00:00') {
-                let h = parseInt(timePart.split(':')[0], 10);
-                let m = timePart.split(':')[1] || '00';
-                
-                // UTC 변환으로 시간이 꼬이는 현상을 방지하기 위해 로컬 시간을 직접 파싱
-                let dObj = new Date(strVal);
-                if (!isNaN(dObj.getTime())) {
-                    h = dObj.getHours();
-                    m = dObj.getMinutes();
+                let timeTokens = timePart.split(':');
+                if (timeTokens.length >= 2) {
+                    return `${timeTokens[0]}:${timeTokens[1]}`;
                 }
-                return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
             }
             strVal = parts[0];
         }
