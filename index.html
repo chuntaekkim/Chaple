@@ -324,7 +324,7 @@
             flex-direction: column;
             gap: 12px;
             margin-left: auto; 
-            margin-top: 8px; /* 여백을 줄여서 박스가 잘리지 않고 위로 정렬되도록 수정 */
+            margin-top: 8px; 
         }
         .parking-entrance-box {
             display: flex;
@@ -624,53 +624,57 @@
         </div>
 
         <div id="parking-b4" class="parking-section active">
-            <div class="event-card" style="border-left: 3px solid #f0a500;">
-                <div style="font-weight: 700; margin-bottom: 6px; color: #facc15; font-size: 15px;">지하 4층 주차 안내</div>
-                <div style="font-size: 14px; color: #e5e7eb;">혼주 차량 및 임원 차량 주차</div>
+            <div class="event-card" style="border-left: 3px solid #f0a500; margin-bottom: 8px; padding: 10px 12px;">
+                <div style="font-weight: 700; margin-bottom: 4px; color: #facc15; font-size: 14px;">지하 4층 주차 안내</div>
+                <div style="font-size: 13px; color: #e5e7eb;">혼주 차량 및 임원 차량 주차</div>
             </div>
+
+            <!-- 주요 임원 차량 리스트 상하 폭을 슬림하게 좁혀서 위쪽으로 당김 -->
+            <div class="section-title" style="color: #facc15; margin-top: 10px; margin-bottom: 6px;">■ 주요 임원 차량 리스트</div>
+            
+            <div style="background-color: #1a1d29; border-radius: 12px; padding: 10px 12px; margin-bottom: 16px;">
+                <div style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">제네시스 G90</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">197하4877</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #facc15;">김수연</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #facc15; text-align: left; padding-left: 8px;">대표님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">쏘렌토</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">02서2546</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #facc15;">강창열</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #facc15; text-align: left; padding-left: 8px;">1그룹장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #10b981; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">팰리세이드</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">126너2085</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #34d399;">김창현</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #34d399; text-align: left; padding-left: 8px;">대치점장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">포르쉐? 그랜저?</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">?</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">허준석</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">본부장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">제네시스 GV80</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">9665</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">심상석</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">2그룹장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 0; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">벤츠 220d</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">8881</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">서종필</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">노조임원님</div>
+                </div>
+            </div>
+
+            <!-- 지하 4층 배치도 -->
             <div class="main-card">
                 <div style="font-weight: 700; margin-bottom: 8px; color: #facc15; font-size: 15px;">지하 4층 배치도</div>
                 <img src="Chaple_B4.png" alt="지하 4층 주차 도면" class="parking-map-img" onerror="this.src='https://via.placeholder.com/400x300/1a1d29/8e8e93?text=Chaple_B4.png+Not+Found'">
-            </div>
-
-            <!-- 지하 4층 하단 주요 임원 차량 리스트 ([차량] [차량번호] [이름] [직급] 4단 균등 분할 & 일반 텍스트 왼쪽 정렬) -->
-            <div class="section-title" style="color: #facc15; margin-top: 20px;">■ 주요 임원 차량 리스트</div>
-            
-            <div class="event-card" style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 8px; padding: 12px 14px; display: flex; align-items: center; text-align: center;">
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">제네시스 G90</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">197하4877</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #facc15;">김수연</div>
-                <div style="flex: 1; font-weight: 600; font-size: 14px; color: #facc15; text-align: left; padding-left: 10px;">대표님</div>
-            </div>
-            <div class="event-card" style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 8px; padding: 12px 14px; display: flex; align-items: center; text-align: center;">
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">쏘렌토</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">02서2546</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #facc15;">강창열</div>
-                <div style="flex: 1; font-weight: 600; font-size: 14px; color: #facc15; text-align: left; padding-left: 10px;">1그룹장님</div>
-            </div>
-            <div class="event-card" style="background-color: #1c1f2e; border-left: 3px solid #10b981; margin-bottom: 8px; padding: 12px 14px; display: flex; align-items: center; text-align: center;">
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">팰리세이드</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">126너2085</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #34d399;">김창현</div>
-                <div style="flex: 1; font-weight: 600; font-size: 14px; color: #34d399; text-align: left; padding-left: 10px;">대치점장님</div>
-            </div>
-            <div class="event-card" style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 8px; padding: 12px 14px; display: flex; align-items: center; text-align: center;">
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">포르쉐? 그랜저?</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">?</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #60a5fa;">허준석</div>
-                <div style="flex: 1; font-weight: 600; font-size: 14px; color: #60a5fa; text-align: left; padding-left: 10px;">본부장님</div>
-            </div>
-            <div class="event-card" style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 8px; padding: 12px 14px; display: flex; align-items: center; text-align: center;">
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">제네시스 GV80</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">9665</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #60a5fa;">심상석</div>
-                <div style="flex: 1; font-weight: 600; font-size: 14px; color: #60a5fa; text-align: left; padding-left: 10px;">2그룹장님</div>
-            </div>
-            <div class="event-card" style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 8px; padding: 12px 14px; display: flex; align-items: center; text-align: center;">
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">벤츠 220d</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">8881</div>
-                <div style="flex: 1; font-weight: 700; font-size: 14px; color: #60a5fa;">서종필</div>
-                <div style="flex: 1; font-weight: 600; font-size: 14px; color: #60a5fa; text-align: left; padding-left: 10px;">노조임원님</div>
             </div>
         </div>
 
