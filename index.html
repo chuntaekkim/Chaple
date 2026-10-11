@@ -303,7 +303,7 @@
             display: block;
         }
         
-        /* 지하 4층 / 5층 이미지 도면 스타일 */
+        /* 지하 4층 / 5층 원본 크기 도면 스타일 */
         .parking-map-img {
             width: 100%;
             border-radius: 12px;
@@ -313,7 +313,7 @@
             object-fit: contain;
         }
 
-        /* 후문 주차장 모형 디자인 스타일 (간격 축소 및 P7~P9 조정) */
+        /* 후문 주차장 모형 디자인 스타일 */
         .parking-layout-box {
             background: linear-gradient(135deg, #161925 0%, #10121a 100%);
             border-radius: 14px;
@@ -373,7 +373,6 @@
             font-weight: 600;
         }
 
-        /* P7~P9 위치 하단 이동 및 네모 박스 간격 간소화 */
         .parking-side-group {
             display: flex;
             flex-direction: column;
@@ -431,7 +430,6 @@
         .cal-cell.has-event {
             border: 1px solid rgba(240, 165, 0, 0.4);
         }
-        /* 오늘 날짜 셀 강조 (굵은 노란색 테두리) */
         .cal-cell.is-today {
             border: 3px solid #f59e0b !important;
             background-color: rgba(245, 158, 11, 0.15) !important;
@@ -1186,6 +1184,7 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
+    // [강화된 날짜 매칭 로직] 연, 월, 일이 정확히 일치하는지 정밀 비교
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
@@ -1195,12 +1194,16 @@
                 if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
-            let matchYMD = strVal.match(new RegExp(`${targetYear}\\s*[-./]\\s*0?(${targetMonth})\\s*[-./]\\s*0?(\\d{1,2})`));
+            // 1. ISO 날짜 형태 또는 YYYY-MM-DD / YYYY.MM.DD 형태 매칭
+            let matchYMD = strVal.match(new RegExp(`(20\\d{2})\\s*[-./]\\s*0?(${targetMonth})\\s*[-./]\\s*0?(${targetDay})`));
             if (matchYMD) {
-                let d = parseInt(matchYMD[2], 10);
-                if (d === targetDay) return true;
+                let y = parseInt(matchYMD[1], 10);
+                let m = parseInt(matchYMD[2], 10);
+                let d = parseInt(matchYMD[3], 10);
+                if (y === targetYear && m === targetMonth && d === targetDay) return true;
             }
 
+            // 2. 월/일 형태 매칭 (예: 10월 11일, 10/11)
             let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
             if (strictMatch) {
                 let m = parseInt(strictMatch[2], 10);
@@ -1414,6 +1417,7 @@
         return strVal.replace('.000Z', '').replace('Z', '');
     }
 
+    // 날짜 클릭 시 시간별 웨딩/상담 상세 출력 함수
     function selectDate(dateStr, dayNum) {
         selectedDateStr = dateStr;
         renderCalendar();
@@ -1422,7 +1426,8 @@
         const titleEl = document.getElementById('selectedDateTitle');
         if (!container) return;
 
-        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
+        // 월별/주간 데이터(monthly, weekly) 전체 대상에서 해당 일자 데이터를 정확히 추출
+        const matchedWeekly = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
         const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
 
         if (titleEl) {
@@ -1498,7 +1503,7 @@
                         `;
                     }
                 }
-                cHtml += `</div>`;
+                contentHtml += `</div>`;
             });
         }
 
