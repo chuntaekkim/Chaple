@@ -1316,7 +1316,8 @@
         const summary = document.getElementById('scheduleSummary');
         if (!grid || !summary) return;
         
-        const monthWedding = dbData.monthly.filter(row => {
+        // 달력 상단 월간 총 건수도 weekly 기준으로 대조
+        const monthWedding = dbData.weekly.filter(row => {
             for (let [key, val] of Object.entries(row)) {
                 if (val !== undefined && val !== null) {
                     let strVal = String(val);
@@ -1362,7 +1363,9 @@
 
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${selectedMonth}월 ${day}일`;
-            const matchedWeddings = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
+            
+            // [핵심] 일정 탭 달력 배지도 weekly(주간) 우선 대조
+            const matchedWeddings = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
             const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true));
 
             const wCount = matchedWeddings.length;
@@ -1391,23 +1394,19 @@
         grid.innerHTML = html;
     }
 
-    // [수정된 시간 정제 파싱 로직: '15:00이나 ISO 날짜 문자열에서 시간만 시차 오류 없이 완벽 추출]
     function cleanValue(key, val) {
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
 
-        // 1. 스프레드시트 텍스트 강제 지정용 작은따옴표(') 제거
         if (strVal.startsWith("'")) {
             strVal = strVal.substring(1);
         }
 
-        // 2. 만약 ISO 형식 날짜 문자열(예: 1899-12-30T15:00:00.000Z 또는 2026-10-11T15:00:00Z 등)로 들어올 경우 시차 왜곡 방지를 위해 T 뒤의 시간(HH:mm)을 직접 추출
-        let isoTimeMatch = strVal.match(/T(\d{2}):(\d{2})/);
-        if (isoTimeMatch) {
-            return `${isoTimeMatch[1]}:${isoTimeMatch[2]}`;
+        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
+        if (isoMatch) {
+            return `${isoMatch[1]}:${isoMatch[2]}`;
         }
 
-        // 3. 일반적인 시간 형식 ("15:00", "15:00:00" 등) 매칭 추출
         let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
         if (timeMatch) {
             let h = timeMatch[1].padStart(2, '0');
@@ -1426,7 +1425,8 @@
         const titleEl = document.getElementById('selectedDateTitle');
         if (!container) return;
 
-        const matchedWeekly = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
+        // [요청 반영] 일정 탭에서도 weekly(주간) 데이터를 항상 참조하도록 설정
+        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
         const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
 
         if (titleEl) {
