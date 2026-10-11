@@ -341,7 +341,6 @@
             padding-left: 0;
             align-items: flex-start;
         }
-        /* 주차 칸 크기 살짝 축소 (44px) */
         .parking-slot {
             width: 44px;
             height: 44px;
@@ -362,7 +361,6 @@
             border-color: #60a5fa;
             background: linear-gradient(145deg, #1e3a8a, #1d212d);
         }
-        /* 빈 네모 박스 스타일 */
         .parking-slot.empty-slot {
             border: 2px dashed rgba(255, 255, 255, 0.2);
             background: transparent;
@@ -389,7 +387,7 @@
             display: flex;
             justify-content: flex-end;
             width: 100%;
-            margin-top: 12px; /* 입구 박스를 한 칸 더 아래로 내림 */
+            margin-top: 12px;
         }
         .parking-entrance {
             font-size: 11px;
@@ -765,7 +763,6 @@
                                     <span class="disabled-badge">♿ 장애인</span>
                                 </div>
                                 <div class="parking-slot">P9</div>
-                                <!-- 요청하신 P7, P8, P9 아래 빈 네모 박스 추가 -->
                                 <div class="parking-slot empty-slot"></div>
                             </div>
                         </div>
@@ -1394,14 +1391,23 @@
         grid.innerHTML = html;
     }
 
+    // [수정된 시간 정제 파싱 로직: '15:00이나 ISO 날짜 문자열에서 시간만 시차 오류 없이 완벽 추출]
     function cleanValue(key, val) {
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
 
+        // 1. 스프레드시트 텍스트 강제 지정용 작은따옴표(') 제거
         if (strVal.startsWith("'")) {
             strVal = strVal.substring(1);
         }
 
+        // 2. 만약 ISO 형식 날짜 문자열(예: 1899-12-30T15:00:00.000Z 또는 2026-10-11T15:00:00Z 등)로 들어올 경우 시차 왜곡 방지를 위해 T 뒤의 시간(HH:mm)을 직접 추출
+        let isoTimeMatch = strVal.match(/T(\d{2}):(\d{2})/);
+        if (isoTimeMatch) {
+            return `${isoTimeMatch[1]}:${isoTimeMatch[2]}`;
+        }
+
+        // 3. 일반적인 시간 형식 ("15:00", "15:00:00" 등) 매칭 추출
         let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
         if (timeMatch) {
             let h = timeMatch[1].padStart(2, '0');
