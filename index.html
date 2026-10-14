@@ -205,7 +205,7 @@
             font-weight: 700;
         }
 
-        /* 3개 월 탭 버튼 그룹 (높이 축소 및 여백 조정) */
+        /* 3개 월 탭 버튼 그룹 */
         .month-box-group {
             display: flex;
             gap: 6px;
@@ -610,6 +610,45 @@
             font-weight: 700;
         }
         .nav-item.active svg { transform: scale(1.15); }
+
+        /* 임원 차량 행 전용 스타일 */
+        .exec-row {
+            background-color: #242838;
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .exec-col-model {
+            font-weight: 700;
+            font-size: 14px;
+            color: #ffffff;
+            flex: 1.5;
+            white-space: nowrap;
+        }
+        .exec-col-num {
+            font-weight: 600;
+            font-size: 13px;
+            color: #9ca3af;
+            flex: 1.1;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .exec-col-name {
+            font-weight: 700;
+            font-size: 14px;
+            flex: 0.8;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .exec-col-role {
+            font-weight: 600;
+            font-size: 13px;
+            flex: 1.2;
+            text-align: right;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -772,7 +811,7 @@
             </div>
         </div>
 
-        <!-- [수정] 임원 차량 탭 레이아웃 (지하 4층 디자인과 높이/폰트크기 통일) -->
+        <!-- 임원 차량 탭 -->
         <div id="parking-exec" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 700; margin-bottom: 6px; color: #f0a500; font-size: 15px;">주요 임원 차량 리스트</div>
@@ -783,40 +822,46 @@
                 <div style="font-weight: 700; margin-bottom: 12px; color: #f0a500; font-size: 15px;">등록 임원 차량 목록</div>
                 
                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <div style="background-color: #242838; border-left: 4px solid #f0a500; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-weight: 700; font-size: 14px; color: #ffffff; flex: 1.2;">제네시스 G90</span>
-                        <span style="font-weight: 600; font-size: 14px; color: #9ca3af; flex: 1.2; text-align: center;">197하4877</span>
-                        <span style="font-weight: 700; font-size: 14px; color: #f0a500; flex: 1; text-align: right;">김수연 대표님</span>
+                    <div class="exec-row" style="border-left: 4px solid #f0a500;">
+                        <span class="exec-col-model">제네시스 G90</span>
+                        <span class="exec-col-num">197하4877</span>
+                        <span class="exec-col-name" style="color: #f0a500;">김수연</span>
+                        <span class="exec-col-role" style="color: #f0a500;">대표님</span>
                     </div>
 
-                    <div style="background-color: #242838; border-left: 4px solid #f0a500; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-weight: 700; font-size: 14px; color: #ffffff; flex: 1.2;">쏘렌토</span>
-                        <span style="font-weight: 600; font-size: 14px; color: #9ca3af; flex: 1.2; text-align: center;">02서2546</span>
-                        <span style="font-weight: 700; font-size: 14px; color: #f0a500; flex: 1; text-align: right;">강창열 1그룹장</span>
+                    <div class="exec-row" style="border-left: 4px solid #f0a500;">
+                        <span class="exec-col-model">쏘렌토</span>
+                        <span class="exec-col-num">02서2546</span>
+                        <span class="exec-col-name" style="color: #f0a500;">강창열</span>
+                        <span class="exec-col-role" style="color: #f0a500;">1그룹장님</span>
                     </div>
 
-                    <div style="background-color: #242838; border-left: 4px solid #4cd964; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-weight: 700; font-size: 14px; color: #ffffff; flex: 1.2;">팰리세이드</span>
-                        <span style="font-weight: 600; font-size: 14px; color: #9ca3af; flex: 1.2; text-align: center;">126너2085</span>
-                        <span style="font-weight: 700; font-size: 14px; color: #4cd964; flex: 1; text-align: right;">김창현 대치점장</span>
+                    <div class="exec-row" style="border-left: 4px solid #4cd964;">
+                        <span class="exec-col-model">팰리세이드</span>
+                        <span class="exec-col-num">126너2085</span>
+                        <span class="exec-col-name" style="color: #4cd964;">김창현</span>
+                        <span class="exec-col-role" style="color: #4cd964;">대치점장님</span>
                     </div>
 
-                    <div style="background-color: #242838; border-left: 4px solid #60a5fa; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-weight: 700; font-size: 14px; color: #ffffff; flex: 1.2;">포르쉐 / 그랜저</span>
-                        <span style="font-weight: 600; font-size: 14px; color: #9ca3af; flex: 1.2; text-align: center;">미확인</span>
-                        <span style="font-weight: 700; font-size: 14px; color: #60a5fa; flex: 1; text-align: right;">허준석 본부장</span>
+                    <div class="exec-row" style="border-left: 4px solid #60a5fa;">
+                        <span class="exec-col-model">포르쉐 / 그랜저</span>
+                        <span class="exec-col-num">미확인</span>
+                        <span class="exec-col-name" style="color: #60a5fa;">허준석</span>
+                        <span class="exec-col-role" style="color: #60a5fa;">본부장님</span>
                     </div>
 
-                    <div style="background-color: #242838; border-left: 4px solid #60a5fa; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-weight: 700; font-size: 14px; color: #ffffff; flex: 1.2;">제네시스 GV80</span>
-                        <span style="font-weight: 600; font-size: 14px; color: #9ca3af; flex: 1.2; text-align: center;">9665</span>
-                        <span style="font-weight: 700; font-size: 14px; color: #60a5fa; flex: 1; text-align: right;">심상석 2그룹장</span>
+                    <div class="exec-row" style="border-left: 4px solid #60a5fa;">
+                        <span class="exec-col-model">제네시스 GV80</span>
+                        <span class="exec-col-num">9665</span>
+                        <span class="exec-col-name" style="color: #60a5fa;">심상석</span>
+                        <span class="exec-col-role" style="color: #60a5fa;">2그룹장님</span>
                     </div>
 
-                    <div style="background-color: #242838; border-left: 4px solid #60a5fa; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="font-weight: 700; font-size: 14px; color: #ffffff; flex: 1.2;">벤츠 220d</span>
-                        <span style="font-weight: 600; font-size: 14px; color: #9ca3af; flex: 1.2; text-align: center;">8881</span>
-                        <span style="font-weight: 700; font-size: 14px; color: #60a5fa; flex: 1; text-align: right;">서종필 노조임원</span>
+                    <div class="exec-row" style="border-left: 4px solid #60a5fa;">
+                        <span class="exec-col-model">벤츠 220d</span>
+                        <span class="exec-col-num">8881</span>
+                        <span class="exec-col-name" style="color: #60a5fa;">서종필</span>
+                        <span class="exec-col-role" style="color: #60a5fa;">노조임원님</span>
                     </div>
                 </div>
             </div>
@@ -1186,6 +1231,7 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
+    // [강화된 날짜 매칭 함수] "2026-10-24 오전 11시" 및 각종 포맷 완벽 지원
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
@@ -1195,26 +1241,31 @@
                 if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
+            // 숫자들만 추출해서 날짜 판정 (예: ["2026", "10", "24", "11"] 또는 ["10", "24", "11"])
             let numbers = strVal.match(/\d+/g);
             if (!numbers || numbers.length < 2) continue;
 
             let y = 0, m = 0, d = 0;
+
             if (numbers.length >= 3 && numbers[0].length === 4) {
+                // YYYY-MM-DD 또는 YYYY년 MM월 DD일 형태 (예: 2026-10-24 ...)
                 y = parseInt(numbers[0], 10);
                 m = parseInt(numbers[1], 10);
                 d = parseInt(numbers[2], 10);
             } else if (numbers.length >= 3 && numbers[2].length === 4) {
+                // MM-DD-YYYY 형태
                 m = parseInt(numbers[0], 10);
                 d = parseInt(numbers[1], 10);
                 y = parseInt(numbers[2], 10);
-            } else if (numbers.length === 2) {
+            } else if (numbers.length >= 2) {
+                // 연도가 생략된 MM-DD 형태 (예: 10-24 또는 10/24)
                 m = parseInt(numbers[0], 10);
                 d = parseInt(numbers[1], 10);
                 y = targetYear;
             }
 
             if (m === targetMonth && d === targetDay) {
-                if (y === 0 || y === targetYear) return true;
+                if (y === 0 || y === targetYear || isNaN(y)) return true;
             }
         }
         return false;
@@ -1317,37 +1368,21 @@
         const grid = document.getElementById('calendarGrid');
         const summary = document.getElementById('scheduleSummary');
         if (!grid || !summary) return;
+
+        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
+        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
+        const totalDays = lastDayObj.getDate();
+        const startDayOffset = firstDayObj.getDay();
         
-        const monthWedding = dbData.weekly.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    let strVal = String(val);
-                    let numbers = strVal.match(/\d+/g);
-                    if (numbers && numbers.length >= 2) {
-                        let m = parseInt(numbers[0].length === 4 ? numbers[1] : numbers[0], 10);
-                        if (m === selectedMonth) return true;
-                    }
-                }
-            }
-            return false;
-        });
+        let totalMonthWeddings = 0;
+        let totalMonthConsults = 0;
 
-        const monthConsult = dbData.consult.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    if (!key.includes('상담일시') && !key.includes('상담')) continue;
-                    let strVal = String(val);
-                    let numbers = strVal.match(/\d+/g);
-                    if (numbers && numbers.length >= 2) {
-                        let m = parseInt(numbers[0].length === 4 ? numbers[1] : numbers[0], 10);
-                        if (m === selectedMonth) return true;
-                    }
-                }
-            }
-            return false;
-        });
+        for (let day = 1; day <= totalDays; day++) {
+            totalMonthWeddings += dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false)).length;
+            totalMonthConsults += dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true)).length;
+        }
 
-        summary.innerText = `${selectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
+        summary.innerText = `${selectedMonth}월 웨딩 총 ${totalMonthWeddings}건 · 상담 총 ${totalMonthConsults}건`;
 
         let html = `
             <div class="cal-day-header" style="color: #ff3b30;">일</div>
@@ -1358,11 +1393,6 @@
             <div class="cal-day-header">금</div>
             <div class="cal-day-header" style="color: #3b82f6;">토</div>
         `;
-
-        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
-        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
-        const totalDays = lastDayObj.getDate();
-        const startDayOffset = firstDayObj.getDay();
 
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
@@ -1406,18 +1436,6 @@
 
         if (strVal.startsWith("'")) {
             strVal = strVal.substring(1);
-        }
-
-        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
-        if (isoMatch) {
-            return `${isoMatch[1]}:${isoMatch[2]}`;
-        }
-
-        let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
-        if (timeMatch) {
-            let h = timeMatch[1].padStart(2, '0');
-            let m = timeMatch[2];
-            return `${h}:${m}`;
         }
 
         return strVal.replace('.000Z', '').replace('Z', '');
