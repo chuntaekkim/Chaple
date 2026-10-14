@@ -205,7 +205,7 @@
             font-weight: 700;
         }
 
-        /* 3개 월 탭 버튼 그룹 */
+        /* 3개 월 탭 버튼 그룹 (높이 축소 및 여백 조정) */
         .month-box-group {
             display: flex;
             gap: 6px;
@@ -329,11 +329,11 @@
             flex-direction: column;
             gap: 6px;
             width: 100%;
-            max-width: 250px;
+            max-width: 260px;
         }
         .parking-row {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             justify-content: flex-start;
         }
         .parking-row.with-side {
@@ -342,19 +342,19 @@
             align-items: flex-start;
         }
         .parking-slot {
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             background: linear-gradient(145deg, #242838, #1d212d);
             border: 2px solid #3b82f6;
-            border-radius: 6px;
+            border-radius: 7px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             color: #93c5fd;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
             position: relative;
         }
         .parking-slot.disabled-slot {
@@ -367,10 +367,10 @@
             box-shadow: none;
         }
         .disabled-badge {
-            font-size: 7px;
+            font-size: 8px;
             color: #93c5fd;
             background-color: rgba(59, 130, 246, 0.3);
-            padding: 1px 2px;
+            padding: 1px 3px;
             border-radius: 3px;
             margin-top: 1px;
             font-weight: 600;
@@ -381,13 +381,13 @@
             flex-direction: column;
             gap: 6px;
             margin-left: auto; 
-            margin-top: 44px;
+            margin-top: 18px;
         }
         .parking-entrance-box {
             display: flex;
             justify-content: flex-end;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         .parking-entrance {
             font-size: 11px;
@@ -610,46 +610,6 @@
             font-weight: 700;
         }
         .nav-item.active svg { transform: scale(1.15); }
-
-        /* [요청 반영] 임원 차량 행: 차종 / 차량번호 / 이름 / 직급 모두 왼쪽 정렬 (- 제거) */
-        .exec-row {
-            background-color: #242838;
-            border-radius: 10px;
-            padding: 12px 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .exec-col-model {
-            font-weight: 700;
-            font-size: 13px;
-            color: #ffffff;
-            flex: 1.3;
-            text-align: left;
-            white-space: nowrap;
-        }
-        .exec-col-num {
-            font-weight: 600;
-            font-size: 12px;
-            color: #9ca3af;
-            flex: 1.2;
-            text-align: left;
-            white-space: nowrap;
-        }
-        .exec-col-name {
-            font-weight: 700;
-            font-size: 13px;
-            flex: 0.9;
-            text-align: left;
-            white-space: nowrap;
-        }
-        .exec-col-role {
-            font-weight: 600;
-            font-size: 12px;
-            flex: 1.0;
-            text-align: left;
-            white-space: nowrap;
-        }
     </style>
 </head>
 <body>
@@ -802,6 +762,7 @@
                                     <span class="disabled-badge">♿ 장애인</span>
                                 </div>
                                 <div class="parking-slot">P9</div>
+                                <div class="parking-slot empty-slot"></div>
                             </div>
                         </div>
                     </div>
@@ -812,58 +773,48 @@
             </div>
         </div>
 
-        <!-- [요청 반영] 임원 차량 탭: 차종 / 차량번호 / 이름 / 직급 모두 왼쪽 정렬 (- 제거) -->
         <div id="parking-exec" class="parking-section">
-            <div class="event-card" style="border-left: 3px solid #f0a500;">
-                <div style="font-weight: 700; margin-bottom: 6px; color: #f0a500; font-size: 15px;">주요 임원 차량 리스트</div>
-                <div style="font-size: 14px; color: #e5e7eb;">지하 4층 전용 주차 대상 임원 차량 정보입니다.</div>
+            <div class="event-card" style="border-left: 3px solid #facc15; margin-bottom: 12px; padding: 10px 12px;">
+                <div style="font-weight: 700; margin-bottom: 4px; color: #facc15; font-size: 14px;">주요 임원 차량 리스트</div>
+                <div style="font-size: 13px; color: #e5e7eb;">지하 4층 전용 주차 대상 임원 차량 정보입니다.</div>
             </div>
             
-            <div class="main-card">
-                <div style="font-weight: 700; margin-bottom: 12px; color: #f0a500; font-size: 15px;">등록 임원 차량 목록</div>
-                
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <div class="exec-row" style="border-left: 4px solid #f0a500;">
-                        <span class="exec-col-model">제네시스 G90</span>
-                        <span class="exec-col-num">197하4877</span>
-                        <span class="exec-col-name" style="color: #f0a500;">김수연</span>
-                        <span class="exec-col-role" style="color: #f0a500;">대표님</span>
-                    </div>
-
-                    <div class="exec-row" style="border-left: 4px solid #f0a500;">
-                        <span class="exec-col-model">쏘렌토</span>
-                        <span class="exec-col-num">02서2546</span>
-                        <span class="exec-col-name" style="color: #f0a500;">강창열</span>
-                        <span class="exec-col-role" style="color: #f0a500;">1그룹장님</span>
-                    </div>
-
-                    <div class="exec-row" style="border-left: 4px solid #4cd964;">
-                        <span class="exec-col-model">팰리세이드</span>
-                        <span class="exec-col-num">126너2085</span>
-                        <span class="exec-col-name" style="color: #4cd964;">김창현</span>
-                        <span class="exec-col-role" style="color: #4cd964;">대치점장님</span>
-                    </div>
-
-                    <div class="exec-row" style="border-left: 4px solid #60a5fa;">
-                        <span class="exec-col-model">포르쉐/그랜저</span>
-                        <span class="exec-col-num">미확인</span>
-                        <span class="exec-col-name" style="color: #60a5fa;">허준석</span>
-                        <span class="exec-col-role" style="color: #60a5fa;">본부장님</span>
-                    </div>
-
-                    <div class="exec-row" style="border-left: 4px solid #60a5fa;">
-                        <span class="exec-col-model">제네시스 GV80</span>
-                        <span class="exec-col-num">9665</span>
-                        <span class="exec-col-name" style="color: #60a5fa;">심상석</span>
-                        <span class="exec-col-role" style="color: #60a5fa;">2그룹장님</span>
-                    </div>
-
-                    <div class="exec-row" style="border-left: 4px solid #60a5fa;">
-                        <span class="exec-col-model">벤츠 220d</span>
-                        <span class="exec-col-num">8881</span>
-                        <span class="exec-col-name" style="color: #60a5fa;">서종필</span>
-                        <span class="exec-col-role" style="color: #60a5fa;">노조임원님</span>
-                    </div>
+            <div style="background-color: #1a1d29; border-radius: 12px; padding: 10px 12px; margin-bottom: 16px;">
+                <div style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">제네시스 G90</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">197하4877</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #facc15;">김수연</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #facc15; text-align: left; padding-left: 8px;">대표님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">쏘렌토</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">02서2546</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #facc15;">강창열</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #facc15; text-align: left; padding-left: 8px;">1그룹장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #10b981; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">팰리세이드</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">126너2085</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #34d399;">김창현</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #34d399; text-align: left; padding-left: 8px;">대치점장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">포르쉐? 그랜저?</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">?</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">허준석</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">본부장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">제네시스 GV80</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">9665</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">심상석</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">2그룹장님</div>
+                </div>
+                <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 0; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">벤츠 220d</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">8881</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">서종필</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">노조임원님</div>
                 </div>
             </div>
         </div>
@@ -1232,56 +1183,38 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
-    // 안정적인 기본 날짜 매칭 함수로 원복 (키 값 오류 해결)
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
-            
-            let cleanKey = String(key).replace(/^'/, '').trim();
-            let strVal = String(val).replace(/^'/, '').trim();
+            let strVal = String(val).trim();
 
             if (isConsult) {
-                if (!cleanKey.includes('상담일시') && !cleanKey.includes('상담')) continue;
+                if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
-            let numbers = strVal.match(/\d+/g);
-            if (!numbers || numbers.length < 2) continue;
-
-            let y = 0, m = 0, d = 0;
-
-            if (numbers.length >= 3 && numbers[0].length === 4) {
-                y = parseInt(numbers[0], 10);
-                m = parseInt(numbers[1], 10);
-                d = parseInt(numbers[2], 10);
-            } else if (numbers.length >= 3 && numbers[2].length === 4) {
-                m = parseInt(numbers[0], 10);
-                d = parseInt(numbers[1], 10);
-                y = parseInt(numbers[2], 10);
-            } else if (numbers.length >= 2) {
-                m = parseInt(numbers[0], 10);
-                d = parseInt(numbers[1], 10);
-                y = targetYear;
+            let matchYMD = strVal.match(new RegExp(`(20\\d{2})\\s*[-./]\\s*0?(${targetMonth})\\s*[-./]\\s*0?(${targetDay})`));
+            if (matchYMD) {
+                let y = parseInt(matchYMD[1], 10);
+                let m = parseInt(matchYMD[2], 10);
+                let d = parseInt(matchYMD[3], 10);
+                if (y === targetYear && m === targetMonth && d === targetDay) return true;
             }
 
-            if (m === targetMonth && d === targetDay) {
-                if (y === 0 || y === targetYear || isNaN(y)) return true;
+            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
+            if (strictMatch) {
+                let m = parseInt(strictMatch[2], 10);
+                let d = parseInt(strictMatch[3], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
+
+            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
+            if (koreanMatch) {
+                let m = parseInt(koreanMatch[1], 10);
+                let d = parseInt(koreanMatch[2], 10);
+                if (m === targetMonth && d === targetDay) return true;
             }
         }
         return false;
-    }
-
-    function getCleanRowProp(row, keys) {
-        for (let [rawKey, rawVal] of Object.entries(row)) {
-            let cleanKey = String(rawKey).replace(/^'/, '').trim();
-            for (let k of keys) {
-                if (cleanKey === k || cleanKey.includes(k)) {
-                    if (rawVal !== undefined && rawVal !== null) {
-                        return String(rawVal).replace(/^'/, '').trim();
-                    }
-                }
-            }
-        }
-        return '';
     }
 
     function renderTodayInfo() {
@@ -1312,11 +1245,11 @@
         } else {
             let wHtml = '';
             matchedTodayWeddings.forEach((row, idx) => {
-                let timeVal = getCleanRowProp(row, ['시간', '예식시간']);
-                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원']) || '정보 없음';
-                let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
-                let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
-                let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
+                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
+                let weddingCar = row['웨딩카'] || '정보 없음';
+                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
+                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
                 wHtml += `
                     <div class="event-card" style="border-left: 3px solid #f0a500;">
@@ -1344,10 +1277,9 @@
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
-                    let cleanKey = String(key).replace(/^'/, '').trim();
-                    if (cleanKey.includes('예정예식일') || cleanKey.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(cleanKey, val);
-                    let pureKey = cleanKey.split(':')[0].trim();
+                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
+                    let cleaned = cleanValue(key, val);
+                    let pureKey = key.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
@@ -1382,21 +1314,31 @@
         const grid = document.getElementById('calendarGrid');
         const summary = document.getElementById('scheduleSummary');
         if (!grid || !summary) return;
-
-        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
-        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
-        const totalDays = lastDayObj.getDate();
-        const startDayOffset = firstDayObj.getDay();
         
-        let totalMonthWeddings = 0;
-        let totalMonthConsults = 0;
+        const monthWedding = dbData.weekly.filter(row => {
+            for (let [key, val] of Object.entries(row)) {
+                if (val !== undefined && val !== null) {
+                    let strVal = String(val);
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
+                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
+                }
+            }
+            return false;
+        });
 
-        for (let day = 1; day <= totalDays; day++) {
-            totalMonthWeddings += dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false)).length;
-            totalMonthConsults += dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true)).length;
-        }
+        const monthConsult = dbData.consult.filter(row => {
+            for (let [key, val] of Object.entries(row)) {
+                if (val !== undefined && val !== null) {
+                    if (!key.includes('상담일시') && !key.includes('상담')) continue;
+                    let strVal = String(val);
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
+                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
+                }
+            }
+            return false;
+        });
 
-        summary.innerText = `${selectedMonth}월 웨딩 총 ${totalMonthWeddings}건 · 상담 총 ${totalMonthConsults}건`;
+        summary.innerText = `${selectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
 
         let html = `
             <div class="cal-day-header" style="color: #ff3b30;">일</div>
@@ -1407,6 +1349,11 @@
             <div class="cal-day-header">금</div>
             <div class="cal-day-header" style="color: #3b82f6;">토</div>
         `;
+
+        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
+        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
+        const totalDays = lastDayObj.getDate();
+        const startDayOffset = firstDayObj.getDay();
 
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
@@ -1452,7 +1399,19 @@
             strVal = strVal.substring(1);
         }
 
-        return strVal.replace('.000Z', '').replace('Z', '').trim();
+        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
+        if (isoMatch) {
+            return `${isoMatch[1]}:${isoMatch[2]}`;
+        }
+
+        let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
+        if (timeMatch) {
+            let h = timeMatch[1].padStart(2, '0');
+            let m = timeMatch[2];
+            return `${h}:${m}`;
+        }
+
+        return strVal.replace('.000Z', '').replace('Z', '');
     }
 
     function selectDate(dateStr, dayNum) {
@@ -1480,12 +1439,12 @@
         if (matchedWeekly.length > 0) {
             contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
-                let timeVal = getCleanRowProp(row, ['시간', '예식시간']);
+                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
-                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원']) || '정보 없음';
-                let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
-                let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
-                let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
+                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
+                let weddingCar = row['웨딩카'] || '정보 없음';
+                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
+                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
 
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #f0a500;">
@@ -1512,10 +1471,9 @@
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
-                    let cleanKey = String(key).replace(/^'/, '').trim();
-                    if (cleanKey.includes('예정예식일') || cleanKey.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(cleanKey, val);
-                    let pureKey = cleanKey.split(':')[0].trim();
+                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
+                    let cleaned = cleanValue(key, val);
+                    let pureKey = key.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
