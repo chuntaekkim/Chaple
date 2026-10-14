@@ -611,7 +611,7 @@
         }
         .nav-item.active svg { transform: scale(1.15); }
 
-        /* [수정] 임원 차량 행: 차종 / 차량번호 / 전화번호 / 이름 / 직급(왼쪽 정렬) 순서 */
+        /* [수정] 임원 차량 행: 차종 / 차량번호 / 이름 / 직급 모두 왼쪽 정렬 (- 제거) */
         .exec-row {
             background-color: #242838;
             border-radius: 10px;
@@ -624,38 +624,30 @@
             font-weight: 700;
             font-size: 13px;
             color: #ffffff;
-            flex: 1.2;
+            flex: 1.3;
+            text-align: left;
             white-space: nowrap;
         }
         .exec-col-num {
             font-weight: 600;
             font-size: 12px;
             color: #9ca3af;
-            flex: 1.1;
-            text-align: center;
-            white-space: nowrap;
-        }
-        .exec-col-phone {
-            font-weight: 500;
-            font-size: 11px;
-            color: #60a5fa;
             flex: 1.2;
-            text-align: center;
+            text-align: left;
             white-space: nowrap;
         }
         .exec-col-name {
             font-weight: 700;
             font-size: 13px;
-            flex: 0.8;
-            text-align: center;
+            flex: 0.9;
+            text-align: left;
             white-space: nowrap;
         }
         .exec-col-role {
             font-weight: 600;
             font-size: 12px;
             flex: 1.0;
-            text-align: left; /* 직급 왼쪽 정렬 */
-            padding-left: 4px;
+            text-align: left;
             white-space: nowrap;
         }
     </style>
@@ -820,7 +812,7 @@
             </div>
         </div>
 
-        <!-- [수정] 임원 차량 탭: 차종 / 차량번호 / 전화번호 / 이름 / 직급(왼쪽 정렬) 순서 -->
+        <!-- [수정] 임원 차량 탭: 차종 / 차량번호 / 이름 / 직급 왼쪽 정렬 (- 제거) -->
         <div id="parking-exec" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 700; margin-bottom: 6px; color: #f0a500; font-size: 15px;">주요 임원 차량 리스트</div>
@@ -834,7 +826,6 @@
                     <div class="exec-row" style="border-left: 4px solid #f0a500;">
                         <span class="exec-col-model">제네시스 G90</span>
                         <span class="exec-col-num">197하4877</span>
-                        <span class="exec-col-phone">-</span>
                         <span class="exec-col-name" style="color: #f0a500;">김수연</span>
                         <span class="exec-col-role" style="color: #f0a500;">대표님</span>
                     </div>
@@ -842,7 +833,6 @@
                     <div class="exec-row" style="border-left: 4px solid #f0a500;">
                         <span class="exec-col-model">쏘렌토</span>
                         <span class="exec-col-num">02서2546</span>
-                        <span class="exec-col-phone">-</span>
                         <span class="exec-col-name" style="color: #f0a500;">강창열</span>
                         <span class="exec-col-role" style="color: #f0a500;">1그룹장님</span>
                     </div>
@@ -850,7 +840,6 @@
                     <div class="exec-row" style="border-left: 4px solid #4cd964;">
                         <span class="exec-col-model">팰리세이드</span>
                         <span class="exec-col-num">126너2085</span>
-                        <span class="exec-col-phone">-</span>
                         <span class="exec-col-name" style="color: #4cd964;">김창현</span>
                         <span class="exec-col-role" style="color: #4cd964;">대치점장님</span>
                     </div>
@@ -858,7 +847,6 @@
                     <div class="exec-row" style="border-left: 4px solid #60a5fa;">
                         <span class="exec-col-model">포르쉐/그랜저</span>
                         <span class="exec-col-num">미확인</span>
-                        <span class="exec-col-phone">-</span>
                         <span class="exec-col-name" style="color: #60a5fa;">허준석</span>
                         <span class="exec-col-role" style="color: #60a5fa;">본부장님</span>
                     </div>
@@ -866,7 +854,6 @@
                     <div class="exec-row" style="border-left: 4px solid #60a5fa;">
                         <span class="exec-col-model">제네시스 GV80</span>
                         <span class="exec-col-num">9665</span>
-                        <span class="exec-col-phone">-</span>
                         <span class="exec-col-name" style="color: #60a5fa;">심상석</span>
                         <span class="exec-col-role" style="color: #60a5fa;">2그룹장님</span>
                     </div>
@@ -874,7 +861,6 @@
                     <div class="exec-row" style="border-left: 4px solid #60a5fa;">
                         <span class="exec-col-model">벤츠 220d</span>
                         <span class="exec-col-num">8881</span>
-                        <span class="exec-col-phone">-</span>
                         <span class="exec-col-name" style="color: #60a5fa;">서종필</span>
                         <span class="exec-col-role" style="color: #60a5fa;">노조임원님</span>
                     </div>
@@ -1246,19 +1232,19 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
-    // [완전 보완된 날짜 매칭 함수] 모든 작은따옴표('), 공백, 특수문자 전처리
+    // [강화된 날짜 매칭 함수] 열 이름이나 값에 상관없이 행 전체에서 월/일 숫자를 정확히 검출
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
             
-            let cleanKey = String(key).replace(/['"\s]/g, '').trim();
-            let strVal = String(val).replace(/['"\s]/g, '').trim();
+            let cleanKey = String(key).replace(/['"\s]/g, '').toLowerCase();
+            let strVal = String(val).replace(/['"\s]/g, '');
 
             if (isConsult) {
-                if (!cleanKey.includes('상담일시') && !cleanKey.includes('상담')) continue;
+                // 상담 시트인 경우 '상담' 또는 '일시' 관련 컬럼 우선 확인, 전체 행 검사도 지원
+                if (cleanKey.includes('예정예식일') || cleanKey.includes('예정일')) continue;
             }
 
-            // 숫자 부분만 추출 (예: "2026-10-25" -> ["2026", "10", "25"])
             let numbers = strVal.match(/\d+/g);
             if (!numbers || numbers.length < 2) continue;
 
@@ -1285,12 +1271,12 @@
         return false;
     }
 
-    // 행에서 작은따옴표나 공백이 제거된 특정 속성 값을 유연하게 찾아오는 헬퍼 함수
     function getCleanRowProp(row, keys) {
         for (let [rawKey, rawVal] of Object.entries(row)) {
-            let cleanKey = String(rawKey).replace(/['"\s]/g, '').trim();
+            let cleanKey = String(rawKey).replace(/['"\s]/g, '').toLowerCase();
             for (let k of keys) {
-                if (cleanKey === k || cleanKey.includes(k)) {
+                let targetKey = k.replace(/['"\s]/g, '').toLowerCase();
+                if (cleanKey === targetKey || cleanKey.includes(targetKey)) {
                     if (rawVal !== undefined && rawVal !== null) {
                         return String(rawVal).replace(/^'/, '').trim();
                     }
@@ -1328,8 +1314,8 @@
         } else {
             let wHtml = '';
             matchedTodayWeddings.forEach((row, idx) => {
-                let timeVal = getCleanRowProp(row, ['시간', '예식시간']);
-                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원']) || '정보 없음';
+                let timeVal = getCleanRowProp(row, ['시간', '예식시간', '타임']);
+                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원', '지불']) || '정보 없음';
                 let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
                 let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
                 let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
@@ -1496,9 +1482,9 @@
         if (matchedWeekly.length > 0) {
             contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
-                let timeVal = getCleanRowProp(row, ['시간', '예식시간']);
+                let timeVal = getCleanRowProp(row, ['시간', '예식시간', '타임']);
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
-                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원']) || '정보 없음';
+                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원', '지불']) || '정보 없음';
                 let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
                 let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
                 let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
