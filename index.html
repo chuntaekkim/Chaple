@@ -611,7 +611,7 @@
         }
         .nav-item.active svg { transform: scale(1.15); }
 
-        /* 임원 차량 행 전용 스타일 */
+        /* 수정된 임원 차량 행 전용 레이아웃 스타일 */
         .exec-row {
             background-color: #242838;
             border-radius: 10px;
@@ -624,7 +624,7 @@
             font-weight: 700;
             font-size: 14px;
             color: #ffffff;
-            flex: 1.5;
+            flex: 1.4;
             white-space: nowrap;
         }
         .exec-col-num {
@@ -635,18 +635,19 @@
             text-align: center;
             white-space: nowrap;
         }
-        .exec-col-name {
-            font-weight: 700;
-            font-size: 14px;
-            flex: 0.8;
-            text-align: left;
-            white-space: nowrap;
-        }
         .exec-col-role {
             font-weight: 600;
             font-size: 13px;
-            flex: 1.2;
-            text-align: right;
+            flex: 1.1;
+            text-align: left; /* 직급을 차량번호 바로 뒤 왼쪽 정렬 */
+            padding-left: 6px;
+            white-space: nowrap;
+        }
+        .exec-col-name {
+            font-weight: 700;
+            font-size: 14px;
+            flex: 0.9;
+            text-align: right; /* 이름을 뒤로 밀어 정렬 */
             white-space: nowrap;
         }
     </style>
@@ -811,7 +812,7 @@
             </div>
         </div>
 
-        <!-- 임원 차량 탭 -->
+        <!-- 임원 차량 탭 (직급 차종 번호 이름 레이아웃 개편 반영) -->
         <div id="parking-exec" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #f0a500;">
                 <div style="font-weight: 700; margin-bottom: 6px; color: #f0a500; font-size: 15px;">주요 임원 차량 리스트</div>
@@ -825,43 +826,43 @@
                     <div class="exec-row" style="border-left: 4px solid #f0a500;">
                         <span class="exec-col-model">제네시스 G90</span>
                         <span class="exec-col-num">197하4877</span>
-                        <span class="exec-col-name" style="color: #f0a500;">김수연</span>
                         <span class="exec-col-role" style="color: #f0a500;">대표님</span>
+                        <span class="exec-col-name" style="color: #f0a500;">김수연</span>
                     </div>
 
                     <div class="exec-row" style="border-left: 4px solid #f0a500;">
                         <span class="exec-col-model">쏘렌토</span>
                         <span class="exec-col-num">02서2546</span>
-                        <span class="exec-col-name" style="color: #f0a500;">강창열</span>
                         <span class="exec-col-role" style="color: #f0a500;">1그룹장님</span>
+                        <span class="exec-col-name" style="color: #f0a500;">강창열</span>
                     </div>
 
                     <div class="exec-row" style="border-left: 4px solid #4cd964;">
                         <span class="exec-col-model">팰리세이드</span>
                         <span class="exec-col-num">126너2085</span>
-                        <span class="exec-col-name" style="color: #4cd964;">김창현</span>
                         <span class="exec-col-role" style="color: #4cd964;">대치점장님</span>
+                        <span class="exec-col-name" style="color: #4cd964;">김창현</span>
                     </div>
 
                     <div class="exec-row" style="border-left: 4px solid #60a5fa;">
-                        <span class="exec-col-model">포르쉐 / 그랜저</span>
+                        <span class="exec-col-model">포르쉐/그랜저</span>
                         <span class="exec-col-num">미확인</span>
-                        <span class="exec-col-name" style="color: #60a5fa;">허준석</span>
                         <span class="exec-col-role" style="color: #60a5fa;">본부장님</span>
+                        <span class="exec-col-name" style="color: #60a5fa;">허준석</span>
                     </div>
 
                     <div class="exec-row" style="border-left: 4px solid #60a5fa;">
                         <span class="exec-col-model">제네시스 GV80</span>
                         <span class="exec-col-num">9665</span>
-                        <span class="exec-col-name" style="color: #60a5fa;">심상석</span>
                         <span class="exec-col-role" style="color: #60a5fa;">2그룹장님</span>
+                        <span class="exec-col-name" style="color: #60a5fa;">심상석</span>
                     </div>
 
                     <div class="exec-row" style="border-left: 4px solid #60a5fa;">
                         <span class="exec-col-model">벤츠 220d</span>
                         <span class="exec-col-num">8881</span>
-                        <span class="exec-col-name" style="color: #60a5fa;">서종필</span>
                         <span class="exec-col-role" style="color: #60a5fa;">노조임원님</span>
+                        <span class="exec-col-name" style="color: #60a5fa;">서종필</span>
                     </div>
                 </div>
             </div>
@@ -1231,20 +1232,19 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
-    // [최적화된 날짜 매칭 함수] `'2026-10-25`, `'10월` 등의 순수 텍스트 완벽 인지
+    // [강화된 날짜 매칭 함수] Key와 Value에 붙은 작은따옴표(') 및 공백 완전 제거 매칭
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
-            let strVal = String(val).trim();
+            
+            let cleanKey = String(key).replace(/^'/, '').trim();
+            let strVal = String(val).replace(/^'/, '').trim();
 
             if (isConsult) {
-                if (!key.includes('상담일시') && !key.includes('상담')) continue;
+                if (!cleanKey.includes('상담일시') && !cleanKey.includes('상담')) continue;
             }
 
-            // 앞뒤 작은따옴표(')나 공백 제거
-            strVal = strVal.replace(/^'/, '').trim();
-
-            // 숫자만 연속으로 추출 (예: "2026-10-25" -> ["2026", "10", "25"])
+            // 숫자 부분만 추출 (예: "2026-10-25" -> ["2026", "10", "25"])
             let numbers = strVal.match(/\d+/g);
             if (!numbers || numbers.length < 2) continue;
 
@@ -1269,6 +1269,21 @@
             }
         }
         return false;
+    }
+
+    // 행에서 작은따옴표나 공백이 제거된 특정 속성 값을 가져오는 헬퍼 함수
+    function getCleanRowProp(row, keys) {
+        for (let [rawKey, rawVal] of Object.entries(row)) {
+            let cleanKey = String(rawKey).replace(/^'/, '').trim();
+            for (let k of keys) {
+                if (cleanKey === k || cleanKey.includes(k)) {
+                    if (rawVal !== undefined && rawVal !== null) {
+                        return String(rawVal).replace(/^'/, '').trim();
+                    }
+                }
+            }
+        }
+        return '';
     }
 
     function renderTodayInfo() {
@@ -1299,11 +1314,11 @@
         } else {
             let wHtml = '';
             matchedTodayWeddings.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+                let timeVal = getCleanRowProp(row, ['시간', '예식시간']);
+                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원']) || '정보 없음';
+                let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
+                let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
+                let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
 
                 wHtml += `
                     <div class="event-card" style="border-left: 3px solid #f0a500;">
@@ -1331,9 +1346,10 @@
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
+                    let cleanKey = String(key).replace(/^'/, '').trim();
+                    if (cleanKey.includes('예정예식일') || cleanKey.includes('예정 예식일')) continue;
+                    let cleaned = cleanValue(cleanKey, val);
+                    let pureKey = cleanKey.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
@@ -1438,7 +1454,7 @@
             strVal = strVal.substring(1);
         }
 
-        return strVal.replace('.000Z', '').replace('Z', '');
+        return strVal.replace('.000Z', '').replace('Z', '').trim();
     }
 
     function selectDate(dateStr, dayNum) {
@@ -1466,12 +1482,12 @@
         if (matchedWeekly.length > 0) {
             contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+                let timeVal = getCleanRowProp(row, ['시간', '예식시간']);
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원']) || '정보 없음';
+                let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
+                let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
+                let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
 
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #f0a500;">
@@ -1498,9 +1514,10 @@
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
+                    let cleanKey = String(key).replace(/^'/, '').trim();
+                    if (cleanKey.includes('예정예식일') || cleanKey.includes('예정 예식일')) continue;
+                    let cleaned = cleanValue(cleanKey, val);
+                    let pureKey = cleanKey.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
@@ -1525,7 +1542,7 @@
                         `;
                     }
                 }
-                contentHtml += `</div>`;
+                cHtml += `</div>`;
             });
         }
 
