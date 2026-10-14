@@ -1231,7 +1231,7 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
-    // [강화된 날짜 매칭 함수] "2026-10-24 오전 11시" 및 각종 포맷 완벽 지원
+    // [최적화된 날짜 매칭 함수] `'2026-10-25`, `'10월` 등의 순수 텍스트 완벽 인지
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
@@ -1241,24 +1241,24 @@
                 if (!key.includes('상담일시') && !key.includes('상담')) continue;
             }
 
-            // 숫자들만 추출해서 날짜 판정 (예: ["2026", "10", "24", "11"] 또는 ["10", "24", "11"])
+            // 앞뒤 작은따옴표(')나 공백 제거
+            strVal = strVal.replace(/^'/, '').trim();
+
+            // 숫자만 연속으로 추출 (예: "2026-10-25" -> ["2026", "10", "25"])
             let numbers = strVal.match(/\d+/g);
             if (!numbers || numbers.length < 2) continue;
 
             let y = 0, m = 0, d = 0;
 
             if (numbers.length >= 3 && numbers[0].length === 4) {
-                // YYYY-MM-DD 또는 YYYY년 MM월 DD일 형태 (예: 2026-10-24 ...)
                 y = parseInt(numbers[0], 10);
                 m = parseInt(numbers[1], 10);
                 d = parseInt(numbers[2], 10);
             } else if (numbers.length >= 3 && numbers[2].length === 4) {
-                // MM-DD-YYYY 형태
                 m = parseInt(numbers[0], 10);
                 d = parseInt(numbers[1], 10);
                 y = parseInt(numbers[2], 10);
             } else if (numbers.length >= 2) {
-                // 연도가 생략된 MM-DD 형태 (예: 10-24 또는 10/24)
                 m = parseInt(numbers[0], 10);
                 d = parseInt(numbers[1], 10);
                 y = targetYear;
