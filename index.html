@@ -1184,36 +1184,32 @@
     }
 
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
-        for (let [key, val] of Object.entries(row)) {
-            if (val === undefined || val === null) continue;
-            let strVal = String(val).trim();
-            // 시트에서 텍스트 날짜 앞에 작은따옴표가 붙어 내려오는 경우 정리
-            if (strVal.startsWith("'")) strVal = strVal.slice(1).trim();
+        // 날짜가 들어 있는 열만 검사합니다. 다른 열의 숫자/문자열(예: 인원, 전화번호)이
+        // 날짜로 오인되어 빈 날짜에 건수가 표시되는 문제를 방지합니다.
+        for (const [key, val] of Object.entries(row || {})) {
+            if (val === undefined || val === null || String(val).trim() === '') continue;
+            const k = String(key).trim();
+            const isDateKey = isConsult
+                ? /(상담일시|상담일|상담날짜|상담 날짜|상담 일정|date|일자)/i.test(k)
+                : /(예식일|예식 날짜|웨딩일|웨딩 날짜|날짜|일자|date)/i.test(k);
+            if (!isDateKey) continue;
 
-            if (isConsult) {
-                if (!key.includes('상담일시') && !key.includes('상담')) continue;
-            }
+            let strVal = String(val).trim().replace(/^'+/, '').trim();
 
-            let matchYMD = strVal.match(new RegExp(`(20\\d{2})\\s*[-./]\\s*0?(${targetMonth})\\s*[-./]\\s*0?(${targetDay})`));
-            if (matchYMD) {
-                let y = parseInt(matchYMD[1], 10);
-                let m = parseInt(matchYMD[2], 10);
-                let d = parseInt(matchYMD[3], 10);
-                if (y === targetYear && m === targetMonth && d === targetDay) return true;
-            }
+            // 연도가 포함된 날짜만 인정합니다. 2026-09-01 같은 ISO 날짜 및
+            // 2026년 9월 1일 형식을 처리하고, 다른 열의 월/일 조각은 무시합니다.
+            let m = strVal.match(/(20\d{2})\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
+            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
 
-            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
-            if (strictMatch) {
-                let m = parseInt(strictMatch[2], 10);
-                let d = parseInt(strictMatch[3], 10);
-                if (m === targetMonth && d === targetDay) return true;
-            }
+            m = strVal.match(/(20\d{2})\s*년\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
+            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
 
-            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
-            if (koreanMatch) {
-                let m = parseInt(koreanMatch[1], 10);
-                let d = parseInt(koreanMatch[2], 10);
-                if (m === targetMonth && d === targetDay) return true;
+            // 연도 없는 날짜가 실제로 날짜 열에 저장된 경우에만 허용
+            if (!/20\d{2}/.test(strVal)) {
+                m = strVal.match(/^\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?\s*$/);
+                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
+                m = strVal.match(/^\s*0?(\d{1,2})[-./]0?(\d{1,2})\s*$/);
+                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
             }
         }
         return false;
@@ -1318,24 +1314,15 @@
         if (!grid || !summary) return;
         
         const monthWedding = dbData.monthly.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    let strVal = String(val);
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
-                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
-                }
+            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
+                if (isRowMatchDate(row, selectedYear, selectedMonth, day, false)) return true;
             }
             return false;
         });
 
         const monthConsult = dbData.consult.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    if (!key.includes('상담일시') && !key.includes('상담')) continue;
-                    let strVal = String(val);
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
-                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
-                }
+            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
+                if (isRowMatchDate(row, selectedYear, selectedMonth, day, true)) return true;
             }
             return false;
         });
