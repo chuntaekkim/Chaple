@@ -18,6 +18,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         .app-container {
             width: 100%;
@@ -28,37 +29,81 @@
             flex-direction: column;
             position: relative;
             padding-bottom: 85px;
+            overflow: hidden;
         }
-        /* 상단 헤더 */
-        .header {
+
+        /* 꽃잎 떨어지는 애니메이션 레이어 */
+        #petalCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* 상단 브랜드 헤더 로고 스타일 */
+        .brand-header-banner {
+            background: linear-gradient(135deg, #1c1f2e 0%, #12141c 100%);
             padding: 16px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(240, 165, 0, 0.2);
+            position: relative;
+            z-index: 51;
+        }
+        .brand-logo-text {
+            font-family: "Georgia", serif;
+            font-size: 22px;
+            font-style: italic;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #f3e5ab;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        }
+        .brand-logo-sub {
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* 상단 시스템 헤더 */
+        .header {
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #161925;
+            z-index: 51;
         }
         .header .status {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 13px;
+            font-size: 12px;
             color: #4cd964;
             cursor: pointer;
         }
         .header .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background-color: #4cd964;
             border-radius: 50%;
         }
+
         /* 콘텐츠 영역 */
         .content {
             padding: 20px;
             flex: 1;
             display: none;
             overflow-y: auto;
+            position: relative;
+            z-index: 51;
         }
         .content.active {
             display: block;
@@ -205,7 +250,7 @@
             font-weight: 700;
         }
 
-        /* 3개 월 탭 버튼 그룹 (높이 축소 및 여백 조정) */
+        /* 3개 월 탭 버튼 그룹 */
         .month-box-group {
             display: flex;
             gap: 6px;
@@ -615,7 +660,16 @@
 <body>
 
 <div class="app-container">
-    <!-- 상단 헤더 -->
+    <!-- 꽃잎 떨어지는 애니메이션 캔버스 -->
+    <canvas id="petalCanvas"></canvas>
+
+    <!-- 상단 브랜드 로고 헤더 -->
+    <div class="brand-header-banner">
+        <div class="brand-logo-text">THE Chapel</div>
+        <div class="brand-logo-sub">DAECHI VALET MANAGEMENT</div>
+    </div>
+
+    <!-- 상단 상태바 헤더 -->
     <div class="header">
         <span id="header-title">더채플대치 발렛</span>
         <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
@@ -1030,7 +1084,9 @@
     let selectedMonth = currentMonth;
     let selectedDateStr = null;
 
+    // 꽃잎 떨어지는 애니메이션 스크립트
     document.addEventListener("DOMContentLoaded", function() {
+        initPetalAnimation();
         initMonthButtons();
         updateTodayDisplay();
         loadData(false);
@@ -1041,6 +1097,66 @@
         updateTodayDisplay();
         loadData(false);
     };
+
+    function initPetalAnimation() {
+        const canvas = document.getElementById('petalCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const petals = [];
+        const petalCount = 18; // 떨어지는 꽃잎 수
+
+        for (let i = 0; i < petalCount; i++) {
+            petals.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 4,       // 꽃잎 크기
+                d: Math.random() * petalCount,  // 밀도 변수
+                color: Math.random() > 0.5 ? 'rgba(255, 218, 224, 0.65)' : 'rgba(255, 240, 245, 0.5)',
+                tilt: Math.random() * 10 - 10,
+                tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+                tiltAngle: 0
+            });
+        }
+
+        function drawPetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => {
+                ctx.beginPath();
+                ctx.lineWidth = p.r / 2;
+                ctx.strokeStyle = p.color;
+                ctx.fillStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 4, p.y);
+                ctx.ellipse(p.x + p.tilt, p.y, p.r, p.r / 2, p.tiltAngle, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            updatePetals();
+        }
+
+        function updatePetals() {
+            petals.forEach(p => {
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.y += (Math.cos(p.d) + 1 + p.r / 4) / 2;
+                p.x += Math.sin(p.d);
+                p.tilt = Math.sin(p.tiltAngle) * 8;
+
+                // 화면 아래로 벗어나면 위쪽으로 재배치
+                if (p.y > canvas.height + 20) {
+                    p.y = -20;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+        }
+
+        setInterval(drawPetals, 35);
+    }
 
     function updateTodayDisplay() {
         const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
@@ -1184,8 +1300,6 @@
     }
 
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
-        // 날짜가 들어 있는 열만 검사합니다. 다른 열의 숫자/문자열(예: 인원, 전화번호)이
-        // 날짜로 오인되어 빈 날짜에 건수가 표시되는 문제를 방지합니다.
         for (const [key, val] of Object.entries(row || {})) {
             if (val === undefined || val === null || String(val).trim() === '') continue;
             const k = String(key).trim();
@@ -1196,15 +1310,12 @@
 
             let strVal = String(val).trim().replace(/^'+/, '').trim();
 
-            // 연도가 포함된 날짜만 인정합니다. 2026-09-01 같은 ISO 날짜 및
-            // 2026년 9월 1일 형식을 처리하고, 다른 열의 월/일 조각은 무시합니다.
             let m = strVal.match(/(20\d{2})\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
             if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
 
             m = strVal.match(/(20\d{2})\s*년\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
             if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
 
-            // 연도 없는 날짜가 실제로 날짜 열에 저장된 경우에만 허용
             if (!/20\d{2}/.test(strVal)) {
                 m = strVal.match(/^\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?\s*$/);
                 if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
