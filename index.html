@@ -205,7 +205,7 @@
             font-weight: 700;
         }
 
-        /* 3개 월 탭 버튼 그룹 (높이 축소 및 여백 조정) */
+        /* 3개 월 탭 버튼 그룹 */
         .month-box-group {
             display: flex;
             gap: 6px;
@@ -1183,38 +1183,82 @@
         if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
     }
 
+    // [강화된 날짜 파싱] 다양한 표기 방식(YYYY-MM-DD, MM/DD, M월 D일 등)을 모두 안정적으로 파싱하는 함수
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
         for (let [key, val] of Object.entries(row)) {
             if (val === undefined || val === null) continue;
-            let strVal = String(val).trim();
+            
+            let cleanKey = String(key).replace(/['"\s]/g, '').toLowerCase();
+            let strVal = String(val).replace(/['"\s]/g, '');
 
             if (isConsult) {
-                if (!key.includes('상담일시') && !key.includes('상담')) continue;
+                if (!cleanKey.includes('상담일시') && !cleanKey.includes('상담')) continue;
+            } else {
+                if (cleanKey.includes('상담')) continue;
             }
 
-            let matchYMD = strVal.match(new RegExp(`(20\\d{2})\\s*[-./]\\s*0?(${targetMonth})\\s*[-./]\\s*0?(${targetDay})`));
-            if (matchYMD) {
-                let y = parseInt(matchYMD[1], 10);
-                let m = parseInt(matchYMD[2], 10);
-                let d = parseInt(matchYMD[3], 10);
-                if (y === targetYear && m === targetMonth && d === targetDay) return true;
+            let numbers = strVal.match(/\d+/g);
+            if (!numbers || numbers.length < 2) continue;
+
+            let y = 0, m = 0, d = 0;
+
+            if (numbers.length >= 3 && numbers[0].length === 4) {
+                y = parseInt(numbers[0], 10);
+                m = parseInt(numbers[1], 10);
+                d = parseInt(numbers[2], 10);
+            } else if (numbers.length >= 3 && numbers[2].length === 4) {
+                m = parseInt(numbers[0], 10);
+                d = parseInt(numbers[1], 10);
+                y = parseInt(numbers[2], 10);
+            } else if (numbers.length >= 2) {
+                m = parseInt(numbers[0], 10);
+                d = parseInt(numbers[1], 10);
+                y = targetYear;
             }
 
-            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
-            if (strictMatch) {
-                let m = parseInt(strictMatch[2], 10);
-                let d = parseInt(strictMatch[3], 10);
-                if (m === targetMonth && d === targetDay) return true;
-            }
-
-            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
-            if (koreanMatch) {
-                let m = parseInt(koreanMatch[1], 10);
-                let d = parseInt(koreanMatch[2], 10);
-                if (m === targetMonth && d === targetDay) return true;
+            if (m === targetMonth && d === targetDay) {
+                if (y === 0 || y === targetYear || isNaN(y)) return true;
             }
         }
         return false;
+    }
+
+    function getCleanRowProp(row, keys) {
+        for (let [rawKey, rawVal] of Object.entries(row)) {
+            let cleanKey = String(rawKey).replace(/['"\s]/g, '').toLowerCase();
+            for (let k of keys) {
+                let targetKey = k.replace(/['"\s]/g, '').toLowerCase();
+                if (cleanKey === targetKey || cleanKey.includes(targetKey)) {
+                    if (rawVal !== undefined && rawVal !== null) {
+                        return String(rawVal).replace(/^'/, '').trim();
+                    }
+                }
+            }
+        }
+        return '';
+    }
+
+    function cleanValue(key, val) {
+        if (val === undefined || val === null) return '';
+        let strVal = String(val).trim();
+
+        if (strVal.startsWith("'")) {
+            strVal = strVal.substring(1);
+        }
+
+        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
+        if (isoMatch) {
+            return `${isoMatch[1]}:${isoMatch[2]}`;
+        }
+
+        let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
+        if (timeMatch) {
+            let h = timeMatch[1].padStart(2, '0');
+            let m = timeMatch[2];
+            return `${h}:${m}`;
+        }
+
+        return strVal.replace('.000Z', '').replace('Z', '').trim();
     }
 
     function renderTodayInfo() {
@@ -1222,7 +1266,9 @@
         const todayMonth = nowDate.getMonth() + 1;
         const todayDay = nowDate.getDate();
 
-        const matchedTodayWeddings = dbData.weekly.filter(row => isRowMatchDate(row, todayYear, todayMonth, todayDay, false));
+        // weekly + monthly 병합 조회
+        const combinedWeddings = [...dbData.weekly, ...dbData.monthly];
+        const matchedTodayWeddings = combinedWeddings.filter(row => isRowMatchDate(row, todayYear, todayMonth, todayDay, false));
         const matchedTodayConsults = dbData.consult.filter(row => isRowMatchDate(row, todayYear, todayMonth, todayDay, true));
 
         const tt = document.getElementById('todayTitle');
@@ -1245,11 +1291,11 @@
         } else {
             let wHtml = '';
             matchedTodayWeddings.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+                let timeVal = getCleanRowProp(row, ['시간', '예식시간', '타임']);
+                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원', '지불']) || '정보 없음';
+                let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
+                let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
+                let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
 
                 wHtml += `
                     <div class="event-card" style="border-left: 3px solid #f0a500;">
@@ -1277,9 +1323,10 @@
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
+                    let cleanKey = String(key).replace(/^'/, '').trim();
+                    if (cleanKey.includes('예정예식일') || cleanKey.includes('예정 예식일')) continue;
+                    let cleaned = cleanValue(cleanKey, val);
+                    let pureKey = cleanKey.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
@@ -1314,31 +1361,22 @@
         const grid = document.getElementById('calendarGrid');
         const summary = document.getElementById('scheduleSummary');
         if (!grid || !summary) return;
+
+        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
+        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
+        const totalDays = lastDayObj.getDate();
+        const startDayOffset = firstDayObj.getDay();
         
-        const monthWedding = dbData.weekly.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    let strVal = String(val);
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
-                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
-                }
-            }
-            return false;
-        });
+        const combinedWeddings = [...dbData.weekly, ...dbData.monthly];
+        let totalMonthWeddings = 0;
+        let totalMonthConsults = 0;
 
-        const monthConsult = dbData.consult.filter(row => {
-            for (let [key, val] of Object.entries(row)) {
-                if (val !== undefined && val !== null) {
-                    if (!key.includes('상담일시') && !key.includes('상담')) continue;
-                    let strVal = String(val);
-                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
-                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
-                }
-            }
-            return false;
-        });
+        for (let day = 1; day <= totalDays; day++) {
+            totalMonthWeddings += combinedWeddings.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false)).length;
+            totalMonthConsults += dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true)).length;
+        }
 
-        summary.innerText = `${selectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
+        summary.innerText = `${selectedMonth}월 웨딩 총 ${totalMonthWeddings}건 · 상담 총 ${totalMonthConsults}건`;
 
         let html = `
             <div class="cal-day-header" style="color: #ff3b30;">일</div>
@@ -1350,11 +1388,6 @@
             <div class="cal-day-header" style="color: #3b82f6;">토</div>
         `;
 
-        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
-        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
-        const totalDays = lastDayObj.getDate();
-        const startDayOffset = firstDayObj.getDay();
-
         for (let i = 0; i < startDayOffset; i++) {
             html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
         }
@@ -1362,7 +1395,7 @@
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${selectedMonth}월 ${day}일`;
             
-            const matchedWeddings = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
+            const matchedWeddings = combinedWeddings.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
             const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true));
 
             const wCount = matchedWeddings.length;
@@ -1391,29 +1424,6 @@
         grid.innerHTML = html;
     }
 
-    function cleanValue(key, val) {
-        if (val === undefined || val === null) return '';
-        let strVal = String(val).trim();
-
-        if (strVal.startsWith("'")) {
-            strVal = strVal.substring(1);
-        }
-
-        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
-        if (isoMatch) {
-            return `${isoMatch[1]}:${isoMatch[2]}`;
-        }
-
-        let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
-        if (timeMatch) {
-            let h = timeMatch[1].padStart(2, '0');
-            let m = timeMatch[2];
-            return `${h}:${m}`;
-        }
-
-        return strVal.replace('.000Z', '').replace('Z', '');
-    }
-
     function selectDate(dateStr, dayNum) {
         selectedDateStr = dateStr;
         renderCalendar();
@@ -1422,7 +1432,8 @@
         const titleEl = document.getElementById('selectedDateTitle');
         if (!container) return;
 
-        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
+        const combinedWeddings = [...dbData.weekly, ...dbData.monthly];
+        const matchedWeekly = combinedWeddings.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
         const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
 
         if (titleEl) {
@@ -1439,12 +1450,12 @@
         if (matchedWeekly.length > 0) {
             contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
+                let timeVal = getCleanRowProp(row, ['시간', '예식시간', '타임']);
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
+                let guarantee = getCleanRowProp(row, ['지불보증', '보증인원', '지불']) || '정보 없음';
+                let weddingCar = getCleanRowProp(row, ['웨딩카']) || '정보 없음';
+                let bus = getCleanRowProp(row, ['대형버스', '버스대절', '버스']) || '정보 없음';
+                let honjuCar = getCleanRowProp(row, ['혼주차량', '혼주']) || '정보 없음';
 
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #f0a500;">
@@ -1471,9 +1482,10 @@
                         </div>
                 `;
                 for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
+                    let cleanKey = String(key).replace(/^'/, '').trim();
+                    if (cleanKey.includes('예정예식일') || cleanKey.includes('예정 예식일')) continue;
+                    let cleaned = cleanValue(cleanKey, val);
+                    let pureKey = cleanKey.split(':')[0].trim();
                     if (!pureKey || pureKey === '' || pureKey === '번호') continue;
 
                     let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
