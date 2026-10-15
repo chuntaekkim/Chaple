@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더채플대치 발렛</title>
+    <!-- 구글 캘리그래피 폰트 적용 -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -34,7 +34,7 @@
             overflow: hidden;
         }
 
-        /* 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 레이어 (최상단 고정 및 클릭 통과) */
+        /* 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 캔버스 */
         #petalCanvas {
             position: absolute;
             top: 0;
@@ -45,45 +45,36 @@
             z-index: 999;
         }
 
-        /* 상단 브랜드 헤더 로고 (사진 속 영문 브랜드 서체 완벽 재현) */
+        /* 상단 브랜드 헤더 로고 (패딩을 줄여서 위로 밀착) */
         .brand-header-banner {
-            background: linear-gradient(180deg, #1f1a1d 0%, #12141c 100%);
-            padding: 18px 20px 14px 20px;
+            background: linear-gradient(180deg, #1c1819 0%, #12141c 100%);
+            padding: 10px 20px 8px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             position: relative;
             z-index: 51;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
         }
-        .brand-logo-main {
-            font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
-            font-size: 28px;
-            font-style: italic;
+        .brand-logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        .brand-logo-the {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            background: linear-gradient(135deg, #fff3d1 0%, #e6ca65 50%, #b89628 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
-            line-height: 1.15;
-        }
-        .brand-logo-main .sub-the {
-            font-family: 'Playfair Display', 'Georgia', serif;
-            font-size: 15px;
-            font-style: normal;
-            letter-spacing: 6px;
-            display: block;
-            margin-bottom: -3px;
+            letter-spacing: 5px;
             color: #d4af37;
-            -webkit-text-fill-color: #d4af37;
+            margin-bottom: 5px;
         }
-        .brand-logo-sub {
-            font-size: 9px;
-            letter-spacing: 4px;
-            color: #a39371;
-            text-transform: uppercase;
-            margin-top: 5px;
-            font-weight: 600;
+        .brand-logo-chapel {
+            font-family: 'Great Vibes', cursive;
+            font-size: 36px;
+            color: #e2c074;
+            line-height: 0.9;
+            text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
         }
 
         /* 상단 시스템 헤더 */
@@ -652,16 +643,15 @@
     <!-- 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 캔버스 -->
     <canvas id="petalCanvas"></canvas>
 
-    <!-- 상단 브랜드 로고 헤더 -->
+    <!-- 상단 브랜드 로고 헤더 (문구 삭제 및 여백 축소) -->
     <div class="brand-header-banner">
-        <div class="brand-logo-main">
-            <span class="sub-the">THE</span>
-            Chapel
+        <div class="brand-logo-wrapper">
+            <span class="brand-logo-the">THE</span>
+            <span class="brand-logo-chapel">Chapel</span>
         </div>
-        <div class="brand-logo-sub">DAECHI VALET MANAGEMENT</div>
     </div>
 
-    <!-- 상단 상태바 헤더 -->
+    <!-- 상단 시스템 헤더 -->
     <div class="header">
         <span id="header-title">더채플대치 발렛</span>
         <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
@@ -1102,20 +1092,20 @@
         window.addEventListener('resize', resizeCanvas);
 
         const items = [];
-        const roseCount = 15;      // 붉은 장미 꽃잎 수
-        const gypsophilaCount = 22; // 흰색 안개꽃 입자 수
+        const roseCount = 16;
+        const gypsophilaCount = 25;
 
         for (let i = 0; i < roseCount; i++) {
             items.push({
                 type: 'rose',
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 6 + 5,
-                color: Math.random() > 0.4 ? 'rgba(215, 38, 56, 0.8)' : 'rgba(165, 28, 42, 0.7)',
-                tilt: Math.random() * 10 - 10,
+                r: Math.random() * 7 + 6,
+                color: Math.random() > 0.3 ? 'rgba(214, 40, 57, 0.85)' : 'rgba(157, 23, 40, 0.75)',
+                tilt: Math.random() * 12 - 12,
                 tiltAngleIncremental: Math.random() * 0.05 + 0.02,
                 tiltAngle: Math.random() * Math.PI,
-                speedY: Math.random() * 0.7 + 0.5,
+                speedY: Math.random() * 0.8 + 0.5,
                 speedX: Math.random() * 0.6 - 0.3
             });
         }
@@ -1125,7 +1115,7 @@
                 type: 'gyp',
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 2 + 1.2,
+                r: Math.random() * 1.8 + 1,
                 color: 'rgba(255, 255, 255, ' + (Math.random() * 0.6 + 0.4) + ')',
                 speedY: Math.random() * 0.5 + 0.3,
                 speedX: Math.random() * 0.4 - 0.2
@@ -1142,14 +1132,14 @@
                     ctx.save();
                     ctx.translate(item.x + item.tilt, item.y);
                     ctx.rotate(item.tiltAngle);
-                    ctx.ellipse(0, 0, item.r, item.r / 1.8, 0, 0, Math.PI * 2);
+                    ctx.ellipse(0, 0, item.r, item.r / 1.6, 0, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.restore();
                 } else {
                     ctx.beginPath();
                     ctx.fillStyle = item.color;
-                    ctx.shadowBlur = 6;
-                    ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = "rgba(255, 255, 255, 0.95)";
                     ctx.arc(item.x, item.y, item.r, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.shadowBlur = 0;
@@ -1166,7 +1156,7 @@
 
                 if (item.type === 'rose') {
                     item.tiltAngle += item.tiltAngleIncremental;
-                    item.tilt = Math.sin(item.tiltAngle) * 6;
+                    item.tilt = Math.sin(item.tiltAngle) * 7;
                 }
 
                 if (item.y > canvas.height + 20) {
