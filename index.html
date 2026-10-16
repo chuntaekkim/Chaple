@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더채플대치 발렛</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,6 +20,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         .app-container {
             width: 100%;
@@ -28,37 +31,96 @@
             flex-direction: column;
             position: relative;
             padding-bottom: 85px;
+            overflow: hidden;
         }
-        /* 상단 헤더 */
+
+        /* 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 레이어 (최상단 고정 및 클릭 통과) */
+        #petalCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* 상단 브랜드 헤더 로고 (사진 속 영문 브랜드 서체 완벽 재현) */
+        .brand-header-banner {
+            background: linear-gradient(180deg, #1f1a1d 0%, #12141c 100%);
+            padding: 18px 20px 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 51;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .brand-logo-main {
+            font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+            font-size: 28px;
+            font-style: italic;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #fff3d1 0%, #e6ca65 50%, #b89628 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
+            line-height: 1.15;
+        }
+        .brand-logo-main .sub-the {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-size: 15px;
+            font-style: normal;
+            letter-spacing: 6px;
+            display: block;
+            margin-bottom: -3px;
+            color: #d4af37;
+            -webkit-text-fill-color: #d4af37;
+        }
+        .brand-logo-sub {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: #a39371;
+            text-transform: uppercase;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* 상단 시스템 헤더 */
         .header {
-            padding: 16px 20px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #161925;
+            z-index: 51;
         }
         .header .status {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 13px;
+            font-size: 12px;
             color: #4cd964;
             cursor: pointer;
         }
         .header .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background-color: #4cd964;
             border-radius: 50%;
         }
+
         /* 콘텐츠 영역 */
         .content {
             padding: 20px;
             flex: 1;
             display: none;
             overflow-y: auto;
+            position: relative;
+            z-index: 51;
         }
         .content.active {
             display: block;
@@ -83,7 +145,6 @@
             display: flex;
             gap: 12px;
         }
-        /* 오늘 화면 상단 통계 분할 박스 스타일 */
         .today-stat-row {
             display: flex;
             gap: 10px;
@@ -118,8 +179,6 @@
             color: #e5e7eb;
             font-weight: 500;
         }
-
-        /* 하단 바로가기 박스 */
         .sub-box {
             flex: 1;
             background-color: #242838;
@@ -140,8 +199,6 @@
             color: #e5e7eb;
             font-weight: 500;
         }
-
-        /* 공통 카드 스타일 */
         .event-card {
             background-color: #1a1d29;
             border-radius: 12px;
@@ -158,8 +215,6 @@
             border-radius: 6px;
             margin-bottom: 10px;
         }
-
-        /* 통일 정렬된 정보 행 스타일 */
         .uniform-row {
             display: flex;
             align-items: flex-start;
@@ -181,8 +236,6 @@
             word-break: break-all;
             flex: 1;
         }
-
-        /* 오늘 날짜 상단 안내 바 */
         .today-info-bar {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             border-left: 4px solid #f59e0b;
@@ -204,8 +257,6 @@
             color: #f59e0b;
             font-weight: 700;
         }
-
-        /* 3개 월 탭 버튼 그룹 (높이 축소 및 여백 조정) */
         .month-box-group {
             display: flex;
             gap: 6px;
@@ -235,7 +286,6 @@
             font-size: 10px;
             opacity: 0.7;
         }
-        
         .month-card-btn.main-current-month {
             flex: 1.35;
             padding: 10px 6px;
@@ -249,7 +299,6 @@
             opacity: 1;
             font-weight: 700;
         }
-
         #monthBtnPrev.active {
             background-color: #475569 !important;
             border-color: #64748b !important;
@@ -266,8 +315,6 @@
             border-color: #10b981 !important;
             color: #ffffff !important;
         }
-
-        /* 주차 안내 전용 탭 메뉴 그룹 */
         .parking-tab-group {
             display: flex;
             background-color: #1a1d29;
@@ -295,14 +342,12 @@
             background-color: #f0a500;
             color: #12141c;
         }
-
         .parking-section {
             display: none;
         }
         .parking-section.active {
             display: block;
         }
-        
         .parking-map-img {
             width: 100%;
             border-radius: 12px;
@@ -311,7 +356,6 @@
             min-height: 380px;
             object-fit: contain;
         }
-
         .parking-layout-box {
             background: linear-gradient(135deg, #161925 0%, #10121a 100%);
             border-radius: 14px;
@@ -375,7 +419,6 @@
             margin-top: 1px;
             font-weight: 600;
         }
-
         .parking-side-group {
             display: flex;
             flex-direction: column;
@@ -400,8 +443,6 @@
             line-height: 1.3;
             box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
-
-        /* 캘린더 그리드 스타일 */
         .calendar-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -481,8 +522,6 @@
             text-align: center;
             white-space: nowrap;
         }
-
-        /* 연락처 카드 스타일 */
         .contact-card {
             background-color: #1a1d29;
             border-radius: 10px;
@@ -499,7 +538,6 @@
         .contact-card.branch-card {
             border-left: 3px solid #3b82f6;
         }
-
         .contact-left {
             display: flex;
             align-items: center;
@@ -555,7 +593,6 @@
             height: 18px;
             fill: currentColor;
         }
-
         .empty-msg {
             text-align: center;
             padding: 22px;
@@ -563,7 +600,6 @@
             font-size: 1rem;
             font-weight: 500;
         }
-
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -574,7 +610,7 @@
             display: flex;
             justify-content: space-around;
             padding: 10px 0 20px 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
         }
         .nav-item {
@@ -597,12 +633,10 @@
             height: 24px;
             transition: transform 0.2s ease;
         }
-
         .nav-item.nav-today { color: #ff7675; }
         .nav-item.nav-schedule { color: #a29bfe; }
         .nav-item.nav-parking { color: #55efc4; }
         .nav-item.nav-contact { color: #34d399; }
-
         .nav-item:not(.active) { opacity: 0.6; }
         .nav-item.active {
             opacity: 1;
@@ -610,28 +644,24 @@
             font-weight: 700;
         }
         .nav-item.active svg { transform: scale(1.15); }
-
-        /* 첫 화면 THE Chapel 원본 로고: 투명 배경 이미지 */
-        .brand-logo-wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 20px 16px;
-            margin-bottom: 4px;
-            min-height: 112px;
-        }
-        .brand-logo-image {
-            display: block;
-            width: min(82%, 360px);
-            height: auto;
-            object-fit: contain;
-        }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <!-- 상단 헤더 -->
+    <!-- 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 캔버스 -->
+    <canvas id="petalCanvas"></canvas>
+
+    <!-- 상단 브랜드 로고 헤더 -->
+    <div class="brand-header-banner">
+        <div class="brand-logo-main">
+            <span class="sub-the">THE</span>
+            Chapel
+        </div>
+        <div class="brand-logo-sub">DAECHI VALET MANAGEMENT</div>
+    </div>
+
+    <!-- 상단 상태바 헤더 -->
     <div class="header">
         <span id="header-title">더채플대치 발렛</span>
         <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
@@ -642,9 +672,6 @@
 
     <!-- [탭 1] 오늘 화면 -->
     <div id="tab-today" class="content active">
-        <div class="brand-logo-wrap" aria-label="THE Chapel 로고">
-            <img class="brand-logo-image" src="./icon-chapel-transparent.png" alt="THE Chapel">
-        </div>
         <div class="section-title" id="todayTitle">오늘 예식 및 상담 현황</div>
         <div class="main-card">
             <div class="today-stat-row">
@@ -683,7 +710,7 @@
         </div>
     </div>
 
-    <!-- [탭 2] 일정 화면 (웨딩/상담 통합) -->
+    <!-- [탭 2] 일정 화면 -->
     <div id="tab-schedule" class="content">
         <div class="today-info-bar">
             <span class="today-info-label">📍 현재 기준 오늘 날짜</span>
@@ -1050,6 +1077,7 @@
     let selectedDateStr = null;
 
     document.addEventListener("DOMContentLoaded", function() {
+        initRoseAndBabyBreathAnimation();
         initMonthButtons();
         updateTodayDisplay();
         loadData(false);
@@ -1060,6 +1088,96 @@
         updateTodayDisplay();
         loadData(false);
     };
+
+    function initRoseAndBabyBreathAnimation() {
+        const canvas = document.getElementById('petalCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const items = [];
+        const roseCount = 15;      // 붉은 장미 꽃잎 수
+        const gypsophilaCount = 22; // 흰색 안개꽃 입자 수
+
+        for (let i = 0; i < roseCount; i++) {
+            items.push({
+                type: 'rose',
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 5,
+                color: Math.random() > 0.4 ? 'rgba(215, 38, 56, 0.8)' : 'rgba(165, 28, 42, 0.7)',
+                tilt: Math.random() * 10 - 10,
+                tiltAngleIncremental: Math.random() * 0.05 + 0.02,
+                tiltAngle: Math.random() * Math.PI,
+                speedY: Math.random() * 0.7 + 0.5,
+                speedX: Math.random() * 0.6 - 0.3
+            });
+        }
+
+        for (let i = 0; i < gypsophilaCount; i++) {
+            items.push({
+                type: 'gyp',
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 2 + 1.2,
+                color: 'rgba(255, 255, 255, ' + (Math.random() * 0.6 + 0.4) + ')',
+                speedY: Math.random() * 0.5 + 0.3,
+                speedX: Math.random() * 0.4 - 0.2
+            });
+        }
+
+        function drawAnimation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            items.forEach(item => {
+                if (item.type === 'rose') {
+                    ctx.beginPath();
+                    ctx.fillStyle = item.color;
+                    ctx.save();
+                    ctx.translate(item.x + item.tilt, item.y);
+                    ctx.rotate(item.tiltAngle);
+                    ctx.ellipse(0, 0, item.r, item.r / 1.8, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                } else {
+                    ctx.beginPath();
+                    ctx.fillStyle = item.color;
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
+                    ctx.arc(item.x, item.y, item.r, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            });
+
+            updateAnimation();
+        }
+
+        function updateAnimation() {
+            items.forEach(item => {
+                item.y += item.speedY;
+                item.x += Math.sin(item.y * 0.02) + item.speedX;
+
+                if (item.type === 'rose') {
+                    item.tiltAngle += item.tiltAngleIncremental;
+                    item.tilt = Math.sin(item.tiltAngle) * 6;
+                }
+
+                if (item.y > canvas.height + 20) {
+                    item.y = -20;
+                    item.x = Math.random() * canvas.width;
+                }
+            });
+        }
+
+        setInterval(drawAnimation, 30);
+    }
 
     function updateTodayDisplay() {
         const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
@@ -1203,8 +1321,6 @@
     }
 
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
-        // 날짜가 들어 있는 열만 검사합니다. 다른 열의 숫자/문자열(예: 인원, 전화번호)이
-        // 날짜로 오인되어 빈 날짜에 건수가 표시되는 문제를 방지합니다.
         for (const [key, val] of Object.entries(row || {})) {
             if (val === undefined || val === null || String(val).trim() === '') continue;
             const k = String(key).trim();
@@ -1215,15 +1331,12 @@
 
             let strVal = String(val).trim().replace(/^'+/, '').trim();
 
-            // 연도가 포함된 날짜만 인정합니다. 2026-09-01 같은 ISO 날짜 및
-            // 2026년 9월 1일 형식을 처리하고, 다른 열의 월/일 조각은 무시합니다.
             let m = strVal.match(/(20\d{2})\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
             if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
 
             m = strVal.match(/(20\d{2})\s*년\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
             if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
 
-            // 연도 없는 날짜가 실제로 날짜 열에 저장된 경우에만 허용
             if (!/20\d{2}/.test(strVal)) {
                 m = strVal.match(/^\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?\s*$/);
                 if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
