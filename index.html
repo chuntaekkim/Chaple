@@ -34,7 +34,7 @@
             overflow: hidden;
         }
 
-        /* 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 캔버스 */
+        /* 진짜 같은 장미 꽃잎 & 안개꽃 낙하 애니메이션 캔버스 */
         #petalCanvas {
             position: absolute;
             top: 0;
@@ -45,7 +45,7 @@
             z-index: 999;
         }
 
-        /* 상단 브랜드 헤더 로고 (패딩을 줄여서 위로 밀착) */
+        /* 상단 브랜드 로고 이미지 배너 (icon-chapel.png 연동) */
         .brand-header-banner {
             background: linear-gradient(180deg, #1c1819 0%, #12141c 100%);
             padding: 10px 20px 8px 20px;
@@ -54,27 +54,15 @@
             position: relative;
             z-index: 51;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-        }
-        .brand-logo-wrapper {
             display: flex;
             justify-content: center;
-            align-items: flex-end;
-            gap: 10px;
+            align-items: center;
         }
-        .brand-logo-the {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            color: #d4af37;
-            margin-bottom: 5px;
-        }
-        .brand-logo-chapel {
-            font-family: 'Great Vibes', cursive;
-            font-size: 36px;
-            color: #e2c074;
-            line-height: 0.9;
-            text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        .brand-logo-img {
+            max-height: 52px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
         }
 
         /* 상단 시스템 헤더 */
@@ -640,15 +628,12 @@
 <body>
 
 <div class="app-container">
-    <!-- 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 캔버스 -->
+    <!-- 진짜 같은 장미 꽃잎 & 안개꽃 애니메이션 캔버스 -->
     <canvas id="petalCanvas"></canvas>
 
-    <!-- 상단 브랜드 로고 헤더 (문구 삭제 및 여백 축소) -->
+    <!-- 상단 브랜드 로고 이미지 배너 (icon-chapel.png 연동) -->
     <div class="brand-header-banner">
-        <div class="brand-logo-wrapper">
-            <span class="brand-logo-the">THE</span>
-            <span class="brand-logo-chapel">Chapel</span>
-        </div>
+        <img src="icon-chapel.png" alt="THE Chapel" class="brand-logo-img">
     </div>
 
     <!-- 상단 시스템 헤더 -->
@@ -1067,7 +1052,7 @@
     let selectedDateStr = null;
 
     document.addEventListener("DOMContentLoaded", function() {
-        initRoseAndBabyBreathAnimation();
+        initRealisticRoseAndGypsophilaAnimation();
         initMonthButtons();
         updateTodayDisplay();
         loadData(false);
@@ -1079,7 +1064,8 @@
         loadData(false);
     };
 
-    function initRoseAndBabyBreathAnimation() {
+    /* 진짜 같은 붉은 장미 꽃잎 & 안개꽃 입체 애니메이션 로직 */
+    function initRealisticRoseAndGypsophilaAnimation() {
         const canvas = document.getElementById('petalCanvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
@@ -1092,33 +1078,47 @@
         window.addEventListener('resize', resizeCanvas);
 
         const items = [];
-        const roseCount = 16;
-        const gypsophilaCount = 25;
+        const petalCount = 14;      // 실제 장미 꽃잎 수 (과하지 않게 우아하게)
+        const gypClusterCount = 8;   // 안개꽃 송이(클러스터) 수
 
-        for (let i = 0; i < roseCount; i++) {
+        // 1. 진짜 같은 붉은 장미 꽃잎 생성 (곡선 및 입체 음영 표현)
+        for (let i = 0; i < petalCount; i++) {
             items.push({
                 type: 'rose',
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 7 + 6,
-                color: Math.random() > 0.3 ? 'rgba(214, 40, 57, 0.85)' : 'rgba(157, 23, 40, 0.75)',
-                tilt: Math.random() * 12 - 12,
-                tiltAngleIncremental: Math.random() * 0.05 + 0.02,
-                tiltAngle: Math.random() * Math.PI,
-                speedY: Math.random() * 0.8 + 0.5,
-                speedX: Math.random() * 0.6 - 0.3
+                w: Math.random() * 16 + 12, // 꽃잎 가로 크기
+                h: Math.random() * 12 + 8,  // 꽃잎 세로 크기
+                color: Math.random() > 0.4 ? 'rgba(215, 38, 56, 0.9)' : 'rgba(160, 20, 35, 0.85)',
+                shadowColor: 'rgba(90, 5, 12, 0.6)',
+                speedY: Math.random() * 0.7 + 0.4,
+                speedX: Math.random() * 0.6 - 0.3,
+                rotation: Math.random() * Math.PI * 2,
+                rotSpeed: Math.random() * 0.02 - 0.01,
+                swing: Math.random() * 1.5 + 0.5,
+                swingSpeed: Math.random() * 0.03 + 0.01
             });
         }
 
-        for (let i = 0; i < gypsophilaCount; i++) {
+        // 2. 몽글몽글한 안개꽃 송이(클러스터) 생성
+        for (let i = 0; i < gypClusterCount; i++) {
+            const clusterDots = [];
+            const dotCount = Math.floor(Math.random() * 5) + 4; // 한 송이당 4~8개의 작은 꽃망울
+            for (let d = 0; d < dotCount; d++) {
+                clusterDots.push({
+                    ox: (Math.random() - 0.5) * 16,
+                    oy: (Math.random() - 0.5) * 16,
+                    r: Math.random() * 1.5 + 1.2
+                });
+            }
             items.push({
                 type: 'gyp',
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 1.8 + 1,
-                color: 'rgba(255, 255, 255, ' + (Math.random() * 0.6 + 0.4) + ')',
+                dots: clusterDots,
                 speedY: Math.random() * 0.5 + 0.3,
-                speedX: Math.random() * 0.4 - 0.2
+                speedX: Math.random() * 0.4 - 0.2,
+                opacity: Math.random() * 0.4 + 0.5
             });
         }
 
@@ -1127,22 +1127,42 @@
 
             items.forEach(item => {
                 if (item.type === 'rose') {
-                    ctx.beginPath();
-                    ctx.fillStyle = item.color;
+                    // 실제 장미 꽃잎 모양 (베젤 곡선형 경로) 그리기
                     ctx.save();
-                    ctx.translate(item.x + item.tilt, item.y);
-                    ctx.rotate(item.tiltAngle);
-                    ctx.ellipse(0, 0, item.r, item.r / 1.6, 0, 0, Math.PI * 2);
+                    ctx.translate(item.x + Math.sin(item.y * 0.02 * item.swing) * 12, item.y);
+                    ctx.rotate(item.rotation);
+
+                    ctx.beginPath();
+                    // 장미 꽃잎 특유의 둥글고 자연스러운 윗선 및 끝마무리 곡선
+                    ctx.moveTo(0, -item.h);
+                    ctx.bezierCurveTo(item.w * 1.2, -item.h * 0.8, item.w, item.h * 1.1, 0, item.h);
+                    ctx.bezierCurveTo(-item.w, item.h * 1.1, -item.w * 1.2, -item.h * 0.8, 0, -item.h);
+
+                    // 입체감을 주는 그라데이션 적용
+                    let grad = ctx.createRadialGradient(-item.w * 0.2, -item.h * 0.2, 2, 0, 0, item.w);
+                    grad.addColorStop(0, '#ff4d6d');
+                    grad.addColorStop(0.5, item.color);
+                    grad.addColorStop(1, item.shadowColor);
+
+                    ctx.fillStyle = grad;
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
                     ctx.fill();
                     ctx.restore();
-                } else {
-                    ctx.beginPath();
-                    ctx.fillStyle = item.color;
-                    ctx.shadowBlur = 8;
-                    ctx.shadowColor = "rgba(255, 255, 255, 0.95)";
-                    ctx.arc(item.x, item.y, item.r, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
+
+                } else if (item.type === 'gyp') {
+                    // 안개꽃 송이(클러스터) 그리기
+                    ctx.save();
+                    ctx.translate(item.x, item.y);
+                    item.dots.forEach(d => {
+                        ctx.beginPath();
+                        ctx.fillStyle = `rgba(255, 255, 255, ${item.opacity})`;
+                        ctx.shadowBlur = 8;
+                        ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
+                        ctx.arc(d.ox, d.oy, d.r, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    ctx.restore();
                 }
             });
 
@@ -1152,15 +1172,15 @@
         function updateAnimation() {
             items.forEach(item => {
                 item.y += item.speedY;
-                item.x += Math.sin(item.y * 0.02) + item.speedX;
+                item.x += item.speedX;
 
                 if (item.type === 'rose') {
-                    item.tiltAngle += item.tiltAngleIncremental;
-                    item.tilt = Math.sin(item.tiltAngle) * 7;
+                    item.rotation += item.rotSpeed;
                 }
 
-                if (item.y > canvas.height + 20) {
-                    item.y = -20;
+                // 화면 아래로 내려가면 상단으로 자연스럽게 재배치
+                if (item.y > canvas.height + 30) {
+                    item.y = -30;
                     item.x = Math.random() * canvas.width;
                 }
             });
@@ -1224,407 +1244,4 @@
         const cachedWeekly = localStorage.getItem('valet_weekly');
         const cachedConsult = localStorage.getItem('valet_consult');
 
-        if (!forceRefresh && cachedMonthly && cachedWeekly && cachedConsult) {
-            try {
-                dbData.monthly = JSON.parse(cachedMonthly);
-                dbData.weekly = JSON.parse(cachedWeekly);
-                dbData.consult = JSON.parse(cachedConsult);
-
-                const st = document.getElementById('statusText');
-                const sd = document.getElementById('statusDot');
-                if(st) st.innerText = "오프라인 캐시 사용중";
-                if(sd) sd.style.backgroundColor = "#ff9500";
-
-                renderTodayInfo();
-                renderCalendar();
-                return;
-            } catch (e) {
-                console.error("Cache parse error:", e);
-            }
-        }
-
-        const st = document.getElementById('statusText');
-        const sd = document.getElementById('statusDot');
-        if(st) st.innerText = "데이터 동기화중...";
-        if(sd) sd.style.backgroundColor = "#007aff";
-
-        try {
-            const [mRes, wRes, cRes] = await Promise.all([
-                fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
-                fetch(`${SCRIPT_URL}?type=weekly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
-                fetch(`${SCRIPT_URL}?type=consult`, { mode: 'cors' }).then(r => r.json()).catch(() => [])
-            ]);
-
-            dbData.monthly = Array.isArray(mRes) ? mRes : [];
-            dbData.weekly = Array.isArray(wRes) ? wRes : [];
-            dbData.consult = Array.isArray(cRes) ? cRes : [];
-
-            localStorage.setItem('valet_monthly', JSON.stringify(dbData.monthly));
-            localStorage.setItem('valet_weekly', JSON.stringify(dbData.weekly));
-            localStorage.setItem('valet_consult', JSON.stringify(dbData.consult));
-
-            if(st) st.innerText = "실시간 연동중";
-            if(sd) sd.style.backgroundColor = "#4cd964";
-
-            renderTodayInfo();
-            renderCalendar();
-        } catch (e) {
-            console.error("Data load error:", e);
-            if(st) st.innerText = "동기화 실패 (캐시 확인)";
-            if(sd) sd.style.backgroundColor = "#ff3b30";
-            renderTodayInfo();
-            renderCalendar();
-        }
-    }
-
-    function refreshData() {
-        if (confirm("스프레드시트의 최신 데이터를 다시 불러오시겠습니까?")) {
-            localStorage.clear();
-            loadData(true);
-        }
-    }
-
-    function switchTab(tabId, element) {
-        document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-        const target = document.getElementById('tab-' + tabId);
-        if (target) target.classList.add('active');
-
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        if (element) {
-            element.classList.add('active');
-        } else {
-            const navButtons = document.querySelectorAll('.nav-item');
-            if (tabId === 'today' && navButtons[0]) navButtons[0].classList.add('active');
-            if (tabId === 'schedule' && navButtons[1]) navButtons[1].classList.add('active');
-            if (tabId === 'parking' && navButtons[2]) navButtons[2].classList.add('active');
-            if (tabId === 'contact' && navButtons[3]) navButtons[3].classList.add('active');
-        }
-        
-        const titles = {
-            'today': '더채플대치 발렛',
-            'schedule': '운영 스케줄 통합 조회',
-            'parking': '주차 안내',
-            'contact': '비상 연락망'
-        };
-        const ht = document.getElementById('header-title');
-        if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
-    }
-
-    function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
-        for (const [key, val] of Object.entries(row || {})) {
-            if (val === undefined || val === null || String(val).trim() === '') continue;
-            const k = String(key).trim();
-            const isDateKey = isConsult
-                ? /(상담일시|상담일|상담날짜|상담 날짜|상담 일정|date|일자)/i.test(k)
-                : /(예식일|예식 날짜|웨딩일|웨딩 날짜|날짜|일자|date)/i.test(k);
-            if (!isDateKey) continue;
-
-            let strVal = String(val).trim().replace(/^'+/, '').trim();
-
-            let m = strVal.match(/(20\d{2})\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
-            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
-
-            m = strVal.match(/(20\d{2})\s*년\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
-            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
-
-            if (!/20\d{2}/.test(strVal)) {
-                m = strVal.match(/^\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?\s*$/);
-                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
-                m = strVal.match(/^\s*0?(\d{1,2})[-./]0?(\d{1,2})\s*$/);
-                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
-            }
-        }
-        return false;
-    }
-
-    function renderTodayInfo() {
-        const todayYear = nowDate.getFullYear();
-        const todayMonth = nowDate.getMonth() + 1;
-        const todayDay = nowDate.getDate();
-
-        const matchedTodayWeddings = dbData.weekly.filter(row => isRowMatchDate(row, todayYear, todayMonth, todayDay, false));
-        const matchedTodayConsults = dbData.consult.filter(row => isRowMatchDate(row, todayYear, todayMonth, todayDay, true));
-
-        const tt = document.getElementById('todayTitle');
-        const wNum = document.getElementById('todayWeddingNum');
-        const wDesc = document.getElementById('todayWeddingDesc');
-        const cNum = document.getElementById('todayConsultNum');
-        const cDesc = document.getElementById('todayConsultDesc');
-
-        if(tt) tt.innerText = `${todayMonth}월 ${todayDay}일 예식 및 상담 현황`;
-
-        if(wNum) wNum.innerText = `${matchedTodayWeddings.length}건`;
-        if(wDesc) wDesc.innerText = matchedTodayWeddings.length > 0 ? `${matchedTodayWeddings.length}건의 예식 진행 예정` : '예식 없음';
-
-        if(cNum) cNum.innerText = `${matchedTodayConsults.length}건`;
-        if(cDesc) cDesc.innerText = matchedTodayConsults.length > 0 ? `${matchedTodayConsults.length}건의 상담 진행 예정` : '상담 없음';
-
-        const weddingContainer = document.getElementById('todayEventsContainer');
-        if (matchedTodayWeddings.length === 0) {
-            if(weddingContainer) weddingContainer.innerHTML = `<div class="empty-msg">오늘(${todayMonth}월 ${todayDay}일) 예정된 예식이 없습니다.</div>`;
-        } else {
-            let wHtml = '';
-            matchedTodayWeddings.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
-
-                wHtml += `
-                    <div class="event-card" style="border-left: 3px solid #f0a500;">
-                        <div class="badge" style="background-color: #f0a500; color: #12141c;">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
-                    </div>
-                `;
-            });
-            if(weddingContainer) weddingContainer.innerHTML = wHtml;
-        }
-
-        const consultContainer = document.getElementById('todayConsultContainer');
-        if (matchedTodayConsults.length === 0) {
-            if(consultContainer) consultContainer.innerHTML = `<div class="empty-msg">오늘(${todayMonth}월 ${todayDay}일) 예정된 상담이 없습니다.</div>`;
-        } else {
-            let cHtml = '';
-            matchedTodayConsults.forEach((row, idx) => {
-                cHtml += `
-                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #c084fc;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #c084fc; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[상담 ${idx + 1}]</span>
-                        </div>
-                `;
-                for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
-                    if (!pureKey || pureKey === '' || pureKey === '번호') continue;
-
-                    let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
-
-                    if (cleaned !== '') {
-                        let valueStyle = '';
-                        let labelColor = '#38bdf8';
-                        if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 15px;';
-                            labelColor = '#f472b6';
-                        } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 14px;';
-                            labelColor = '#38bdf8';
-                        }
-
-                        cHtml += `
-                            <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor}; font-size:14px;">${labelText}</span>
-                                <span class="info-colon" style="color: ${labelColor};">:</span>
-                                <span class="info-value" style="${valueStyle}">${cleaned}</span>
-                            </div>
-                        `;
-                    }
-                }
-                cHtml += `</div>`;
-            });
-            if(consultContainer) consultContainer.innerHTML = cHtml;
-        }
-    }
-
-    function renderCalendar() {
-        const grid = document.getElementById('calendarGrid');
-        const summary = document.getElementById('scheduleSummary');
-        if (!grid || !summary) return;
-        
-        const monthWedding = dbData.monthly.filter(row => {
-            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
-                if (isRowMatchDate(row, selectedYear, selectedMonth, day, false)) return true;
-            }
-            return false;
-        });
-
-        const monthConsult = dbData.consult.filter(row => {
-            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
-                if (isRowMatchDate(row, selectedYear, selectedMonth, day, true)) return true;
-            }
-            return false;
-        });
-
-        summary.innerText = `${selectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
-
-        let html = `
-            <div class="cal-day-header" style="color: #ff3b30;">일</div>
-            <div class="cal-day-header">월</div>
-            <div class="cal-day-header">화</div>
-            <div class="cal-day-header">수</div>
-            <div class="cal-day-header">목</div>
-            <div class="cal-day-header">금</div>
-            <div class="cal-day-header" style="color: #3b82f6;">토</div>
-        `;
-
-        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
-        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
-        const totalDays = lastDayObj.getDate();
-        const startDayOffset = firstDayObj.getDay();
-
-        for (let i = 0; i < startDayOffset; i++) {
-            html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
-        }
-
-        for (let day = 1; day <= totalDays; day++) {
-            const dateStr = `${selectedMonth}월 ${day}일`;
-            
-            const matchedWeddings = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
-            const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true));
-
-            const wCount = matchedWeddings.length;
-            const cCount = matchedConsults.length;
-            const hasEvent = (wCount > 0 || cCount > 0);
-            const isSelected = selectedDateStr === dateStr;
-
-            const isToday = (selectedYear === currentYear && selectedMonth === currentMonth && day === currentDay);
-
-            let dayOfWeek = (startDayOffset + day - 1) % 7;
-            let dayColor = 'inherit';
-            if (dayOfWeek === 0) dayColor = '#ff3b30';
-            else if (dayOfWeek === 6) dayColor = '#3b82f6';
-
-            html += `
-                <div class="cal-cell ${hasEvent ? 'has-event' : ''} ${isToday ? 'is-today' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}', ${day})">
-                    <span class="cal-date-num" style="color:${dayColor}">${day}</span>
-                    <div class="badge-group">
-                        ${wCount > 0 ? `<span class="event-count-badge">웨딩 ${wCount}</span>` : ''}
-                        ${cCount > 0 ? `<span class="consult-count-badge">상담 ${cCount}</span>` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        grid.innerHTML = html;
-    }
-
-    function cleanValue(key, val) {
-        if (val === undefined || val === null) return '';
-        let strVal = String(val).trim();
-
-        if (strVal.startsWith("'")) {
-            strVal = strVal.substring(1);
-        }
-
-        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
-        if (isoMatch) {
-            return `${isoMatch[1]}:${isoMatch[2]}`;
-        }
-
-        let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
-        if (timeMatch) {
-            let h = timeMatch[1].padStart(2, '0');
-            let m = timeMatch[2];
-            return `${h}:${m}`;
-        }
-
-        return strVal.replace('.000Z', '').replace('Z', '');
-    }
-
-    function selectDate(dateStr, dayNum) {
-        selectedDateStr = dateStr;
-        renderCalendar();
-
-        const container = document.getElementById('selectedDateContent');
-        const titleEl = document.getElementById('selectedDateTitle');
-        if (!container) return;
-
-        const matchedWeekly = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
-        const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
-
-        if (titleEl) {
-            titleEl.innerText = `${selectedMonth}월 ${dayNum}일 상세 내역 (웨딩 ${matchedWeekly.length}건 / 상담 ${matchedConsult.length}건)`;
-        }
-
-        if (matchedWeekly.length === 0 && matchedConsult.length === 0) {
-            container.innerHTML = `<div class="empty-msg">${selectedMonth}월 ${dayNum}일에 등록된 웨딩 및 상담 일정이 없습니다.</div>`;
-            return;
-        }
-
-        let contentHtml = '';
-
-        if (matchedWeekly.length > 0) {
-            contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
-            matchedWeekly.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
-
-                contentHtml += `
-                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #f0a500;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #f0a500; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[웨딩 ${idx + 1}]</span>
-                        </div>
-                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8; font-size:14px;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${dateDisplay}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
-                    </div>
-                `;
-            });
-        }
-
-        if (matchedConsult.length > 0) {
-            contentHtml += `<div style="font-size:14px; font-weight:bold; color:#c084fc; margin-top:14px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
-            matchedConsult.forEach((row, idx) => {
-                contentHtml += `
-                    <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #c084fc;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #c084fc; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[상담 ${idx + 1}]</span>
-                        </div>
-                `;
-                for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
-                    if (!pureKey || pureKey === '' || pureKey === '번호') continue;
-
-                    let labelText = pureKey.includes('상담일시') ? '상담일시(회차)' : pureKey;
-
-                    if (cleaned !== '') {
-                        let valueStyle = '';
-                        let labelColor = '#38bdf8';
-                        if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 15px;';
-                            labelColor = '#f472b6';
-                        } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 14px;';
-                            labelColor = '#38bdf8';
-                        }
-
-                        contentHtml += `
-                            <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor}; font-size:14px;">${labelText}</span>
-                                <span class="info-colon" style="color: ${labelColor};">:</span>
-                                <span class="info-value" style="${valueStyle}">${cleaned}</span>
-                            </div>
-                        `;
-                    }
-                }
-                contentHtml += `</div>`;
-            });
-        }
-
-        container.innerHTML = contentHtml;
-    }
-
-    function switchParkingTab(floor) {
-        document.querySelectorAll('.parking-section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('#tab-parking .parking-tab-btn').forEach(btn => btn.classList.remove('active'));
-        const targetSec = document.getElementById('parking-' + floor);
-        const targetBtn = document.getElementById('p-btn-' + floor);
-        if (targetSec) targetSec.classList.add('active');
-        if (targetBtn) targetBtn.classList.add('active');
-    }
-</script>
-
-</body>
-</html>
+        if (!forceRefresh && cachedMonthly && cachedWeekly
