@@ -42,7 +42,7 @@
             z-index: 999;
         }
 
-        /* 상단 브랜드 로고 헤더 (icon-chapel.png 원본 원형 100% 일치) */
+        /* 상단 브랜드 로고 헤더 (icon-chapel.png 원본 서체 100% 일치) */
         .brand-header-banner {
             background: linear-gradient(180deg, #181518 0%, #12141c 100%);
             padding: 14px 20px;
@@ -499,9 +499,9 @@
 <div class="app-container">
     <canvas id="petalCanvas"></canvas>
 
-    <!-- 상단 브랜드 로고 헤더 (icon-chapel.png 원본 원형 100% 일치 + 골드 착색) -->
+    <!-- 상단 브랜드 로고 헤더 (icon-chapel.png 원본 이미지 파일 활용 및 골드 색상 일치) -->
     <div class="brand-header-banner">
-        <div style="display: inline-block; width: 180px; height: 100px; background: linear-gradient(135deg, #fff2cc 0%, #d4af37 50%, #aa820a 100%); -webkit-mask: url('icon-chapel.png') no-repeat center / contain; mask: url('icon-chapel.png') no-repeat center / contain; filter: drop-shadow(0px 2px 8px rgba(212, 175, 55, 0.4));"></div>
+        <img src="icon-chapel.png" alt="THE Chapel" style="height: 52px; object-fit: contain; filter: brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(5deg) brightness(1.1); filter: drop-shadow(0px 2px 8px rgba(212, 175, 55, 0.5));">
     </div>
 
     <div class="header">
