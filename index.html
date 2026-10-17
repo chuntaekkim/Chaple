@@ -18,7 +18,6 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
         }
         .app-container {
             width: 100%;
@@ -29,81 +28,37 @@
             flex-direction: column;
             position: relative;
             padding-bottom: 85px;
-            overflow: hidden;
         }
-
-        /* 꽃잎 떨어지는 애니메이션 레이어 */
-        #petalCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        /* 상단 브랜드 헤더 로고 스타일 */
-        .brand-header-banner {
-            background: linear-gradient(135deg, #1c1f2e 0%, #12141c 100%);
-            padding: 16px 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(240, 165, 0, 0.2);
-            position: relative;
-            z-index: 51;
-        }
-        .brand-logo-text {
-            font-family: "Georgia", serif;
-            font-size: 22px;
-            font-style: italic;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #f3e5ab;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-        }
-        .brand-logo-sub {
-            font-size: 10px;
-            letter-spacing: 4px;
-            color: #9ca3af;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-
-        /* 상단 시스템 헤더 */
+        /* 상단 헤더 */
         .header {
-            padding: 10px 20px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background-color: #161925;
-            z-index: 51;
         }
         .header .status {
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 12px;
+            font-size: 13px;
             color: #4cd964;
             cursor: pointer;
         }
         .header .status-dot {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             background-color: #4cd964;
             border-radius: 50%;
         }
-
         /* 콘텐츠 영역 */
         .content {
             padding: 20px;
             flex: 1;
             display: none;
             overflow-y: auto;
-            position: relative;
-            z-index: 51;
         }
         .content.active {
             display: block;
@@ -250,7 +205,7 @@
             font-weight: 700;
         }
 
-        /* 3개 월 탭 버튼 그룹 */
+        /* 3개 월 탭 버튼 그룹 (높이 축소 및 여백 조정) */
         .month-box-group {
             display: flex;
             gap: 6px;
@@ -660,16 +615,7 @@
 <body>
 
 <div class="app-container">
-    <!-- 꽃잎 떨어지는 애니메이션 캔버스 -->
-    <canvas id="petalCanvas"></canvas>
-
-    <!-- 상단 브랜드 로고 헤더 -->
-    <div class="brand-header-banner">
-        <div class="brand-logo-text">THE Chapel</div>
-        <div class="brand-logo-sub">DAECHI VALET MANAGEMENT</div>
-    </div>
-
-    <!-- 상단 상태바 헤더 -->
+    <!-- 상단 헤더 -->
     <div class="header">
         <span id="header-title">더채플대치 발렛</span>
         <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
@@ -1084,9 +1030,7 @@
     let selectedMonth = currentMonth;
     let selectedDateStr = null;
 
-    // 꽃잎 떨어지는 애니메이션 스크립트
     document.addEventListener("DOMContentLoaded", function() {
-        initPetalAnimation();
         initMonthButtons();
         updateTodayDisplay();
         loadData(false);
@@ -1097,66 +1041,6 @@
         updateTodayDisplay();
         loadData(false);
     };
-
-    function initPetalAnimation() {
-        const canvas = document.getElementById('petalCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        const petals = [];
-        const petalCount = 18; // 떨어지는 꽃잎 수
-
-        for (let i = 0; i < petalCount; i++) {
-            petals.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 6 + 4,       // 꽃잎 크기
-                d: Math.random() * petalCount,  // 밀도 변수
-                color: Math.random() > 0.5 ? 'rgba(255, 218, 224, 0.65)' : 'rgba(255, 240, 245, 0.5)',
-                tilt: Math.random() * 10 - 10,
-                tiltAngleIncremental: Math.random() * 0.07 + 0.05,
-                tiltAngle: 0
-            });
-        }
-
-        function drawPetals() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            petals.forEach(p => {
-                ctx.beginPath();
-                ctx.lineWidth = p.r / 2;
-                ctx.strokeStyle = p.color;
-                ctx.fillStyle = p.color;
-                ctx.moveTo(p.x + p.tilt + p.r / 4, p.y);
-                ctx.ellipse(p.x + p.tilt, p.y, p.r, p.r / 2, p.tiltAngle, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            updatePetals();
-        }
-
-        function updatePetals() {
-            petals.forEach(p => {
-                p.tiltAngle += p.tiltAngleIncremental;
-                p.y += (Math.cos(p.d) + 1 + p.r / 4) / 2;
-                p.x += Math.sin(p.d);
-                p.tilt = Math.sin(p.tiltAngle) * 8;
-
-                // 화면 아래로 벗어나면 위쪽으로 재배치
-                if (p.y > canvas.height + 20) {
-                    p.y = -20;
-                    p.x = Math.random() * canvas.width;
-                }
-            });
-        }
-
-        setInterval(drawPetals, 35);
-    }
 
     function updateTodayDisplay() {
         const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
@@ -1300,27 +1184,36 @@
     }
 
     function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
-        for (const [key, val] of Object.entries(row || {})) {
-            if (val === undefined || val === null || String(val).trim() === '') continue;
-            const k = String(key).trim();
-            const isDateKey = isConsult
-                ? /(상담일시|상담일|상담날짜|상담 날짜|상담 일정|date|일자)/i.test(k)
-                : /(예식일|예식 날짜|웨딩일|웨딩 날짜|날짜|일자|date)/i.test(k);
-            if (!isDateKey) continue;
+        for (let [key, val] of Object.entries(row)) {
+            if (val === undefined || val === null) continue;
+            let strVal = String(val).trim();
+            // 시트에서 텍스트 날짜 앞에 작은따옴표가 붙어 내려오는 경우 정리
+            if (strVal.startsWith("'")) strVal = strVal.slice(1).trim();
 
-            let strVal = String(val).trim().replace(/^'+/, '').trim();
+            if (isConsult) {
+                if (!key.includes('상담일시') && !key.includes('상담')) continue;
+            }
 
-            let m = strVal.match(/(20\d{2})\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
-            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
+            let matchYMD = strVal.match(new RegExp(`(20\\d{2})\\s*[-./]\\s*0?(${targetMonth})\\s*[-./]\\s*0?(${targetDay})`));
+            if (matchYMD) {
+                let y = parseInt(matchYMD[1], 10);
+                let m = parseInt(matchYMD[2], 10);
+                let d = parseInt(matchYMD[3], 10);
+                if (y === targetYear && m === targetMonth && d === targetDay) return true;
+            }
 
-            m = strVal.match(/(20\d{2})\s*년\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
-            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
+            let strictMatch = strVal.match(/(^|[^0-9])0?(\d{1,2})[-\./]0?(\d{1,2})([^0-9]|$)/);
+            if (strictMatch) {
+                let m = parseInt(strictMatch[2], 10);
+                let d = parseInt(strictMatch[3], 10);
+                if (m === targetMonth && d === targetDay) return true;
+            }
 
-            if (!/20\d{2}/.test(strVal)) {
-                m = strVal.match(/^\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?\s*$/);
-                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
-                m = strVal.match(/^\s*0?(\d{1,2})[-./]0?(\d{1,2})\s*$/);
-                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
+            let koreanMatch = strVal.match(/0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
+            if (koreanMatch) {
+                let m = parseInt(koreanMatch[1], 10);
+                let d = parseInt(koreanMatch[2], 10);
+                if (m === targetMonth && d === targetDay) return true;
             }
         }
         return false;
@@ -1425,15 +1318,24 @@
         if (!grid || !summary) return;
         
         const monthWedding = dbData.monthly.filter(row => {
-            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
-                if (isRowMatchDate(row, selectedYear, selectedMonth, day, false)) return true;
+            for (let [key, val] of Object.entries(row)) {
+                if (val !== undefined && val !== null) {
+                    let strVal = String(val);
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
+                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
+                }
             }
             return false;
         });
 
         const monthConsult = dbData.consult.filter(row => {
-            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
-                if (isRowMatchDate(row, selectedYear, selectedMonth, day, true)) return true;
+            for (let [key, val] of Object.entries(row)) {
+                if (val !== undefined && val !== null) {
+                    if (!key.includes('상담일시') && !key.includes('상담')) continue;
+                    let strVal = String(val);
+                    let mMatch = strVal.match(/0?(\d{1,2})\s*월/) || strVal.match(new RegExp(`${selectedYear}\\s*[-./]\\s*0?(${selectedMonth})`));
+                    if (mMatch && parseInt(mMatch[1], 10) === selectedMonth) return true;
+                }
             }
             return false;
         });
