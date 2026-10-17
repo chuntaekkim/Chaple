@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>더채플대치 발렛</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&family=Alex+Brush&display=swap');
 
         * {
             box-sizing: border-box;
@@ -34,7 +34,6 @@
             overflow: hidden;
         }
 
-        /* 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 레이어 (최상단 고정 및 클릭 통과) */
         #petalCanvas {
             position: absolute;
             top: 0;
@@ -45,54 +44,22 @@
             z-index: 999;
         }
 
-        /* 상단 브랜드 헤더 로고 (사진 속 영문 브랜드 서체 완벽 재현) */
         .brand-header-banner {
             background: linear-gradient(180deg, #1f1a1d 0%, #12141c 100%);
-            padding: 18px 20px 14px 20px;
+            padding: 14px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             position: relative;
             z-index: 51;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .brand-logo-main {
-            font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
-            font-size: 28px;
-            font-style: italic;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            background: linear-gradient(135deg, #fff3d1 0%, #e6ca65 50%, #b89628 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
-            line-height: 1.15;
-        }
-        .brand-logo-main .sub-the {
-            font-family: 'Playfair Display', 'Georgia', serif;
-            font-size: 15px;
-            font-style: normal;
-            letter-spacing: 6px;
-            display: block;
-            margin-bottom: -3px;
-            color: #d4af37;
-            -webkit-text-fill-color: #d4af37;
-        }
-        .brand-logo-sub {
-            font-size: 9px;
-            letter-spacing: 4px;
-            color: #a39371;
-            text-transform: uppercase;
-            margin-top: 5px;
-            font-weight: 600;
-        }
 
-        /* 상단 시스템 헤더 */
         .header {
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             background-color: #161925;
@@ -102,7 +69,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 12px;
+            font-size: 13px;
             color: #4cd964;
             cursor: pointer;
         }
@@ -113,7 +80,6 @@
             border-radius: 50%;
         }
 
-        /* 콘텐츠 영역 */
         .content {
             padding: 20px;
             flex: 1;
@@ -126,7 +92,7 @@
             display: block;
         }
         .section-title {
-            font-size: 15px;
+            font-size: 16px;
             color: #b5b5be;
             margin-bottom: 8px;
             margin-top: 14px;
@@ -166,16 +132,16 @@
             border-left: 4px solid #c084fc;
         }
         .today-stat-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #9ca3af;
             font-weight: 600;
         }
         .today-stat-num {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
         }
         .today-stat-desc {
-            font-size: 12px;
+            font-size: 13px;
             color: #e5e7eb;
             font-weight: 500;
         }
@@ -187,7 +153,7 @@
             cursor: pointer;
         }
         .sub-box-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             margin-bottom: 6px;
             display: flex;
@@ -195,7 +161,7 @@
             gap: 6px;
         }
         .sub-box-desc {
-            font-size: 13px;
+            font-size: 14px;
             color: #e5e7eb;
             font-weight: 500;
         }
@@ -209,7 +175,7 @@
             display: inline-block;
             background-color: #007aff;
             color: #ffffff;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             padding: 5px 12px;
             border-radius: 6px;
@@ -219,10 +185,10 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 7px;
-            font-size: 14px;
+            font-size: 15px;
         }
         .uniform-row .info-label {
-            width: 95px;
+            width: 105px;
             font-weight: 700;
             flex-shrink: 0;
         }
@@ -248,12 +214,12 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         }
         .today-info-label {
-            font-size: 13px;
+            font-size: 14px;
             color: #9ca3af;
             font-weight: 600;
         }
         .today-info-date {
-            font-size: 15px;
+            font-size: 16px;
             color: #f59e0b;
             font-weight: 700;
         }
@@ -270,20 +236,18 @@
             border-radius: 10px;
             padding: 8px 4px;
             color: #9ca3af;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 1px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .month-card-btn .m-sub {
-            font-size: 10px;
+            font-size: 11px;
             opacity: 0.7;
         }
         .month-card-btn.main-current-month {
@@ -291,10 +255,10 @@
             padding: 10px 6px;
             background-color: #1e2433;
             border: 2px solid rgba(59, 130, 246, 0.4);
-            font-size: 14px;
+            font-size: 15px;
         }
         .month-card-btn.main-current-month .m-sub {
-            font-size: 11px;
+            font-size: 12px;
             color: #93c5fd;
             opacity: 1;
             font-weight: 700;
@@ -308,7 +272,6 @@
             background-color: #2563eb !important;
             border-color: #3b82f6 !important;
             color: #ffffff !important;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
         }
         #monthBtnNext.active {
             background-color: #059669 !important;
@@ -330,12 +293,11 @@
             border: none;
             color: #d1d5db;
             padding: 10px 4px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
             text-align: center;
-            transition: all 0.2s ease;
             white-space: nowrap;
         }
         .parking-tab-btn.active {
@@ -359,21 +321,20 @@
         .parking-layout-box {
             background: linear-gradient(135deg, #161925 0%, #10121a 100%);
             border-radius: 14px;
-            padding: 16px 16px 14px 16px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
             margin-top: 10px;
             border: 1px solid rgba(59, 130, 246, 0.4);
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
         }
         .parking-grid-container {
             display: flex;
             flex-direction: column;
             gap: 6px;
             width: 100%;
-            max-width: 260px;
+            max-width: 240px;
         }
         .parking-row {
             display: flex;
@@ -382,12 +343,11 @@
         }
         .parking-row.with-side {
             justify-content: flex-start;
-            padding-left: 0;
             align-items: flex-start;
         }
         .parking-slot {
-            width: 44px;
-            height: 44px;
+            width: 38px;
+            height: 38px;
             background: linear-gradient(145deg, #242838, #1d212d);
             border: 2px solid #3b82f6;
             border-radius: 7px;
@@ -395,10 +355,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: #93c5fd;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
             position: relative;
         }
         .parking-slot.disabled-slot {
@@ -408,23 +367,21 @@
         .parking-slot.empty-slot {
             border: 2px dashed rgba(255, 255, 255, 0.2);
             background: transparent;
-            box-shadow: none;
         }
         .disabled-badge {
-            font-size: 8px;
+            font-size: 7px;
             color: #93c5fd;
             background-color: rgba(59, 130, 246, 0.3);
-            padding: 1px 3px;
+            padding: 1px 2px;
             border-radius: 3px;
             margin-top: 1px;
-            font-weight: 600;
         }
         .parking-side-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
             margin-left: auto; 
-            margin-top: 18px;
+            margin-top: 56px;
         }
         .parking-entrance-box {
             display: flex;
@@ -440,18 +397,16 @@
             padding: 5px 12px;
             border-radius: 12px;
             text-align: center;
-            line-height: 1.3;
-            box-shadow: 0 3px 10px rgba(240, 165, 0, 0.3);
         }
         .calendar-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: repeat(7, 1fr);
             gap: 3px;
             text-align: center;
             margin-top: 6px;
         }
         .cal-day-header {
-            font-size: 12px;
+            font-size: 13px;
             color: #b5b5be;
             padding-bottom: 4px;
             font-weight: 700;
@@ -460,15 +415,14 @@
             background-color: #1a1d29;
             border-radius: 6px;
             padding: 4px 2px;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
-            min-height: 56px;
+            min-height: 58px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             gap: 2px;
-            position: relative;
             border: 1px solid transparent;
         }
         .cal-cell.has-event {
@@ -477,21 +431,10 @@
         .cal-cell.is-today {
             border: 3px solid #f59e0b !important;
             background-color: rgba(245, 158, 11, 0.15) !important;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
-            border-radius: 8px;
-        }
-        .cal-cell.is-today .cal-date-num {
-            color: #f59e0b !important;
-            font-weight: 900;
-        }
-        .cal-cell.selected {
-            background-color: #242838;
-            outline: 2px solid #3b82f6;
         }
         .cal-date-num {
             font-weight: 700;
-            margin-bottom: 1px;
-            font-size: 13px;
+            font-size: 14px;
         }
         .badge-group {
             display: flex;
@@ -500,28 +443,17 @@
             width: 100%;
             align-items: center;
         }
-        .event-count-badge {
+        .event-count-badge, .consult-count-badge {
             font-size: 10px;
-            background-color: #f0a500;
-            color: #12141c;
             padding: 1px 3px;
             border-radius: 5px;
             font-weight: 700;
             width: 95%;
             text-align: center;
-            white-space: nowrap;
         }
-        .consult-count-badge {
-            font-size: 10px;
-            background-color: #c084fc;
-            color: #12141c;
-            padding: 1px 3px;
-            border-radius: 5px;
-            font-weight: 700;
-            width: 95%;
-            text-align: center;
-            white-space: nowrap;
-        }
+        .event-count-badge { background-color: #f0a500; color: #12141c; }
+        .consult-count-badge { background-color: #c084fc; color: #12141c; }
+        
         .contact-card {
             background-color: #1a1d29;
             border-radius: 10px;
@@ -531,137 +463,45 @@
             align-items: center;
             margin-bottom: 6px;
         }
-        .contact-card.hq-card {
-            border-left: 3px solid #f59e0b;
-            background-color: #1c1f2e;
-        }
-        .contact-card.branch-card {
-            border-left: 3px solid #3b82f6;
-        }
-        .contact-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex: 1;
-        }
-        .contact-info-group {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex: 1;
-        }
-        .contact-name {
-            font-weight: 700;
-            font-size: 16px;
-            color: #ffffff;
-            width: 60px;
-            flex-shrink: 0;
-        }
-        .contact-role {
-            font-size: 13px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            width: 50px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .contact-phone {
-            font-size: 14px;
-            color: #f3f4f6;
-            font-weight: 600;
-        }
+        .contact-card.hq-card { border-left: 3px solid #f59e0b; background-color: #1c1f2e; }
+        .contact-card.branch-card { border-left: 3px solid #3b82f6; }
+        .contact-left, .contact-info-group { display: flex; align-items: center; gap: 14px; flex: 1; }
+        .contact-name { font-weight: 700; font-size: 16px; width: 60px; }
+        .contact-role { font-size: 13px; font-weight: 700; padding: 3px 8px; border-radius: 6px; width: 50px; text-align: center; }
+        .contact-phone { font-size: 15px; font-weight: 600; }
+        
         .call-icon-btn {
-            background-color: #10b981;
-            color: white;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
-            flex-shrink: 0;
-            transition: transform 0.1s ease;
+            background-color: #10b981; color: white; width: 38px; height: 38px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; flex-shrink: 0;
         }
-        .call-icon-btn:active {
-            transform: scale(0.92);
-        }
-        .call-icon-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-        .empty-msg {
-            text-align: center;
-            padding: 22px;
-            color: #b5b5be;
-            font-size: 1rem;
-            font-weight: 500;
-        }
+        .call-icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .empty-msg { text-align: center; padding: 22px; color: #b5b5be; font-size: 1.05rem; }
+        
         .nav-bar {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 480px;
-            background-color: #161925;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0 20px 0;
-            z-index: 1000;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
+            position: fixed; bottom: 0; width: 100%; max-width: 480px;
+            background-color: #161925; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-around; padding: 10px 0 20px 0; z-index: 1000;
         }
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: #a1a1aa;
-            font-size: 12px;
-            font-weight: 600;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            flex: 1;
-            transition: all 0.2s ease;
+            display: flex; flex-direction: column; align-items: center;
+            color: #a1a1aa; font-size: 13px; font-weight: 600; gap: 5px;
+            background: none; border: none; flex: 1; cursor: pointer;
         }
-        .nav-item svg {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.2s ease;
-        }
-        .nav-item.nav-today { color: #ff7675; }
-        .nav-item.nav-schedule { color: #a29bfe; }
-        .nav-item.nav-parking { color: #55efc4; }
-        .nav-item.nav-contact { color: #34d399; }
-        .nav-item:not(.active) { opacity: 0.6; }
-        .nav-item.active {
-            opacity: 1;
-            transform: translateY(-2px);
-            font-weight: 700;
-        }
-        .nav-item.active svg { transform: scale(1.15); }
+        .nav-item svg { width: 24px; height: 24px; }
+        .nav-item.active { opacity: 1; transform: translateY(-2px); font-weight: 700; color: #f59e0b; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <!-- 붉은 장미 꽃잎 & 흰색 안개꽃 애니메이션 캔버스 -->
     <canvas id="petalCanvas"></canvas>
 
-    <!-- 상단 브랜드 로고 헤더 -->
-    <div class="brand-header-banner">
-        <div class="brand-logo-main">
-            <span class="sub-the">THE</span>
-            Chapel
-        </div>
-        <div class="brand-logo-sub">DAECHI VALET MANAGEMENT</div>
+    <div class="brand-header-banner" style="padding: 14px 20px;">
+        <div style="font-family: 'Playfair Display', serif; font-size: 14px; letter-spacing: 5px; color: #d4af37; font-weight: 700; margin-bottom: 2px;">THE</div>
+        <div style="font-family: 'Alex Brush', cursive; font-size: 38px; color: #d4af37; line-height: 1; text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);">Chapel</div>
     </div>
 
-    <!-- 상단 상태바 헤더 -->
     <div class="header">
         <span id="header-title">더채플대치 발렛</span>
         <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
@@ -735,7 +575,7 @@
         </div>
 
         <div class="main-card" style="margin-top: 6px; padding: 12px 14px;">
-            <div id="scheduleSummary" style="font-weight: 700; margin-bottom: 6px; color: #f3f4f6; font-size: 14px;">스케줄 로딩 중...</div>
+            <div id="scheduleSummary" style="font-weight: 700; margin-bottom: 6px; color: #f3f4f6; font-size: 15px;">스케줄 로딩 중...</div>
             <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
@@ -821,46 +661,46 @@
 
         <div id="parking-exec" class="parking-section">
             <div class="event-card" style="border-left: 3px solid #facc15; margin-bottom: 12px; padding: 10px 12px;">
-                <div style="font-weight: 700; margin-bottom: 4px; color: #facc15; font-size: 14px;">주요 임원 차량 리스트</div>
-                <div style="font-size: 13px; color: #e5e7eb;">지하 4층 전용 주차 대상 임원 차량 정보입니다.</div>
+                <div style="font-weight: 700; margin-bottom: 4px; color: #facc15; font-size: 15px;">주요 임원 차량 리스트</div>
+                <div style="font-size: 14px; color: #e5e7eb;">지하 4층 전용 주차 대상 임원 차량 정보입니다.</div>
             </div>
             
-            <div style="background-color: #1a1d29; border-radius: 12px; padding: 10px 12px; margin-bottom: 16px;">
+            <div class="main-card" style="margin-bottom: 16px;">
                 <div style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">제네시스 G90</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">197하4877</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #facc15;">김수연</div>
-                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #facc15; text-align: left; padding-left: 8px;">대표님</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">제네시스 G90</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">197하4877</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #facc15;">김수연</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 14px; color: #facc15; text-align: left; padding-left: 8px;">대표님</div>
                 </div>
                 <div style="background-color: #1c1f2e; border-left: 3px solid #facc15; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">쏘렌토</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">02서2546</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #facc15;">강창열</div>
-                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #facc15; text-align: left; padding-left: 8px;">1그룹장님</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">쏘렌토</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">02서2546</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #facc15;">강창열</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 14px; color: #facc15; text-align: left; padding-left: 8px;">1그룹장님</div>
                 </div>
                 <div style="background-color: #1c1f2e; border-left: 3px solid #10b981; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">팰리세이드</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">126너2085</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #34d399;">김창현</div>
-                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #34d399; text-align: left; padding-left: 8px;">대치점장님</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">팰리세이드</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">126너2085</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #34d399;">김창현</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 14px; color: #34d399; text-align: left; padding-left: 8px;">대치점장님</div>
                 </div>
                 <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">포르쉐? 그랜저?</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">?</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">허준석</div>
-                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">본부장님</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">포르쉐? 그랜저?</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">?</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #60a5fa;">허준석</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 14px; color: #60a5fa; text-align: left; padding-left: 8px;">본부장님</div>
                 </div>
                 <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 6px; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">제네시스 GV80</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">9665</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">심상석</div>
-                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">2그룹장님</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">제네시스 GV80</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">9665</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #60a5fa;">심상석</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 14px; color: #60a5fa; text-align: left; padding-left: 8px;">2그룹장님</div>
                 </div>
                 <div style="background-color: #1c1f2e; border-left: 3px solid #3b82f6; margin-bottom: 0; padding: 8px 10px; display: flex; align-items: center; text-align: center; border-radius: 8px;">
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff; text-align: left;">벤츠 220d</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #ffffff;">8881</div>
-                    <div style="flex: 1; font-weight: 700; font-size: 13px; color: #60a5fa;">서종필</div>
-                    <div style="flex: 1; font-weight: 600; font-size: 13px; color: #60a5fa; text-align: left; padding-left: 8px;">노조임원님</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff; text-align: left;">벤츠 220d</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #ffffff;">8881</div>
+                    <div style="flex: 1; font-weight: 700; font-size: 14px; color: #60a5fa;">서종필</div>
+                    <div style="flex: 1; font-weight: 600; font-size: 14px; color: #60a5fa; text-align: left; padding-left: 8px;">노조임원님</div>
                 </div>
             </div>
         </div>
@@ -1045,7 +885,6 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
 
     let dbData = {
-        monthly: [],
         weekly: [],
         consult: []
     };
@@ -1060,17 +899,11 @@
 
     let prevYear = currentYear;
     let prevMonth = currentMonth - 1;
-    if (prevMonth < 1) {
-        prevMonth = 12;
-        prevYear--;
-    }
+    if (prevMonth < 1) { prevMonth = 12; prevYear--; }
 
     let nextYear = currentYear;
     let nextMonth = currentMonth + 1;
-    if (nextMonth > 12) {
-        nextMonth = 1;
-        nextYear++;
-    }
+    if (nextMonth > 12) { nextMonth = 1; nextYear++; }
 
     let selectedYear = currentYear;
     let selectedMonth = currentMonth;
@@ -1082,12 +915,6 @@
         updateTodayDisplay();
         loadData(false);
     });
-
-    window.onload = function() {
-        initMonthButtons();
-        updateTodayDisplay();
-        loadData(false);
-    };
 
     function initRoseAndBabyBreathAnimation() {
         const canvas = document.getElementById('petalCanvas');
@@ -1102,8 +929,8 @@
         window.addEventListener('resize', resizeCanvas);
 
         const items = [];
-        const roseCount = 15;      // 붉은 장미 꽃잎 수
-        const gypsophilaCount = 22; // 흰색 안개꽃 입자 수
+        const roseCount = 15;
+        const gypsophilaCount = 22;
 
         for (let i = 0; i < roseCount; i++) {
             items.push({
@@ -1134,7 +961,6 @@
 
         function drawAnimation() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             items.forEach(item => {
                 if (item.type === 'rose') {
                     ctx.beginPath();
@@ -1155,7 +981,6 @@
                     ctx.shadowBlur = 0;
                 }
             });
-
             updateAnimation();
         }
 
@@ -1163,12 +988,10 @@
             items.forEach(item => {
                 item.y += item.speedY;
                 item.x += Math.sin(item.y * 0.02) + item.speedX;
-
                 if (item.type === 'rose') {
                     item.tiltAngle += item.tiltAngleIncremental;
                     item.tilt = Math.sin(item.tiltAngle) * 6;
                 }
-
                 if (item.y > canvas.height + 20) {
                     item.y = -20;
                     item.x = Math.random() * canvas.width;
@@ -1230,13 +1053,11 @@
     }
 
     async function loadData(forceRefresh = false) {
-        const cachedMonthly = localStorage.getItem('valet_monthly');
         const cachedWeekly = localStorage.getItem('valet_weekly');
         const cachedConsult = localStorage.getItem('valet_consult');
 
-        if (!forceRefresh && cachedMonthly && cachedWeekly && cachedConsult) {
+        if (!forceRefresh && cachedWeekly && cachedConsult) {
             try {
-                dbData.monthly = JSON.parse(cachedMonthly);
                 dbData.weekly = JSON.parse(cachedWeekly);
                 dbData.consult = JSON.parse(cachedConsult);
 
@@ -1259,17 +1080,14 @@
         if(sd) sd.style.backgroundColor = "#007aff";
 
         try {
-            const [mRes, wRes, cRes] = await Promise.all([
-                fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
+            const [wRes, cRes] = await Promise.all([
                 fetch(`${SCRIPT_URL}?type=weekly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
                 fetch(`${SCRIPT_URL}?type=consult`, { mode: 'cors' }).then(r => r.json()).catch(() => [])
             ]);
 
-            dbData.monthly = Array.isArray(mRes) ? mRes : [];
             dbData.weekly = Array.isArray(wRes) ? wRes : [];
             dbData.consult = Array.isArray(cRes) ? cRes : [];
 
-            localStorage.setItem('valet_monthly', JSON.stringify(dbData.monthly));
             localStorage.setItem('valet_weekly', JSON.stringify(dbData.weekly));
             localStorage.setItem('valet_consult', JSON.stringify(dbData.consult));
 
@@ -1362,10 +1180,8 @@
         const cDesc = document.getElementById('todayConsultDesc');
 
         if(tt) tt.innerText = `${todayMonth}월 ${todayDay}일 예식 및 상담 현황`;
-
         if(wNum) wNum.innerText = `${matchedTodayWeddings.length}건`;
         if(wDesc) wDesc.innerText = matchedTodayWeddings.length > 0 ? `${matchedTodayWeddings.length}건의 예식 진행 예정` : '예식 없음';
-
         if(cNum) cNum.innerText = `${matchedTodayConsults.length}건`;
         if(cDesc) cDesc.innerText = matchedTodayConsults.length > 0 ? `${matchedTodayConsults.length}건의 상담 진행 예정` : '상담 없음';
 
@@ -1384,10 +1200,10 @@
                 wHtml += `
                     <div class="event-card" style="border-left: 3px solid #f0a500;">
                         <div class="badge" style="background-color: #f0a500; color: #12141c;">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
                     </div>
                 `;
             });
@@ -1418,16 +1234,16 @@
                         let valueStyle = '';
                         let labelColor = '#38bdf8';
                         if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 15px;';
+                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 16px;';
                             labelColor = '#f472b6';
                         } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 14px;';
+                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 15px;';
                             labelColor = '#38bdf8';
                         }
 
                         cHtml += `
                             <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor}; font-size:14px;">${labelText}</span>
+                                <span class="info-label" style="color: ${labelColor};">${labelText}</span>
                                 <span class="info-colon" style="color: ${labelColor};">:</span>
                                 <span class="info-value" style="${valueStyle}">${cleaned}</span>
                             </div>
@@ -1445,7 +1261,7 @@
         const summary = document.getElementById('scheduleSummary');
         if (!grid || !summary) return;
         
-        const monthWedding = dbData.monthly.filter(row => {
+        const monthWedding = dbData.weekly.filter(row => {
             for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
                 if (isRowMatchDate(row, selectedYear, selectedMonth, day, false)) return true;
             }
@@ -1483,14 +1299,13 @@
         for (let day = 1; day <= totalDays; day++) {
             const dateStr = `${selectedMonth}월 ${day}일`;
             
-            const matchedWeddings = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
+            const matchedWeddings = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, false));
             const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true));
 
             const wCount = matchedWeddings.length;
             const cCount = matchedConsults.length;
             const hasEvent = (wCount > 0 || cCount > 0);
             const isSelected = selectedDateStr === dateStr;
-
             const isToday = (selectedYear === currentYear && selectedMonth === currentMonth && day === currentDay);
 
             let dayOfWeek = (startDayOffset + day - 1) % 7;
@@ -1515,23 +1330,11 @@
     function cleanValue(key, val) {
         if (val === undefined || val === null) return '';
         let strVal = String(val).trim();
-
-        if (strVal.startsWith("'")) {
-            strVal = strVal.substring(1);
-        }
-
+        if (strVal.startsWith("'")) strVal = strVal.substring(1);
         let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
-        if (isoMatch) {
-            return `${isoMatch[1]}:${isoMatch[2]}`;
-        }
-
+        if (isoMatch) return `${isoMatch[1]}:${isoMatch[2]}`;
         let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
-        if (timeMatch) {
-            let h = timeMatch[1].padStart(2, '0');
-            let m = timeMatch[2];
-            return `${h}:${m}`;
-        }
-
+        if (timeMatch) return `${timeMatch[1].padStart(2, '0')}:${timeMatch[2]}`;
         return strVal.replace('.000Z', '').replace('Z', '');
     }
 
@@ -1543,7 +1346,7 @@
         const titleEl = document.getElementById('selectedDateTitle');
         if (!container) return;
 
-        const matchedWeekly = dbData.monthly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
+        const matchedWeekly = dbData.weekly.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, false));
         const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
 
         if (titleEl) {
@@ -1558,7 +1361,7 @@
         let contentHtml = '';
 
         if (matchedWeekly.length > 0) {
-            contentHtml += `<div style="font-size:14px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
+            contentHtml += `<div style="font-size:15px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
             matchedWeekly.forEach((row, idx) => {
                 let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
                 let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
@@ -1572,18 +1375,18 @@
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                             <span style="background-color: #f0a500; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[웨딩 ${idx + 1}]</span>
                         </div>
-                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8; font-size:14px;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${dateDisplay}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399; font-size:14px;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6; font-size:14px;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24; font-size:14px;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa; font-size:14px;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff; font-size:14px;">${honjuCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff;">${dateDisplay}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
+                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
                     </div>
                 `;
             });
         }
 
         if (matchedConsult.length > 0) {
-            contentHtml += `<div style="font-size:14px; font-weight:bold; color:#c084fc; margin-top:14px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
+            contentHtml += `<div style="font-size:15px; font-weight:bold; color:#c084fc; margin-top:14px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
             matchedConsult.forEach((row, idx) => {
                 contentHtml += `
                     <div style="background:#242838; padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #c084fc;">
@@ -1603,16 +1406,16 @@
                         let valueStyle = '';
                         let labelColor = '#38bdf8';
                         if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 15px;';
+                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 16px;';
                             labelColor = '#f472b6';
                         } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 14px;';
+                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 15px;';
                             labelColor = '#38bdf8';
                         }
 
                         contentHtml += `
                             <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor}; font-size:14px;">${labelText}</span>
+                                <span class="info-label" style="color: ${labelColor};">${labelText}</span>
                                 <span class="info-colon" style="color: ${labelColor};">:</span>
                                 <span class="info-value" style="${valueStyle}">${cleaned}</span>
                             </div>
