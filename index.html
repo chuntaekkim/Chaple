@@ -25,12 +25,8 @@
         .app-container {
             width: 100%;
             max-width: 480px;
-            /* ✨ 고급스러운 웨딩홀 배경 + 오버레이 블렌딩 */
-            background: linear-gradient(180deg, rgba(16, 18, 24, 0.86) 0%, rgba(20, 22, 30, 0.90) 100%), 
-                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80');
-            background-blend-mode: overlay;
-            background-size: cover;
-            background-position: center;
+            /* ✨ 사진 배경을 빼고 눈이 편안한 깔끔한 딥 차콜 & 모던 샴페인 그라데이션 적용 */
+            background: linear-gradient(180deg, #12141c 0%, #1a1c27 50%, #10121a 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -52,14 +48,13 @@
 
         /* 상단 브랜드 로고 헤더 */
         .brand-header-banner {
-            background: linear-gradient(180deg, rgba(22, 24, 32, 0.92) 0%, rgba(16, 18, 24, 0.92) 100%);
+            background: linear-gradient(180deg, rgba(22, 24, 32, 0.95) 0%, rgba(16, 18, 24, 0.95) 100%);
             padding: 14px 20px;
             text-align: center;
             border-bottom: 1px solid rgba(212, 175, 55, 0.25);
             position: relative;
             z-index: 51;
             box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
         }
         .logo-the {
             font-family: 'Cinzel', serif;
@@ -89,7 +84,7 @@
             font-size: 15px;
             font-weight: 600;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            background-color: rgba(22, 25, 35, 0.85);
+            background-color: rgba(22, 25, 35, 0.9);
             backdrop-filter: blur(6px);
             z-index: 51;
         }
@@ -131,7 +126,7 @@
             margin-top: 0;
         }
         .main-card {
-            background-color: rgba(26, 29, 41, 0.82);
+            background-color: rgba(26, 29, 41, 0.88);
             backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 18px;
@@ -150,7 +145,7 @@
         }
         .today-stat-box {
             flex: 1;
-            background-color: rgba(35, 39, 54, 0.88);
+            background-color: rgba(35, 39, 54, 0.9);
             border-radius: 12px;
             padding: 14px;
             display: flex;
@@ -180,7 +175,7 @@
         }
         .sub-box {
             flex: 1;
-            background-color: rgba(35, 39, 54, 0.88);
+            background-color: rgba(35, 39, 54, 0.9);
             border-radius: 12px;
             padding: 16px 14px;
             cursor: pointer;
@@ -200,7 +195,7 @@
             font-weight: 500;
         }
         .event-card {
-            background-color: rgba(26, 29, 41, 0.85);
+            background-color: rgba(26, 29, 41, 0.88);
             backdrop-filter: blur(8px);
             border-radius: 12px;
             padding: 14px;
@@ -268,7 +263,7 @@
         }
         .month-card-btn {
             flex: 1;
-            background-color: rgba(26, 29, 41, 0.85);
+            background-color: rgba(26, 29, 41, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             padding: 8px 4px;
@@ -317,7 +312,7 @@
         }
         .parking-tab-group {
             display: flex;
-            background-color: rgba(26, 29, 41, 0.85);
+            background-color: rgba(26, 29, 41, 0.88);
             border-radius: 12px;
             padding: 4px;
             margin-bottom: 16px;
@@ -450,7 +445,7 @@
             font-weight: 700;
         }
         .cal-cell {
-            background-color: rgba(26, 29, 41, 0.85);
+            background-color: rgba(26, 29, 41, 0.88);
             border-radius: 6px;
             padding: 4px 2px;
             font-size: 13px;
@@ -493,7 +488,7 @@
         .consult-count-badge { background-color: #c084fc; color: #12141c; }
         
         .contact-card {
-            background-color: rgba(26, 29, 41, 0.85);
+            background-color: rgba(26, 29, 41, 0.88);
             backdrop-filter: blur(8px);
             border-radius: 10px;
             padding: 10px 14px;
@@ -503,7 +498,7 @@
             margin-bottom: 6px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .contact-card.hq-card { border-left: 3px solid #f59e0b; background-color: rgba(28, 31, 46, 0.9); }
+        .contact-card.hq-card { border-left: 3px solid #f59e0b; background-color: rgba(28, 31, 46, 0.95); }
         .contact-card.branch-card { border-left: 3px solid #3b82f6; }
         .contact-left, .contact-info-group { display: flex; align-items: center; gap: 14px; flex: 1; }
         .contact-name { font-weight: 700; font-size: 16px; width: 60px; }
@@ -518,7 +513,6 @@
         }
         .call-icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
         
-        /* 💬 추가된 문자 보내기 버튼 디자인 */
         .sms-icon-btn {
             background-color: #3b82f6; color: white; width: 38px; height: 38px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -759,7 +753,7 @@
         </div>
     </div>
 
-    <!-- [탭 4] 비상 연락망 화면 (전화 + 문자 전송 지원) -->
+    <!-- [탭 4] 비상 연락망 화면 -->
     <div id="tab-contact" class="content">
         <div class="section-title" style="margin-top:0;">비상 연락망</div>
         <div style="font-size: 15px; color: #e5e7eb; margin-bottom: 10px; font-weight: 500;">전화기/문자 아이콘을 누르면 바로 통화 및 문자가 연결됩니다.</div>
@@ -947,660 +941,4 @@
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
                 <a href="tel:010-6844-9401" class="call-icon-btn" title="전화 걸기">
-                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                </a>
-                <a href="sms:010-6844-9401" class="sms-icon-btn" title="문자 보내기">
-                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-                </a>
-            </div>
-        </div>
-        <div class="contact-card branch-card">
-            <div class="contact-left">
-                <div class="contact-info-group">
-                    <span class="contact-name">함성</span>
-                    <span class="contact-role" style="color:#38bdf8; background-color:rgba(56,189,248,0.1);">팀원</span>
-                    <span class="contact-phone">010-8358-8815</span>
-                </div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <a href="tel:010-8358-8815" class="call-icon-btn" title="전화 걸기">
-                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                </a>
-                <a href="sms:010-8358-8815" class="sms-icon-btn" title="문자 보내기">
-                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 하단 네비게이션 바 -->
-    <div class="nav-bar">
-        <button class="nav-item nav-today active" onclick="switchTab('today', this)">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
-            오늘
-        </button>
-        <button class="nav-item nav-schedule" onclick="switchTab('schedule', this)">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
-            일정
-        </button>
-        <button class="nav-item nav-parking" onclick="switchTab('parking', this)">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3z"/></svg>
-            주차
-        </button>
-        <button class="nav-item nav-contact" onclick="switchTab('contact', this)">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-            연락
-        </button>
-    </div>
-</div>
-
-<script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmbcADVjlVq6xhVqos5QnSSEpA13ZYWwpwSHqcJG7xoq2ggIzXbCW4y-nO0JGXTTwH/exec";
-
-    let dbData = {
-        monthly: [],
-        weekly: [],
-        consult: []
-    };
-
-    function getWeddingsForDate(year, month, day) {
-        const weeklyMatches = (dbData.weekly || []).filter(row => isRowMatchDate(row, year, month, day, false));
-        if (weeklyMatches.length > 0) {
-            return weeklyMatches;
-        }
-        return (dbData.monthly || []).filter(row => isRowMatchDate(row, year, month, day, false));
-    }
-
-    function getMonthWeddings(year, month) {
-        const lastDay = new Date(year, month, 0).getDate();
-        let matched = [];
-        for (let day = 1; day <= lastDay; day++) {
-            const dayList = getWeddingsForDate(year, month, day);
-            dayList.forEach(item => {
-                if (!matched.includes(item)) matched.push(item);
-            });
-        }
-        return matched;
-    }
-
-    const nowDate = new Date();
-    let currentYear = nowDate.getFullYear();
-    let currentMonth = nowDate.getMonth() + 1;
-    let currentDay = nowDate.getDate();
-    
-    if (isNaN(currentYear) || currentYear < 2024) currentYear = 2026;
-    if (isNaN(currentMonth) || currentMonth < 1 || currentMonth > 12) currentMonth = 10;
-
-    let prevYear = currentYear;
-    let prevMonth = currentMonth - 1;
-    if (prevMonth < 1) { prevMonth = 12; prevYear--; }
-
-    let nextYear = currentYear;
-    let nextMonth = currentMonth + 1;
-    if (nextMonth > 12) { nextMonth = 1; nextYear++; }
-
-    let selectedYear = currentYear;
-    let selectedMonth = currentMonth;
-    let selectedDateStr = null;
-
-    document.addEventListener("DOMContentLoaded", function() {
-        initMultiColorPetalAndGypAnimation();
-        initMonthButtons();
-        updateTodayDisplay();
-        loadData(false);
-    });
-
-    // 🌸 다양한 색상(레드, 화이트, 핑크, 노랑)의 꽃잎 & 은은한 안개꽃 애니메이션
-    function initMultiColorPetalAndGypAnimation() {
-        const canvas = document.getElementById('petalCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        const items = [];
-        const petalCount = 14;  
-        const gypCount = 18;    
-
-        // 🎨 빨강, 화이트, 핑크, 노랑 다양한 꽃잎 팔레트
-        const colorPalettes = [
-            { light: '#ff6b81', dark: '#d63031' }, // 로맨틱 딥 레드/장미
-            { light: '#ffffff', dark: '#e2e8f0' }, // 순백의 화이트
-            { light: '#ffb8b8', dark: '#ff7675' }, // 러블리 핑크
-            { light: '#ffeaa7', dark: '#fdcb6e' }  // 따스한 은은한 노랑/골드
-        ];
-
-        for (let i = 0; i < petalCount; i++) {
-            const palette = colorPalettes[i % colorPalettes.length];
-            items.push({
-                type: 'petal',
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                scale: Math.random() * 0.28 + 0.25,
-                color: palette.light,
-                darkColor: palette.dark,
-                rotation: Math.random() * Math.PI * 2,
-                rotSpeed: Math.random() * 0.01 - 0.005,
-                speedY: Math.random() * 0.45 + 0.2,
-                speedX: Math.random() * 0.4 - 0.2,
-                swing: Math.random() * 12 + 6,
-                swingSpeed: Math.random() * 0.02 + 0.008
-            });
-        }
-
-        for (let i = 0; i < gypCount; i++) {
-            items.push({
-                type: 'gyp',
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                r: Math.random() * 1.3 + 0.7,
-                alpha: Math.random() * 0.5 + 0.25,
-                speedY: Math.random() * 0.35 + 0.15,
-                speedX: Math.random() * 0.3 - 0.15,
-                swing: Math.random() * 8 + 3,
-                swingSpeed: Math.random() * 0.015 + 0.005
-            });
-        }
-
-        function drawAnimation() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            items.forEach(item => {
-                ctx.save();
-                ctx.translate(item.x, item.y);
-
-                if (item.type === 'petal') {
-                    ctx.rotate(item.rotation);
-                    ctx.scale(item.scale, item.scale);
-
-                    ctx.beginPath();
-                    ctx.moveTo(0, -9);
-                    ctx.bezierCurveTo(9, -11, 12, 2, 5, 9);
-                    ctx.bezierCurveTo(2, 12, -2, 12, -5, 9);
-                    ctx.bezierCurveTo(-12, 2, -9, -11, 0, -9);
-                    
-                    let grad = ctx.createLinearGradient(0, -9, 0, 11);
-                    grad.addColorStop(0, item.color);
-                    grad.addColorStop(1, item.darkColor);
-                    ctx.fillStyle = grad;
-                    ctx.fill();
-                    ctx.shadowBlur = 4;
-                    ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
-                } else {
-                    ctx.beginPath();
-                    ctx.fillStyle = `rgba(255, 255, 255, ${item.alpha})`;
-                    ctx.shadowBlur = 3;
-                    ctx.shadowColor = "rgba(255, 255, 255, 0.7)";
-                    ctx.arc(0, 0, item.r, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                ctx.restore();
-            });
-
-            updateAnimation();
-        }
-
-        function updateAnimation() {
-            items.forEach(item => {
-                item.y += item.speedY;
-                item.x += Math.sin(item.y * item.swingSpeed) * 0.4 + item.speedX;
-                if (item.type === 'petal') {
-                    item.rotation += item.rotSpeed;
-                }
-                if (item.y > canvas.height + 30) {
-                    item.y = -30;
-                    item.x = Math.random() * canvas.width;
-                }
-            });
-        }
-
-        setInterval(drawAnimation, 30);
-    }
-
-    function updateTodayDisplay() {
-        const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
-        const dayOfWeek = dayNames[nowDate.getDay()];
-        const targetEl = document.getElementById('displayTodayText');
-        if (targetEl) {
-            targetEl.innerText = `${currentYear}년 ${currentMonth}월 ${currentDay}일 (${dayOfWeek})`;
-        }
-    }
-
-    function initMonthButtons() {
-        const lblPrev = document.getElementById('labelPrev');
-        const lblCurrent = document.getElementById('labelCurrent');
-        const lblNext = document.getElementById('labelNext');
-        
-        if (lblPrev && lblCurrent && lblNext) {
-            lblPrev.innerText = `${prevMonth}월`;
-            lblCurrent.innerText = `${currentMonth}월`;
-            lblNext.innerText = `${nextMonth}월`;
-        }
-    }
-
-    function selectMonthTab(type) {
-        const btnPrev = document.getElementById('monthBtnPrev');
-        const btnCurrent = document.getElementById('monthBtnCurrent');
-        const btnNext = document.getElementById('monthBtnNext');
-
-        if (btnPrev) btnPrev.classList.remove('active');
-        if (btnCurrent) btnCurrent.classList.remove('active');
-        if (btnNext) btnNext.classList.remove('active');
-
-        if (type === 'prev') {
-            selectedYear = prevYear;
-            selectedMonth = prevMonth;
-            if (btnPrev) btnPrev.classList.add('active');
-        } else if (type === 'current') {
-            selectedYear = currentYear;
-            selectedMonth = currentMonth;
-            if (btnCurrent) btnCurrent.classList.add('active');
-        } else if (type === 'next') {
-            selectedYear = nextYear;
-            selectedMonth = nextMonth;
-            if (btnNext) btnNext.classList.add('active');
-        }
-
-        selectedDateStr = null;
-        renderCalendar();
-        const sc = document.getElementById('selectedDateContent');
-        if(sc) sc.innerHTML = '<div class="empty-msg">날짜를 선택해 주세요.</div>';
-    }
-
-    async function loadData(forceRefresh = false) {
-        const cachedMonthly = localStorage.getItem('valet_monthly');
-        const cachedWeekly = localStorage.getItem('valet_weekly');
-        const cachedConsult = localStorage.getItem('valet_consult');
-
-        if (!forceRefresh && cachedMonthly && cachedWeekly && cachedConsult) {
-            try {
-                dbData.monthly = JSON.parse(cachedMonthly);
-                dbData.weekly = JSON.parse(cachedWeekly);
-                dbData.consult = JSON.parse(cachedConsult);
-
-                const st = document.getElementById('statusText');
-                const sd = document.getElementById('statusDot');
-                if(st) st.innerText = "오프라인 캐시 사용중";
-                if(sd) sd.style.backgroundColor = "#ff9500";
-
-                renderTodayInfo();
-                renderCalendar();
-                return;
-            } catch (e) {
-                console.error("Cache parse error:", e);
-            }
-        }
-
-        const st = document.getElementById('statusText');
-        const sd = document.getElementById('statusDot');
-        if(st) st.innerText = "데이터 동기화중...";
-        if(sd) sd.style.backgroundColor = "#007aff";
-
-        try {
-            const [mRes, wRes, cRes] = await Promise.all([
-                fetch(`${SCRIPT_URL}?type=monthly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
-                fetch(`${SCRIPT_URL}?type=weekly`, { mode: 'cors' }).then(r => r.json()).catch(() => []),
-                fetch(`${SCRIPT_URL}?type=consult`, { mode: 'cors' }).then(r => r.json()).catch(() => [])
-            ]);
-
-            dbData.monthly = Array.isArray(mRes) ? mRes : [];
-            dbData.weekly = Array.isArray(wRes) ? wRes : [];
-            dbData.consult = Array.isArray(cRes) ? cRes : [];
-
-            localStorage.setItem('valet_monthly', JSON.stringify(dbData.monthly));
-            localStorage.setItem('valet_weekly', JSON.stringify(dbData.weekly));
-            localStorage.setItem('valet_consult', JSON.stringify(dbData.consult));
-
-            if(st) st.innerText = "실시간 연동중";
-            if(sd) sd.style.backgroundColor = "#4cd964";
-
-            renderTodayInfo();
-            renderCalendar();
-        } catch (e) {
-            console.error("Data load error:", e);
-            if(st) st.innerText = "동기화 실패 (캐시 확인)";
-            if(sd) sd.style.backgroundColor = "#ff3b30";
-            renderTodayInfo();
-            renderCalendar();
-        }
-    }
-
-    function refreshData() {
-        if (confirm("스프레드시트의 최신 데이터를 다시 불러오시겠습니까?")) {
-            localStorage.clear();
-            loadData(true);
-        }
-    }
-
-    function switchTab(tabId, element) {
-        document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-        const target = document.getElementById('tab-' + tabId);
-        if (target) target.classList.add('active');
-
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        if (element) {
-            element.classList.add('active');
-        } else {
-            const navButtons = document.querySelectorAll('.nav-item');
-            if (tabId === 'today' && navButtons[0]) navButtons[0].classList.add('active');
-            if (tabId === 'schedule' && navButtons[1]) navButtons[1].classList.add('active');
-            if (tabId === 'parking' && navButtons[2]) navButtons[2].classList.add('active');
-            if (tabId === 'contact' && navButtons[3]) navButtons[3].classList.add('active');
-        }
-        
-        const titles = {
-            'today': '더채플대치 발렛',
-            'schedule': '운영 스케줄 통합 조회',
-            'parking': '주차 안내',
-            'contact': '비상 연락망'
-        };
-        const ht = document.getElementById('header-title');
-        if(ht) ht.innerText = titles[tabId] || '더채플대치 발렛';
-    }
-
-    function isRowMatchDate(row, targetYear, targetMonth, targetDay, isConsult = false) {
-        for (const [key, val] of Object.entries(row || {})) {
-            if (val === undefined || val === null || String(val).trim() === '') continue;
-            const k = String(key).trim();
-            
-            const isDateKey = isConsult
-                ? /(상담일시|상담일|날짜|일자|상담 일정|일정)/i.test(k)
-                : /(예식일|예식 날짜|웨딩일|웨딩 날짜|날짜|일자|date)/i.test(k);
-            if (!isDateKey) continue;
-
-            let strVal = String(val).trim().replace(/^'+/, '').trim();
-
-            let m = strVal.match(/(20\d{2})\s*[-./]\s*0?(\d{1,2})\s*[-./]\s*0?(\d{1,2})/);
-            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
-
-            m = strVal.match(/(20\d{2})\s*년\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?/);
-            if (m && Number(m[1]) === targetYear && Number(m[2]) === targetMonth && Number(m[3]) === targetDay) return true;
-
-            if (!/20\d{2}/.test(strVal)) {
-                m = strVal.match(/^\s*0?(\d{1,2})\s*월\s*0?(\d{1,2})\s*일?\s*$/);
-                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
-                m = strVal.match(/^\s*0?(\d{1,2})[-./]0?(\d{1,2})\s*$/);
-                if (m && Number(m[1]) === targetMonth && Number(m[2]) === targetDay) return true;
-            }
-        }
-        return false;
-    }
-
-    function renderTodayInfo() {
-        const todayYear = nowDate.getFullYear();
-        const todayMonth = nowDate.getMonth() + 1;
-        const todayDay = nowDate.getDate();
-
-        const matchedTodayWeddings = getWeddingsForDate(todayYear, todayMonth, todayDay);
-        const matchedTodayConsults = dbData.consult.filter(row => isRowMatchDate(row, todayYear, todayMonth, todayDay, true));
-
-        const tt = document.getElementById('todayTitle');
-        const wNum = document.getElementById('todayWeddingNum');
-        const wDesc = document.getElementById('todayWeddingDesc');
-        const cNum = document.getElementById('todayConsultNum');
-        const cDesc = document.getElementById('todayConsultDesc');
-
-        if(tt) tt.innerText = `${todayMonth}월 ${todayDay}일 예식 및 상담 현황`;
-        if(wNum) wNum.innerText = `${matchedTodayWeddings.length}건`;
-        if(wDesc) wDesc.innerText = matchedTodayWeddings.length > 0 ? `${matchedTodayWeddings.length}건의 예식 진행 예정` : '예식 없음';
-        if(cNum) cNum.innerText = `${matchedTodayConsults.length}건`;
-        if(cDesc) cDesc.innerText = matchedTodayConsults.length > 0 ? `${matchedTodayConsults.length}건의 상담 진행 예정` : '상담 없음';
-
-        const weddingContainer = document.getElementById('todayEventsContainer');
-        if (matchedTodayWeddings.length === 0) {
-            if(weddingContainer) weddingContainer.innerHTML = `<div class="empty-msg">오늘(${todayMonth}월 ${todayDay}일) 예정된 예식이 없습니다.</div>`;
-        } else {
-            let wHtml = '';
-            matchedTodayWeddings.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
-
-                wHtml += `
-                    <div class="event-card" style="border-left: 3px solid #f0a500;">
-                        <div class="badge" style="background-color: #f0a500; color: #12141c;">${timeVal ? timeVal : '예식 ' + (idx + 1)} 진행</div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
-                    </div>
-                `;
-            });
-            if(weddingContainer) weddingContainer.innerHTML = wHtml;
-        }
-
-        const consultContainer = document.getElementById('todayConsultContainer');
-        if (matchedTodayConsults.length === 0) {
-            if(consultContainer) consultContainer.innerHTML = `<div class="empty-msg">오늘(${todayMonth}월 ${todayDay}일) 예정된 상담이 없습니다.</div>`;
-        } else {
-            let cHtml = '';
-            matchedTodayConsults.forEach((row, idx) => {
-                cHtml += `
-                    <div style="background:rgba(35, 39, 54, 0.9); padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #c084fc;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #c084fc; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[상담 ${idx + 1}]</span>
-                        </div>
-                `;
-                for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
-                    if (!pureKey || pureKey === '' || pureKey === '번호') continue;
-
-                    let labelText = pureKey.includes('상담일시') ? '상담일시' : pureKey;
-
-                    if (cleaned !== '') {
-                        let valueStyle = '';
-                        let labelColor = '#38bdf8';
-                        if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 16px;';
-                            labelColor = '#f472b6';
-                        } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 15px;';
-                            labelColor = '#38bdf8';
-                        }
-
-                        cHtml += `
-                            <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor};">${labelText}</span>
-                                <span class="info-colon" style="color: ${labelColor};">:</span>
-                                <span class="info-value" style="${valueStyle}">${cleaned}</span>
-                            </div>
-                        `;
-                    }
-                }
-                cHtml += `</div>`;
-            });
-            if(consultContainer) consultContainer.innerHTML = cHtml;
-        }
-    }
-
-    function renderCalendar() {
-        const grid = document.getElementById('calendarGrid');
-        const summary = document.getElementById('scheduleSummary');
-        if (!grid || !summary) return;
-        
-        const monthWedding = getMonthWeddings(selectedYear, selectedMonth);
-
-        const monthConsult = dbData.consult.filter(row => {
-            for (let day = 1; day <= new Date(selectedYear, selectedMonth, 0).getDate(); day++) {
-                if (isRowMatchDate(row, selectedYear, selectedMonth, day, true)) return true;
-            }
-            return false;
-        });
-
-        summary.innerText = `${selectedMonth}월 웨딩 총 ${monthWedding.length}건 · 상담 총 ${monthConsult.length}건`;
-
-        let html = `
-            <div class="cal-day-header" style="color: #ff3b30;">일</div>
-            <div class="cal-day-header">월</div>
-            <div class="cal-day-header">화</div>
-            <div class="cal-day-header">수</div>
-            <div class="cal-day-header">목</div>
-            <div class="cal-day-header">금</div>
-            <div class="cal-day-header" style="color: #3b82f6;">토</div>
-        `;
-
-        const firstDayObj = new Date(selectedYear, selectedMonth - 1, 1);
-        const lastDayObj = new Date(selectedYear, selectedMonth, 0);
-        const totalDays = lastDayObj.getDate();
-        const startDayOffset = firstDayObj.getDay();
-
-        for (let i = 0; i < startDayOffset; i++) {
-            html += `<div class="cal-cell" style="background:transparent; cursor:default;"></div>`;
-        }
-
-        for (let day = 1; day <= totalDays; day++) {
-            const dateStr = `${selectedMonth}월 ${day}일`;
-            
-            const matchedWeddings = getWeddingsForDate(selectedYear, selectedMonth, day);
-            const matchedConsults = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, day, true));
-
-            const wCount = matchedWeddings.length;
-            const cCount = matchedConsults.length;
-            const hasEvent = (wCount > 0 || cCount > 0);
-            const isSelected = selectedDateStr === dateStr;
-            const isToday = (selectedYear === currentYear && selectedMonth === currentMonth && day === currentDay);
-
-            let dayOfWeek = (startDayOffset + day - 1) % 7;
-            let dayColor = 'inherit';
-            if (dayOfWeek === 0) dayColor = '#ff3b30';
-            else if (dayOfWeek === 6) dayColor = '#3b82f6';
-
-            html += `
-                <div class="cal-cell ${hasEvent ? 'has-event' : ''} ${isToday ? 'is-today' : ''} ${isSelected ? 'selected' : ''}" onclick="selectDate('${dateStr}', ${day})">
-                    <span class="cal-date-num" style="color:${dayColor}">${day}</span>
-                    <div class="badge-group">
-                        ${wCount > 0 ? `<span class="event-count-badge">웨딩 ${wCount}</span>` : ''}
-                        ${cCount > 0 ? `<span class="consult-count-badge">상담 ${cCount}</span>` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        grid.innerHTML = html;
-    }
-
-    function cleanValue(key, val) {
-        if (val === undefined || val === null) return '';
-        let strVal = String(val).trim();
-        if (strVal.startsWith("'")) strVal = strVal.substring(1);
-        strVal = strVal.replace(/\s*\(\d+차\)/g, '');
-        let isoMatch = strVal.match(/T(\d{2}):(\d{2})/);
-        if (isoMatch) return `${isoMatch[1]}:${isoMatch[2]}`;
-        let timeMatch = strVal.match(/(\d{1,2}):(\d{2})/);
-        if (timeMatch) return `${timeMatch[1].padStart(2, '0')}:${timeMatch[2]}`;
-        return strVal.replace('.000Z', '').replace('Z', '');
-    }
-
-    function selectDate(dateStr, dayNum) {
-        selectedDateStr = dateStr;
-        renderCalendar();
-
-        const container = document.getElementById('selectedDateContent');
-        const titleEl = document.getElementById('selectedDateTitle');
-        if (!container) return;
-
-        const matchedWeekly = getWeddingsForDate(selectedYear, selectedMonth, dayNum);
-        const matchedConsult = dbData.consult.filter(row => isRowMatchDate(row, selectedYear, selectedMonth, dayNum, true));
-
-        if (titleEl) {
-            titleEl.innerText = `${selectedMonth}월 ${dayNum}일 상세 내역 (웨딩 ${matchedWeekly.length}건 / 상담 ${matchedConsult.length}건)`;
-        }
-
-        if (matchedWeekly.length === 0 && matchedConsult.length === 0) {
-            container.innerHTML = `<div class="empty-msg">${selectedMonth}월 ${dayNum}일에 등록된 웨딩 및 상담 일정이 없습니다.</div>`;
-            return;
-        }
-
-        let contentHtml = '';
-
-        if (matchedWeekly.length > 0) {
-            contentHtml += `<div style="font-size:15px; font-weight:bold; color:#f0a500; margin-bottom:8px;">💍 웨딩 일정 (${matchedWeekly.length}건)</div>`;
-            matchedWeekly.forEach((row, idx) => {
-                let timeVal = cleanValue('시간', row['시간'] || row['예식시간'] || '');
-                let dateDisplay = `${selectedMonth}월 ${dayNum}일${timeVal ? ' ' + timeVal : ''}`;
-                let guarantee = row['지불보증'] || row['보증인원'] || '정보 없음';
-                let weddingCar = row['웨딩카'] || '정보 없음';
-                let bus = row['대형버스'] || row['버스대절'] || row['버스'] || '정보 없음';
-                let honjuCar = row['혼주차량'] || row['혼주'] || '정보 없음';
-
-                contentHtml += `
-                    <div style="background:rgba(35, 39, 54, 0.9); padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #f0a500;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #f0a500; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[웨딩 ${idx + 1}]</span>
-                        </div>
-                        <div class="uniform-row"><span class="info-label" style="color:#38bdf8;">일시</span><span class="info-colon" style="color:#38bdf8;">:</span><span class="info-value" style="color:#ffffff;">${dateDisplay}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#34d399;">지불 보증</span><span class="info-colon" style="color:#34d399;">:</span><span class="info-value" style="color:#ffffff;">${guarantee}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#f472b6;">웨딩카</span><span class="info-colon" style="color:#f472b6;">:</span><span class="info-value" style="color:#ffffff;">${weddingCar}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#fbbf24;">대형버스</span><span class="info-colon" style="color:#fbbf24;">:</span><span class="info-value" style="color:#ffffff;">${bus}</span></div>
-                        <div class="uniform-row"><span class="info-label" style="color:#a78bfa;">혼주 차량</span><span class="info-colon" style="color:#a78bfa;">:</span><span class="info-value" style="color:#ffffff;">${honjuCar}</span></div>
-                    </div>
-                `;
-            });
-        }
-
-        if (matchedConsult.length > 0) {
-            contentHtml += `<div style="font-size:15px; font-weight:bold; color:#c084fc; margin-top:14px; margin-bottom:8px;">📝 상담 일정 (${matchedConsult.length}건)</div>`;
-            matchedConsult.forEach((row, idx) => {
-                contentHtml += `
-                    <div style="background:rgba(35, 39, 54, 0.9); padding:14px; border-radius:10px; margin-bottom:10px; border-left: 3px solid #c084fc;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="background-color: #c084fc; color: #12141c; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 6px;">[상담 ${idx + 1}]</span>
-                        </div>
-                `;
-                for (let [key, val] of Object.entries(row)) {
-                    if (key.includes('예정예식일') || key.includes('예정 예식일')) continue;
-                    let cleaned = cleanValue(key, val);
-                    let pureKey = key.split(':')[0].trim();
-                    if (!pureKey || pureKey === '' || pureKey === '번호') continue;
-
-                    let labelText = pureKey.includes('상담일시') ? '상담일시' : pureKey;
-
-                    if (cleaned !== '') {
-                        let valueStyle = '';
-                        let labelColor = '#38bdf8';
-                        if (pureKey.includes('신부') || pureKey.includes('신랑')) {
-                            valueStyle = 'color: #fbcfe8; font-weight: 700; font-size: 16px;';
-                            labelColor = '#f472b6';
-                        } else if (pureKey.includes('상담일시')) {
-                            valueStyle = 'color: #38bdf8; font-weight: 600; font-size: 15px;';
-                            labelColor = '#38bdf8';
-                        }
-
-                        contentHtml += `
-                            <div class="uniform-row">
-                                <span class="info-label" style="color: ${labelColor};">${labelText}</span>
-                                <span class="info-colon" style="color: ${labelColor};">:</span>
-                                <span class="info-value" style="${valueStyle}">${cleaned}</span>
-                            </div>
-                        `;
-                    }
-                }
-                contentHtml += `</div>`;
-            });
-        }
-
-        container.innerHTML = contentHtml;
-    }
-
-    function switchParkingTab(floor) {
-        document.querySelectorAll('.parking-section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('#tab-parking .parking-tab-btn').forEach(btn => btn.classList.remove('active'));
-        const targetSec = document.getElementById('parking-' + floor);
-        const targetBtn = document.getElementById('p-btn-' + floor);
-        if (targetSec) targetSec.classList.add('active');
-        if (targetBtn) targetBtn.classList.add('active');
-    }
-</script>
-
-</body>
-</html>
+                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.
