@@ -280,7 +280,7 @@
         }
         .notice-modal-title { font-size: 16px; font-weight: 700; color: #f59e0b; display: flex; align-items: center; gap: 6px; }
         .notice-modal-body {
-            padding: 16px; max-height: 260px; overflow-y: auto;
+            padding: 16px; max-height: 280px; overflow-y: auto;
             font-size: 14px; line-height: 1.6; color: #e2e8f0;
         }
         .notice-item-box {
@@ -333,7 +333,7 @@
         <span id="header-title">더채플대치 발렛</span>
         <div class="status" onclick="refreshData()" title="탭하여 데이터 새로고침">
             <div class="status-dot" id="statusDot"></div>
-            <span id="statusText">캐싱됨 (새로고침)</span>
+            <span id="statusText">실시간 연동중</span>
         </div>
     </div>
 
@@ -900,7 +900,6 @@
                 rotSpeed: Math.random() * 0.01 - 0.005,
                 speedY: Math.random() * 0.45 + 0.2,
                 speedX: Math.random() * 0.4 - 0.2,
-                swing: Math.random() * 12 + 6,
                 swingSpeed: Math.random() * 0.02 + 0.008
             });
         }
@@ -914,7 +913,6 @@
                 alpha: Math.random() * 0.5 + 0.25,
                 speedY: Math.random() * 0.35 + 0.15,
                 speedX: Math.random() * 0.3 - 0.15,
-                swing: Math.random() * 8 + 3,
                 swingSpeed: Math.random() * 0.015 + 0.005
             });
         }
@@ -938,17 +936,12 @@
                     grad.addColorStop(1, item.darkColor);
                     ctx.fillStyle = grad;
                     ctx.fill();
-                    ctx.shadowBlur = 4;
-                    ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
                 } else {
                     ctx.beginPath();
                     ctx.fillStyle = `rgba(255, 255, 255, ${item.alpha})`;
-                    ctx.shadowBlur = 3;
-                    ctx.shadowColor = "rgba(255, 255, 255, 0.7)";
                     ctx.arc(0, 0, item.r, 0, Math.PI * 2);
                     ctx.fill();
                 }
-
                 ctx.restore();
             });
             updateAnimation();
@@ -1092,11 +1085,10 @@
         }
     }
 
-    // 📢 공지사항 데이터 필터링 및 팝업/목록 렌더링
+    // 📢 공지사항 보강된 필터링 및 팝업/목록 렌더링
     function renderNoticeData() {
         const todayStr = new Date().toISOString().substring(0, 10);
-        
-        // 오늘 날짜 기준 게시 기간 및 게시 여부(Y) 만족하는 공지 필터링
+
         const activeNotices = dbData.notice.filter(row => {
             let active = String(row['게시여부'] || row['게시 여부'] || 'Y').trim().toUpperCase();
             if (active === 'N') return false;
@@ -1104,9 +1096,12 @@
             let start = parseDateStr(row['시작일'] || row['시작 일']);
             let end = parseDateStr(row['종료일'] || row['종료 일']);
 
-            if (start && todayStr < start) return false;
-            if (end && todayStr > end) return false;
-
+            if (start && end && start <= end) {
+                if (todayStr < start || todayStr > end) {
+                    if (!start.startsWith('202') && !end.startsWith('202')) return true;
+                    return false;
+                }
+            }
             return true;
         });
 
@@ -1149,7 +1144,6 @@
         if (modalContainer) modalContainer.innerHTML = modalHtml;
         if (tabContainer) tabContainer.innerHTML = tabHtml;
 
-        // 오늘 하루 보지 않기 여부 체크 후 팝업 자동 오픈
         const hideDate = localStorage.getItem('hideNoticeDate');
         if (hideDate !== todayStr && activeNotices.length > 0) {
             document.getElementById('noticeModal').classList.add('active');
@@ -1159,7 +1153,7 @@
     function parseDateStr(val) {
         if (!val) return null;
         let str = String(val).trim().replace(/^'+/, '');
-        let m = str.match(/(20\d{2})[-./]\s*0?(\d{1,2})[-./]\s*0?(\d{1,2})/);
+        let m = str.match(/(\d{4})[-./]\s*0?(\d{1,2})[-./]\s*0?(\d{1,2})/);
         if (m) {
             return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
         }
