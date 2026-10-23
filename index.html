@@ -1142,10 +1142,6 @@
 
         const hideDate = localStorage.getItem('hideNoticeDate');
         if (hideDate !== todayStr && activeNotices.length > 0) {
-            // 앱 실행 초기 자동 팝업 시에는 '오늘 하루 보지 않기' 항목 표시
-            const todayCloseRow = document.querySelector('.notice-today-close');
-            if (todayCloseRow) todayCloseRow.style.display = 'flex';
-
             document.getElementById('noticeModal').classList.add('active');
         }
     }
@@ -1180,12 +1176,9 @@
         }
     }
 
-    // 💡 하단 [공지] 아이콘을 누를 때 처리 (하루 안 보기 항목 숨김)
+    // 💡 하단 [공지] 아이콘을 누를 때: 팝업 없이 깔끔하게 공지 탭 목록 화면으로 바로 이동
     function openNoticeTab(element) {
-        const todayCloseRow = document.querySelector('.notice-today-close');
-        if (todayCloseRow) todayCloseRow.style.display = 'none';
-
-        document.getElementById('noticeModal').classList.add('active');
+        document.getElementById('noticeModal').classList.remove('active');
         switchTab('notice', element);
     }
 
@@ -1485,7 +1478,7 @@
                             labelColor = '#38bdf8';
                         }
 
-                        cHtml += `
+                        contentHtml += `
                             <div class="uniform-row">
                                 <span class="info-label" style="color: ${labelColor};">${labelText}</span>
                                 <span class="info-colon" style="color: ${labelColor};">:</span>
@@ -1494,7 +1487,7 @@
                         `;
                     }
                 }
-                cHtml += `</div>`;
+                contentHtml += `</div>`;
             });
         }
 
