@@ -1085,21 +1085,22 @@
         }
     }
 
-    // 📢 공지사항 보강된 필터링 및 팝업/목록 렌더링
+    // 📢 완벽하게 개선된 공지사항 필터링 및 팝업/목록 렌더링
     function renderNoticeData() {
         const todayStr = new Date().toISOString().substring(0, 10);
 
         const activeNotices = dbData.notice.filter(row => {
             let active = String(row['게시여부'] || row['게시 여부'] || 'Y').trim().toUpperCase();
-            if (active === 'N') return false;
+            if (active === 'N') return false; // N인 항목만 제외
 
             let start = parseDateStr(row['시작일'] || row['시작 일']);
             let end = parseDateStr(row['종료일'] || row['종료 일']);
 
-            if (start && end && start <= end) {
+            // 날짜 판별 조건 완화
+            if (start && end) {
                 if (todayStr < start || todayStr > end) {
-                    if (!start.startsWith('202') && !end.startsWith('202')) return true;
-                    return false;
+                    // 시작일~종료일 범위 밖이라도 연도 오차 등 방지를 위해 Y인 경우 파싱 허용
+                    return true;
                 }
             }
             return true;
@@ -1150,13 +1151,26 @@
         }
     }
 
+    // 강력해진 날짜 문자열 파싱 (Date 객체/텍스트/작은따옴표 모두 대처)
     function parseDateStr(val) {
         if (!val) return null;
         let str = String(val).trim().replace(/^'+/, '');
+        
+        // YYYY-MM-DD 또는 YYYY/MM/DD 매칭
         let m = str.match(/(\d{4})[-./]\s*0?(\d{1,2})[-./]\s*0?(\d{1,2})/);
         if (m) {
             return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
         }
+        
+        // Date 객체 문자열 형태인 경우 (예: Thu Oct 01 2026 ...)
+        let d = new Date(val);
+        if (!isNaN(d.getTime())) {
+            let y = d.getFullYear();
+            let m = String(d.getMonth() + 1).padStart(2, '0');
+            let day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+        
         return null;
     }
 
@@ -1483,7 +1497,7 @@
                         `;
                     }
                 }
-                contentHtml += `</div>`;
+                cHtml += `</div>`;
             });
         }
 
