@@ -259,46 +259,52 @@
         }
         .sms-icon-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-        /* 📢 공지사항 팝업 (Modal) 스타일 */
+        /* 📢 공지사항 팝업 (Modal) - 단일 대형 창, 큰 폰트 설정 */
         .notice-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(6px);
             display: none; justify-content: center; align-items: center;
-            z-index: 2000; padding: 20px;
+            z-index: 2000; padding: 16px;
         }
         .notice-modal-overlay.active { display: flex; }
         .notice-modal-card {
             background: linear-gradient(145deg, #1e2230, #161822);
-            border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 16px;
-            width: 100%; max-width: 420px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 18px;
+            width: 100%; max-width: 440px; max-height: 85vh;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.85);
             overflow: hidden; display: flex; flex-direction: column;
         }
         .notice-modal-header {
-            background-color: rgba(245, 158, 11, 0.15); padding: 14px 18px;
-            border-bottom: 1px solid rgba(245, 158, 11, 0.2); display: flex;
+            background-color: rgba(245, 158, 11, 0.18); padding: 16px 20px;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.25); display: flex;
             justify-content: space-between; align-items: center;
         }
-        .notice-modal-title { font-size: 16px; font-weight: 700; color: #f59e0b; display: flex; align-items: center; gap: 6px; }
+        .notice-modal-title { font-size: 19px; font-weight: 700; color: #f59e0b; display: flex; align-items: center; gap: 8px; }
+        
+        /* 세로로 길게 확장되며 내부 스크롤 제공 */
         .notice-modal-body {
-            padding: 16px; max-height: 280px; overflow-y: auto;
-            font-size: 14px; line-height: 1.6; color: #e2e8f0;
+            padding: 18px; flex: 1; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 14px;
         }
+        
+        /* 각각의 공지 박스 스타일 및 큰 글씨 */
         .notice-item-box {
-            background-color: rgba(255, 255, 255, 0.04); border-radius: 10px;
-            padding: 12px; margin-bottom: 10px; border-left: 3px solid #f59e0b;
+            background-color: rgba(255, 255, 255, 0.05); border-radius: 12px;
+            padding: 16px; border-left: 4px solid #f59e0b;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
-        .notice-item-box:last-child { margin-bottom: 0; }
-        .notice-item-title { font-weight: 700; color: #ffffff; margin-bottom: 4px; font-size: 15px; }
-        .notice-item-date { font-size: 11px; color: #9ca3af; margin-bottom: 6px; }
-        .notice-item-content { white-space: pre-wrap; word-break: break-all; color: #d1d5db; }
+        .notice-item-title { font-weight: 700; color: #facc15; margin-bottom: 6px; font-size: 18px; line-height: 1.3; }
+        .notice-item-date { font-size: 13px; color: #9ca3af; margin-bottom: 10px; font-weight: 500; }
+        .notice-item-content { white-space: pre-wrap; word-break: break-all; color: #f3f4f6; font-size: 16px; line-height: 1.65; }
 
         .notice-modal-footer {
-            background-color: rgba(15, 17, 26, 0.9); padding: 10px 16px;
+            background-color: rgba(15, 17, 26, 0.95); padding: 14px 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex;
-            justify-content: space-between; align-items: center; font-size: 13px;
+            justify-content: space-between; align-items: center; font-size: 15px;
         }
-        .notice-today-close { display: flex; align-items: center; gap: 6px; color: #9ca3af; cursor: pointer; user-select: none; }
-        .notice-btn-close { background-color: #3b82f6; color: #ffffff; border: none; padding: 6px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .notice-today-close { display: flex; align-items: center; gap: 8px; color: #cbd5e1; cursor: pointer; user-select: none; font-weight: 500; }
+        .notice-today-close input { width: 18px; height: 18px; accent-color: #f59e0b; cursor: pointer; }
+        .notice-btn-close { background-color: #3b82f6; color: #ffffff; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3); }
 
         .empty-msg { text-align: center; padding: 22px; color: #cbd5e1; font-size: 1.05rem; }
 
@@ -337,11 +343,11 @@
         </div>
     </div>
 
-    <!-- 📢 실시간 공지사항 팝업 모달 -->
+    <!-- 📢 실시간 공지사항 통합 대형 팝업 모달 -->
     <div id="noticeModal" class="notice-modal-overlay">
         <div class="notice-modal-card">
             <div class="notice-modal-header">
-                <span class="notice-modal-title">📢 현장 공지사항</span>
+                <span class="notice-modal-title" id="noticeModalTitle">📢 현장 공지사항</span>
             </div>
             <div class="notice-modal-body" id="noticeModalContent">
                 <div class="empty-msg">공지사항을 로딩 중입니다...</div>
@@ -1085,24 +1091,13 @@
         }
     }
 
-    // 📢 완벽하게 개선된 공지사항 필터링 및 팝업/목록 렌더링
+    // 📢 통합 팝업 렌더링 (모든 공지를 한 번에 나열)
     function renderNoticeData() {
         const todayStr = new Date().toISOString().substring(0, 10);
 
         const activeNotices = dbData.notice.filter(row => {
             let active = String(row['게시여부'] || row['게시 여부'] || 'Y').trim().toUpperCase();
-            if (active === 'N') return false; // N인 항목만 제외
-
-            let start = parseDateStr(row['시작일'] || row['시작 일']);
-            let end = parseDateStr(row['종료일'] || row['종료 일']);
-
-            // 날짜 판별 조건 완화
-            if (start && end) {
-                if (todayStr < start || todayStr > end) {
-                    // 시작일~종료일 범위 밖이라도 연도 오차 등 방지를 위해 Y인 경우 파싱 허용
-                    return true;
-                }
-            }
+            if (active === 'N') return false;
             return true;
         });
 
@@ -1118,7 +1113,7 @@
         let modalHtml = '';
         let tabHtml = '';
 
-        activeNotices.forEach(item => {
+        activeNotices.forEach((item, index) => {
             let title = item['제목'] || '공지사항';
             let content = item['내용'] || '';
             let start = parseDateStr(item['시작일'] || item['시작 일']) || '';
@@ -1135,9 +1130,9 @@
 
             tabHtml += `
                 <div class="main-card">
-                    <div style="font-weight:700; color:#f59e0b; font-size:16px; margin-bottom:6px;">${title}</div>
-                    ${dateRange ? `<div style="font-size:12px; color:#9ca3af; margin-bottom:8px;">${dateRange}</div>` : ''}
-                    <div style="font-size:14px; color:#e2e8f0; line-height:1.6; white-space:pre-wrap;">${content}</div>
+                    <div style="font-weight:700; color:#f59e0b; font-size:18px; margin-bottom:8px;">${title}</div>
+                    ${dateRange ? `<div style="font-size:13px; color:#9ca3af; margin-bottom:10px;">${dateRange}</div>` : ''}
+                    <div style="font-size:16px; color:#e2e8f0; line-height:1.65; white-space:pre-wrap;">${content}</div>
                 </div>
             `;
         });
@@ -1151,18 +1146,13 @@
         }
     }
 
-    // 강력해진 날짜 문자열 파싱 (Date 객체/텍스트/작은따옴표 모두 대처)
     function parseDateStr(val) {
         if (!val) return null;
         let str = String(val).trim().replace(/^'+/, '');
-        
-        // YYYY-MM-DD 또는 YYYY/MM/DD 매칭
         let m = str.match(/(\d{4})[-./]\s*0?(\d{1,2})[-./]\s*0?(\d{1,2})/);
         if (m) {
             return `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}`;
         }
-        
-        // Date 객체 문자열 형태인 경우 (예: Thu Oct 01 2026 ...)
         let d = new Date(val);
         if (!isNaN(d.getTime())) {
             let y = d.getFullYear();
@@ -1170,7 +1160,6 @@
             let day = String(d.getDate()).padStart(2, '0');
             return `${y}-${m}-${day}`;
         }
-        
         return null;
     }
 
